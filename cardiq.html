@@ -1,0 +1,2250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CardIQ — Sports Card Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* Navy foundation — deep, professional, premium */
+    --bg:    #0d1117;
+    --bg2:   #131a24;
+    --bg3:   #192030;
+    --bg4:   #1f2a3d;
+    --bg5:   #243248;
+
+    /* Borders — subtle blue-tinted */
+    --border:  rgba(148,174,220,0.09);
+    --border2: rgba(148,174,220,0.18);
+    --border3: rgba(148,174,220,0.30);
+
+    /* Text — warm off-white to slate */
+    --text:  #e8edf5;
+    --text2: #7e93b4;
+    --text3: #3f5070;
+
+    /* Accent: champagne gold — premium collectibles */
+    --gold:   #c9a84c;
+    --gold2:  #e2c068;
+    --gold3:  #f0d48a;
+    --gold-bg: rgba(201,168,76,0.08);
+    --gold-border: rgba(201,168,76,0.22);
+
+    /* Semantic */
+    --green:    #34c97a;
+    --green-bg: rgba(52,201,122,0.09);
+    --red:      #e05c5c;
+    --red-bg:   rgba(224,92,92,0.09);
+    --blue:     #5b8de8;
+    --blue-bg:  rgba(91,141,232,0.08);
+
+    /* Typography */
+    --font-display: 'Plus Jakarta Sans', sans-serif;
+    --font-serif:   'Libre Baskerville', serif;
+    --font-mono:    'IBM Plex Mono', monospace;
+
+    --radius:    8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --nav-h: 60px;
+
+    /* Subtle texture — fine grain over surfaces */
+    --surface-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  }
+
+  html { font-size: 15px; scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-display);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h);
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(20px) saturate(1.4);
+    border-bottom: 1px solid var(--border2);
+    display: flex; align-items: center;
+    padding: 0 2rem;
+  }
+  /* Thin gold accent line at very top of nav */
+  nav::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold3) 50%, var(--gold) 70%, transparent 100%);
+    opacity: 0.6;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+    margin-right: 2.5rem;
+    cursor: pointer;
+  }
+  .nav-logo-mark {
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold3) 100%);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #0d1117;
+    letter-spacing: 0;
+    font-family: var(--font-mono);
+    flex-shrink: 0;
+  }
+  .nav-logo-text { color: var(--text); }
+  .nav-logo-text span { color: var(--gold2); }
+  .nav-links {
+    display: flex; align-items: center; gap: 2px;
+    list-style: none;
+    flex: 1;
+  }
+  .nav-links li button {
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 13px;
+    border-radius: 7px;
+    font-size: 0.83rem;
+    font-weight: 500;
+    color: var(--text2);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.15s, background 0.15s;
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+  }
+  .nav-links li button:hover { color: var(--text); background: var(--bg3); }
+  .nav-links li button.active {
+    color: var(--gold2);
+    background: var(--gold-bg);
+    border: 1px solid var(--gold-border);
+  }
+  .nav-badge {
+    background: var(--gold);
+    color: #0d1117;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 20px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+  }
+  .nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .btn-sm {
+    padding: 7px 16px;
+    border-radius: 7px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.15s;
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+  }
+  .btn-ghost {
+    background: none;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+  }
+  .btn-ghost:hover { color: var(--text); background: var(--bg3); border-color: var(--border3); }
+  .btn-accent {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
+    border: none;
+    color: #0d1117;
+    font-weight: 700;
+  }
+  .btn-accent:hover { background: linear-gradient(135deg, var(--gold2) 0%, var(--gold3) 100%); transform: translateY(-1px); }
+
+  /* ── PAGES ── */
+  .page { display: none; padding-top: var(--nav-h); min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* ─────────────────────────────────────────
+     HOME PAGE
+  ───────────────────────────────────────── */
+  .hero {
+    position: relative;
+    padding: 5.5rem 2rem 4.5rem;
+    overflow: hidden;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  /* Fine dot grid */
+  .hero-grid-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: radial-gradient(circle, rgba(148,174,220,0.15) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse 85% 75% at 50% 50%, black 20%, transparent 100%);
+  }
+  /* Diagonal rule lines — luxury feel */
+  .hero-rules {
+    position: absolute; inset: 0; z-index: 0; overflow: hidden;
+  }
+  .hero-rules::before, .hero-rules::after {
+    content: '';
+    position: absolute;
+    width: 1px; height: 100%;
+    background: linear-gradient(180deg, transparent, var(--gold-border), transparent);
+  }
+  .hero-rules::before { left: 25%; }
+  .hero-rules::after { right: 25%; }
+  .hero-glow {
+    position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+    width: 700px; height: 350px;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, rgba(91,141,232,0.04) 50%, transparent 70%);
+    z-index: 0;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gold-bg);
+    border: 1px solid var(--gold-border);
+    border-radius: 4px;
+    padding: 5px 14px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--gold2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.75rem;
+    font-family: var(--font-mono);
+  }
+  .hero-eyebrow::before { content: '◆'; font-size: 0.5rem; }
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.25rem;
+    color: var(--text);
+  }
+  .hero-title em {
+    color: transparent;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold3) 60%, var(--gold2) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-style: italic;
+  }
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--text2);
+    max-width: 500px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.75;
+    font-weight: 400;
+  }
+  .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .hero-ctas button {
+    padding: 11px 26px;
+    border-radius: 7px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-display);
+    transition: 0.18s;
+    letter-spacing: 0.01em;
+  }
+  .cta-primary {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
+    border: none; color: #0d1117; font-weight: 700;
+  }
+  .cta-primary:hover { transform: translateY(-2px); background: linear-gradient(135deg, var(--gold2) 0%, var(--gold3) 100%); }
+  .cta-secondary { background: none; border: 1px solid var(--border2); color: var(--text); }
+  .cta-secondary:hover { background: var(--bg3); border-color: var(--border3); }
+
+  .home-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0;
+    background: var(--border);
+    border-bottom: 1px solid var(--border2);
+  }
+  .home-stat {
+    background: var(--bg);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    position: relative;
+  }
+  .home-stat::after {
+    content: '';
+    position: absolute; top: 25%; bottom: 25%; right: 0;
+    width: 1px;
+    background: var(--border2);
+  }
+  .home-stat:last-child::after { display: none; }
+  .home-stat-val {
+    font-family: var(--font-mono);
+    font-size: 1.9rem;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .home-stat-val span { color: var(--gold2); }
+  .home-stat-label {
+    font-size: 0.7rem;
+    color: var(--text3);
+    margin-top: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    font-family: var(--font-mono);
+  }
+
+  .home-section { padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 0.6rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-label::before { content: '—'; opacity: 0.5; }
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-xl); overflow: hidden; }
+  .feature-card {
+    background: var(--bg2);
+    padding: 1.75rem 1.5rem;
+    transition: background 0.2s;
+  }
+  .feature-card:hover { background: var(--bg3); }
+  .feature-icon {
+    width: 36px; height: 36px;
+    background: var(--gold-bg);
+    border: 1px solid var(--gold-border);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    margin-bottom: 1.1rem;
+  }
+  .feature-card h3 { font-family: var(--font-display); font-size: 0.88rem; font-weight: 600; margin-bottom: 0.45rem; color: var(--text); }
+  .feature-card p { font-size: 0.8rem; color: var(--text2); line-height: 1.65; }
+
+  .trending-home { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-xl); overflow: hidden; }
+  .trending-card {
+    background: var(--bg2);
+    padding: 1.25rem;
+    display: flex; flex-direction: column; gap: 10px;
+    transition: background 0.2s;
+    position: relative;
+  }
+  .trending-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold-border), transparent);
+  }
+  .trending-card:hover { background: var(--bg3); }
+  .tc-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .tc-name { font-weight: 600; font-size: 0.88rem; line-height: 1.3; color: var(--text); }
+  .tc-set { font-size: 0.72rem; color: var(--text3); margin-top: 2px; }
+  .badge {
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+  }
+  .badge-green { background: var(--green-bg); color: var(--green); border: 1px solid rgba(52,201,122,0.2); }
+  .badge-red { background: var(--red-bg); color: var(--red); border: 1px solid rgba(224,92,92,0.2); }
+  .badge-blue { background: var(--blue-bg); color: var(--blue); }
+  .badge-amber { background: var(--gold-bg); color: var(--gold2); border: 1px solid var(--gold-border); }
+  .tc-price { font-family: var(--font-mono); font-size: 1.05rem; font-weight: 500; color: var(--text); }
+  .tc-meta { font-size: 0.72rem; color: var(--text3); }
+
+  /* ─────────────────────────────────────────
+     MARKET ANALYSIS
+  ───────────────────────────────────────── */
+  .page-header {
+    padding: 1.75rem 2rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
+  }
+  .page-header h1 {
+    font-family: var(--font-serif);
+    font-size: 1.55rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .page-header p { font-size: 0.8rem; color: var(--text3); margin-top: 4px; font-family: var(--font-mono); letter-spacing: 0.03em; }
+  .header-controls { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill-group {
+    display: flex;
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 7px;
+    padding: 3px;
+  }
+  .pill {
+    padding: 5px 13px;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: var(--text2);
+    font-family: var(--font-mono);
+    transition: 0.15s;
+    letter-spacing: 0.03em;
+  }
+  .pill.active {
+    background: var(--bg5);
+    color: var(--gold2);
+    border: 1px solid var(--gold-border);
+  }
+
+  .metrics-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+    gap: 0;
+    background: var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .metric {
+    background: var(--bg);
+    padding: 1.1rem 1.4rem;
+    border-right: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .metric:last-child { border-right: none; }
+  .metric:hover { background: var(--bg2); }
+  .metric-label {
+    font-size: 0.65rem;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+    font-family: var(--font-mono);
+  }
+  .metric-val { font-family: var(--font-mono); font-size: 1.25rem; font-weight: 500; color: var(--text); }
+  .metric-sub { font-size: 0.72rem; margin-top: 4px; font-family: var(--font-mono); }
+  .up { color: var(--green); }
+  .down { color: var(--red); }
+  .neutral { color: var(--text3); }
+
+  .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); padding: 0; margin: 1px; }
+  @media (max-width: 900px) { .market-grid { grid-template-columns: 1fr; } }
+  .market-grid-wrapper { background: var(--border); margin: 1.5rem 2rem; border: 1px solid var(--border); border-radius: var(--radius-xl); overflow: hidden; }
+  .chart-card {
+    background: var(--bg2);
+    padding: 1.4rem 1.5rem;
+  }
+  .chart-card.full { grid-column: 1 / -1; }
+  .chart-title {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+    color: var(--text);
+    letter-spacing: 0.01em;
+  }
+  .chart-sub { font-size: 0.7rem; color: var(--text3); margin-bottom: 1.25rem; font-family: var(--font-mono); letter-spacing: 0.03em; }
+  .chart-wrap { position: relative; width: 100%; }
+
+  .movers-table { width: 100%; border-collapse: collapse; }
+  .movers-table th {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--text3);
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-weight: 500;
+    font-family: var(--font-mono);
+  }
+  .movers-table td {
+    padding: 10px;
+    font-size: 0.82rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .movers-table tr:last-child td { border-bottom: none; }
+  .movers-table tr:hover td { background: rgba(148,174,220,0.03); }
+  .player-cell { display: flex; flex-direction: column; }
+  .player-name { font-weight: 600; color: var(--text); font-size: 0.83rem; }
+  .player-set { font-size: 0.69rem; color: var(--text3); font-family: var(--font-mono); margin-top: 1px; }
+  .mono { font-family: var(--font-mono); }
+
+  .heat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 6px; }
+  .heat-cell {
+    border-radius: 6px;
+    padding: 0.85rem 0.7rem;
+    text-align: center;
+    cursor: default;
+    transition: opacity 0.15s, transform 0.15s;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .heat-cell:hover { opacity: 0.88; transform: scale(1.02); }
+  .heat-name { font-size: 0.68rem; font-weight: 600; color: rgba(255,255,255,0.92); letter-spacing: 0.01em; }
+  .heat-val { font-family: var(--font-mono); font-size: 0.75rem; color: rgba(255,255,255,0.72); margin-top: 3px; }
+
+  .vol-bar-wrap { display: flex; flex-direction: column; gap: 9px; }
+  .vol-row { display: flex; align-items: center; gap: 10px; }
+  .vol-label { font-size: 0.75rem; color: var(--text2); width: 72px; flex-shrink: 0; font-family: var(--font-mono); }
+  .vol-bar-bg { flex: 1; height: 22px; background: var(--bg3); border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+  .vol-bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 9px; }
+  .vol-bar-fill span { font-size: 0.67rem; font-family: var(--font-mono); color: rgba(13,17,23,0.75); font-weight: 600; }
+  .vol-num { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text2); width: 55px; text-align: right; flex-shrink: 0; }
+
+  /* ─────────────────────────────────────────
+     COLLECTION
+  ───────────────────────────────────────── */
+  .portfolio-header {
+    padding: 1.75rem 2rem;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
+  }
+  .portfolio-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 1px;
+    margin-top: 1.25rem;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .pstat {
+    background: var(--bg3);
+    padding: 1.1rem 1.3rem;
+    transition: background 0.15s;
+  }
+  .pstat:hover { background: var(--bg4); }
+  .pstat-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); margin-bottom: 6px; font-family: var(--font-mono); }
+  .pstat-val { font-family: var(--font-mono); font-size: 1.3rem; font-weight: 500; }
+  .pstat-sub { font-size: 0.7rem; margin-top: 4px; font-family: var(--font-mono); }
+
+  .collection-toolbar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    flex-wrap: wrap;
+  }
+  .search-input {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 7px;
+    padding: 7px 12px;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    outline: none;
+    width: 220px;
+    transition: border-color 0.15s;
+  }
+  .search-input::placeholder { color: var(--text3); }
+  .search-input:focus { border-color: var(--gold-border); }
+  select.filter-sel {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 7px;
+    padding: 7px 10px;
+    color: var(--text2);
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+  }
+  .add-btn {
+    margin-left: auto;
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 18px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
+    border: none;
+    border-radius: 7px;
+    color: #0d1117;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: var(--font-display);
+    transition: 0.15s;
+    letter-spacing: 0.01em;
+  }
+  .add-btn:hover { background: linear-gradient(135deg, var(--gold2) 0%, var(--gold3) 100%); transform: translateY(-1px); }
+
+  .table-wrap { overflow-x: auto; padding: 0 0 2rem; }
+  .cards-table { width: 100%; border-collapse: collapse; min-width: 900px; }
+  .cards-table thead { background: var(--bg2); }
+  .cards-table th {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--text3);
+    padding: 11px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    font-family: var(--font-mono);
+  }
+  .cards-table th:hover { color: var(--text2); }
+  .cards-table td {
+    padding: 13px 16px;
+    font-size: 0.82rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  .cards-table tr:last-child td { border-bottom: none; }
+  .cards-table tbody tr:hover td { background: rgba(148,174,220,0.025); }
+  .grade-pill {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 4px;
+    font-size: 0.67rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    background: var(--gold-bg);
+    color: var(--gold2);
+    border: 1px solid var(--gold-border);
+    letter-spacing: 0.03em;
+  }
+  .grade-9 { background: var(--green-bg); color: var(--green); border-color: rgba(52,201,122,0.2); }
+  .grade-10 { background: var(--blue-bg); color: var(--blue); border-color: rgba(91,141,232,0.2); }
+  .action-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 4px 10px;
+    color: var(--text3);
+    font-size: 0.7rem;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    transition: 0.15s;
+    margin-right: 4px;
+    letter-spacing: 0.02em;
+  }
+  .action-btn:hover { color: var(--text); border-color: var(--border2); background: var(--bg3); }
+  .action-btn.watch-on { color: var(--gold2); border-color: var(--gold-border); background: var(--gold-bg); }
+
+  .alloc-section { padding: 1.5rem 2rem; border-top: 1px solid var(--border); }
+  .alloc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-top: 1rem; }
+  @media (max-width: 700px) { .alloc-grid { grid-template-columns: 1fr; } }
+
+  /* ─────────────────────────────────────────
+     WATCHLIST
+  ───────────────────────────────────────── */
+  .watchlist-header {
+    padding: 1.75rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
+  }
+  .watchlist-count {
+    background: var(--gold-bg);
+    color: var(--gold2);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    border: 1px solid var(--gold-border);
+    letter-spacing: 0.04em;
+  }
+  .wl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: var(--border); padding: 1.5rem 2rem; }
+  .wl-grid-inner { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; padding: 1.5rem 2rem; }
+  .wl-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.35rem;
+    transition: border-color 0.2s, background 0.2s, transform 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+  .wl-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold-border), rgba(201,168,76,0.4), var(--gold-border));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .wl-card:hover { border-color: var(--border3); background: var(--bg3); transform: translateY(-2px); }
+  .wl-card:hover::before { opacity: 1; }
+  .wl-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 1rem; }
+  .wl-name { font-weight: 600; font-size: 0.9rem; line-height: 1.3; color: var(--text); }
+  .wl-meta { font-size: 0.7rem; color: var(--text3); margin-top: 3px; font-family: var(--font-mono); }
+  .wl-actions { display: flex; gap: 5px; }
+  .icon-btn {
+    width: 29px; height: 29px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem;
+    transition: 0.15s;
+    color: var(--text3);
+  }
+  .icon-btn:hover { border-color: var(--border2); color: var(--text); background: var(--bg4); }
+  .icon-btn.remove { color: var(--red); border-color: rgba(224,92,92,0.2); background: var(--red-bg); }
+  .icon-btn.alert-on { color: var(--gold2); border-color: var(--gold-border); background: var(--gold-bg); }
+  .wl-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+  .wl-stat-box { background: var(--bg3); border-radius: 6px; padding: 0.7rem 0.85rem; border: 1px solid var(--border); }
+  .wl-stat-label { font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text3); font-family: var(--font-mono); }
+  .wl-stat-val { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 500; margin-top: 3px; }
+  .wl-sparkline { height: 34px; margin-top: 1rem; display: flex; align-items: flex-end; gap: 3px; }
+  .spark-bar { flex: 1; border-radius: 2px; min-height: 3px; transition: opacity 0.15s; }
+  .spark-bar:hover { opacity: 0.75; }
+  .wl-alert-row { display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; padding-top: 0.9rem; border-top: 1px solid var(--border); }
+  .wl-alert-label { font-size: 0.72rem; color: var(--text3); display: flex; align-items: center; gap: 7px; font-family: var(--font-mono); }
+  .alert-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .alert-active { background: var(--green); }
+  .alert-inactive { background: var(--text3); }
+  .toggle {
+    width: 34px; height: 18px;
+    background: var(--bg5);
+    border-radius: 9px;
+    cursor: pointer;
+    border: 1px solid var(--border2);
+    position: relative;
+    transition: 0.2s;
+    flex-shrink: 0;
+  }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--text3);
+    transition: 0.2s;
+  }
+  .toggle.on { background: rgba(52,201,122,0.15); border-color: rgba(52,201,122,0.3); }
+  .toggle.on::after { left: 18px; background: var(--green); }
+
+  .empty-state { text-align: center; padding: 4rem 2rem; color: var(--text3); }
+  .empty-state-icon { font-size: 2.2rem; margin-bottom: 1rem; opacity: 0.5; }
+  .empty-state h3 { font-family: var(--font-serif); font-size: 1.05rem; color: var(--text2); margin-bottom: 0.5rem; }
+  .empty-state p { font-size: 0.82rem; max-width: 300px; margin: 0 auto; line-height: 1.65; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(5,8,14,0.8);
+    backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+    padding: 1rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg2);
+    border: 1px solid var(--border3);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    width: 100%; max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.08);
+    position: relative;
+  }
+  .modal::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+  }
+  .modal-title {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    color: var(--text);
+  }
+  .modal-close {
+    background: none; border: 1px solid var(--border); color: var(--text3); cursor: pointer;
+    font-size: 1rem; width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    transition: 0.15s;
+  }
+  .modal-close:hover { color: var(--text); background: var(--bg3); border-color: var(--border2); }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-label { font-size: 0.65rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--font-mono); }
+  .form-input {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 7px;
+    padding: 8px 12px;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 0.84rem;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-input:focus { border-color: var(--gold-border); }
+  .form-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 1.5rem; }
+
+  /* ── DIVIDERS & RULES ── */
+  .rule-h { height: 1px; background: var(--border); width: 100%; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    nav { padding: 0 1rem; }
+    .hero { padding: 4rem 1rem 3rem; }
+    .home-section, .metrics-bar, .market-grid-wrapper, .collection-toolbar,
+    .table-wrap, .watchlist-header, .wl-grid-inner, .portfolio-header,
+    .alloc-section, .page-header { padding-left: 1rem; padding-right: 1rem; }
+    .nav-links li:nth-child(n+3) { display: none; }
+    .form-grid { grid-template-columns: 1fr; }
+    .market-grid-wrapper { margin: 1rem; }
+  }
+
+  /* ─────────────────────────────────────────
+     HUB PAGE
+  ───────────────────────────────────────── */
+  .hub-header {
+    position: relative;
+    padding: 4.5rem 2rem 3.5rem;
+    text-align: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .hub-grid-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: radial-gradient(circle, rgba(148,174,220,0.13) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 20%, transparent 100%);
+  }
+  .hub-glow {
+    position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 340px;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, rgba(91,141,232,0.04) 50%, transparent 70%);
+    z-index: 0;
+  }
+  .hub-content { position: relative; z-index: 1; max-width: 660px; margin: 0 auto; }
+  .hub-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gold-bg);
+    border: 1px solid var(--gold-border);
+    border-radius: 4px;
+    padding: 4px 13px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--gold2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    font-family: var(--font-mono);
+  }
+  .hub-eyebrow::before { content: '◆'; font-size: 0.45rem; }
+  .hub-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.12;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+  .hub-title em {
+    font-style: italic;
+    color: transparent;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold3) 60%, var(--gold2) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  .hub-sub {
+    font-size: 0.92rem;
+    color: var(--text2);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+
+  /* Hub global search */
+  .hub-search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    max-width: 540px;
+    margin: 0 auto;
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    transition: border-color 0.2s;
+  }
+  .hub-search-wrap:focus-within { border-color: var(--gold-border); }
+  .hub-search-icon {
+    padding: 0 0 0 14px;
+    font-size: 1rem;
+    color: var(--text3);
+    flex-shrink: 0;
+    pointer-events: none;
+    line-height: 1;
+  }
+  .hub-search {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    padding: 12px 10px;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+  }
+  .hub-search::placeholder { color: var(--text3); }
+  .hub-search-btn {
+    margin: 5px;
+    padding: 7px 16px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
+    border: none;
+    border-radius: 7px;
+    color: #0d1117;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: var(--font-display);
+    white-space: nowrap;
+    transition: 0.15s;
+    flex-shrink: 0;
+  }
+  .hub-search-btn:hover { background: linear-gradient(135deg, var(--gold2) 0%, var(--gold3) 100%); }
+
+  /* Sport grid */
+  .hub-sports-section {
+    padding: 2.5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hub-section-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hub-section-label::before { content: '—'; opacity: 0.4; }
+  .hub-sport-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 12px;
+  }
+  .sport-tile {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.25rem;
+    cursor: pointer;
+    transition: border-color 0.18s, background 0.18s, transform 0.18s;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .sport-tile::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    opacity: 0;
+    transition: opacity 0.18s;
+  }
+  .sport-tile:hover {
+    border-color: var(--border3);
+    background: var(--bg3);
+    transform: translateY(-3px);
+  }
+  .sport-tile:hover::before { opacity: 1; }
+  .sport-tile:active { transform: translateY(-1px); }
+  .sport-tile-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+    filter: grayscale(0.2);
+  }
+  .sport-tile-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+    letter-spacing: 0.01em;
+  }
+  .sport-tile-count {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text3);
+    letter-spacing: 0.03em;
+  }
+  .sport-tile-arrow {
+    position: absolute; bottom: 1.1rem; right: 1.1rem;
+    font-size: 0.8rem;
+    color: var(--text3);
+    transition: color 0.18s, transform 0.18s;
+  }
+  .sport-tile:hover .sport-tile-arrow { color: var(--gold2); transform: translate(2px,-2px); }
+
+  /* Ticker strip */
+  .hub-ticker {
+    border-top: 1px solid var(--border);
+    background: var(--bg2);
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .hub-ticker-label {
+    flex-shrink: 0;
+    padding: 0.65rem 1.2rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold2);
+    background: var(--gold-bg);
+    border-right: 1px solid var(--gold-border);
+    white-space: nowrap;
+  }
+  .hub-ticker-items {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    padding: 0.6rem 1rem;
+    scrollbar-width: none;
+    flex: 1;
+  }
+  .hub-ticker-items::-webkit-scrollbar { display: none; }
+  .hub-tick {
+    display: flex; align-items: center; gap: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .htick-name { font-size: 0.75rem; color: var(--text2); }
+  .htick-val { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text); font-weight: 500; }
+  .htick-chg { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; }
+  .hub-tick-sep { color: var(--text3); margin: 0 12px; font-size: 0.8rem; }
+
+  /* ─────────────────────────────────────────
+     BROWSE PAGE
+  ───────────────────────────────────────── */
+  .browse-header {
+    padding: 1.5rem 2rem 0;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
+  }
+  .browse-header-top {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 1.25rem;
+  }
+  .browse-back {
+    background: none;
+    border: 1px solid var(--border2);
+    border-radius: 7px;
+    padding: 6px 12px;
+    color: var(--text2);
+    font-size: 0.78rem;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    transition: 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .browse-back:hover { color: var(--text); background: var(--bg3); }
+  .browse-sport-badge {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .browse-sport-badge span {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 10px;
+    border-radius: 5px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    vertical-align: middle;
+  }
+  .browse-search-row {
+    display: flex; align-items: center; gap: 10px;
+    flex-wrap: wrap;
+    padding-bottom: 1rem;
+  }
+  .browse-search-wrap {
+    display: flex; align-items: center;
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    flex: 1; min-width: 200px;
+    transition: border-color 0.15s;
+  }
+  .browse-search-wrap:focus-within { border-color: var(--gold-border); }
+  .browse-search-input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    padding: 9px 10px;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+  }
+  .browse-search-input::placeholder { color: var(--text3); }
+  .browse-filters { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .browse-result-meta {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text3);
+    letter-spacing: 0.04em;
+    padding-bottom: 0.75rem;
+  }
+
+  /* Browse sport pill group — override active color per sport */
+  .browse-pill { background: none; }
+  .browse-pill.active { background: var(--bg5); }
+
+  /* Card grid */
+  .browse-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+    padding: 1.5rem 2rem 3rem;
+  }
+  .browse-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    display: flex; flex-direction: column; gap: 10px;
+    transition: border-color 0.18s, background 0.18s, transform 0.18s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .browse-card::after {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+    border-radius: 3px 0 0 3px;
+    opacity: 0;
+    transition: opacity 0.18s;
+  }
+  .browse-card:hover { border-color: var(--border3); background: var(--bg3); transform: translateY(-2px); }
+  .browse-card:hover::after { opacity: 1; }
+  .bc-sport-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+    width: fit-content;
+  }
+  .bc-player { font-weight: 700; font-size: 0.95rem; color: var(--text); }
+  .bc-card-name { font-size: 0.78rem; color: var(--text2); line-height: 1.4; }
+  .bc-meta-row {
+    display: flex; align-items: center; gap: 8px;
+    flex-wrap: wrap;
+  }
+  .bc-year { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text3); }
+  .bc-divider { color: var(--border2); }
+  .bc-price-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-top: 4px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+  .bc-price { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 500; color: var(--text); }
+  .bc-actions { display: flex; gap: 6px; margin-top: 2px; }
+  .bc-btn {
+    flex: 1;
+    padding: 7px 0;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border2);
+    background: none;
+    color: var(--text2);
+    font-family: var(--font-mono);
+    transition: 0.15s;
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+  .bc-btn:hover { color: var(--text); background: var(--bg4); border-color: var(--border3); }
+  .bc-btn-primary {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
+    border-color: transparent;
+    color: #0d1117;
+  }
+  .bc-btn-primary:hover { background: linear-gradient(135deg, var(--gold2) 0%, var(--gold3) 100%); color: #0d1117; }
+  .bc-btn-watch.active { color: var(--gold2); border-color: var(--gold-border); background: var(--gold-bg); }
+
+  .browse-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 5rem 2rem;
+    color: var(--text3);
+  }
+  .browse-empty h3 { font-family: var(--font-serif); font-size: 1.1rem; color: var(--text2); margin-bottom: 0.5rem; }
+  .browse-empty p { font-size: 0.82rem; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--border3); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">
+    <div class="nav-logo-mark">IQ</div>
+    <div class="nav-logo-text">Card<span>IQ</span></div>
+  </div>
+  <ul class="nav-links">
+    <li><button onclick="showPage('home')" id="nav-home" class="active">Home</button></li>
+    <li><button onclick="goToBrowse(null,'')" id="nav-browse">Browse</button></li>
+    <li><button onclick="showPage('market')" id="nav-market">Market</button></li>
+    <li><button onclick="showPage('collection')" id="nav-collection">Collection</button></li>
+    <li><button onclick="showPage('watchlist')" id="nav-watchlist">Watchlist <span class="nav-badge" id="wl-badge">0</span></button></li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn-sm btn-ghost" onclick="showPage('collection')">My Portfolio</button>
+    <button class="btn-sm btn-accent" onclick="openAddModal()">+ Add Card</button>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════
+     HOME PAGE — Sport Selector Hub
+════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- Wordmark + prompt -->
+  <div class="hub-header">
+    <div class="hub-grid-bg"></div>
+    <div class="hub-glow"></div>
+    <div class="hub-content">
+      <div class="hub-eyebrow">Sports Card Intelligence Platform</div>
+      <h1 class="hub-title">What sport are you<br>looking for <em>today?</em></h1>
+      <p class="hub-sub">Select a league to browse cards, prices, and trends — or search across all sports below.</p>
+
+      <!-- Global search -->
+      <div class="hub-search-wrap">
+        <span class="hub-search-icon">⌕</span>
+        <input
+          type="text"
+          class="hub-search"
+          id="hub-global-search"
+          placeholder="Search any player, set, or card name…"
+          oninput="handleHubSearch(this.value)"
+          onkeydown="if(event.key==='Enter') goToBrowse(null, this.value)"
+        >
+        <button class="hub-search-btn" onclick="goToBrowse(null, document.getElementById('hub-global-search').value)">Browse All →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sport tiles -->
+  <div class="hub-sports-section">
+    <div class="hub-section-label">Browse by League</div>
+    <div class="hub-sport-grid" id="hub-sport-grid"></div>
+  </div>
+
+  <!-- Quick stats row -->
+  <div class="hub-ticker">
+    <div class="hub-ticker-label">Market Pulse</div>
+    <div class="hub-ticker-items">
+      <div class="hub-tick"><span class="htick-name">Wembanyama RC Auto</span><span class="htick-val">$3,400</span><span class="htick-chg up">+28.4%</span></div>
+      <div class="hub-tick-sep">·</div>
+      <div class="hub-tick"><span class="htick-name">Mahomes Prizm PSA 10</span><span class="htick-val">$2,950</span><span class="htick-chg up">+12.1%</span></div>
+      <div class="hub-tick-sep">·</div>
+      <div class="hub-tick"><span class="htick-name">Caitlin Clark RC</span><span class="htick-val">$1,200</span><span class="htick-chg up">+41.2%</span></div>
+      <div class="hub-tick-sep">·</div>
+      <div class="hub-tick"><span class="htick-name">Luka Prizm Silver</span><span class="htick-val">$780</span><span class="htick-chg down">-13.3%</span></div>
+      <div class="hub-tick-sep">·</div>
+      <div class="hub-tick"><span class="htick-name">Ohtani Chrome Refractor</span><span class="htick-val">$1,100</span><span class="htick-chg up">+29.4%</span></div>
+      <div class="hub-tick-sep">·</div>
+      <div class="hub-tick"><span class="htick-name">Trout Topps Update PSA 8</span><span class="htick-val">$740</span><span class="htick-chg up">+19.4%</span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════
+     BROWSE PAGE — Sport-filtered card catalog
+════════════════════════════════════════ -->
+<div class="page" id="page-browse">
+  <div class="browse-header">
+    <div class="browse-header-top">
+      <button class="browse-back" onclick="showPage('home')">← Back</button>
+      <div class="browse-sport-badge" id="browse-sport-badge">All Sports</div>
+    </div>
+    <div class="browse-search-row">
+      <div class="browse-search-wrap">
+        <span class="hub-search-icon">⌕</span>
+        <input type="text" class="browse-search-input" id="browse-search" placeholder="Search player, set, card name…" oninput="filterBrowse()">
+      </div>
+      <div class="browse-filters">
+        <div class="pill-group" id="browse-sport-pills"></div>
+        <select class="filter-sel" id="browse-grade" onchange="filterBrowse()">
+          <option value="">All Grades</option>
+          <option>PSA 10</option><option>PSA 9</option><option>PSA 8</option><option>PSA 7</option><option>Raw</option>
+        </select>
+        <select class="filter-sel" id="browse-sort" onchange="filterBrowse()">
+          <option value="value-desc">Value: High → Low</option>
+          <option value="value-asc">Value: Low → High</option>
+          <option value="change-desc">Gain: High → Low</option>
+          <option value="player-asc">Player A → Z</option>
+        </select>
+      </div>
+    </div>
+    <div class="browse-result-meta" id="browse-result-meta"></div>
+  </div>
+  <div class="browse-grid" id="browse-grid"></div>
+</div>
+
+<!-- ════════════════════════════════════════
+     MARKET ANALYSIS
+════════════════════════════════════════ -->
+<div class="page" id="page-market">
+  <div class="page-header">
+    <div>
+      <h1>Market Analysis</h1>
+      <p>Sports card market data, trends, and price movement</p>
+    </div>
+    <div class="header-controls">
+      <div class="pill-group">
+        <button class="pill active" onclick="setPeriod(this,'7d')">7D</button>
+        <button class="pill" onclick="setPeriod(this,'30d')">30D</button>
+        <button class="pill" onclick="setPeriod(this,'90d')">90D</button>
+        <button class="pill" onclick="setPeriod(this,'1y')">1Y</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="metrics-bar">
+    <div class="metric"><div class="metric-label">Market Index</div><div class="metric-val">4,821</div><div class="metric-sub up">▲ 3.2% this week</div></div>
+    <div class="metric"><div class="metric-label">Total Volume</div><div class="metric-val">$38.4M</div><div class="metric-sub up">▲ 11% vs last week</div></div>
+    <div class="metric"><div class="metric-label">PSA 10 Premium</div><div class="metric-val">3.8×</div><div class="metric-sub neutral">vs raw avg</div></div>
+    <div class="metric"><div class="metric-label">Top Sport</div><div class="metric-val">NBA</div><div class="metric-sub up">▲ 18% volume share</div></div>
+    <div class="metric"><div class="metric-label">Avg Sale Price</div><div class="metric-val">$247</div><div class="metric-sub down">▼ 2.1% vs last week</div></div>
+    <div class="metric"><div class="metric-label">New Listings</div><div class="metric-val">12,441</div><div class="metric-sub up">▲ 4.7%</div></div>
+  </div>
+
+  <div class="market-grid-wrapper">
+  <div class="market-grid">
+    <!-- Index Chart -->
+    <div class="chart-card full">
+      <div class="chart-title">CardIQ Market Index</div>
+      <div class="chart-sub">Composite index tracking 500 most-traded sports cards</div>
+      <div class="chart-wrap" style="height:240px"><canvas id="indexChart" role="img" aria-label="CardIQ market index trend over time">Market index showing upward trend.</canvas></div>
+    </div>
+
+    <!-- Top Movers Table -->
+    <div class="chart-card">
+      <div class="chart-title">Top Movers</div>
+      <div class="chart-sub">Biggest price changes this period</div>
+      <table class="movers-table">
+        <thead>
+          <tr>
+            <th>Card</th>
+            <th>Grade</th>
+            <th>Price</th>
+            <th>Change</th>
+          </tr>
+        </thead>
+        <tbody id="movers-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Volume by Sport -->
+    <div class="chart-card">
+      <div class="chart-title">Volume by Sport</div>
+      <div class="chart-sub">Sales distribution this period</div>
+      <div class="vol-bar-wrap" id="vol-bars" style="margin-top:0.5rem"></div>
+    </div>
+
+    <!-- Category Breakdown Chart -->
+    <div class="chart-card">
+      <div class="chart-title">Category Breakdown</div>
+      <div class="chart-sub">Volume share by card category</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="categoryChart" role="img" aria-label="Pie chart of card categories by volume">Rookies lead at 38%, followed by Parallels at 26%.</canvas></div>
+    </div>
+
+    <!-- Grade Premium Chart -->
+    <div class="chart-card">
+      <div class="chart-title">Grade Premium Multipliers</div>
+      <div class="chart-sub">Price premium relative to PSA 7 baseline</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="gradeChart" role="img" aria-label="Bar chart of grade premiums">PSA 10 commands 3.8x over PSA 7 baseline.</canvas></div>
+    </div>
+
+    <!-- Market Heatmap -->
+    <div class="chart-card full">
+      <div class="chart-title">Category Heat Map</div>
+      <div class="chart-sub">7-day price change by player/category segment — darker green = stronger gain</div>
+      <div class="heat-grid" id="heat-grid" style="margin-top:0.75rem"></div>
+    </div>
+  </div>
+  </div><!-- /market-grid-wrapper -->
+</div>
+
+<!-- ════════════════════════════════════════
+     COLLECTION PAGE
+════════════════════════════════════════ -->
+<div class="page" id="page-collection">
+  <div class="portfolio-header">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+      <div>
+        <h1 style="font-family:var(--font-display);font-size:1.6rem;font-weight:700;letter-spacing:-0.02em">My Collection</h1>
+        <p style="font-size:0.85rem;color:var(--text2);margin-top:3px">Portfolio-style tracking for your sports cards</p>
+      </div>
+    </div>
+    <div class="portfolio-stats" id="portfolio-stats"></div>
+  </div>
+
+  <div class="collection-toolbar">
+    <input type="text" class="search-input" placeholder="Search cards, players..." id="collection-search" oninput="filterCollection()">
+    <select class="filter-sel" id="filter-sport" onchange="filterCollection()">
+      <option value="">All Sports</option>
+      <option value="NBA">NBA</option>
+      <option value="NFL">NFL</option>
+      <option value="MLB">MLB</option>
+    </select>
+    <select class="filter-sel" id="filter-grade" onchange="filterCollection()">
+      <option value="">All Grades</option>
+      <option value="PSA 10">PSA 10</option>
+      <option value="PSA 9">PSA 9</option>
+      <option value="Raw">Raw</option>
+    </select>
+    <button class="add-btn" onclick="openAddModal()">+ Add Card</button>
+  </div>
+
+  <div class="table-wrap">
+    <table class="cards-table" id="collection-table">
+      <thead>
+        <tr>
+          <th onclick="sortBy('player')">Player ↕</th>
+          <th onclick="sortBy('cardName')">Card Name ↕</th>
+          <th>Set / Year</th>
+          <th onclick="sortBy('grade')">Grade ↕</th>
+          <th>Qty</th>
+          <th onclick="sortBy('purchasePrice')">Cost ↕</th>
+          <th onclick="sortBy('currentValue')">Current Value ↕</th>
+          <th onclick="sortBy('change')">Gain/Loss ↕</th>
+          <th onclick="sortBy('percentChange')">% Change ↕</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="collection-body"></tbody>
+    </table>
+  </div>
+
+  <div class="alloc-section">
+    <div class="section-label">Allocation</div>
+    <div class="section-title" style="font-size:1.1rem;font-family:var(--font-serif)">Portfolio Breakdown</div>
+    <div class="alloc-grid">
+      <div class="chart-card">
+        <div class="chart-title">By Sport</div>
+        <div class="chart-wrap" style="height:200px"><canvas id="allocSportChart" role="img" aria-label="Allocation by sport">Sport allocation breakdown.</canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">By Grade</div>
+        <div class="chart-wrap" style="height:200px"><canvas id="allocGradeChart" role="img" aria-label="Allocation by grade">Grade allocation breakdown.</canvas></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     WATCHLIST PAGE
+════════════════════════════════════════ -->
+<div class="page" id="page-watchlist">
+  <div class="watchlist-header">
+    <div>
+      <h1 style="font-family:var(--font-display);font-size:1.6rem;font-weight:700;letter-spacing:-0.02em">Watchlist</h1>
+      <p style="font-size:0.85rem;color:var(--text2);margin-top:3px">Cards you're tracking and targeting</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span class="watchlist-count" id="wl-count">0 cards</span>
+      <button class="btn-sm btn-ghost" onclick="showPage('market')">Browse Market</button>
+    </div>
+  </div>
+  <div class="wl-grid-inner" id="watchlist-grid"></div>
+</div>
+
+<!-- ADD CARD MODAL -->
+<div class="modal-overlay" id="add-modal">
+  <div class="modal">
+    <div class="modal-title">
+      Add Card to Collection
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label class="form-label">Player Name</label>
+        <input class="form-input" id="f-player" placeholder="e.g. LeBron James">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Card Name</label>
+        <input class="form-input" id="f-cardName" placeholder="e.g. 2003-04 Topps Chrome Rookie">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Set Name</label>
+        <input class="form-input" id="f-setName" placeholder="Topps Chrome">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Year</label>
+        <input class="form-input" id="f-year" type="number" placeholder="2003">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Grade</label>
+        <select class="form-input" id="f-grade">
+          <option>PSA 10</option><option>PSA 9</option><option>PSA 8</option><option>PSA 7</option><option>Raw</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sport</label>
+        <select class="form-input" id="f-category">
+          <option>NBA</option><option>NFL</option><option>MLB</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Purchase Price ($)</label>
+        <input class="form-input" id="f-purchasePrice" type="number" placeholder="250.00">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Current Est. Value ($)</label>
+        <input class="form-input" id="f-currentValue" type="number" placeholder="310.00">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Quantity</label>
+        <input class="form-input" id="f-qty" type="number" value="1" min="1">
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-sm btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn-sm btn-accent" onclick="addCard()">Add to Collection</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── DATA MODEL ─────────────────────────────────────────────────────────────
+let cards = [
+  { id:1, player:'LeBron James', cardName:'2003-04 Topps Chrome Rookie', setName:'Topps Chrome', year:2003, grade:'PSA 9', purchasePrice:3200, currentValue:4800, change:1600, percentChange:50.0, category:'NBA', qty:1, isWatchlisted:false },
+  { id:2, player:'Patrick Mahomes', cardName:'2017 Panini Prizm Rookie PSA 10', setName:'Panini Prizm', year:2017, grade:'PSA 10', purchasePrice:1800, currentValue:2950, change:1150, percentChange:63.9, category:'NFL', qty:1, isWatchlisted:true },
+  { id:3, player:'Luka Dončić', cardName:'2018-19 Panini Prizm Silver Rookie', setName:'Panini Prizm', year:2018, grade:'PSA 10', purchasePrice:900, currentValue:780, change:-120, percentChange:-13.3, category:'NBA', qty:2, isWatchlisted:true },
+  { id:4, player:'Mike Trout', cardName:'2011 Topps Update Rookie', setName:'Topps Update', year:2011, grade:'PSA 8', purchasePrice:620, currentValue:740, change:120, percentChange:19.4, category:'MLB', qty:1, isWatchlisted:false },
+  { id:5, player:'Ja Morant', cardName:'2019-20 Donruss Optic Rated Rookie', setName:'Donruss Optic', year:2019, grade:'PSA 10', purchasePrice:480, currentValue:590, change:110, percentChange:22.9, category:'NBA', qty:1, isWatchlisted:false },
+  { id:6, player:'Justin Jefferson', cardName:'2020 Panini Prizm Rookie Silver', setName:'Panini Prizm', year:2020, grade:'PSA 9', purchasePrice:310, currentValue:420, change:110, percentChange:35.5, category:'NFL', qty:1, isWatchlisted:true },
+  { id:7, player:'Shohei Ohtani', cardName:'2018 Topps Chrome Rookie Refractor', setName:'Topps Chrome', year:2018, grade:'PSA 10', purchasePrice:850, currentValue:1100, change:250, percentChange:29.4, category:'MLB', qty:1, isWatchlisted:false },
+  { id:8, player:'Giannis Antetokounmpo', cardName:'2013-14 Panini Prizm Rookie', setName:'Panini Prizm', year:2013, grade:'PSA 9', purchasePrice:1400, currentValue:1650, change:250, percentChange:17.9, category:'NBA', qty:1, isWatchlisted:false },
+];
+
+// Watchlist-only cards (not in collection)
+let watchlistOnly = [
+  { id:101, player:'Victor Wembanyama', cardName:'2023-24 Topps Chrome RC Auto', setName:'Topps Chrome', year:2023, grade:'PSA 10', currentValue:3400, trend:'+28%', priceHistory:[2100,2300,2500,2600,2800,3000,3200,3400], isWatchlisted:true, alertEnabled:true },
+  { id:102, player:'Caitlin Clark', cardName:'2024 Rittenhouse WNBA Rookie', setName:'Rittenhouse', year:2024, grade:'PSA 10', currentValue:1200, trend:'+41%', priceHistory:[650,720,810,900,980,1050,1120,1200], isWatchlisted:true, alertEnabled:false },
+  { id:103, player:'Caleb Williams', cardName:'2024 Panini Prizm Draft Picks RC', setName:'Panini Prizm', year:2024, grade:'Raw', currentValue:180, trend:'-8%', priceHistory:[220,210,205,195,190,185,182,180], isWatchlisted:true, alertEnabled:true },
+];
+
+let nextId = 9;
+let sortField = null;
+let sortDir = 1;
+let allocSportChart, allocGradeChart;
+
+// ─── SPORT CONFIG ────────────────────────────────────────────────────────────
+const SPORTS = [
+  { id:'NBA',  label:'NBA',    icon:'🏀', color:'#5b8de8', colorBg:'rgba(91,141,232,0.1)',  colorBorder:'rgba(91,141,232,0.25)',  desc:'Basketball' },
+  { id:'NFL',  label:'NFL',    icon:'🏈', color:'#c9a84c', colorBg:'rgba(201,168,76,0.1)',  colorBorder:'rgba(201,168,76,0.25)',  desc:'Football' },
+  { id:'MLB',  label:'MLB',    icon:'⚾', color:'#34c97a', colorBg:'rgba(52,201,122,0.1)',  colorBorder:'rgba(52,201,122,0.25)',  desc:'Baseball' },
+  { id:'NHL',  label:'NHL',    icon:'🏒', color:'#7eb8e8', colorBg:'rgba(126,184,232,0.1)', colorBorder:'rgba(126,184,232,0.25)', desc:'Hockey' },
+  { id:'Soccer',label:'Soccer',icon:'⚽', color:'#a88be0', colorBg:'rgba(168,139,224,0.1)', colorBorder:'rgba(168,139,224,0.25)', desc:'Soccer / Football' },
+  { id:'WNBA', label:'WNBA',   icon:'🏀', color:'#e07a5b', colorBg:'rgba(224,122,91,0.1)',  colorBorder:'rgba(224,122,91,0.25)',  desc:'Women\'s Basketball' },
+  { id:'UFC',  label:'UFC/MMA',icon:'🥊', color:'#e05c5c', colorBg:'rgba(224,92,92,0.1)',   colorBorder:'rgba(224,92,92,0.25)',   desc:'Combat Sports' },
+  { id:'Golf', label:'Golf',   icon:'⛳', color:'#6db87a', colorBg:'rgba(109,184,122,0.1)', colorBorder:'rgba(109,184,122,0.25)', desc:'Golf' },
+];
+
+// Extended browse catalog (mock data covering all sports)
+const BROWSE_CATALOG = [
+  // NBA
+  { id:'b1',  player:'LeBron James',          cardName:'2003-04 Topps Chrome Rookie',         setName:'Topps Chrome',       year:2003, grade:'PSA 9',  currentValue:4800,  percentChange:50.0,  category:'NBA' },
+  { id:'b2',  player:'Luka Dončić',           cardName:'2018-19 Panini Prizm Silver Rookie',   setName:'Panini Prizm',       year:2018, grade:'PSA 10', currentValue:780,   percentChange:-13.3, category:'NBA' },
+  { id:'b3',  player:'Ja Morant',             cardName:'2019-20 Donruss Optic Rated Rookie',   setName:'Donruss Optic',      year:2019, grade:'PSA 10', currentValue:590,   percentChange:22.9,  category:'NBA' },
+  { id:'b4',  player:'Giannis Antetokounmpo', cardName:'2013-14 Panini Prizm Rookie',          setName:'Panini Prizm',       year:2013, grade:'PSA 9',  currentValue:1650,  percentChange:17.9,  category:'NBA' },
+  { id:'b5',  player:'Victor Wembanyama',     cardName:'2023-24 Topps Chrome RC Auto',         setName:'Topps Chrome',       year:2023, grade:'PSA 10', currentValue:3400,  percentChange:28.4,  category:'NBA' },
+  { id:'b6',  player:'Stephen Curry',         cardName:'2009-10 Panini Prizm Rookie',          setName:'Panini Prizm',       year:2009, grade:'PSA 9',  currentValue:2100,  percentChange:9.2,   category:'NBA' },
+  { id:'b7',  player:'Kevin Durant',          cardName:'2007-08 Topps Chrome Rookie Refractor',setName:'Topps Chrome',       year:2007, grade:'PSA 8',  currentValue:880,   percentChange:6.4,   category:'NBA' },
+  { id:'b8',  player:'Nikola Jokić',          cardName:'2015-16 Panini Prizm Rookie Silver',   setName:'Panini Prizm',       year:2015, grade:'PSA 10', currentValue:1420,  percentChange:31.5,  category:'NBA' },
+  // NFL
+  { id:'b9',  player:'Patrick Mahomes',       cardName:'2017 Panini Prizm Rookie PSA 10',      setName:'Panini Prizm',       year:2017, grade:'PSA 10', currentValue:2950,  percentChange:63.9,  category:'NFL' },
+  { id:'b10', player:'Justin Jefferson',      cardName:'2020 Panini Prizm Rookie Silver',       setName:'Panini Prizm',       year:2020, grade:'PSA 9',  currentValue:420,   percentChange:35.5,  category:'NFL' },
+  { id:'b11', player:'Joe Burrow',            cardName:'2020 Panini Prizm Rookie Auto',         setName:'Panini Prizm',       year:2020, grade:'PSA 10', currentValue:890,   percentChange:18.2,  category:'NFL' },
+  { id:'b12', player:'Ja\'Marr Chase',        cardName:'2021 Panini Select Rookie PSA 10',      setName:'Panini Select',      year:2021, grade:'PSA 10', currentValue:560,   percentChange:24.1,  category:'NFL' },
+  { id:'b13', player:'Caleb Williams',        cardName:'2024 Panini Prizm Draft Picks RC',      setName:'Panini Prizm',       year:2024, grade:'Raw',    currentValue:180,   percentChange:-8.1,  category:'NFL' },
+  { id:'b14', player:'Tom Brady',             cardName:'2000 Playoff Contenders Rookie Auto',   setName:'Playoff Contenders', year:2000, grade:'PSA 8',  currentValue:18500, percentChange:5.3,   category:'NFL' },
+  // MLB
+  { id:'b15', player:'Mike Trout',            cardName:'2011 Topps Update Rookie',              setName:'Topps Update',       year:2011, grade:'PSA 8',  currentValue:740,   percentChange:19.4,  category:'MLB' },
+  { id:'b16', player:'Shohei Ohtani',         cardName:'2018 Topps Chrome Rookie Refractor',    setName:'Topps Chrome',       year:2018, grade:'PSA 10', currentValue:1100,  percentChange:29.4,  category:'MLB' },
+  { id:'b17', player:'Fernando Tatis Jr.',    cardName:'2019 Bowman Chrome Auto',               setName:'Bowman Chrome',      year:2019, grade:'PSA 10', currentValue:640,   percentChange:12.0,  category:'MLB' },
+  { id:'b18', player:'Ronald Acuña Jr.',      cardName:'2018 Topps Chrome Rookie Auto',         setName:'Topps Chrome',       year:2018, grade:'PSA 9',  currentValue:480,   percentChange:8.8,   category:'MLB' },
+  { id:'b19', player:'Mickey Mantle',         cardName:'1952 Topps',                            setName:'Topps',              year:1952, grade:'PSA 7',  currentValue:85000, percentChange:3.1,   category:'MLB' },
+  // NHL
+  { id:'b20', player:'Connor McDavid',        cardName:'2015-16 Upper Deck Young Guns Rookie',  setName:'Upper Deck',         year:2015, grade:'PSA 10', currentValue:2400,  percentChange:22.7,  category:'NHL' },
+  { id:'b21', player:'Sidney Crosby',         cardName:'2005-06 Upper Deck Young Guns Rookie',  setName:'Upper Deck',         year:2005, grade:'PSA 9',  currentValue:1800,  percentChange:11.2,  category:'NHL' },
+  { id:'b22', player:'Nathan MacKinnon',      cardName:'2013-14 Upper Deck Young Guns Rookie',  setName:'Upper Deck',         year:2013, grade:'PSA 9',  currentValue:980,   percentChange:16.4,  category:'NHL' },
+  { id:'b23', player:'Auston Matthews',       cardName:'2016-17 Upper Deck Young Guns Rookie',  setName:'Upper Deck',         year:2016, grade:'PSA 10', currentValue:1150,  percentChange:19.0,  category:'NHL' },
+  // Soccer
+  { id:'b24', player:'Lionel Messi',          cardName:'2004-05 Panini Rookie Card',            setName:'Panini',             year:2004, grade:'PSA 8',  currentValue:7200,  percentChange:14.5,  category:'Soccer' },
+  { id:'b25', player:'Cristiano Ronaldo',     cardName:'2003-04 Futera Unique Rookie',          setName:'Futera Unique',      year:2003, grade:'PSA 7',  currentValue:4100,  percentChange:9.8,   category:'Soccer' },
+  { id:'b26', player:'Erling Haaland',        cardName:'2019 Topps Chrome UCC Rookie Auto',     setName:'Topps Chrome',       year:2019, grade:'PSA 10', currentValue:1850,  percentChange:38.2,  category:'Soccer' },
+  // WNBA
+  { id:'b27', player:'Caitlin Clark',         cardName:'2024 Rittenhouse WNBA Rookie',          setName:'Rittenhouse',        year:2024, grade:'PSA 10', currentValue:1200,  percentChange:41.2,  category:'WNBA' },
+  { id:'b28', player:'Angel Reese',           cardName:'2024 Panini Prizm WNBA Rookie',         setName:'Panini Prizm',       year:2024, grade:'PSA 10', currentValue:480,   percentChange:28.7,  category:'WNBA' },
+  // UFC
+  { id:'b29', player:'Conor McGregor',        cardName:'2016 Topps UFC Knockout Auto',          setName:'Topps UFC',          year:2016, grade:'PSA 9',  currentValue:520,   percentChange:7.3,   category:'UFC' },
+  { id:'b30', player:'Jon Jones',             cardName:'2011 Topps UFC Finest Rookie Auto',     setName:'Topps UFC',          year:2011, grade:'PSA 8',  currentValue:310,   percentChange:-4.1,  category:'UFC' },
+  // Golf
+  { id:'b31', player:'Tiger Woods',           cardName:'2001 SP Authentic Sign of the Times Auto', setName:'SP Authentic',   year:2001, grade:'PSA 9',  currentValue:3800,  percentChange:6.2,   category:'Golf' },
+  { id:'b32', player:'Rory McIlroy',          cardName:'2012 SP Authentic Rookie Auto',         setName:'SP Authentic',       year:2012, grade:'PSA 10', currentValue:420,   percentChange:11.0,  category:'Golf' },
+];
+
+// ─── NAVIGATION ─────────────────────────────────────────────────────────────
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  const navBtn = document.getElementById('nav-'+name);
+  if (navBtn) navBtn.classList.add('active');
+  if (name === 'market') initMarketCharts();
+  if (name === 'collection') renderCollection();
+  if (name === 'watchlist') renderWatchlist();
+  if (name === 'home') renderHub();
+  window.scrollTo(0,0);
+}
+
+// ─── HUB PAGE ────────────────────────────────────────────────────────────────
+function renderHub() {
+  const grid = document.getElementById('hub-sport-grid');
+  if (!grid) return;
+  // Count catalog entries per sport
+  const counts = {};
+  BROWSE_CATALOG.forEach(c => { counts[c.category] = (counts[c.category]||0)+1; });
+  grid.innerHTML = SPORTS.map(s => `
+    <div class="sport-tile" onclick="goToBrowse('${s.id}', '')"
+      style="--tile-color:${s.color}"
+    >
+      <div style="
+        position:absolute;top:0;left:0;right:0;height:2px;
+        background:linear-gradient(90deg,${s.color}88,${s.color}22);
+        opacity:0;transition:opacity 0.18s;
+      " class="tile-top-rule"></div>
+      <div class="sport-tile-icon">${s.icon}</div>
+      <div>
+        <div class="sport-tile-name">${s.label}</div>
+        <div class="sport-tile-count">${counts[s.id]||0} cards tracked</div>
+      </div>
+      <div class="sport-tile-arrow">↗</div>
+    </div>`).join('');
+
+  // Hover rule activation via JS (CSS ::before can't do dynamic colors easily)
+  grid.querySelectorAll('.sport-tile').forEach(tile => {
+    const rule = tile.querySelector('.tile-top-rule');
+    tile.addEventListener('mouseenter', () => rule.style.opacity = '1');
+    tile.addEventListener('mouseleave', () => rule.style.opacity = '0');
+  });
+}
+
+function handleHubSearch(val) {
+  // Live preview: could show autocomplete — for now just lets Enter/button handle it
+}
+
+// ─── BROWSE PAGE ─────────────────────────────────────────────────────────────
+let activeBrowseSport = null; // null = all
+
+function goToBrowse(sport, searchVal) {
+  activeBrowseSport = sport || null;
+  // Show page
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-browse').classList.add('active');
+  const navBrowse = document.getElementById('nav-browse');
+  if (navBrowse) navBrowse.classList.add('active');
+
+  // Set search value
+  const si = document.getElementById('browse-search');
+  if (si) si.value = searchVal || '';
+
+  // Render sport pills
+  renderBrowseSportPills();
+
+  // Render badge headline
+  updateBrowseBadge();
+
+  // Render cards
+  filterBrowse();
+  window.scrollTo(0,0);
+}
+
+function renderBrowseSportPills() {
+  const wrap = document.getElementById('browse-sport-pills');
+  if (!wrap) return;
+  const allSports = ['All', ...SPORTS.map(s => s.id)];
+  wrap.innerHTML = allSports.map(s => {
+    const isAll = s === 'All';
+    const isActive = isAll ? !activeBrowseSport : activeBrowseSport === s;
+    const sport = SPORTS.find(sp => sp.id === s);
+    return `<button class="pill browse-pill ${isActive?'active':''}"
+      onclick="setBrowseSport('${s}')"
+      style="${isActive && sport ? `color:${sport.color};border:1px solid ${sport.colorBorder};background:${sport.colorBg}` : ''}"
+    >${isAll ? 'All' : s}</button>`;
+  }).join('');
+}
+
+function setBrowseSport(s) {
+  activeBrowseSport = (s === 'All') ? null : s;
+  renderBrowseSportPills();
+  updateBrowseBadge();
+  filterBrowse();
+}
+
+function updateBrowseBadge() {
+  const badge = document.getElementById('browse-sport-badge');
+  if (!badge) return;
+  if (!activeBrowseSport) {
+    badge.innerHTML = 'All Sports';
+    return;
+  }
+  const sport = SPORTS.find(s => s.id === activeBrowseSport);
+  if (!sport) return;
+  badge.innerHTML = `${sport.icon} ${sport.label}
+    <span style="background:${sport.colorBg};color:${sport.color};border:1px solid ${sport.colorBorder}">
+      ${sport.desc}
+    </span>`;
+}
+
+function filterBrowse() {
+  const search = (document.getElementById('browse-search')?.value || '').toLowerCase().trim();
+  const grade  = document.getElementById('browse-grade')?.value || '';
+  const sortV  = document.getElementById('browse-sort')?.value || 'value-desc';
+
+  let filtered = BROWSE_CATALOG.filter(c => {
+    const matchSport  = !activeBrowseSport || c.category === activeBrowseSport;
+    const matchGrade  = !grade || c.grade === grade;
+    const matchSearch = !search ||
+      c.player.toLowerCase().includes(search) ||
+      c.cardName.toLowerCase().includes(search) ||
+      c.setName.toLowerCase().includes(search) ||
+      c.category.toLowerCase().includes(search);
+    return matchSport && matchGrade && matchSearch;
+  });
+
+  // Sort
+  filtered.sort((a,b) => {
+    if (sortV === 'value-desc')  return b.currentValue - a.currentValue;
+    if (sortV === 'value-asc')   return a.currentValue - b.currentValue;
+    if (sortV === 'change-desc') return b.percentChange - a.percentChange;
+    if (sortV === 'player-asc')  return a.player.localeCompare(b.player);
+    return 0;
+  });
+
+  // Meta count
+  const meta = document.getElementById('browse-result-meta');
+  if (meta) meta.textContent = `${filtered.length} card${filtered.length!==1?'s':''} found`;
+
+  // Render grid
+  const grid = document.getElementById('browse-grid');
+  if (!grid) return;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="browse-empty">
+      <div style="font-size:2rem;margin-bottom:1rem;opacity:0.3">⬜</div>
+      <h3>No cards found</h3>
+      <p>Try adjusting your search or filters.</p>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(c => {
+    const sport = SPORTS.find(s => s.id === c.category) || { color:'#7e93b4', colorBg:'rgba(126,147,180,0.1)', colorBorder:'rgba(126,147,180,0.2)', icon:'🃏' };
+    const isUp = c.percentChange >= 0;
+    const inColl = cards.some(cc => cc.player === c.player && cc.cardName === c.cardName);
+    const inWatch = cards.some(cc => cc.player === c.player && cc.isWatchlisted) ||
+                    watchlistOnly.some(w => w.player === c.player);
+    return `
+    <div class="browse-card" style="--bc-color:${sport.color}">
+      <style>.browse-card[style*="${sport.color}"]:hover::after { background:${sport.color}; }</style>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div class="bc-sport-tag" style="background:${sport.colorBg};color:${sport.color};border:1px solid ${sport.colorBorder}">
+          ${sport.icon} ${c.category}
+        </div>
+        <span class="badge ${isUp?'badge-green':'badge-red'}">${isUp?'+':''}${c.percentChange.toFixed(1)}%</span>
+      </div>
+      <div class="bc-player">${c.player}</div>
+      <div class="bc-card-name">${c.cardName}</div>
+      <div class="bc-meta-row">
+        <span class="grade-pill ${c.grade==='PSA 10'?'grade-10':c.grade==='PSA 9'?'grade-9':''}">${c.grade}</span>
+        <span class="bc-divider">·</span>
+        <span class="bc-year">${c.year} · ${c.setName}</span>
+      </div>
+      <div class="bc-price-row">
+        <span class="bc-price">${fmt(c.currentValue)}</span>
+        <span class="${isUp?'up':'down'}" style="font-family:var(--font-mono);font-size:0.78rem">${isUp?'▲':'▼'} ${Math.abs(c.percentChange).toFixed(1)}%</span>
+      </div>
+      <div class="bc-actions">
+        <button class="bc-btn bc-btn-watch ${inWatch?'active':''}" onclick="quickWatch('${c.id}', this)">${inWatch?'★ Watching':'☆ Watch'}</button>
+        <button class="bc-btn bc-btn-primary" onclick="quickAddToCollection('${c.id}')">+ Add</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function quickWatch(catalogId, btn) {
+  const card = BROWSE_CATALOG.find(c => c.id === catalogId);
+  if (!card) return;
+  const existing = watchlistOnly.find(w => w.player === card.player && w.cardName === card.cardName);
+  if (existing) {
+    watchlistOnly = watchlistOnly.filter(w => !(w.player === card.player && w.cardName === card.cardName));
+    btn.textContent = '☆ Watch';
+    btn.classList.remove('active');
+  } else {
+    watchlistOnly.push({
+      id: 200 + watchlistOnly.length,
+      player: card.player, cardName: card.cardName,
+      setName: card.setName, year: card.year, grade: card.grade,
+      currentValue: card.currentValue,
+      trend: (card.percentChange >= 0 ? '+' : '') + card.percentChange.toFixed(1) + '%',
+      priceHistory: genSparkline(card.currentValue * 0.8, card.currentValue),
+      isWatchlisted: true, alertEnabled: false
+    });
+    btn.textContent = '★ Watching';
+    btn.classList.add('active');
+  }
+  updateWatchBadge();
+}
+
+function quickAddToCollection(catalogId) {
+  const c = BROWSE_CATALOG.find(cc => cc.id === catalogId);
+  if (!c) return;
+  const pp = Math.round(c.currentValue * 0.85);
+  const change = c.currentValue - pp;
+  cards.push({
+    id: nextId++, player: c.player, cardName: c.cardName,
+    setName: c.setName, year: c.year, grade: c.grade,
+    purchasePrice: pp, currentValue: c.currentValue,
+    change, percentChange: parseFloat(((change/pp)*100).toFixed(1)),
+    category: c.category, qty: 1, isWatchlisted: false
+  });
+  // Navigate to collection
+  showPage('collection');
+}
+
+
+// ─── MARKET ──────────────────────────────────────────────────────────────────
+let chartsInited = false;
+function setPeriod(btn, p) {
+  document.querySelectorAll('.pill-group .pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function initMarketCharts() {
+  if (chartsInited) return;
+  chartsInited = true;
+
+  // Index Chart
+  const labels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].slice(0,9).concat(['Now']);
+  const idxData = [3900,4050,3980,4120,4210,4080,4350,4500,4620,4821];
+  new Chart(document.getElementById('indexChart'), {
+    type:'line',
+    data:{ labels, datasets:[{
+      label:'Index', data:idxData,
+      borderColor:'#c9a84c', borderWidth:2,
+      pointRadius:0, pointHoverRadius:4,
+      fill:true,
+      backgroundColor:(ctx)=>{
+        const g = ctx.chart.ctx.createLinearGradient(0,0,0,240);
+        g.addColorStop(0,'rgba(201,168,76,0.16)');
+        g.addColorStop(1,'rgba(201,168,76,0)');
+        return g;
+      },
+      tension:0.4
+    }]},
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:'#192030',borderColor:'rgba(148,174,220,0.18)',borderWidth:1,titleColor:'#e8edf5',bodyColor:'#7e93b4'}}, scales:{x:{grid:{color:'rgba(148,174,220,0.05)'},ticks:{color:'#3f5070',font:{size:11}}},y:{grid:{color:'rgba(148,174,220,0.05)'},ticks:{color:'#3f5070',font:{size:11}},position:'right'}}}
+  });
+
+  // Category Donut
+  new Chart(document.getElementById('categoryChart'), {
+    type:'doughnut',
+    data:{
+      labels:['Rookies','Parallels','Autos','Base','Refractors'],
+      datasets:[{data:[38,26,18,11,7],backgroundColor:['#c9a84c','#5b8de8','#34c97a','#7e6bb0','#4a8fad'],borderWidth:0,hoverOffset:4}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},cutout:'65%'}
+  });
+
+  // Grade Chart
+  new Chart(document.getElementById('gradeChart'), {
+    type:'bar',
+    data:{
+      labels:['PSA 7','PSA 8','PSA 9','PSA 10'],
+      datasets:[{label:'Premium Multiple',data:[1,1.6,2.4,3.8],backgroundColor:['rgba(148,174,220,0.1)','rgba(201,168,76,0.25)','rgba(201,168,76,0.5)','#c9a84c'],borderWidth:0,borderRadius:4}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#3f5070',font:{size:11}}},y:{grid:{color:'rgba(148,174,220,0.05)'},ticks:{color:'#3f5070',font:{size:11},callback:v=>v+'×'},position:'right'}}}
+  });
+
+  // Movers table
+  const movers = [
+    {player:'Victor Wembanyama',set:'2023 Topps Chrome Auto',grade:'PSA 10',price:'$3,400',change:'+$748',pct:'+28.2%',up:true},
+    {player:'Caitlin Clark',set:'2024 Rittenhouse WNBA',grade:'PSA 10',price:'$1,200',change:'+$350',pct:'+41.2%',up:true},
+    {player:'Patrick Mahomes',set:'2017 Panini Prizm',grade:'PSA 10',price:'$2,950',change:'+$320',pct:'+12.2%',up:true},
+    {player:'Shohei Ohtani',set:'2018 Topps Chrome Refractor',grade:'PSA 9',price:'$890',change:'+$210',pct:'+30.9%',up:true},
+    {player:'Luka Dončić',set:'2018-19 Prizm Silver',grade:'PSA 9',price:'$780',change:'-$120',pct:'-13.3%',up:false},
+    {player:'Tua Tagovailoa',set:'2020 Panini Prizm',grade:'PSA 10',price:'$310',change:'-$65',pct:'-17.3%',up:false},
+  ];
+  document.getElementById('movers-body').innerHTML = movers.map(m=>`
+    <tr>
+      <td><div class="player-cell"><span class="player-name">${m.player}</span><span class="player-set">${m.set}</span></div></td>
+      <td><span class="grade-pill ${m.grade==='PSA 10'?'grade-10':m.grade==='PSA 9'?'grade-9':''}">${m.grade}</span></td>
+      <td class="mono">${m.price}</td>
+      <td><span class="badge ${m.up?'badge-green':'badge-red'}">${m.pct}</span></td>
+    </tr>`).join('');
+
+  // Volume bars
+  const sports = [
+    {name:'NBA',pct:38,val:'$14.6M',color:'#5b8de8'},
+    {name:'NFL',pct:28,val:'$10.8M',color:'#c9a84c'},
+    {name:'MLB',pct:19,val:'$7.3M',color:'#34c97a'},
+    {name:'Soccer',pct:9,val:'$3.5M',color:'#7e6bb0'},
+    {name:'Other',pct:6,val:'$2.3M',color:'#3f5070'},
+  ];
+  document.getElementById('vol-bars').innerHTML = sports.map(s=>`
+    <div class="vol-row">
+      <span class="vol-label">${s.name}</span>
+      <div class="vol-bar-bg">
+        <div class="vol-bar-fill" style="width:${s.pct}%;background:${s.color}">
+          <span>${s.pct}%</span>
+        </div>
+      </div>
+      <span class="vol-num">${s.val}</span>
+    </div>`).join('');
+
+  // Heat map
+  const heatData = [
+    {name:'Wembanyama',val:'+28.4%',heat:0.95},
+    {name:'C. Clark',val:'+41.2%',heat:1.0},
+    {name:'Mahomes',val:'+12.1%',heat:0.65},
+    {name:'Ohtani',val:'+30.9%',heat:0.97},
+    {name:'Dončić',val:'-13.3%',heat:-0.6},
+    {name:'Trout',val:'+8.2%',heat:0.45},
+    {name:'LeBron',val:'+5.4%',heat:0.35},
+    {name:'Jefferson',val:'+18.2%',heat:0.75},
+    {name:'Tua',val:'-17.3%',heat:-0.8},
+    {name:'Giannis',val:'+9.7%',heat:0.52},
+    {name:'Caleb W.',val:'-8.1%',heat:-0.4},
+    {name:'Ja Morant',val:'+14.5%',heat:0.68},
+  ];
+  function heatColor(h) {
+    if (h >= 0) {
+      const i = Math.round(h * 200);
+      return `rgb(${61-Math.round(h*40)}, ${Math.round(120+h*100)}, ${Math.round(60+h*70)})`;
+    } else {
+      const a = Math.abs(h);
+      return `rgb(${Math.round(180+a*75)}, ${Math.round(60-a*40)}, ${Math.round(60-a*40)})`;
+    }
+  }
+  document.getElementById('heat-grid').innerHTML = heatData.map(h=>`
+    <div class="heat-cell" style="background:${heatColor(h.heat)}">
+      <div class="heat-name">${h.name}</div>
+      <div class="heat-val">${h.val}</div>
+    </div>`).join('');
+}
+
+// ─── COLLECTION ──────────────────────────────────────────────────────────────
+function renderCollection() {
+  renderPortfolioStats();
+  renderTableBody(cards);
+  renderAllocCharts();
+}
+
+function renderPortfolioStats() {
+  const totalCost = cards.reduce((a,c)=>a+c.purchasePrice*c.qty,0);
+  const totalVal = cards.reduce((a,c)=>a+c.currentValue*c.qty,0);
+  const totalGain = totalVal - totalCost;
+  const totalPct = totalCost > 0 ? ((totalGain/totalCost)*100).toFixed(1) : 0;
+  document.getElementById('portfolio-stats').innerHTML = `
+    <div class="pstat">
+      <div class="pstat-label">Total Cost Basis</div>
+      <div class="pstat-val">${fmt(totalCost)}</div>
+      <div class="pstat-sub neutral">${cards.length} cards in collection</div>
+    </div>
+    <div class="pstat">
+      <div class="pstat-label">Current Value</div>
+      <div class="pstat-val">${fmt(totalVal)}</div>
+      <div class="pstat-sub neutral">Est. market value</div>
+    </div>
+    <div class="pstat">
+      <div class="pstat-label">Total Gain / Loss</div>
+      <div class="pstat-val ${totalGain>=0?'up':'down'}">${totalGain>=0?'+':''}${fmt(totalGain)}</div>
+      <div class="pstat-sub ${totalGain>=0?'up':'down'}">${totalGain>=0?'▲':'▼'} ${Math.abs(totalPct)}% overall</div>
+    </div>
+    <div class="pstat">
+      <div class="pstat-label">Watchlisted</div>
+      <div class="pstat-val">${cards.filter(c=>c.isWatchlisted).length}</div>
+      <div class="pstat-sub neutral">cards on watchlist</div>
+    </div>`;
+}
+
+function renderTableBody(data) {
+  const wl = cards.filter(c=>c.isWatchlisted).map(c=>c.id);
+  document.getElementById('collection-body').innerHTML = data.length === 0 ?
+    `<tr><td colspan="10" style="text-align:center;padding:3rem;color:var(--text3)">No cards match your filters.</td></tr>` :
+    data.map(c=>`
+    <tr>
+      <td style="font-weight:600">${c.player}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis">${c.cardName}</td>
+      <td style="color:var(--text2)">${c.setName} · ${c.year}</td>
+      <td><span class="grade-pill ${c.grade==='PSA 10'?'grade-10':c.grade==='PSA 9'?'grade-9':''}">${c.grade}</span></td>
+      <td class="mono" style="color:var(--text2)">${c.qty}</td>
+      <td class="mono">${fmt(c.purchasePrice)}</td>
+      <td class="mono">${fmt(c.currentValue)}</td>
+      <td class="mono ${c.change>=0?'up':'down'}">${c.change>=0?'+':''}${fmt(c.change)}</td>
+      <td><span class="badge ${c.percentChange>=0?'badge-green':'badge-red'}">${c.percentChange>=0?'+':''}${c.percentChange.toFixed(1)}%</span></td>
+      <td>
+        <button class="action-btn ${c.isWatchlisted?'watch-on':''}" onclick="toggleWatch(${c.id})">${c.isWatchlisted?'★ Watching':'☆ Watch'}</button>
+        <button class="action-btn" onclick="removeCard(${c.id})" style="color:var(--red)">✕</button>
+      </td>
+    </tr>`).join('');
+}
+
+function filterCollection() {
+  const search = document.getElementById('collection-search').value.toLowerCase();
+  const sport = document.getElementById('filter-sport').value;
+  const grade = document.getElementById('filter-grade').value;
+  let filtered = cards.filter(c => {
+    const matchSearch = !search || c.player.toLowerCase().includes(search) || c.cardName.toLowerCase().includes(search) || c.setName.toLowerCase().includes(search);
+    const matchSport = !sport || c.category === sport;
+    const matchGrade = !grade || c.grade === grade;
+    return matchSearch && matchSport && matchGrade;
+  });
+  renderTableBody(filtered);
+}
+
+function sortBy(field) {
+  if (sortField === field) sortDir *= -1;
+  else { sortField = field; sortDir = 1; }
+  cards.sort((a,b) => {
+    if (typeof a[field] === 'string') return a[field].localeCompare(b[field]) * sortDir;
+    return (a[field] - b[field]) * sortDir;
+  });
+  filterCollection();
+}
+
+function toggleWatch(id) {
+  const card = cards.find(c=>c.id===id);
+  if (card) card.isWatchlisted = !card.isWatchlisted;
+  renderCollection();
+  updateWatchBadge();
+}
+
+function removeCard(id) {
+  cards = cards.filter(c=>c.id!==id);
+  renderCollection();
+  updateWatchBadge();
+}
+
+function renderAllocCharts() {
+  const sportMap = {};
+  const gradeMap = {};
+  cards.forEach(c=>{
+    sportMap[c.category] = (sportMap[c.category]||0) + c.currentValue*c.qty;
+    gradeMap[c.grade] = (gradeMap[c.grade]||0) + c.currentValue*c.qty;
+  });
+  const sLabels = Object.keys(sportMap); const sData = Object.values(sportMap);
+  const gLabels = Object.keys(gradeMap); const gData = Object.values(gradeMap);
+  const colors = ['#c9a84c','#5b8de8','#34c97a','#e05c5c','#7e6bb0'];
+
+  if (allocSportChart) { allocSportChart.destroy(); }
+  if (allocGradeChart) { allocGradeChart.destroy(); }
+  allocSportChart = new Chart(document.getElementById('allocSportChart'), {
+    type:'doughnut', data:{labels:sLabels,datasets:[{data:sData,backgroundColor:colors,borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'right',labels:{color:'#7e93b4',font:{size:11},boxWidth:10}}},cutout:'62%'}
+  });
+  allocGradeChart = new Chart(document.getElementById('allocGradeChart'), {
+    type:'doughnut', data:{labels:gLabels,datasets:[{data:gData,backgroundColor:colors,borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'right',labels:{color:'#7e93b4',font:{size:11},boxWidth:10}}},cutout:'62%'}
+  });
+}
+
+// ─── WATCHLIST ───────────────────────────────────────────────────────────────
+function renderWatchlist() {
+  const allWatched = [
+    ...cards.filter(c=>c.isWatchlisted).map(c=>({
+      ...c, trend: c.percentChange>=0 ? `+${c.percentChange.toFixed(1)}%` : `${c.percentChange.toFixed(1)}%`,
+      priceHistory: genSparkline(c.purchasePrice, c.currentValue),
+      alertEnabled: false
+    })),
+    ...watchlistOnly
+  ];
+  updateWatchBadge(allWatched.length);
+  const grid = document.getElementById('watchlist-grid');
+  if (allWatched.length === 0) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-state-icon">👁</div>
+      <h3>Your watchlist is empty</h3>
+      <p>Add cards to your collection and click "Watch" to track them here.</p>
+    </div>`;
+    return;
+  }
+  grid.innerHTML = allWatched.map(c=>`
+    <div class="wl-card" id="wlc-${c.id}">
+      <div class="wl-card-header">
+        <div>
+          <div class="wl-name">${c.player}</div>
+          <div class="wl-meta">${c.setName} · ${c.year} · ${c.grade}</div>
+        </div>
+        <div class="wl-actions">
+          <button class="icon-btn ${c.alertEnabled?'alert-on':''}" onclick="toggleAlert(${c.id})" title="Toggle alert">🔔</button>
+          <button class="icon-btn remove" onclick="removeFromWatch(${c.id})" title="Remove from watchlist">✕</button>
+        </div>
+      </div>
+      <div class="wl-stats">
+        <div class="wl-stat-box">
+          <div class="wl-stat-label">Current Value</div>
+          <div class="wl-stat-val">${fmt(c.currentValue)}</div>
+        </div>
+        <div class="wl-stat-box">
+          <div class="wl-stat-label">7-Day Trend</div>
+          <div class="wl-stat-val ${c.trend.startsWith('+')?'up':'down'}">${c.trend}</div>
+        </div>
+      </div>
+      <div class="wl-sparkline">${renderSparkline(c.priceHistory, c.trend.startsWith('+'))}</div>
+      <div class="wl-alert-row">
+        <span class="wl-alert-label">
+          <span class="alert-dot ${c.alertEnabled?'alert-active':'alert-inactive'}"></span>
+          Price alert
+        </span>
+        <div class="toggle ${c.alertEnabled?'on':''}" onclick="toggleAlert(${c.id})"></div>
+      </div>
+    </div>`).join('');
+}
+
+function renderSparkline(history, up) {
+  if (!history || !history.length) return '';
+  const max = Math.max(...history); const min = Math.min(...history);
+  const range = max - min || 1;
+  const color = up ? '#34c97a' : '#e05c5c';
+  const bgColor = up ? 'rgba(52,201,122,0.15)' : 'rgba(224,92,92,0.15)';
+  return history.map(v=>{
+    const h = Math.max(4, Math.round(((v-min)/range)*32));
+    return `<div class="spark-bar" style="height:${h}px;background:${color};opacity:${0.4+((v-min)/range)*0.6}"></div>`;
+  }).join('');
+}
+
+function genSparkline(start, end) {
+  const arr = [start];
+  for (let i=1;i<7;i++) { const last = arr[arr.length-1]; arr.push(last + (Math.random()-0.4)*(end-start)*0.3); }
+  arr.push(end);
+  return arr;
+}
+
+let wlAlertStates = {}; // {id: bool}
+function toggleAlert(id) {
+  // Try collection cards first
+  const cCard = cards.find(c=>c.id===id);
+  if (cCard) { wlAlertStates[id] = !wlAlertStates[id]; renderWatchlist(); return; }
+  const wCard = watchlistOnly.find(c=>c.id===id);
+  if (wCard) { wCard.alertEnabled = !wCard.alertEnabled; renderWatchlist(); }
+}
+
+function removeFromWatch(id) {
+  const card = cards.find(c=>c.id===id);
+  if (card) { card.isWatchlisted = false; }
+  const idx = watchlistOnly.findIndex(c=>c.id===id);
+  if (idx > -1) watchlistOnly.splice(idx, 1);
+  renderWatchlist();
+  updateWatchBadge();
+}
+
+function updateWatchBadge(count) {
+  const n = count !== undefined ? count : cards.filter(c=>c.isWatchlisted).length + watchlistOnly.length;
+  document.getElementById('wl-badge').textContent = n;
+  document.getElementById('wl-count').textContent = n + ' card' + (n!==1?'s':'');
+}
+
+// ─── MODAL ───────────────────────────────────────────────────────────────────
+function openAddModal() {
+  document.getElementById('add-modal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('add-modal').classList.remove('open');
+}
+document.getElementById('add-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('add-modal')) closeModal();
+});
+
+function addCard() {
+  const player = document.getElementById('f-player').value.trim();
+  const cardName = document.getElementById('f-cardName').value.trim();
+  if (!player || !cardName) { alert('Please enter at least a player name and card name.'); return; }
+  const pp = parseFloat(document.getElementById('f-purchasePrice').value) || 0;
+  const cv = parseFloat(document.getElementById('f-currentValue').value) || 0;
+  const change = cv - pp;
+  const pct = pp > 0 ? ((change/pp)*100) : 0;
+  cards.push({
+    id: nextId++,
+    player, cardName,
+    setName: document.getElementById('f-setName').value.trim() || 'Unknown Set',
+    year: parseInt(document.getElementById('f-year').value) || new Date().getFullYear(),
+    grade: document.getElementById('f-grade').value,
+    purchasePrice: pp, currentValue: cv,
+    change, percentChange: parseFloat(pct.toFixed(1)),
+    category: document.getElementById('f-category').value,
+    qty: parseInt(document.getElementById('f-qty').value) || 1,
+    isWatchlisted: false
+  });
+  closeModal();
+  showPage('collection');
+  ['f-player','f-cardName','f-setName','f-year','f-purchasePrice','f-currentValue'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('f-qty').value = '1';
+}
+
+// ─── UTILS ───────────────────────────────────────────────────────────────────
+function fmt(n) {
+  if (isNaN(n)) return '$0';
+  return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n);
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+renderHub();
+updateWatchBadge();
+</script>
+</body>
+</html>
