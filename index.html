@@ -664,15 +664,20 @@
     letter-spacing: 0.04em;
   }
   .wl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: var(--border); padding: 1.5rem 2rem; }
-  .wl-grid-inner { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; padding: 1.5rem 2rem; }
+  .wl-grid-inner { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.1rem; padding: 1.5rem 2rem; }
+
+  /* ── Stock-graph watchlist card ── */
   .wl-card {
     background: var(--bg2);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 1.35rem;
+    padding: 1.25rem 1.35rem 1rem;
     transition: border-color 0.2s, background 0.2s, transform 0.18s;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
   }
   .wl-card::before {
     content: '';
@@ -681,37 +686,118 @@
     opacity: 0;
     transition: opacity 0.2s;
   }
+  .wl-card.up-card::before { background: linear-gradient(90deg, rgba(52,201,122,0.15), rgba(52,201,122,0.5), rgba(52,201,122,0.15)); opacity: 1; }
+  .wl-card.dn-card::before { background: linear-gradient(90deg, rgba(224,92,92,0.15), rgba(224,92,92,0.45), rgba(224,92,92,0.15)); opacity: 1; }
   .wl-card:hover { border-color: var(--border3); background: var(--bg3); transform: translateY(-2px); }
-  .wl-card:hover::before { opacity: 1; }
-  .wl-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 1rem; }
+
+  /* Header row */
+  .wl-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 0.75rem; }
   .wl-name { font-weight: 600; font-size: 0.9rem; line-height: 1.3; color: var(--text); }
-  .wl-meta { font-size: 0.7rem; color: var(--text3); margin-top: 3px; font-family: var(--font-mono); }
+  .wl-meta { font-size: 0.68rem; color: var(--text3); margin-top: 2px; font-family: var(--font-mono); letter-spacing: 0.02em; }
   .wl-actions { display: flex; gap: 5px; }
   .icon-btn {
-    width: 29px; height: 29px;
+    width: 28px; height: 28px;
     border-radius: 6px;
     border: 1px solid var(--border);
     background: none;
     cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     transition: 0.15s;
     color: var(--text3);
   }
   .icon-btn:hover { border-color: var(--border2); color: var(--text); background: var(--bg4); }
   .icon-btn.remove { color: var(--red); border-color: rgba(224,92,92,0.2); background: var(--red-bg); }
   .icon-btn.alert-on { color: var(--gold2); border-color: var(--gold-border); background: var(--gold-bg); }
-  .wl-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
-  .wl-stat-box { background: var(--bg3); border-radius: 6px; padding: 0.7rem 0.85rem; border: 1px solid var(--border); }
-  .wl-stat-label { font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text3); font-family: var(--font-mono); }
-  .wl-stat-val { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 500; margin-top: 3px; }
-  .wl-sparkline { height: 34px; margin-top: 1rem; display: flex; align-items: flex-end; gap: 3px; }
-  .spark-bar { flex: 1; border-radius: 2px; min-height: 3px; transition: opacity 0.15s; }
-  .spark-bar:hover { opacity: 0.75; }
-  .wl-alert-row { display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; padding-top: 0.9rem; border-top: 1px solid var(--border); }
-  .wl-alert-label { font-size: 0.72rem; color: var(--text3); display: flex; align-items: center; gap: 7px; font-family: var(--font-mono); }
+
+  /* Price + change row */
+  .wl-price-row {
+    display: flex; align-items: baseline; gap: 10px;
+    margin-bottom: 0.3rem;
+  }
+  .wl-price {
+    font-family: var(--font-mono);
+    font-size: 1.45rem;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .wl-change-badge {
+    display: inline-flex; align-items: center; gap: 3px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+  }
+  .wl-change-badge.up { background: var(--green-bg); color: var(--green); border: 1px solid rgba(52,201,122,0.22); }
+  .wl-change-badge.dn { background: var(--red-bg); color: var(--red); border: 1px solid rgba(224,92,92,0.22); }
+
+  /* Range stat row (open/high/low/vol) */
+  .wl-stats-row {
+    display: flex; gap: 0;
+    margin-bottom: 0.9rem;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .wl-stat-item {
+    flex: 1;
+    padding: 0.45rem 0.6rem;
+    border-right: 1px solid var(--border);
+    min-width: 0;
+  }
+  .wl-stat-item:last-child { border-right: none; }
+  .wl-stat-lbl { font-size: 0.57rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text3); font-family: var(--font-mono); }
+  .wl-stat-v { font-family: var(--font-mono); font-size: 0.77rem; font-weight: 500; margin-top: 2px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* Chart area */
+  .wl-chart-wrap {
+    position: relative;
+    width: 100%;
+    height: 110px;
+    margin-bottom: 0.7rem;
+  }
+  .wl-chart-wrap canvas { display: block; }
+
+  /* Time-range slider */
+  .wl-range-row {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 0.85rem;
+  }
+  .wl-range-labels {
+    display: flex; gap: 2px;
+    flex: 1;
+  }
+  .wl-range-btn {
+    flex: 1;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 3px 0;
+    font-size: 0.58rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    color: var(--text3);
+    cursor: pointer;
+    transition: 0.13s;
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+  .wl-range-btn:hover { color: var(--text2); background: var(--bg4); }
+  .wl-range-btn.active {
+    background: var(--bg5);
+    border-color: var(--border2);
+    color: var(--gold2);
+  }
+
+  /* Alert row */
+  .wl-alert-row { display: flex; align-items: center; justify-content: space-between; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+  .wl-alert-label { font-size: 0.7rem; color: var(--text3); display: flex; align-items: center; gap: 7px; font-family: var(--font-mono); }
   .alert-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .alert-active { background: var(--green); }
+  .alert-active { background: var(--green); box-shadow: 0 0 5px var(--green); }
   .alert-inactive { background: var(--text3); }
   .toggle {
     width: 34px; height: 18px;
@@ -734,6 +820,10 @@
   }
   .toggle.on { background: rgba(52,201,122,0.15); border-color: rgba(52,201,122,0.3); }
   .toggle.on::after { left: 18px; background: var(--green); }
+
+  /* Wl sparkline (legacy — kept but hidden) */
+  .wl-sparkline { display: none; }
+  .spark-bar { display: none; }
 
   .empty-state { text-align: center; padding: 4rem 2rem; color: var(--text3); }
   .empty-state-icon { font-size: 2.2rem; margin-bottom: 1rem; opacity: 0.5; }
@@ -1248,8 +1338,8 @@
   }
   .ag-dropzone:hover::before, .ag-dropzone.drag-over::before { opacity: 1; }
   .ag-drop-icon { font-size: 2.8rem; margin-bottom: 1rem; opacity: 0.7; }
-  .ag-drop-title { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; }
-  .ag-drop-sub { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text3); letter-spacing: 0.04em; }
+  .ag-drop-title { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--gold2); margin-bottom: 0.4rem; }
+  .ag-drop-sub { font-family: var(--font-mono); font-size: 0.72rem; color: var(--gold-border); letter-spacing: 0.04em; }
   .ag-upload-btn {
     margin-top: 1.75rem; padding: 11px 30px;
     background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
@@ -1294,7 +1384,7 @@
     -webkit-background-clip: text; background-clip: text; color: transparent;
     position: relative; z-index: 1; letter-spacing: -0.02em;
   }
-  .ag-grade-label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.4rem; }
+  .ag-grade-label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--gold2); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.4rem; }
   .ag-preview-img {
     width: 130px; height: 180px; background: var(--bg3); border: 1px solid var(--border2);
     border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center;
@@ -1304,9 +1394,9 @@
   .ag-subgrades { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border-top: 1px solid var(--border); }
   .ag-subgrade { background: var(--bg2); padding: 1.25rem 1rem; text-align: center; transition: background 0.15s; }
   .ag-subgrade:hover { background: var(--bg3); }
-  .ag-subgrade-val { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 500; color: var(--text); letter-spacing: -0.02em; }
+  .ag-subgrade-val { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 500; color: var(--gold3); letter-spacing: -0.02em; }
   .ag-subgrade-val span { color: var(--gold2); }
-  .ag-subgrade-key { font-family: var(--font-mono); font-size: 0.63rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
+  .ag-subgrade-key { font-family: var(--font-mono); font-size: 0.63rem; color: var(--gold-border); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
   .ag-summary { padding: 1.5rem 2rem; border-top: 1px solid var(--border); background: var(--bg); }
   .ag-summary-label {
     font-family: var(--font-mono); font-size: 0.62rem; color: var(--gold);
@@ -1314,7 +1404,7 @@
     display: flex; align-items: center; gap: 8px;
   }
   .ag-summary-label::before { content: '—'; opacity: 0.5; }
-  .ag-summary-text { font-size: 0.85rem; color: var(--text2); line-height: 1.7; font-family: var(--font-display); }
+  .ag-summary-text { font-size: 0.85rem; color: var(--gold3); line-height: 1.7; font-family: var(--font-display); }
   .ag-actions { display: flex; gap: 10px; padding: 1.5rem 2rem; border-top: 1px solid var(--border); }
   @media (max-width: 600px) {
     .ag-subgrades { grid-template-columns: repeat(2, 1fr); }
@@ -1428,7 +1518,9 @@
         <button class="pill active" onclick="setPeriod(this,'7d')">7D</button>
         <button class="pill" onclick="setPeriod(this,'30d')">30D</button>
         <button class="pill" onclick="setPeriod(this,'90d')">90D</button>
+        <button class="pill" onclick="setPeriod(this,'6M')">6M</button>
         <button class="pill" onclick="setPeriod(this,'1y')">1Y</button>
+        <button class="pill" onclick="setPeriod(this,'5Y')">5Y</button>
       </div>
     </div>
   </div>
@@ -1491,9 +1583,40 @@
 
     <!-- Market Heatmap -->
     <div class="chart-card full">
-      <div class="chart-title">Category Heat Map</div>
-      <div class="chart-sub">7-day price change by player/category segment — darker green = stronger gain</div>
-      <div class="heat-grid" id="heat-grid" style="margin-top:0.75rem"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:0.25rem">
+        <div>
+          <div style="font-family:var(--font-display);font-size:1.35rem;font-weight:700;letter-spacing:-0.02em;color:var(--text)">Category Heat Map</div>
+          <div class="chart-sub" style="margin-top:3px">7-day price change by player — darker green = stronger gain</div>
+        </div>
+        <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap">
+          <div style="position:relative;display:flex;align-items:center">
+            <span style="position:absolute;left:14px;color:var(--gold2);font-size:1.05rem;pointer-events:none;line-height:1">⌕</span>
+            <input type="text" id="heat-search" placeholder="Search player…" oninput="renderHeatMap()"
+              style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);color:var(--text);font-family:var(--font-display);font-size:0.95rem;font-weight:500;padding:10px 16px 10px 40px;width:280px;outline:none;transition:border-color 0.18s,box-shadow 0.18s;box-shadow:inset 0 1px 3px rgba(0,0,0,0.4)"
+              onfocus="this.style.borderColor='var(--gold-border)';this.style.boxShadow='0 0 0 2px rgba(184,146,46,0.12),inset 0 1px 3px rgba(0,0,0,0.4)'"
+              onblur="this.style.borderColor='var(--border2)';this.style.boxShadow='inset 0 1px 3px rgba(0,0,0,0.4)'">
+          </div>
+          <select id="heat-sport" onchange="renderHeatMap()" style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);color:var(--text2);font-family:var(--font-display);font-size:0.92rem;font-weight:500;padding:10px 16px;outline:none;cursor:pointer;transition:border-color 0.18s;box-shadow:inset 0 1px 3px rgba(0,0,0,0.4)">
+            <option value="">All Sports</option>
+            <option value="NBA">NBA</option>
+            <option value="NFL">NFL</option>
+            <option value="MLB">MLB</option>
+            <option value="NHL">NHL</option>
+            <option value="Soccer">Soccer</option>
+            <option value="WNBA">WNBA</option>
+            <option value="UFC">UFC</option>
+            <option value="Golf">Golf</option>
+          </select>
+        </div>
+      </div>
+      <!-- Trending Players strip -->
+      <div style="margin-top:1.25rem">
+        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
+          <span style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3)">🔥 Trending Now</span>
+          <div style="flex:1;height:1px;background:linear-gradient(90deg,var(--border2),transparent)"></div>
+        </div>
+        <div id="trending-strip" style="display:grid;grid-template-columns:repeat(5,1fr);gap:0.75rem"></div>
+      </div>
     </div>
   </div>
   </div><!-- /market-grid-wrapper -->
@@ -1645,7 +1768,7 @@
 <div class="page" id="page-ai-grading">
   <div class="page-header">
     <div>
-      <h1 style="font-family:var(--font-serif);font-size:1.55rem;font-weight:700;letter-spacing:-0.01em;color:var(--text)">AI Card Grading</h1>
+      <h1 style="font-family:var(--font-serif);font-size:1.55rem;font-weight:700;letter-spacing:-0.01em;color:var(--gold2)">AI Card Grading</h1>
       <p style="font-size:0.78rem;color:var(--text3);margin-top:4px;font-family:var(--font-mono);letter-spacing:0.03em">Upload your card. Instantly estimate condition and grade.</p>
     </div>
     <div class="header-controls">
@@ -1667,6 +1790,12 @@
         <div class="ag-drop-sub">Supports JPG, PNG — Front &amp; back recommended</div>
         <button class="ag-upload-btn" onclick="event.stopPropagation(); document.getElementById('ag-file-input').click()">Upload Card Images</button>
         <input type="file" id="ag-file-input" accept="image/*" multiple style="display:none" onchange="agHandleFiles(this.files)">
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:0.6rem;margin-top:1rem;padding:0.75rem 1rem;background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:var(--radius-lg)">
+        <span style="font-size:0.9rem;margin-top:1px;flex-shrink:0">⚠️</span>
+        <p style="font-family:var(--font-mono);font-size:0.72rem;color:var(--gold2);letter-spacing:0.02em;line-height:1.6">
+          <strong style="color:var(--gold3)">Disclaimer:</strong> Grading accuracy depends on image quality. Higher resolution, well-lit photos with minimal glare will produce the most accurate estimated grade. Blurry or low-quality images may result in reduced precision.
+        </p>
       </div>
     </div>
 
@@ -2109,19 +2238,54 @@ function quickAddToCollection(catalogId) {
 
 // ─── MARKET ──────────────────────────────────────────────────────────────────
 let chartsInited = false;
+let indexChartInst = null;
+
+const INDEX_PERIODS = {
+  '7d': {
+    labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun','Now'],
+    data:   [4680,4710,4695,4730,4760,4748,4790,4821]
+  },
+  '30d': {
+    labels: ['Wk 1','Wk 2','Wk 3','Wk 4','Now'],
+    data:   [4520,4580,4610,4750,4821]
+  },
+  '90d': {
+    labels: ['Aug','Sep','Oct','Now'],
+    data:   [4210,4350,4620,4821]
+  },
+  '6M': {
+    labels: ['May','Jun','Jul','Aug','Sep','Oct','Now'],
+    data:   [3980,4080,4200,4350,4620,4750,4821]
+  },
+  '1y': {
+    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Now'],
+    data:   [3900,4050,3980,4120,4210,4080,4350,4500,4620,4750,4821]
+  },
+  '5Y': {
+    labels: ['2021','2022','2023','2024','2025','Now'],
+    data:   [1800,2400,3100,3700,4300,4821]
+  }
+};
+
 function setPeriod(btn, p) {
   document.querySelectorAll('.pill-group .pill').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+
+  if (!indexChartInst) return;
+  const key = p.toLowerCase() === '6m' ? '6M' : p.toLowerCase() === '5y' ? '5Y' : p.toLowerCase();
+  const period = INDEX_PERIODS[key] || INDEX_PERIODS['1y'];
+  indexChartInst.data.labels = period.labels;
+  indexChartInst.data.datasets[0].data = period.data;
+  indexChartInst.update('active');
 }
 
 function initMarketCharts() {
   if (chartsInited) return;
   chartsInited = true;
 
-  // Index Chart
-  const labels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].slice(0,9).concat(['Now']);
-  const idxData = [3900,4050,3980,4120,4210,4080,4350,4500,4620,4821];
-  new Chart(document.getElementById('indexChart'), {
+  // Index Chart — default 1Y
+  const { labels, data: idxData } = INDEX_PERIODS['1y'];
+  indexChartInst = new Chart(document.getElementById('indexChart'), {
     type:'line',
     data:{ labels, datasets:[{
       label:'Index', data:idxData,
@@ -2144,7 +2308,7 @@ function initMarketCharts() {
     type:'doughnut',
     data:{
       labels:['Rookies','Parallels','Autos','Base','Refractors'],
-      datasets:[{data:[38,26,18,11,7],backgroundColor:['#c9a84c','var(--gold2)','#34c97a','#7e6bb0','#4a8fad'],borderWidth:0,hoverOffset:4}]
+      datasets:[{data:[38,26,18,11,7],backgroundColor:['#c9a84c','#22d3c8','#34c97a','#7e6bb0','#4a8fad'],borderWidth:0,hoverOffset:4}]
     },
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},cutout:'65%'}
   });
@@ -2197,19 +2361,47 @@ function initMarketCharts() {
 
   // Heat map
   const heatData = [
-    {name:'Wembanyama',val:'+28.4%',heat:0.95},
-    {name:'C. Clark',val:'+41.2%',heat:1.0},
-    {name:'Mahomes',val:'+12.1%',heat:0.65},
-    {name:'Ohtani',val:'+30.9%',heat:0.97},
-    {name:'Dončić',val:'-13.3%',heat:-0.6},
-    {name:'Trout',val:'+8.2%',heat:0.45},
-    {name:'LeBron',val:'+5.4%',heat:0.35},
-    {name:'Jefferson',val:'+18.2%',heat:0.75},
-    {name:'Tua',val:'-17.3%',heat:-0.8},
-    {name:'Giannis',val:'+9.7%',heat:0.52},
-    {name:'Caleb W.',val:'-8.1%',heat:-0.4},
-    {name:'Ja Morant',val:'+14.5%',heat:0.68},
+    {name:'Victor Wembanyama', val:'+28.4%', heat:0.95,  sport:'NBA',   espnId:'4395725'},
+    {name:'Caitlin Clark',     val:'+41.2%', heat:1.0,   sport:'WNBA',  espnId:'4433403'},
+    {name:'Patrick Mahomes',   val:'+12.1%', heat:0.65,  sport:'NFL',   espnId:'3139477'},
+    {name:'Shohei Ohtani',     val:'+30.9%', heat:0.97,  sport:'MLB',   espnId:'3971038'},
+    {name:'Luka Dončić',       val:'-13.3%', heat:-0.6,  sport:'NBA',   espnId:'3945274'},
+    {name:'Mike Trout',        val:'+8.2%',  heat:0.45,  sport:'MLB',   espnId:'30836'},
+    {name:'LeBron James',      val:'+5.4%',  heat:0.35,  sport:'NBA',   espnId:'1966'},
+    {name:'Justin Jefferson',  val:'+18.2%', heat:0.75,  sport:'NFL',   espnId:'4262921'},
+    {name:'Tua Tagovailoa',    val:'-17.3%', heat:-0.8,  sport:'NFL',   espnId:'4241479'},
+    {name:'Giannis Antetokounmpo', val:'+9.7%', heat:0.52, sport:'NBA', espnId:'3032977'},
+    {name:'Caleb Williams',    val:'-8.1%',  heat:-0.4,  sport:'NFL',   espnId:'4686261'},
+    {name:'Ja Morant',         val:'+14.5%', heat:0.68,  sport:'NBA',   espnId:'4279888'},
+    {name:'Connor McDavid',    val:'+22.7%', heat:0.82,  sport:'NHL',   espnId:'3895074'},
+    {name:'Sidney Crosby',     val:'+11.2%', heat:0.60,  sport:'NHL',   espnId:'3114'},
+    {name:'Lionel Messi',      val:'+14.5%', heat:0.70,  sport:'Soccer',espnId:'45843'},
+    {name:'Erling Haaland',    val:'+38.2%', heat:0.99,  sport:'Soccer',espnId:'4232519'},
+    {name:'Angel Reese',       val:'+28.7%', heat:0.93,  sport:'WNBA',  espnId:'4433401'},
+    {name:'Conor McGregor',    val:'+7.3%',  heat:0.42,  sport:'UFC',   espnId:'2977473'},
+    {name:'Tiger Woods',       val:'+6.2%',  heat:0.38,  sport:'Golf',  espnId:'924'},
+    {name:'Nikola Jokić',      val:'+31.5%', heat:0.98,  sport:'NBA',   espnId:'3112335'},
+    {name:'Stephen Curry',     val:'+9.2%',  heat:0.50,  sport:'NBA',   espnId:'3975'},
+    {name:'Kevin Durant',      val:'+6.4%',  heat:0.37,  sport:'NBA',   espnId:'3202'},
+    {name:'Tom Brady',         val:'+5.3%',  heat:0.33,  sport:'NFL',   espnId:'2330'},
+    {name:'Joe Burrow',        val:'+18.2%', heat:0.76,  sport:'NFL',   espnId:'3915511'},
+    {name:"Ja'Marr Chase",     val:'+24.1%', heat:0.86,  sport:'NFL',   espnId:'4362628'},
+    {name:'Fernando Tatis Jr.',val:'+12.0%', heat:0.63,  sport:'MLB',   espnId:'4150679'},
+    {name:'Ronald Acuña Jr.',  val:'+8.8%',  heat:0.48,  sport:'MLB',   espnId:'4004278'},
+    {name:'Nathan MacKinnon',  val:'+16.4%', heat:0.72,  sport:'NHL',   espnId:'2976833'},
+    {name:'Auston Matthews',   val:'+19.0%', heat:0.78,  sport:'NHL',   espnId:'3900158'},
+    {name:'Cristiano Ronaldo', val:'+9.8%',  heat:0.53,  sport:'Soccer',espnId:'45843'},
+    {name:'Jon Jones',         val:'-4.1%',  heat:-0.22, sport:'UFC',   espnId:'2331670'},
+    {name:'Rory McIlroy',      val:'+11.0%', heat:0.58,  sport:'Golf',  espnId:'3694'},
+    {name:'Mickey Mantle',     val:'+3.1%',  heat:0.22,  sport:'MLB',   espnId:null},
+    {name:'Jayson Tatum',      val:'+21.3%', heat:0.80,  sport:'NBA',   espnId:'4065648'},
+    {name:'Lamar Jackson',     val:'+16.8%', heat:0.73,  sport:'NFL',   espnId:'3916387'},
+    {name:'Saquon Barkley',    val:'+10.4%', heat:0.56,  sport:'NFL',   espnId:'3929630'},
+    {name:'Vladimir Guerrero Jr.', val:'+13.7%', heat:0.67, sport:'MLB',espnId:'4178527'},
+    {name:'Patrik Laine',      val:'+7.9%',  heat:0.44,  sport:'NHL',   espnId:'3904174'},
+    {name:'Kylian Mbappé',     val:'+33.1%', heat:0.99,  sport:'Soccer',espnId:'3947391'},
   ];
+
   function heatColor(h) {
     if (h >= 0) {
       const i = Math.round(h * 200);
@@ -2219,11 +2411,47 @@ function initMarketCharts() {
       return `rgb(${Math.round(180+a*75)}, ${Math.round(60-a*40)}, ${Math.round(60-a*40)})`;
     }
   }
-  document.getElementById('heat-grid').innerHTML = heatData.map(h=>`
-    <div class="heat-cell" style="background:${heatColor(h.heat)}">
-      <div class="heat-name">${h.name}</div>
-      <div class="heat-val">${h.val}</div>
-    </div>`).join('');
+
+  // Trending strip — all gainers sorted by heat
+  const trending = [...heatData].filter(h => h.heat > 0).sort((a,b) => b.heat - a.heat).slice(0, 10);
+  const sportColors = {NBA:'#c9a84c',NFL:'#4a8fad',MLB:'#34c97a',NHL:'#7e6bb0',Soccer:'#e07c5c',WNBA:'#d4a843',UFC:'#e05c5c',Golf:'#5caa6f'};
+  const rankLabels = trending.map((_,i) => `#${i+1}`);
+  document.getElementById('trending-strip').innerHTML = trending.map((h, i) => {
+    const col = sportColors[h.sport] || 'var(--gold2)';
+    const barW = Math.round(h.heat * 100);
+    const initials = h.name.split(' ').map(w=>w[0]).slice(0,2).join('');
+    const imgUrl = h.espnId ? `https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/${h.espnId}.png&w=140&h=100&cb=1` : null;
+    const avatarHtml = imgUrl
+      ? `<img src="${imgUrl}" alt="${h.name}"
+           style="width:72px;height:72px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid ${col}44;background:var(--bg4);flex-shrink:0"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+         >
+         <div style="display:none;width:72px;height:72px;border-radius:50%;background:${col}22;border:2px solid ${col}44;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1rem;font-weight:700;color:${col};flex-shrink:0">${initials}</div>`
+      : `<div style="display:flex;width:72px;height:72px;border-radius:50%;background:${col}22;border:2px solid ${col}44;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1rem;font-weight:700;color:${col};flex-shrink:0">${initials}</div>`;
+    return `
+    <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:1rem;position:relative;overflow:hidden;transition:transform 0.18s,border-color 0.18s;cursor:default"
+         onmouseover="this.style.transform='translateY(-2px)';this.style.borderColor='var(--border3)'"
+         onmouseout="this.style.transform='';this.style.borderColor='var(--border2)'">
+      <!-- top accent bar -->
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,${col},transparent)"></div>
+      <!-- rank + sport -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.65rem">
+        <span style="font-family:var(--font-mono);font-size:0.65rem;font-weight:600;color:var(--text3)">${rankLabels[i]}</span>
+        <span style="font-size:0.6rem;font-weight:700;letter-spacing:0.06em;padding:2px 7px;border-radius:99px;background:${col}22;color:${col};border:1px solid ${col}44">${h.sport}</span>
+      </div>
+      <!-- avatar + name row -->
+      <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.6rem">
+        ${avatarHtml}
+        <div style="font-family:var(--font-display);font-size:0.85rem;font-weight:700;color:var(--text);line-height:1.25">${h.name}</div>
+      </div>
+      <!-- change value -->
+      <div style="font-family:var(--font-mono);font-size:1.05rem;font-weight:600;color:#34c97a;margin-bottom:0.6rem">${h.val}</div>
+      <!-- mini progress bar -->
+      <div style="height:3px;border-radius:99px;background:var(--bg4);overflow:hidden">
+        <div style="height:100%;width:${barW}%;border-radius:99px;background:linear-gradient(90deg,#34c97a,${col});transition:width 0.6s ease"></div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 // ─── COLLECTION ──────────────────────────────────────────────────────────────
@@ -2437,17 +2665,70 @@ function renderAllocCharts() {
 }
 
 // ─── WATCHLIST ───────────────────────────────────────────────────────────────
+
+// Range configs: [label, datapoints, volatility_multiplier]
+const WL_RANGES = [
+  { key:'7D',  label:'7D',   pts:14,  vol:0.018 },
+  { key:'30D', label:'30D',  pts:30,  vol:0.022 },
+  { key:'90D', label:'90D',  pts:45,  vol:0.028 },
+  { key:'6M',  label:'6M',   pts:52,  vol:0.032 },
+  { key:'1Y',  label:'1Y',   pts:52,  vol:0.040 },
+  { key:'5Y',  label:'5Y+',  pts:60,  vol:0.055 },
+];
+
+// Store: cardId -> { historyCache: {rangeKey: [...values]}, chartInst, activeRange }
+const wlCardState = {};
+let wlChartRegistry = {};
+
+function genHistory(start, end, pts, vol) {
+  // Realistic random walk biased toward end value
+  const arr = [start];
+  const drift = (end - start) / pts;
+  for (let i = 1; i < pts; i++) {
+    const prev = arr[arr.length - 1];
+    const noise = prev * vol * (Math.random() * 2 - 1);
+    arr.push(Math.max(1, prev + drift + noise));
+  }
+  arr.push(end);
+  return arr;
+}
+
+function buildCardHistories(card) {
+  // Seed: derive stable-ish "intermediate" anchors from card data
+  const base = card.purchasePrice || 10;
+  const cur  = card.currentValue  || base;
+  const cache = {};
+  WL_RANGES.forEach(r => {
+    cache[r.key] = genHistory(base, cur, r.pts, r.vol);
+  });
+  return cache;
+}
+
+function wlRangeStats(data, cur) {
+  const open  = data[0];
+  const high  = Math.max(...data);
+  const low   = Math.min(...data);
+  const chg   = cur - open;
+  const pct   = open > 0 ? (chg / open) * 100 : 0;
+  return { open, high, low, chg, pct };
+}
+
 function renderWatchlist() {
   const allWatched = [
-    ...cards.filter(c=>c.isWatchlisted).map(c=>({
-      ...c, trend: c.percentChange>=0 ? `+${c.percentChange.toFixed(1)}%` : `${c.percentChange.toFixed(1)}%`,
-      priceHistory: genSparkline(c.purchasePrice, c.currentValue),
-      alertEnabled: false
+    ...cards.filter(c => c.isWatchlisted).map(c => ({
+      ...c,
+      trend: c.percentChange >= 0 ? `+${c.percentChange.toFixed(1)}%` : `${c.percentChange.toFixed(1)}%`,
+      alertEnabled: wlAlertStates[c.id] || false
     })),
     ...watchlistOnly
   ];
   updateWatchBadge(allWatched.length);
   const grid = document.getElementById('watchlist-grid');
+
+  // Destroy old charts before re-rendering
+  Object.values(wlChartRegistry).forEach(ch => { try { ch.destroy(); } catch(e){} });
+  wlChartRegistry = {};
+
   if (allWatched.length === 0) {
     grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
       <div class="empty-state-icon">👁</div>
@@ -2456,57 +2737,218 @@ function renderWatchlist() {
     </div>`;
     return;
   }
-  grid.innerHTML = allWatched.map(c=>`
-    <div class="wl-card" id="wlc-${c.id}">
+
+  // Init state for each card
+  allWatched.forEach(c => {
+    if (!wlCardState[c.id]) {
+      wlCardState[c.id] = {
+        histories: buildCardHistories(c),
+        activeRange: '30D'
+      };
+    }
+  });
+
+  grid.innerHTML = allWatched.map(c => {
+    const st   = wlCardState[c.id];
+    const rng  = st.activeRange;
+    const data = st.histories[rng];
+    const { open, high, low, chg, pct } = wlRangeStats(data, c.currentValue);
+    const up   = chg >= 0;
+    const sign = up ? '+' : '';
+    const alertOn = c.alertEnabled || wlAlertStates[c.id];
+
+    return `
+    <div class="wl-card ${up?'up-card':'dn-card'}" id="wlc-${c.id}">
       <div class="wl-card-header">
-        <div>
+        <div style="min-width:0">
           <div class="wl-name">${c.player}</div>
           <div class="wl-meta">${c.setName} · ${c.year} · ${c.grade}</div>
         </div>
         <div class="wl-actions">
-          <button class="icon-btn ${c.alertEnabled?'alert-on':''}" onclick="toggleAlert(${c.id})" title="Toggle alert">🔔</button>
-          <button class="icon-btn remove" onclick="removeFromWatch(${c.id})" title="Remove from watchlist">✕</button>
+          <button class="icon-btn ${alertOn?'alert-on':''}" onclick="toggleAlert(${c.id})" title="Toggle alert">🔔</button>
+          <button class="icon-btn remove" onclick="removeFromWatch(${c.id})" title="Remove">✕</button>
         </div>
       </div>
-      <div class="wl-stats">
-        <div class="wl-stat-box">
-          <div class="wl-stat-label">Current Value</div>
-          <div class="wl-stat-val">${fmt(c.currentValue)}</div>
+
+      <div class="wl-price-row">
+        <span class="wl-price">${fmt(c.currentValue)}</span>
+        <span class="wl-change-badge ${up?'up':'dn'}">
+          ${up?'▲':'▼'} ${sign}${fmt(chg)} (${sign}${pct.toFixed(2)}%)
+        </span>
+      </div>
+
+      <div class="wl-stats-row">
+        <div class="wl-stat-item">
+          <div class="wl-stat-lbl">Open</div>
+          <div class="wl-stat-v">${fmt(open)}</div>
         </div>
-        <div class="wl-stat-box">
-          <div class="wl-stat-label">7-Day Trend</div>
-          <div class="wl-stat-val ${c.trend.startsWith('+')?'up':'down'}">${c.trend}</div>
+        <div class="wl-stat-item">
+          <div class="wl-stat-lbl">High</div>
+          <div class="wl-stat-v" style="color:var(--green)">${fmt(high)}</div>
+        </div>
+        <div class="wl-stat-item">
+          <div class="wl-stat-lbl">Low</div>
+          <div class="wl-stat-v" style="color:var(--red)">${fmt(low)}</div>
+        </div>
+        <div class="wl-stat-item">
+          <div class="wl-stat-lbl">Range</div>
+          <div class="wl-stat-v">${rng}</div>
         </div>
       </div>
-      <div class="wl-sparkline">${renderSparkline(c.priceHistory, c.trend.startsWith('+'))}</div>
+
+      <div class="wl-chart-wrap">
+        <canvas id="wlchart-${c.id}" height="110"></canvas>
+      </div>
+
+      <div class="wl-range-row">
+        <div class="wl-range-labels">
+          ${WL_RANGES.map(r=>`
+            <button class="wl-range-btn ${r.key===rng?'active':''}"
+              onclick="wlSetRange(${c.id},'${r.key}')">${r.label}</button>
+          `).join('')}
+        </div>
+      </div>
+
       <div class="wl-alert-row">
         <span class="wl-alert-label">
-          <span class="alert-dot ${c.alertEnabled?'alert-active':'alert-inactive'}"></span>
+          <span class="alert-dot ${alertOn?'alert-active':'alert-inactive'}"></span>
           Price alert
         </span>
-        <div class="toggle ${c.alertEnabled?'on':''}" onclick="toggleAlert(${c.id})"></div>
+        <div class="toggle ${alertOn?'on':''}" onclick="toggleAlert(${c.id})"></div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
+
+  // Mount charts after DOM settles
+  requestAnimationFrame(() => {
+    allWatched.forEach(c => mountWlChart(c));
+  });
 }
 
-function renderSparkline(history, up) {
-  if (!history || !history.length) return '';
-  const max = Math.max(...history); const min = Math.min(...history);
-  const range = max - min || 1;
-  const color = up ? '#34c97a' : '#e05c5c';
-  const bgColor = up ? 'rgba(52,201,122,0.15)' : 'rgba(224,92,92,0.15)';
-  return history.map(v=>{
-    const h = Math.max(4, Math.round(((v-min)/range)*32));
-    return `<div class="spark-bar" style="height:${h}px;background:${color};opacity:${0.4+((v-min)/range)*0.6}"></div>`;
-  }).join('');
+function mountWlChart(c) {
+  const canvas = document.getElementById(`wlchart-${c.id}`);
+  if (!canvas) return;
+  const st   = wlCardState[c.id];
+  const data = st.histories[st.activeRange];
+  const up   = (c.currentValue || 0) >= (c.purchasePrice || 0);
+  const color     = up ? '#34c97a' : '#e05c5c';
+  const colorFade = up ? 'rgba(52,201,122,0)' : 'rgba(224,92,92,0)';
+  const colorMid  = up ? 'rgba(52,201,122,0.18)' : 'rgba(224,92,92,0.16)';
+
+  const ctx = canvas.getContext('2d');
+  const grad = ctx.createLinearGradient(0, 0, 0, 110);
+  grad.addColorStop(0, colorMid);
+  grad.addColorStop(1, colorFade);
+
+  const labels = data.map((_, i) => i);
+  const ch = new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        data,
+        borderColor: color,
+        borderWidth: 1.8,
+        pointRadius: 0,
+        pointHoverRadius: 3,
+        pointHoverBackgroundColor: color,
+        fill: true,
+        backgroundColor: grad,
+        tension: 0.35,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 350, easing: 'easeOutQuart' },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#181818',
+          borderColor: color,
+          borderWidth: 1,
+          titleColor: '#ffffff',
+          bodyColor: '#a89070',
+          titleFont: { family: "'IBM Plex Mono'", size: 10 },
+          bodyFont:  { family: "'IBM Plex Mono'", size: 11 },
+          callbacks: {
+            title: () => '',
+            label: ctx2 => ` ${fmt(ctx2.raw)}`
+          },
+          padding: 8,
+          displayColors: false,
+        }
+      },
+      scales: {
+        x: { display: false },
+        y: {
+          display: true,
+          position: 'right',
+          grid: { color: 'rgba(201,168,76,0.05)', drawBorder: false },
+          border: { display: false },
+          ticks: {
+            color: '#5a4a38',
+            font: { family: "'IBM Plex Mono'", size: 9 },
+            maxTicksLimit: 3,
+            callback: v => '$' + (v >= 1000 ? (v/1000).toFixed(1)+'k' : Math.round(v))
+          }
+        }
+      }
+    }
+  });
+  wlChartRegistry[c.id] = ch;
+}
+
+function wlSetRange(id, rangeKey) {
+  if (!wlCardState[id]) return;
+  wlCardState[id].activeRange = rangeKey;
+  // Re-render just this card — update chart data + range buttons
+  const card = [...cards.filter(c=>c.isWatchlisted), ...watchlistOnly].find(c=>c.id===id);
+  if (!card) return;
+
+  // Destroy old chart
+  if (wlChartRegistry[id]) { wlChartRegistry[id].destroy(); delete wlChartRegistry[id]; }
+
+  const st   = wlCardState[id];
+  const data = st.histories[rangeKey];
+  const { open, high, low, chg, pct } = wlRangeStats(data, card.currentValue);
+  const up   = chg >= 0;
+  const sign = up ? '+' : '';
+
+  const el = document.getElementById(`wlc-${id}`);
+  if (!el) return;
+
+  // Update price/badge
+  el.querySelector('.wl-price').textContent = fmt(card.currentValue);
+  const badge = el.querySelector('.wl-change-badge');
+  badge.className = `wl-change-badge ${up?'up':'dn'}`;
+  badge.innerHTML = `${up?'▲':'▼'} ${sign}${fmt(chg)} (${sign}${pct.toFixed(2)}%)`;
+
+  // Update stats
+  const statVals = el.querySelectorAll('.wl-stat-v');
+  statVals[0].textContent = fmt(open);
+  statVals[1].textContent = fmt(high);
+  statVals[2].textContent = fmt(low);
+  statVals[3].textContent = rangeKey;
+
+  // Update range buttons
+  el.querySelectorAll('.wl-range-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.trim() === WL_RANGES.find(r=>r.key===rangeKey).label);
+  });
+
+  // Remount chart
+  requestAnimationFrame(() => mountWlChart(card));
 }
 
 function genSparkline(start, end) {
+  // Legacy — kept for any other callers
   const arr = [start];
   for (let i=1;i<7;i++) { const last = arr[arr.length-1]; arr.push(last + (Math.random()-0.4)*(end-start)*0.3); }
   arr.push(end);
   return arr;
 }
+function renderSparkline() { return ''; }
 
 let wlAlertStates = {}; // {id: bool}
 function toggleAlert(id) {
