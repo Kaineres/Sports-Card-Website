@@ -25,8 +25,8 @@
 
     /* Text — pure white to warm gray */
     --text:  #ffffff;
-    --text2: #a89070;
-    --text3: #5a4a38;
+    --text2: #c8aa88;
+    --text3: #8a7060;
 
     /* Accent: rich gold — pulled directly from logo gradient */
     --gold:   #b8922e;
@@ -57,7 +57,7 @@
     --surface-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
   }
 
-  html { font-size: 15px; scroll-behavior: smooth; }
+  html { font-size: 17px; scroll-behavior: smooth; }
   body {
     background: var(--bg);
     color: var(--text);
@@ -118,7 +118,7 @@
   .nav-badge {
     background: var(--gold);
     color: #0d1117;
-    font-size: 0.6rem;
+    font-size: 0.72rem;
     font-weight: 700;
     padding: 1px 6px;
     border-radius: 20px;
@@ -204,7 +204,7 @@
     margin-bottom: 1.75rem;
     font-family: var(--font-mono);
   }
-  .hero-eyebrow::before { content: '◆'; font-size: 0.5rem; }
+  .hero-eyebrow::before { content: '◆'; font-size: 0.6rem; }
   .hero-title {
     font-family: var(--font-serif);
     font-size: clamp(2.2rem, 5.5vw, 3.8rem);
@@ -750,7 +750,7 @@
     min-width: 0;
   }
   .wl-stat-item:last-child { border-right: none; }
-  .wl-stat-lbl { font-size: 0.57rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text3); font-family: var(--font-mono); }
+  .wl-stat-lbl { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text3); font-family: var(--font-mono); }
   .wl-stat-v { font-family: var(--font-mono); font-size: 0.77rem; font-weight: 500; margin-top: 2px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
   /* Chart area */
@@ -777,7 +777,7 @@
     border: 1px solid transparent;
     border-radius: 4px;
     padding: 3px 0;
-    font-size: 0.58rem;
+    font-size: 0.70rem;
     font-family: var(--font-mono);
     font-weight: 500;
     color: var(--text3);
@@ -941,7 +941,7 @@
     margin-bottom: 1.5rem;
     font-family: var(--font-mono);
   }
-  .hub-eyebrow::before { content: '◆'; font-size: 0.45rem; }
+  .hub-eyebrow::before { content: '◆'; font-size: 0.58rem; }
   .hub-title {
     font-family: var(--font-serif);
     font-size: clamp(2rem, 5vw, 3.2rem);
@@ -1106,7 +1106,7 @@
     flex-shrink: 0;
     padding: 0.65rem 1.2rem;
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size: 0.72rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -1245,7 +1245,7 @@
   .bc-sport-tag {
     display: inline-flex; align-items: center; gap: 5px;
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.07em;
     text-transform: uppercase;
@@ -1313,7 +1313,7 @@
   .ag-beta-badge {
     display: inline-flex; align-items: center;
     background: var(--gold-bg); border: 1px solid var(--gold-border);
-    color: var(--gold2); font-family: var(--font-mono); font-size: 0.62rem;
+    color: var(--gold2); font-family: var(--font-mono); font-size: 0.72rem;
     font-weight: 700; letter-spacing: 0.14em; padding: 3px 10px;
     border-radius: 4px; text-transform: uppercase;
   }
@@ -1396,10 +1396,10 @@
   .ag-subgrade:hover { background: var(--bg3); }
   .ag-subgrade-val { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 500; color: var(--gold3); letter-spacing: -0.02em; }
   .ag-subgrade-val span { color: var(--gold2); }
-  .ag-subgrade-key { font-family: var(--font-mono); font-size: 0.63rem; color: var(--gold-border); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
+  .ag-subgrade-key { font-family: var(--font-mono); font-size: 0.72rem; color: var(--gold-border); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
   .ag-summary { padding: 1.5rem 2rem; border-top: 1px solid var(--border); background: var(--bg); }
   .ag-summary-label {
-    font-family: var(--font-mono); font-size: 0.62rem; color: var(--gold);
+    font-family: var(--font-mono); font-size: 0.72rem; color: var(--gold);
     text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 0.5rem;
     display: flex; align-items: center; gap: 8px;
   }
@@ -1567,11 +1567,104 @@
       <div class="vol-bar-wrap" id="vol-bars" style="margin-top:0.5rem"></div>
     </div>
 
-    <!-- Category Breakdown Chart -->
-    <div class="chart-card">
-      <div class="chart-title">Category Breakdown</div>
-      <div class="chart-sub">Volume share by card category</div>
-      <div class="chart-wrap" style="height:220px"><canvas id="categoryChart" role="img" aria-label="Pie chart of card categories by volume">Rookies lead at 38%, followed by Parallels at 26%.</canvas></div>
+    <!-- Top Investor Picks -->
+    <div class="chart-card full">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap">
+        <div>
+          <div style="font-family:var(--font-mono);font-size:0.68rem;color:var(--gold);text-transform:uppercase;letter-spacing:0.14em;display:flex;align-items:center;gap:8px;margin-bottom:0.5rem"><span style="opacity:0.5">—</span> Investor Signals</div>
+          <div style="font-family:var(--font-serif);font-size:1.35rem;font-weight:700;letter-spacing:-0.01em;color:var(--text)">Players Top Card Investors Are Buying</div>
+          <div style="font-size:0.75rem;color:var(--text3);margin-top:4px;font-family:var(--font-mono);letter-spacing:0.03em">High-conviction targets with projectable upside — updated weekly</div>
+        </div>
+        <span class="badge badge-amber" style="align-self:flex-start">ANALYST PICKS</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden">
+
+        <!-- Pick 1: Caitlin Clark -->
+        <div style="background:var(--bg3);padding:1.5rem 1.4rem;position:relative;overflow:hidden;transition:background 0.2s" onmouseenter="this.style.background='var(--bg4)'" onmouseleave="this.style.background='var(--bg3)'">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(52,201,122,0.15),rgba(52,201,122,0.55),rgba(52,201,122,0.15))"></div>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:1rem">
+            <div>
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(52,201,122,0.1);border:1px solid rgba(52,201,122,0.25);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:0.75rem">🏀</div>
+              <div style="font-family:var(--font-display);font-weight:700;font-size:1rem;color:var(--text);line-height:1.2">Caitlin Clark</div>
+              <div style="font-size:0.72rem;color:var(--text3);font-family:var(--font-mono);margin-top:3px;letter-spacing:0.02em">2024 Rittenhouse WNBA RC Auto</div>
+            </div>
+            <span class="badge badge-green">+41.2%</span>
+          </div>
+          <div style="font-size:0.82rem;color:var(--text2);line-height:1.7;margin-bottom:1.1rem">Historic rookie demand with crossover mainstream appeal. Certified autos in PSA 10 remain under-distributed relative to collector interest — strong floor with league growth as a tailwind.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden">
+            <div style="padding:0.5rem 0.7rem;background:var(--bg2)">
+              <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);font-family:var(--font-mono)">Avg PSA 10</div>
+              <div style="font-family:var(--font-mono);font-size:0.9rem;font-weight:500;color:var(--text);margin-top:2px">$1,200</div>
+            </div>
+            <div style="padding:0.5rem 0.7rem;background:var(--bg2);border-left:1px solid var(--border)">
+              <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);font-family:var(--font-mono)">Pop Report</div>
+              <div style="font-family:var(--font-mono);font-size:0.9rem;font-weight:500;color:var(--text);margin-top:2px">214</div>
+            </div>
+            <div style="padding:0.5rem 0.7rem;background:var(--bg2);border-left:1px solid var(--border)">
+              <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);font-family:var(--font-mono)">Conviction</div>
+              <div style="font-family:var(--font-mono);font-size:0.9rem;font-weight:500;color:var(--green);margin-top:2px">HIGH</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pick 2: Victor Wembanyama -->
+        <div style="background:var(--bg3);padding:1.5rem 1.4rem;position:relative;overflow:hidden;transition:background 0.2s" onmouseenter="this.style.background='var(--bg4)'" onmouseleave="this.style.background='var(--bg3)'">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(201,168,76,0.15),rgba(201,168,76,0.55),rgba(201,168,76,0.15))"></div>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:1rem">
+            <div>
+              <div style="width:40px;height:40px;border-radius:10px;background:var(--gold-bg);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:0.75rem">🏀</div>
+              <div style="font-family:var(--font-display);font-weight:700;font-size:1rem;color:var(--text);line-height:1.2">Victor Wembanyama</div>
+              <div style="font-size:0.72rem;color:var(--text3);font-family:var(--font-mono);margin-top:3px;letter-spacing:0.02em">2023 Topps Chrome Auto PSA 10</div>
+            </div>
+            <span class="badge badge-green">+28.2%</span>
+          </div>
+          <div style="font-size:0.82rem;color:var(--text2);line-height:1.7;margin-bottom:1.1rem">Generational prospect comps to LeBron rookie trajectories at the same career stage. Certified autos are still early in the price discovery phase — institutional collector funds have begun staking positions.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden">
+            <div style="padding:0.5rem 0.7rem;background:var(--bg2)">
+              <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);font-family:var(--font-mono)">Avg PSA 10</div>
+              <div style="font-family:var(--font-mono);font-size:0.9rem;font-weight:500;color:var(--text);margin-top:2px">$3,400</div>
+            </div>
+            <div style="padding:0.5rem 0.7rem;background:var(--bg2);border-left:1px solid var(--border)">
+              <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);font-family:var(--font-mono)">Pop Report</div>
+              <div style="font-family:var(--font-mono);font-size:0.9rem;font-weight:500;color:var(--text);margin-top:2px">389</div>
+            </div>
+            <div style="padding:0.5rem 0.7rem;background:var(--bg2);border-left:1px solid var(--border)">
+              <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);font-family:var(--font-mono)">Conviction</div>
+              <div style="font-family:var(--font-mono);font-size:0.9rem;font-weight:500;color:var(--green);margin-top:2px">HIGH</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pick 3: Shohei Ohtani -->
+        <div style="background:var(--bg3);padding:1.5rem 1.4rem;position:relative;overflow:hidden;transition:background 0.2s" onmouseenter="this.style.background='var(--bg4)'" onmouseleave="this.style.background='var(--bg3)'">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(201,168,76,0.1),rgba(240,201,106,0.45),rgba(201,168,76,0.1))"></div>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:1rem">
+            <div>
+              <div style="width:40px;height:40px;border-radius:10px;background:rgba(52,201,122,0.08);border:1px solid rgba(52,201,122,0.2);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:0.75rem">⚾</div>
+              <div style="font-family:var(--font-display);font-weight:700;font-size:1rem;color:var(--text);line-height:1.2">Shohei Ohtani</div>
+              <div style="font-size:0.72rem;color:var(--text3);font-family:var(--font-mono);margin-top:3px;letter-spacing:0.02em">2018 Topps Chrome RC Refractor</div>
+            </div>
+            <span class="badge badge-green">+30.9%</span>
+          </div>
+          <div style="font-size:0.82rem;color:var(--text2);line-height:1.7;margin-bottom:1.1rem">Unique two-way player status commands a collector premium with no historical comparable. Dodgers signing amplified global demand — Japanese collector market adds a non-correlated buyer pool unavailable to most U.S. assets.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;background:var(--border);border:1px solid var(--border);border-radius:6px;overflow:hidden">
+            <div style="padding:0.5rem 0.7rem;background:var(--bg2)">
+              <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);font-family:var(--font-mono)">Avg PSA 9</div>
+              <div style="font-family:var(--font-mono);font-size:0.9rem;font-weight:500;color:var(--text);margin-top:2px">$890</div>
+            </div>
+            <div style="padding:0.5rem 0.7rem;background:var(--bg2);border-left:1px solid var(--border)">
+              <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);font-family:var(--font-mono)">Pop Report</div>
+              <div style="font-family:var(--font-mono);font-size:0.9rem;font-weight:500;color:var(--text);margin-top:2px">1,042</div>
+            </div>
+            <div style="padding:0.5rem 0.7rem;background:var(--bg2);border-left:1px solid var(--border)">
+              <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);font-family:var(--font-mono)">Conviction</div>
+              <div style="font-family:var(--font-mono);font-size:0.9rem;font-weight:500;color:var(--gold2);margin-top:2px">MED</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <!-- Grade Premium Chart -->
@@ -2300,17 +2393,7 @@ function initMarketCharts() {
       },
       tension:0.4
     }]},
-    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:'#192030',borderColor:'rgba(148,174,220,0.18)',borderWidth:1,titleColor:'#e8edf5',bodyColor:'#7e93b4'}}, scales:{x:{grid:{color:'rgba(148,174,220,0.05)'},ticks:{color:'#3f5070',font:{size:11}}},y:{grid:{color:'rgba(148,174,220,0.05)'},ticks:{color:'#3f5070',font:{size:11}},position:'right'}}}
-  });
-
-  // Category Donut
-  new Chart(document.getElementById('categoryChart'), {
-    type:'doughnut',
-    data:{
-      labels:['Rookies','Parallels','Autos','Base','Refractors'],
-      datasets:[{data:[38,26,18,11,7],backgroundColor:['#c9a84c','#22d3c8','#34c97a','#7e6bb0','#4a8fad'],borderWidth:0,hoverOffset:4}]
-    },
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},cutout:'65%'}
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:'#192030',borderColor:'rgba(148,174,220,0.18)',borderWidth:1,titleColor:'#e8edf5',bodyColor:'#7e93b4'}}, scales:{x:{grid:{color:'rgba(148,174,220,0.05)'},ticks:{color:'#8a8070',font:{size:11}}},y:{grid:{color:'rgba(148,174,220,0.05)'},ticks:{color:'#8a8070',font:{size:11}},position:'right'}}}
   });
 
   // Grade Chart
@@ -2320,7 +2403,7 @@ function initMarketCharts() {
       labels:['PSA 7','PSA 8','PSA 9','PSA 10'],
       datasets:[{label:'Premium Multiple',data:[1,1.6,2.4,3.8],backgroundColor:['#22d3c8','rgba(201,168,76,0.25)','rgba(201,168,76,0.5)','#c9a84c'],borderWidth:0,borderRadius:4}]
     },
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#3f5070',font:{size:11}}},y:{grid:{color:'rgba(148,174,220,0.05)'},ticks:{color:'#3f5070',font:{size:11},callback:v=>v+'×'},position:'right'}}}
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#8a8070',font:{size:11}}},y:{grid:{color:'rgba(148,174,220,0.05)'},ticks:{color:'#8a8070',font:{size:11},callback:v=>v+'×'},position:'right'}}}
   });
 
   // Movers table
@@ -2346,7 +2429,7 @@ function initMarketCharts() {
     {name:'NFL',pct:28,val:'$10.8M',color:'#c9a84c'},
     {name:'MLB',pct:19,val:'$7.3M',color:'#34c97a'},
     {name:'Soccer',pct:9,val:'$3.5M',color:'#7e6bb0'},
-    {name:'Other',pct:6,val:'$2.3M',color:'#3f5070'},
+    {name:'Other',pct:6,val:'$2.3M',color:'#8a8070'},
   ];
   document.getElementById('vol-bars').innerHTML = sports.map(s=>`
     <div class="vol-row">
@@ -2437,7 +2520,7 @@ function initMarketCharts() {
       <!-- rank + sport -->
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.65rem">
         <span style="font-family:var(--font-mono);font-size:0.65rem;font-weight:600;color:var(--text3)">${rankLabels[i]}</span>
-        <span style="font-size:0.6rem;font-weight:700;letter-spacing:0.06em;padding:2px 7px;border-radius:99px;background:${col}22;color:${col};border:1px solid ${col}44">${h.sport}</span>
+        <span style="font-size:0.72rem;font-weight:700;letter-spacing:0.06em;padding:2px 8px;border-radius:99px;background:${col}22;color:${col};border:1px solid ${col}44">${h.sport}</span>
       </div>
       <!-- avatar + name row -->
       <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.6rem">
@@ -2622,7 +2705,7 @@ function renderAllocCharts() {
   const legendOpts = {
     display: true, position: 'right',
     labels: {
-      color: '#a89070', font: { size: 11, family: "'IBM Plex Mono'" }, boxWidth: 10, padding: 14,
+      color: '#c8aa88', font: { size: 11, family: "'IBM Plex Mono'" }, boxWidth: 10, padding: 14,
       generateLabels: function(chart) {
         const data = chart.data;
         return data.labels.map((label, i) => ({
@@ -2641,7 +2724,7 @@ function renderAllocCharts() {
     responsive: true, maintainAspectRatio: false,
     plugins: { legend: legendOpts, tooltip: {
       backgroundColor: '#181818', borderColor: '#b8922e', borderWidth: 1,
-      titleColor: '#ffffff', bodyColor: '#a89070',
+      titleColor: '#ffffff', bodyColor: '#c8aa88',
       titleFont: { family: "'Plus Jakarta Sans'", weight: '600' },
       bodyFont: { family: "'IBM Plex Mono'", size: 11 },
       callbacks: { label: ctx => ` ${ctx.label}: $${ctx.raw.toLocaleString()}` }
@@ -2869,7 +2952,7 @@ function mountWlChart(c) {
           borderColor: color,
           borderWidth: 1,
           titleColor: '#ffffff',
-          bodyColor: '#a89070',
+          bodyColor: '#c8aa88',
           titleFont: { family: "'IBM Plex Mono'", size: 10 },
           bodyFont:  { family: "'IBM Plex Mono'", size: 11 },
           callbacks: {
@@ -2888,7 +2971,7 @@ function mountWlChart(c) {
           grid: { color: 'rgba(201,168,76,0.05)', drawBorder: false },
           border: { display: false },
           ticks: {
-            color: '#5a4a38',
+            color: '#8a7060',
             font: { family: "'IBM Plex Mono'", size: 9 },
             maxTicksLimit: 3,
             callback: v => '$' + (v >= 1000 ? (v/1000).toFixed(1)+'k' : Math.round(v))
