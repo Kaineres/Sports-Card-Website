@@ -640,6 +640,9 @@
   }
 
   .alloc-section { padding: 1.5rem 2rem; border-top: 1px solid var(--border); }
+  .pv-range-btn { background: transparent; border: 1px solid var(--border); color: var(--text3); font-family: var(--font-mono); font-size: 0.72rem; padding: 4px 10px; border-radius: 5px; cursor: pointer; transition: all 0.15s; letter-spacing: 0.04em; }
+  .pv-range-btn:hover { color: var(--text1); border-color: var(--text3); }
+  .pv-range-btn.active { background: rgba(34,211,200,0.12); border-color: #22d3c8; color: #22d3c8; }
   .alloc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-top: 1rem; }
   @media (max-width: 700px) { .alloc-grid { grid-template-columns: 1fr; } }
 
@@ -1745,7 +1748,7 @@
       <option value="PSA 7 & Below">PSA 7 &amp; Below</option>
       <option value="Raw">Raw</option>
     </select>
-    <button class="add-btn" onclick="openAddModal()">+ Add Card</button>
+    <button class="add-btn" onclick="openAddModal()">+ Add to Collection</button>
   </div>
 
   <div class="table-wrap">
@@ -1766,6 +1769,32 @@
       </thead>
       <tbody id="collection-body"></tbody>
     </table>
+  </div>
+
+  <!-- Portfolio Value Chart -->
+  <div class="alloc-section" id="pv-section" style="padding-bottom:1.5rem">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:0.25rem">
+      <div>
+        <div class="section-label">Performance</div>
+        <div style="display:flex;align-items:baseline;gap:0.75rem;flex-wrap:wrap;margin-top:4px">
+          <div id="pv-price-display" style="font-family:var(--font-mono);font-size:2rem;font-weight:700;letter-spacing:-0.02em;color:var(--text1);line-height:1"></div>
+          <span id="pv-change-display" style="font-size:0.82rem;font-family:var(--font-mono);padding:3px 10px;border-radius:5px;font-weight:600"></span>
+        </div>
+        <div id="pv-hover-label" style="font-size:0.72rem;font-family:var(--font-mono);color:var(--text3);margin-top:4px;min-height:1em"></div>
+      </div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;align-self:flex-start;margin-top:4px">
+        <button class="pv-range-btn active" onclick="setPVRange('1W',this)">1W</button>
+        <button class="pv-range-btn" onclick="setPVRange('1M',this)">1M</button>
+        <button class="pv-range-btn" onclick="setPVRange('3M',this)">3M</button>
+        <button class="pv-range-btn" onclick="setPVRange('6M',this)">6M</button>
+        <button class="pv-range-btn" onclick="setPVRange('1Y',this)">1Y</button>
+        <button class="pv-range-btn" onclick="setPVRange('ALL',this)">ALL</button>
+      </div>
+    </div>
+    <div class="chart-wrap" style="height:300px;position:relative;margin-top:1rem">
+      <canvas id="portfolioValueChart" role="img" aria-label="Portfolio value over time"></canvas>
+    </div>
+    <div id="pv-stats-bar" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:0;border-top:1px solid rgba(148,174,220,0.08)"></div>
   </div>
 
   <div class="alloc-section">
@@ -1978,6 +2007,8 @@ let nextId = 9;
 let sortField = null;
 let sortDir = 1;
 let allocSportChart, allocGradeChart;
+let portfolioValueChart;
+let pvRange = '1W';
 
 // ─── SPORT CONFIG ────────────────────────────────────────────────────────────
 const SPORTS = [
@@ -2401,7 +2432,7 @@ function initMarketCharts() {
     type:'bar',
     data:{
       labels:['PSA 7','PSA 8','PSA 9','PSA 10'],
-      datasets:[{label:'Premium Multiple',data:[1,1.6,2.4,3.8],backgroundColor:['#22d3c8','rgba(201,168,76,0.25)','rgba(201,168,76,0.5)','#c9a84c'],borderWidth:0,borderRadius:4}]
+      datasets:[{label:'Premium Multiple',data:[1,1.6,2.4,3.8],backgroundColor:['#22d3c8','#e05c5c','#a78bfa','#c9a84c'],borderWidth:0,borderRadius:4}]
     },
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'#8a8070',font:{size:11}}},y:{grid:{color:'rgba(148,174,220,0.05)'},ticks:{color:'#8a8070',font:{size:11},callback:v=>v+'×'},position:'right'}}}
   });
@@ -2542,6 +2573,7 @@ function renderCollection() {
   renderPortfolioStats();
   renderTableBody(cards);
   renderAllocCharts();
+  renderPortfolioValueChart();
 }
 
 function renderPortfolioStats() {
@@ -2658,6 +2690,225 @@ function undoRemove(card) {
   updateWatchBadge();
   const toast = document.getElementById('remove-toast');
   if (toast) toast.style.opacity = '0';
+}
+
+
+// ─── PORTFOLIO VALUE CHART ────────────────────────────────────────────────────
+function generatePVHistory(totalVal, totalCost) {
+  const now = Date.now();
+  const day = 86400000;
+  const configs = {
+    '1W':  { points: 7,   step: day,        volBase: 0.008 },
+    '1M':  { points: 30,  step: day,        volBase: 0.012 },
+    '3M':  { points: 90,  step: day,        volBase: 0.016 },
+    '6M':  { points: 26,  step: day * 7,    volBase: 0.022 },
+    '1Y':  { points: 52,  step: day * 7,    volBase: 0.028 },
+    'ALL': { points: 48,  step: day * 22,   volBase: 0.034 }
+  };
+  const startFractions = { '1W': 0.977, '1M': 0.924, '3M': 0.862, '6M': 0.795, '1Y': 0.672, 'ALL': 0.48 };
+  const result = {};
+  // Seeded pseudo-random for consistency per session
+  let seed = Math.floor(totalVal * 137 + totalCost * 31) & 0xffff;
+  const rnd = () => { seed = (seed * 1664525 + 1013904223) & 0xffffffff; return ((seed >>> 16) & 0x7fff) / 0x7fff; };
+
+  for (const [range, cfg] of Object.entries(configs)) {
+    const labels = [], data = [];
+    const startVal = Math.max(totalCost * startFractions[range], totalVal * 0.3);
+    let val = startVal;
+    const pts = cfg.points;
+    // Build a realistic random walk with mean-reversion toward the trend
+    for (let i = 0; i < pts; i++) {
+      const ts = now - (pts - 1 - i) * cfg.step;
+      const d = new Date(ts);
+      let label;
+      if (cfg.step <= day) label = d.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+      else if (cfg.step < day * 20) label = d.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+      else label = d.toLocaleDateString('en-US', {month:'short', year:'2-digit'});
+      labels.push(label);
+      if (i > 0) {
+        const t = i / (pts - 1);
+        const trendTarget = startVal + (totalVal - startVal) * (t * t * 0.5 + t * 0.5);
+        const drift = (trendTarget - val) * 0.12; // mean reversion
+        const shock = (rnd() - 0.5) * 2 * cfg.volBase * val;
+        // Occasional larger moves (market events ~10% of steps)
+        const event = rnd() < 0.1 ? (rnd() - 0.48) * cfg.volBase * 4 * val : 0;
+        val = Math.max(val + drift + shock + event, totalVal * 0.2);
+      }
+      data.push(parseFloat(val.toFixed(2)));
+    }
+    data[data.length - 1] = parseFloat(totalVal.toFixed(2));
+    result[range] = { labels, data };
+  }
+  return result;
+}
+
+let pvHistory = null;
+
+function renderPortfolioValueChart() {
+  const totalVal = cards.reduce((a,c)=>a+c.currentValue*c.qty,0);
+  const totalCost = cards.reduce((a,c)=>a+c.purchasePrice*c.qty,0);
+  pvHistory = generatePVHistory(totalVal, totalCost);
+  drawPVChart(pvRange);
+}
+
+function setPVRange(range, btn) {
+  pvRange = range;
+  document.querySelectorAll('.pv-range-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  drawPVChart(range);
+}
+
+function drawPVChart(range) {
+  if (!pvHistory) return;
+  const { labels, data } = pvHistory[range];
+  const first = data[0], last = data[data.length - 1];
+  const isUp = last >= first;
+  const lineColor = isUp ? '#22d3c8' : '#e05c5c';
+  const gradColor = isUp ? 'rgba(34,211,200,' : 'rgba(224,92,92,';
+  const totalCost = cards.reduce((a,c)=>a+c.purchasePrice*c.qty,0);
+
+  const fmtDollar = v => '$' + v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const fmtK = v => '$' + (Math.abs(v) >= 1000 ? (v/1000).toFixed(1)+'k' : v.toFixed(0));
+
+  // Header
+  const change = last - first;
+  const changePct = first > 0 ? ((change / first) * 100).toFixed(2) : '0.00';
+  document.getElementById('pv-price-display').textContent = fmtDollar(last);
+  const disp = document.getElementById('pv-change-display');
+  disp.textContent = (change >= 0 ? '+' : '') + fmtDollar(Math.abs(change)) + ' (' + (change >= 0 ? '+' : '-') + Math.abs(changePct) + '%)';
+  disp.style.background = isUp ? 'rgba(34,211,200,0.12)' : 'rgba(224,92,92,0.12)';
+  disp.style.color = lineColor;
+  disp.style.border = isUp ? '1px solid rgba(34,211,200,0.25)' : '1px solid rgba(224,92,92,0.25)';
+
+  // Stats bar
+  const hi = Math.max(...data), lo = Math.min(...data);
+  const totalReturn = totalCost > 0 ? (((last - totalCost) / totalCost) * 100).toFixed(1) : '0.0';
+  const statsEl = document.getElementById('pv-stats-bar');
+  const statItem = (label, val, color) =>
+    `<div style="padding:0.9rem 0.5rem 0.75rem;text-align:center;border-right:1px solid rgba(148,174,220,0.07)">
+      <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:0.09em;color:var(--text3);font-family:var(--font-mono);margin-bottom:5px">${label}</div>
+      <div style="font-family:var(--font-mono);font-size:0.92rem;font-weight:600;color:${color||'var(--text1)'}">${val}</div>
+    </div>`;
+  statsEl.innerHTML =
+    statItem('Period High', fmtK(hi), '#22d3c8') +
+    statItem('Period Low', fmtK(lo), '#e05c5c') +
+    statItem('Cost Basis', fmtK(totalCost), 'var(--text2)') +
+    statItem('Total Return', (parseFloat(totalReturn)>=0?'+':'')+totalReturn+'%', parseFloat(totalReturn)>=0?'#22d3c8':'#e05c5c');
+
+  if (portfolioValueChart) portfolioValueChart.destroy();
+
+  const canvas = document.getElementById('portfolioValueChart');
+  const ctx = canvas.getContext('2d');
+  const grad = ctx.createLinearGradient(0, 0, 0, 300);
+  grad.addColorStop(0, gradColor + '0.20)');
+  grad.addColorStop(0.65, gradColor + '0.06)');
+  grad.addColorStop(1, gradColor + '0)');
+
+  // Crosshair plugin
+  const crosshairPlugin = {
+    id: 'pvCrosshair',
+    afterDraw(chart) {
+      if (chart.tooltip._active && chart.tooltip._active.length) {
+        const ctx2 = chart.ctx;
+        const x = chart.tooltip._active[0].element.x;
+        const topY = chart.chartArea.top;
+        const botY = chart.chartArea.bottom;
+        ctx2.save();
+        ctx2.beginPath();
+        ctx2.moveTo(x, topY);
+        ctx2.lineTo(x, botY);
+        ctx2.lineWidth = 1;
+        ctx2.strokeStyle = 'rgba(148,174,220,0.22)';
+        ctx2.setLineDash([4,4]);
+        ctx2.stroke();
+        ctx2.restore();
+      }
+    }
+  };
+
+  portfolioValueChart = new Chart(ctx, {
+    type: 'line',
+    plugins: [crosshairPlugin],
+    data: {
+      labels,
+      datasets: [{
+        data,
+        borderColor: lineColor,
+        borderWidth: 2,
+        backgroundColor: grad,
+        fill: true,
+        tension: 0.3,
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: lineColor,
+        pointHoverBorderColor: '#0e1420',
+        pointHoverBorderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      onHover: (evt, elements, chart) => {
+        const hoverEl = document.getElementById('pv-hover-label');
+        if (elements && elements.length) {
+          const idx = elements[0].index;
+          const hVal = data[idx];
+          const hLbl = labels[idx];
+          const hChange = hVal - first;
+          const hPct = first > 0 ? ((hChange/first)*100).toFixed(2) : '0.00';
+          hoverEl.textContent = hLbl + '  ·  ' + fmtDollar(hVal) + '  ' + (hChange>=0?'▲':'▼') + ' ' + Math.abs(hPct) + '%';
+          hoverEl.style.color = hChange >= 0 ? '#22d3c8' : '#e05c5c';
+          document.getElementById('pv-price-display').textContent = fmtDollar(hVal);
+        } else {
+          hoverEl.textContent = '';
+          hoverEl.style.color = 'var(--text3)';
+          document.getElementById('pv-price-display').textContent = fmtDollar(last);
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#101828',
+          borderColor: lineColor,
+          borderWidth: 1,
+          titleColor: '#7e93b4',
+          bodyColor: lineColor,
+          titleFont: { family: "'IBM Plex Mono'", size: 11 },
+          bodyFont: { family: "'IBM Plex Mono'", size: 13, weight: '600' },
+          padding: 12,
+          displayColors: false,
+          callbacks: {
+            title: items => items[0].label,
+            label: item => fmtDollar(item.parsed.y)
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(148,174,220,0.04)', drawBorder: false },
+          ticks: {
+            color: '#4a5a78',
+            font: { size: 10, family: "'IBM Plex Mono'" },
+            maxTicksLimit: 7,
+            maxRotation: 0
+          },
+          border: { display: false }
+        },
+        y: {
+          position: 'right',
+          grid: { color: 'rgba(148,174,220,0.05)', drawBorder: false },
+          ticks: {
+            color: '#4a5a78',
+            font: { size: 10, family: "'IBM Plex Mono'" },
+            callback: v => '$' + (Math.abs(v) >= 1000 ? (v/1000).toFixed(1)+'k' : v.toFixed(0)),
+            maxTicksLimit: 6
+          },
+          border: { display: false }
+        }
+      }
+    }
+  });
 }
 
 function renderAllocCharts() {
