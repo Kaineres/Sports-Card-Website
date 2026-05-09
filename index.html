@@ -914,7 +914,7 @@
     position: relative;
     padding: 4.5rem 2rem 3.5rem;
     text-align: center;
-    overflow: hidden;
+    overflow: visible;
     border-bottom: 1px solid var(--border);
   }
   .hub-grid-bg {
@@ -929,7 +929,7 @@
     background: radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, rgba(184,146,46,0.04) 50%, transparent 70%);
     z-index: 0;
   }
-  .hub-content { position: relative; z-index: 1; max-width: 660px; margin: 0 auto; }
+  .hub-content { position: relative; z-index: 500; max-width: 660px; margin: 0 auto; }
   .hub-eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
     background: var(--gold-bg);
@@ -1205,6 +1205,66 @@
     font-size: 0.85rem;
   }
   .browse-search-input::placeholder { color: var(--text3); }
+
+  /* ── AUTOCOMPLETE DROPDOWN (shared) ── */
+  .ac-wrap { position: relative; }
+  .ac-dropdown {
+    position: absolute; top: calc(100% + 5px); left: 0; right: 0;
+    background: var(--bg2);
+    border: 1px solid var(--gold-border);
+    border-radius: 10px;
+    overflow-y: auto;
+    max-height: 60vh;
+    z-index: 400;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+    display: none;
+    /* custom scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: var(--border2) transparent;
+  }
+  .ac-dropdown::-webkit-scrollbar { width: 5px; }
+  .ac-dropdown::-webkit-scrollbar-track { background: transparent; }
+  .ac-dropdown::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+  .ac-dropdown.open { display: block; }
+  .ac-item {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; padding: 10px 14px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+  .ac-item:last-child { border-bottom: none; }
+  .ac-item:hover, .ac-item.ac-focused { background: var(--bg3); }
+  .ac-item:hover .ac-player, .ac-item.ac-focused .ac-player { color: var(--gold2); }
+  .ac-left { display: flex; align-items: center; gap: 9px; min-width: 0; }
+  .ac-dot {
+    width: 26px; height: 26px; border-radius: 5px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 0.8rem;
+  }
+  .ac-text { min-width: 0; }
+  .ac-player { font-family: var(--font-display); font-size: 0.85rem; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ac-sub { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.02em; margin-top: 1px; }
+  .ac-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .ac-price { font-family: var(--font-mono); font-size: 0.78rem; color: var(--gold3); }
+  .ac-no-results { padding: 14px 16px; text-align: center; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text3); letter-spacing: 0.04em; }
+  .ac-section-header {
+    padding: 6px 14px 5px;
+    font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    display: flex; align-items: center; gap: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .ac-section-header.watching {
+    background: var(--gold-bg); color: var(--gold2);
+    border-bottom-color: var(--gold-border);
+  }
+  .ac-section-header.watching::before { content: '★'; font-size: 0.65rem; }
+  .ac-section-header.other { color: var(--text3); background: var(--bg); margin-top: 2px; }
+  .ac-item.is-watched { background: rgba(201,168,76,0.04); }
+  .ac-item.is-watched:hover, .ac-item.is-watched.ac-focused { background: rgba(201,168,76,0.1); }
+  .ac-watch-star { font-size: 0.65rem; color: var(--gold2); margin-left: 4px; flex-shrink: 0; }
+  /* hub search needs extra z so it floats above sport tiles */
+  .hub-search-wrap .ac-dropdown { top: calc(100% + 8px); min-width: 100%; }
   .browse-filters { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .browse-result-meta {
     font-family: var(--font-mono);
@@ -1305,6 +1365,109 @@
   .browse-empty h3 { font-family: var(--font-serif); font-size: 1.1rem; color: var(--text2); margin-bottom: 0.5rem; }
   .browse-empty p { font-size: 0.82rem; }
 
+  /* ── PLAYER PAGE ── */
+  #page-player { padding-bottom: 4rem; }
+  .pp-hero {
+    position: relative; overflow: hidden;
+    padding: 2.5rem 2rem 2rem;
+    background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .pp-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(148,174,220,0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(ellipse 100% 100% at 50% 0%, black 0%, transparent 80%);
+    pointer-events: none;
+  }
+  .pp-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: none; border: 1px solid var(--border2); border-radius: 6px;
+    color: var(--text3); font-family: var(--font-mono); font-size: 0.68rem;
+    padding: 5px 12px; cursor: pointer; transition: 0.15s;
+    margin-bottom: 1.25rem; position: relative; z-index: 1;
+    letter-spacing: 0.04em;
+  }
+  .pp-back:hover { color: var(--text); border-color: var(--border3); background: var(--bg3); }
+  .pp-hero-inner { position: relative; z-index: 1; display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+  .pp-sport-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    padding: 3px 9px; border-radius: 4px; margin-bottom: 0.6rem;
+  }
+  .pp-name { font-family: var(--font-serif); font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 700; color: var(--text); line-height: 1.1; margin-bottom: 0.5rem; }
+  .pp-meta { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text3); letter-spacing: 0.04em; }
+  .pp-hero-stats { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.25rem; }
+  .pp-hstat { text-align: left; }
+  .pp-hstat-val { font-family: var(--font-mono); font-size: 1.25rem; font-weight: 500; color: var(--gold3); letter-spacing: -0.02em; }
+  .pp-hstat-lbl { font-family: var(--font-mono); font-size: 0.6rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px; }
+
+  /* selected card detail panel */
+  .pp-detail-wrap { padding: 1.5rem 2rem 0; }
+  .pp-detail-card {
+    background: var(--bg2); border: 1px solid var(--border2);
+    border-radius: var(--radius-xl); overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    position: relative;
+  }
+  .pp-detail-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold3), transparent);
+  }
+  .pp-detail-top {
+    display: grid; grid-template-columns: 1fr 260px;
+    gap: 0; border-bottom: 1px solid var(--border);
+  }
+  @media (max-width: 640px) { .pp-detail-top { grid-template-columns: 1fr; } }
+  .pp-detail-left { padding: 1.5rem 1.75rem; border-right: 1px solid var(--border); }
+  .pp-detail-cardname { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: var(--gold2); margin-bottom: 0.3rem; }
+  .pp-detail-set { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text3); letter-spacing: 0.04em; margin-bottom: 0.9rem; }
+  .pp-detail-pills { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 1.25rem; }
+  .pp-chart-section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+  .pp-chart-title { font-family: var(--font-mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); }
+  .pp-range-row { display: flex; gap: 4px; }
+  .pp-range-btn {
+    background: none; border: 1px solid var(--border); color: var(--text3);
+    font-family: var(--font-mono); font-size: 0.6rem; padding: 3px 8px;
+    border-radius: 4px; cursor: pointer; transition: 0.12s; letter-spacing: 0.04em;
+  }
+  .pp-range-btn.active { background: var(--gold-bg); border-color: var(--gold-border); color: var(--gold2); }
+  .pp-range-btn:hover:not(.active) { background: var(--bg3); border-color: var(--border2); color: var(--text2); }
+  .pp-chart-wrap { height: 160px; position: relative; }
+  .pp-detail-right { padding: 1.5rem; display: flex; flex-direction: column; gap: 0; }
+  .pp-stat-row { display: flex; flex-direction: column; gap: 0; }
+  .pp-stat { padding: 0.9rem 0; border-bottom: 1px solid var(--border); }
+  .pp-stat:last-child { border-bottom: none; }
+  .pp-stat-val { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 500; color: var(--gold3); }
+  .pp-stat-lbl { font-family: var(--font-mono); font-size: 0.6rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px; }
+
+  /* tables inside detail */
+  .pp-tables { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--border); }
+  @media (max-width: 640px) { .pp-tables { grid-template-columns: 1fr; } }
+  .pp-table-section { padding: 1.25rem 1.75rem; }
+  .pp-table-section:first-child { border-right: 1px solid var(--border); }
+  .pp-table-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+  .pp-table-title { font-family: var(--font-mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); }
+  .pp-table-count { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text3); }
+  .cd-table { width: 100%; border-collapse: collapse; }
+  .pp-detail-actions { display: flex; gap: 10px; padding: 1.25rem 1.75rem; border-top: 1px solid var(--border); }
+  .pp-act-btn {
+    flex: 1; padding: 9px 0; border-radius: 7px; text-align: center;
+    font-family: var(--font-display); font-size: 0.82rem; font-weight: 700;
+    cursor: pointer; transition: 0.15s;
+    border: 1px solid var(--border2); background: var(--bg3); color: var(--text2);
+  }
+  .pp-act-btn:hover { background: var(--bg4); border-color: var(--border3); color: var(--text); }
+  .pp-act-btn.primary { background: linear-gradient(135deg, var(--gold), var(--gold2)); color: #0d1117; border-color: transparent; }
+  .pp-act-btn.primary:hover { background: linear-gradient(135deg, var(--gold2), var(--gold3)); transform: translateY(-1px); }
+  .pp-act-btn.watch-on { color: var(--gold2); border-color: var(--gold-border); background: var(--gold-bg); }
+
+  /* other cards section */
+  .pp-other-section { padding: 1.75rem 2rem 0; }
+  .pp-section-label { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text3); margin-bottom: 1rem; }
+  .pp-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.875rem; }
+
   /* ── SCROLLBAR ── */
   ::-webkit-scrollbar { width: 5px; height: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
@@ -1321,11 +1484,13 @@
     border-radius: 4px; text-transform: uppercase;
   }
   .ag-wrap { max-width: 760px; margin: 0 auto; padding: 3rem 2rem; }
+  .ag-dual-upload { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 1.25rem; }
+  @media (max-width: 520px) { .ag-dual-upload { grid-template-columns: 1fr; } }
   .ag-dropzone {
     border: 2px dashed var(--border2);
     border-radius: var(--radius-xl);
     background: var(--bg2);
-    padding: 4rem 2rem;
+    padding: 2.25rem 1.5rem;
     text-align: center; cursor: pointer;
     transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
     position: relative; overflow: hidden;
@@ -1340,17 +1505,42 @@
     box-shadow: 0 0 40px rgba(184,146,46,0.08);
   }
   .ag-dropzone:hover::before, .ag-dropzone.drag-over::before { opacity: 1; }
-  .ag-drop-icon { font-size: 2.8rem; margin-bottom: 1rem; opacity: 0.7; }
-  .ag-drop-title { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--gold2); margin-bottom: 0.4rem; }
-  .ag-drop-sub { font-family: var(--font-mono); font-size: 0.72rem; color: var(--gold-border); letter-spacing: 0.04em; }
+  .ag-dropzone.has-file { border-color: rgba(52,201,122,0.5); background: rgba(52,201,122,0.04); }
+  .ag-dropzone.has-file::before { background: radial-gradient(ellipse at 50% 0%, rgba(52,201,122,0.07) 0%, transparent 70%); opacity: 1; }
+  .ag-dropzone.required-err { border-color: rgba(224,92,92,0.7); animation: ag-shake 0.32s ease; }
+  @keyframes ag-shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+  .ag-zone-label {
+    font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    color: var(--text3); margin-bottom: 0.65rem;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .ag-zone-req { color: var(--red); font-size: 0.6rem; }
+  .ag-zone-ok  { color: #34c97a; }
+  .ag-zone-thumb { width: 100%; max-height: 110px; object-fit: contain; border-radius: 6px; margin-bottom: 0.4rem; display: none; }
+  .ag-zone-fname { font-family: var(--font-mono); font-size: 0.64rem; color: #34c97a; margin-top: 0.3rem; display: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ag-zone-clear { font-family: var(--font-mono); font-size: 0.62rem; color: var(--red); background: none; border: none; cursor: pointer; margin-top: 4px; display: none; padding: 0; letter-spacing: 0.04em; }
+  .ag-zone-clear:hover { text-decoration: underline; }
+  .ag-drop-icon { font-size: 2.2rem; margin-bottom: 0.65rem; opacity: 0.7; }
+  .ag-drop-title { font-family: var(--font-display); font-size: 0.88rem; font-weight: 600; color: var(--gold2); margin-bottom: 0.3rem; }
+  .ag-drop-sub { font-family: var(--font-mono); font-size: 0.68rem; color: var(--gold-border); letter-spacing: 0.04em; }
   .ag-upload-btn {
-    margin-top: 1.75rem; padding: 11px 30px;
+    margin-top: 1.1rem; padding: 9px 22px;
     background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
     border: none; border-radius: 7px; color: #080808;
-    font-family: var(--font-display); font-size: 0.875rem; font-weight: 700;
+    font-family: var(--font-display); font-size: 0.82rem; font-weight: 700;
     cursor: pointer; transition: 0.18s; letter-spacing: 0.01em;
   }
   .ag-upload-btn:hover { background: linear-gradient(135deg, var(--gold2) 0%, var(--gold3) 100%); transform: translateY(-1px); }
+  .ag-analyze-btn {
+    width: 100%; padding: 13px; border: none; border-radius: 8px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: #080808; font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
+    cursor: pointer; transition: 0.18s; letter-spacing: 0.01em;
+    opacity: 0.38; pointer-events: none; margin-bottom: 1rem;
+  }
+  .ag-analyze-btn.ready { opacity: 1; pointer-events: auto; }
+  .ag-analyze-btn.ready:hover { background: linear-gradient(135deg, var(--gold2), var(--gold3)); transform: translateY(-1px); }
   .ag-loading { text-align: center; padding: 3.5rem 0; display: none; }
   .ag-progress-track { width: 100%; height: 3px; background: var(--bg4); border-radius: 99px; overflow: hidden; margin: 1.5rem 0 1rem; }
   .ag-progress-bar {
@@ -1425,7 +1615,7 @@
   </div>
   <ul class="nav-links">
     <li><button onclick="showPage('home')" id="nav-home" class="active">Home</button></li>
-    <li><button onclick="showPage('market')" id="nav-market">Market</button></li>
+    <li><button onclick="showPage('market')" id="nav-market">Market Analysis</button></li>
     <li><button onclick="showPage('collection')" id="nav-collection">Collection</button></li>
     <li><button onclick="showPage('watchlist')" id="nav-watchlist">Watchlist <span class="nav-badge" id="wl-badge">0</span></button></li>
     <li><button onclick="showPage('ai-grading')" id="nav-ai-grading">✦ AI Grading</button></li>
@@ -1455,10 +1645,12 @@
           class="hub-search"
           id="hub-global-search"
           placeholder="Search any player, set, or card name…"
-          oninput="handleHubSearch(this.value)"
-          onkeydown="if(event.key==='Enter') goToBrowse(null, this.value)"
+          oninput="acShow('hub-global-search','hub-ac')"
+          onkeydown="acKey(event,'hub-global-search','hub-ac')"
+          autocomplete="off"
         >
-        <button class="hub-search-btn" onclick="goToBrowse(null, document.getElementById('hub-global-search').value)">Browse All →</button>
+        <button class="hub-search-btn" onclick="goToBrowse(null, document.getElementById('hub-global-search').value);acClose('hub-ac')">Browse All →</button>
+        <div class="ac-dropdown" id="hub-ac"></div>
       </div>
     </div>
   </div>
@@ -1484,9 +1676,13 @@
       <div class="browse-sport-badge" id="browse-sport-badge">All Sports</div>
     </div>
     <div class="browse-search-row">
-      <div class="browse-search-wrap">
+      <div class="browse-search-wrap" style="position:relative">
         <span class="hub-search-icon">⌕</span>
-        <input type="text" class="browse-search-input" id="browse-search" placeholder="Search player, set, card name…" oninput="filterBrowse()">
+        <input type="text" class="browse-search-input" id="browse-search" placeholder="Search player, set, card name…"
+          oninput="filterBrowse();acShow('browse-search','browse-ac')"
+          onkeydown="acKey(event,'browse-search','browse-ac')"
+          autocomplete="off">
+        <div class="ac-dropdown" id="browse-ac"></div>
       </div>
       <div class="browse-filters">
         <div class="pill-group" id="browse-sport-pills"></div>
@@ -1687,10 +1883,14 @@
         <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap">
           <div style="position:relative;display:flex;align-items:center">
             <span style="position:absolute;left:14px;color:var(--gold2);font-size:1.05rem;pointer-events:none;line-height:1">⌕</span>
-            <input type="text" id="heat-search" placeholder="Search player…" oninput="renderHeatMap()"
+            <input type="text" id="heat-search" placeholder="Search player…"
+              oninput="renderHeatMap();acShow('heat-search','heat-ac')"
+              onkeydown="acKey(event,'heat-search','heat-ac')"
+              autocomplete="off"
               style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);color:var(--text);font-family:var(--font-display);font-size:0.95rem;font-weight:500;padding:10px 16px 10px 40px;width:280px;outline:none;transition:border-color 0.18s,box-shadow 0.18s;box-shadow:inset 0 1px 3px rgba(0,0,0,0.4)"
               onfocus="this.style.borderColor='var(--gold-border)';this.style.boxShadow='0 0 0 2px rgba(184,146,46,0.12),inset 0 1px 3px rgba(0,0,0,0.4)'"
               onblur="this.style.borderColor='var(--border2)';this.style.boxShadow='inset 0 1px 3px rgba(0,0,0,0.4)'">
+            <div class="ac-dropdown" id="heat-ac"></div>
           </div>
           <select id="heat-sport" onchange="renderHeatMap()" style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);color:var(--text2);font-family:var(--font-display);font-size:0.92rem;font-weight:500;padding:10px 16px;outline:none;cursor:pointer;transition:border-color 0.18s;box-shadow:inset 0 1px 3px rgba(0,0,0,0.4)">
             <option value="">All Sports</option>
@@ -1733,7 +1933,13 @@
   </div>
 
   <div class="collection-toolbar">
-    <input type="text" class="search-input" placeholder="Search cards, players..." id="collection-search" oninput="filterCollection()">
+    <div style="position:relative;flex:1;min-width:180px">
+      <input type="text" class="search-input" placeholder="Search cards, players..." id="collection-search"
+        oninput="filterCollection();acShow('collection-search','collection-ac')"
+        onkeydown="acKey(event,'collection-search','collection-ac')"
+        autocomplete="off" style="width:100%">
+      <div class="ac-dropdown" id="collection-ac"></div>
+    </div>
     <select class="filter-sel" id="filter-sport" onchange="filterCollection()">
       <option value="">All Sports</option>
       <option value="NBA">NBA</option>
@@ -1824,10 +2030,130 @@
     </div>
     <div style="display:flex;align-items:center;gap:10px">
       <span class="watchlist-count" id="wl-count">0 cards</span>
-      <button class="btn-sm btn-ghost" onclick="showPage('market')">Browse Market</button>
+
     </div>
   </div>
   <div class="wl-grid-inner" id="watchlist-grid"></div>
+</div>
+
+<!-- CARD DETAIL MODAL -->
+<!-- ════════════════════════════════════════
+     PLAYER PAGE
+════════════════════════════════════════ -->
+<div class="page" id="page-player">
+
+  <!-- Hero header -->
+  <div class="pp-hero">
+    <button class="pp-back" id="pp-back-btn" onclick="ppGoBack()">← Back</button>
+    <div class="pp-hero-inner">
+      <div>
+        <div class="pp-sport-pill" id="pp-sport-pill"></div>
+        <div class="pp-name" id="pp-name"></div>
+        <div class="pp-meta" id="pp-meta"></div>
+        <div class="pp-hero-stats" id="pp-hero-stats"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selected card detail -->
+  <div class="pp-detail-wrap">
+    <div class="pp-detail-card">
+
+      <div class="pp-detail-top">
+        <!-- left: card info + chart -->
+        <div class="pp-detail-left">
+          <div class="pp-detail-cardname" id="pp-cardname"></div>
+          <div class="pp-detail-set" id="pp-cardset"></div>
+          <div class="pp-detail-pills" id="pp-detail-pills"></div>
+          <div class="pp-chart-section-head">
+            <div class="pp-chart-title">Value Over Time</div>
+            <div class="pp-range-row" id="pp-range-row">
+              <button class="pp-range-btn" onclick="ppSetRange('7D',this)">7D</button>
+              <button class="pp-range-btn" onclick="ppSetRange('30D',this)">30D</button>
+              <button class="pp-range-btn active" onclick="ppSetRange('90D',this)">90D</button>
+              <button class="pp-range-btn" onclick="ppSetRange('6M',this)">6M</button>
+              <button class="pp-range-btn" onclick="ppSetRange('1Y',this)">1Y</button>
+              <button class="pp-range-btn" onclick="ppSetRange('5Y',this)">5Y+</button>
+            </div>
+          </div>
+          <div class="pp-chart-wrap">
+            <canvas id="pp-chart-canvas"></canvas>
+          </div>
+        </div>
+        <!-- right: key stats -->
+        <div class="pp-detail-right">
+          <div class="pp-stat-row">
+            <div class="pp-stat">
+              <div class="pp-stat-val" id="pp-val"></div>
+              <div class="pp-stat-lbl">Current Value</div>
+            </div>
+            <div class="pp-stat">
+              <div class="pp-stat-val" id="pp-change"></div>
+              <div class="pp-stat-lbl">12-Mo Change</div>
+            </div>
+            <div class="pp-stat">
+              <div class="pp-stat-val" id="pp-avg"></div>
+              <div class="pp-stat-lbl">Avg Sale (90d)</div>
+            </div>
+            <div class="pp-stat">
+              <div class="pp-stat-val" id="pp-last"></div>
+              <div class="pp-stat-lbl">Last Sale</div>
+            </div>
+            <div class="pp-stat">
+              <div class="pp-stat-val" id="pp-listings-count"></div>
+              <div class="pp-stat-lbl">Active Listings</div>
+            </div>
+            <div class="pp-stat">
+              <div class="pp-stat-val" id="pp-auctions-count"></div>
+              <div class="pp-stat-lbl">Live Auctions</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- listings + auctions -->
+      <div class="pp-tables">
+        <div class="pp-table-section">
+          <div class="pp-table-head">
+            <div class="pp-table-title">Active Listings</div>
+            <span class="pp-table-count" id="pp-listings-label"></span>
+          </div>
+          <table class="cd-table">
+            <thead><tr>
+              <th>Platform</th><th>Grade</th><th>Notes</th><th>Price</th>
+            </tr></thead>
+            <tbody id="pp-listings-body"></tbody>
+          </table>
+        </div>
+        <div class="pp-table-section">
+          <div class="pp-table-head">
+            <div class="pp-table-title">Live Auctions</div>
+            <span class="pp-table-count" id="pp-auctions-label"></span>
+          </div>
+          <table class="cd-table">
+            <thead><tr>
+              <th>Platform</th><th>Bid</th><th>Bids</th><th>Ends</th>
+            </tr></thead>
+            <tbody id="pp-auctions-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- action bar -->
+      <div class="pp-detail-actions">
+        <button class="pp-act-btn" id="pp-watch-btn" onclick="ppToggleWatch()">☆ Watch</button>
+        <button class="pp-act-btn primary" onclick="ppAddToCollection()">+ Add to Collection</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Other cards by this player -->
+  <div class="pp-other-section">
+    <div class="pp-section-label" id="pp-other-label"></div>
+    <div class="pp-cards-grid" id="pp-other-grid"></div>
+  </div>
+
 </div>
 
 <!-- ADD CARD MODAL -->
@@ -1902,18 +2228,53 @@
 
     <!-- UPLOAD STATE -->
     <div id="ag-upload-state">
-      <div class="ag-dropzone" id="ag-dropzone"
-        ondragover="event.preventDefault(); this.classList.add('drag-over')"
-        ondragleave="this.classList.remove('drag-over')"
-        ondrop="agHandleDrop(event)"
-        onclick="document.getElementById('ag-file-input').click()">
-        <div class="ag-drop-icon">🃏</div>
-        <div class="ag-drop-title">Drop card images here or click to upload</div>
-        <div class="ag-drop-sub">Supports JPG, PNG — Front &amp; back recommended</div>
-        <button class="ag-upload-btn" onclick="event.stopPropagation(); document.getElementById('ag-file-input').click()">Upload Card Images</button>
-        <input type="file" id="ag-file-input" accept="image/*" multiple style="display:none" onchange="agHandleFiles(this.files)">
+      <div class="ag-dual-upload">
+
+        <!-- FRONT -->
+        <div class="ag-dropzone" id="ag-dz-front"
+          ondragover="event.preventDefault();this.classList.add('drag-over')"
+          ondragleave="this.classList.remove('drag-over')"
+          ondrop="agHandleDrop(event,'front')"
+          onclick="document.getElementById('ag-file-front').click()">
+          <div class="ag-zone-label">
+            Front <span class="ag-zone-req" id="ag-front-req">* Required</span>
+            <span class="ag-zone-ok" id="ag-front-ok" style="display:none">✓</span>
+          </div>
+          <img class="ag-zone-thumb" id="ag-thumb-front" alt="Front preview">
+          <div class="ag-drop-icon" id="ag-icon-front">🃏</div>
+          <div class="ag-drop-title">Front of Card</div>
+          <div class="ag-drop-sub">JPG or PNG</div>
+          <div class="ag-zone-fname" id="ag-fname-front"></div>
+          <button class="ag-upload-btn" onclick="event.stopPropagation();document.getElementById('ag-file-front').click()">Upload Front</button>
+          <button class="ag-zone-clear" id="ag-clear-front" onclick="event.stopPropagation();agClearZone('front')">✕ Remove</button>
+          <input type="file" id="ag-file-front" accept="image/*" style="display:none" onchange="agHandleZoneFile(this.files,'front')">
+        </div>
+
+        <!-- BACK -->
+        <div class="ag-dropzone" id="ag-dz-back"
+          ondragover="event.preventDefault();this.classList.add('drag-over')"
+          ondragleave="this.classList.remove('drag-over')"
+          ondrop="agHandleDrop(event,'back')"
+          onclick="document.getElementById('ag-file-back').click()">
+          <div class="ag-zone-label">
+            Back <span class="ag-zone-req" id="ag-back-req">* Required</span>
+            <span class="ag-zone-ok" id="ag-back-ok" style="display:none">✓</span>
+          </div>
+          <img class="ag-zone-thumb" id="ag-thumb-back" alt="Back preview">
+          <div class="ag-drop-icon" id="ag-icon-back">🃏</div>
+          <div class="ag-drop-title">Back of Card</div>
+          <div class="ag-drop-sub">JPG or PNG</div>
+          <div class="ag-zone-fname" id="ag-fname-back"></div>
+          <button class="ag-upload-btn" onclick="event.stopPropagation();document.getElementById('ag-file-back').click()">Upload Back</button>
+          <button class="ag-zone-clear" id="ag-clear-back" onclick="event.stopPropagation();agClearZone('back')">✕ Remove</button>
+          <input type="file" id="ag-file-back" accept="image/*" style="display:none" onchange="agHandleZoneFile(this.files,'back')">
+        </div>
+
       </div>
-      <div style="display:flex;align-items:flex-start;gap:0.6rem;margin-top:1rem;padding:0.75rem 1rem;background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:var(--radius-lg)">
+
+      <button class="ag-analyze-btn" id="ag-analyze-btn" onclick="agStartGrading()">Analyze Card</button>
+
+      <div style="display:flex;align-items:flex-start;gap:0.6rem;padding:0.75rem 1rem;background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:var(--radius-lg)">
         <span style="font-size:0.9rem;margin-top:1px;flex-shrink:0">⚠️</span>
         <p style="font-family:var(--font-mono);font-size:0.72rem;color:var(--gold2);letter-spacing:0.02em;line-height:1.6">
           <strong style="color:var(--gold3)">Disclaimer:</strong> Grading accuracy depends on image quality. Higher resolution, well-lit photos with minimal glare will produce the most accurate estimated grade. Blurry or low-quality images may result in reduced precision.
@@ -2024,46 +2385,198 @@ const SPORTS = [
 
 // Extended browse catalog (mock data covering all sports)
 const BROWSE_CATALOG = [
-  // NBA
-  { id:'b1',  player:'LeBron James',          cardName:'2003-04 Topps Chrome Rookie',         setName:'Topps Chrome',       year:2003, grade:'PSA 9',  currentValue:4800,  percentChange:50.0,  category:'NBA' },
-  { id:'b2',  player:'Luka Dončić',           cardName:'2018-19 Panini Prizm Silver Rookie',   setName:'Panini Prizm',       year:2018, grade:'PSA 10', currentValue:780,   percentChange:-13.3, category:'NBA' },
-  { id:'b3',  player:'Ja Morant',             cardName:'2019-20 Donruss Optic Rated Rookie',   setName:'Donruss Optic',      year:2019, grade:'PSA 10', currentValue:590,   percentChange:22.9,  category:'NBA' },
-  { id:'b4',  player:'Giannis Antetokounmpo', cardName:'2013-14 Panini Prizm Rookie',          setName:'Panini Prizm',       year:2013, grade:'PSA 9',  currentValue:1650,  percentChange:17.9,  category:'NBA' },
-  { id:'b5',  player:'Victor Wembanyama',     cardName:'2023-24 Topps Chrome RC Auto',         setName:'Topps Chrome',       year:2023, grade:'PSA 10', currentValue:3400,  percentChange:28.4,  category:'NBA' },
-  { id:'b6',  player:'Stephen Curry',         cardName:'2009-10 Panini Prizm Rookie',          setName:'Panini Prizm',       year:2009, grade:'PSA 9',  currentValue:2100,  percentChange:9.2,   category:'NBA' },
-  { id:'b7',  player:'Kevin Durant',          cardName:'2007-08 Topps Chrome Rookie Refractor',setName:'Topps Chrome',       year:2007, grade:'PSA 8',  currentValue:880,   percentChange:6.4,   category:'NBA' },
-  { id:'b8',  player:'Nikola Jokić',          cardName:'2015-16 Panini Prizm Rookie Silver',   setName:'Panini Prizm',       year:2015, grade:'PSA 10', currentValue:1420,  percentChange:31.5,  category:'NBA' },
-  // NFL
-  { id:'b9',  player:'Patrick Mahomes',       cardName:'2017 Panini Prizm Rookie PSA 10',      setName:'Panini Prizm',       year:2017, grade:'PSA 10', currentValue:2950,  percentChange:63.9,  category:'NFL' },
-  { id:'b10', player:'Justin Jefferson',      cardName:'2020 Panini Prizm Rookie Silver',       setName:'Panini Prizm',       year:2020, grade:'PSA 9',  currentValue:420,   percentChange:35.5,  category:'NFL' },
-  { id:'b11', player:'Joe Burrow',            cardName:'2020 Panini Prizm Rookie Auto',         setName:'Panini Prizm',       year:2020, grade:'PSA 10', currentValue:890,   percentChange:18.2,  category:'NFL' },
-  { id:'b12', player:'Ja\'Marr Chase',        cardName:'2021 Panini Select Rookie PSA 10',      setName:'Panini Select',      year:2021, grade:'PSA 10', currentValue:560,   percentChange:24.1,  category:'NFL' },
-  { id:'b13', player:'Caleb Williams',        cardName:'2024 Panini Prizm Draft Picks RC',      setName:'Panini Prizm',       year:2024, grade:'Raw',    currentValue:180,   percentChange:-8.1,  category:'NFL' },
-  { id:'b14', player:'Tom Brady',             cardName:'2000 Playoff Contenders Rookie Auto',   setName:'Playoff Contenders', year:2000, grade:'PSA 8',  currentValue:18500, percentChange:5.3,   category:'NFL' },
-  // MLB
-  { id:'b15', player:'Mike Trout',            cardName:'2011 Topps Update Rookie',              setName:'Topps Update',       year:2011, grade:'PSA 8',  currentValue:740,   percentChange:19.4,  category:'MLB' },
-  { id:'b16', player:'Shohei Ohtani',         cardName:'2018 Topps Chrome Rookie Refractor',    setName:'Topps Chrome',       year:2018, grade:'PSA 10', currentValue:1100,  percentChange:29.4,  category:'MLB' },
-  { id:'b17', player:'Fernando Tatis Jr.',    cardName:'2019 Bowman Chrome Auto',               setName:'Bowman Chrome',      year:2019, grade:'PSA 10', currentValue:640,   percentChange:12.0,  category:'MLB' },
-  { id:'b18', player:'Ronald Acuña Jr.',      cardName:'2018 Topps Chrome Rookie Auto',         setName:'Topps Chrome',       year:2018, grade:'PSA 9',  currentValue:480,   percentChange:8.8,   category:'MLB' },
-  { id:'b19', player:'Mickey Mantle',         cardName:'1952 Topps',                            setName:'Topps',              year:1952, grade:'PSA 7',  currentValue:85000, percentChange:3.1,   category:'MLB' },
-  // NHL
-  { id:'b20', player:'Connor McDavid',        cardName:'2015-16 Upper Deck Young Guns Rookie',  setName:'Upper Deck',         year:2015, grade:'PSA 10', currentValue:2400,  percentChange:22.7,  category:'NHL' },
-  { id:'b21', player:'Sidney Crosby',         cardName:'2005-06 Upper Deck Young Guns Rookie',  setName:'Upper Deck',         year:2005, grade:'PSA 9',  currentValue:1800,  percentChange:11.2,  category:'NHL' },
-  { id:'b22', player:'Nathan MacKinnon',      cardName:'2013-14 Upper Deck Young Guns Rookie',  setName:'Upper Deck',         year:2013, grade:'PSA 9',  currentValue:980,   percentChange:16.4,  category:'NHL' },
-  { id:'b23', player:'Auston Matthews',       cardName:'2016-17 Upper Deck Young Guns Rookie',  setName:'Upper Deck',         year:2016, grade:'PSA 10', currentValue:1150,  percentChange:19.0,  category:'NHL' },
-  // Soccer
-  { id:'b24', player:'Lionel Messi',          cardName:'2004-05 Panini Rookie Card',            setName:'Panini',             year:2004, grade:'PSA 8',  currentValue:7200,  percentChange:14.5,  category:'Soccer' },
-  { id:'b25', player:'Cristiano Ronaldo',     cardName:'2003-04 Futera Unique Rookie',          setName:'Futera Unique',      year:2003, grade:'PSA 7',  currentValue:4100,  percentChange:9.8,   category:'Soccer' },
-  { id:'b26', player:'Erling Haaland',        cardName:'2019 Topps Chrome UCC Rookie Auto',     setName:'Topps Chrome',       year:2019, grade:'PSA 10', currentValue:1850,  percentChange:38.2,  category:'Soccer' },
-  // WNBA
-  { id:'b27', player:'Caitlin Clark',         cardName:'2024 Rittenhouse WNBA Rookie',          setName:'Rittenhouse',        year:2024, grade:'PSA 10', currentValue:1200,  percentChange:41.2,  category:'WNBA' },
-  { id:'b28', player:'Angel Reese',           cardName:'2024 Panini Prizm WNBA Rookie',         setName:'Panini Prizm',       year:2024, grade:'PSA 10', currentValue:480,   percentChange:28.7,  category:'WNBA' },
-  // UFC
-  { id:'b29', player:'Conor McGregor',        cardName:'2016 Topps UFC Knockout Auto',          setName:'Topps UFC',          year:2016, grade:'PSA 9',  currentValue:520,   percentChange:7.3,   category:'UFC' },
-  { id:'b30', player:'Jon Jones',             cardName:'2011 Topps UFC Finest Rookie Auto',     setName:'Topps UFC',          year:2011, grade:'PSA 8',  currentValue:310,   percentChange:-4.1,  category:'UFC' },
-  // Golf
-  { id:'b31', player:'Tiger Woods',           cardName:'2001 SP Authentic Sign of the Times Auto', setName:'SP Authentic',   year:2001, grade:'PSA 9',  currentValue:3800,  percentChange:6.2,   category:'Golf' },
-  { id:'b32', player:'Rory McIlroy',          cardName:'2012 SP Authentic Rookie Auto',         setName:'SP Authentic',       year:2012, grade:'PSA 10', currentValue:420,   percentChange:11.0,  category:'Golf' },
+  // ── NBA ─────────────────────────────────────────────────────────────────────
+  // LeBron James
+  { id:'b1',   player:'LeBron James', cardName:'2003-04 Topps Chrome Rookie',               setName:'Topps Chrome',        year:2003, grade:'PSA 9',  currentValue:4800,  percentChange:50.0,  category:'NBA' },
+  { id:'b1b',  player:'LeBron James', cardName:'2003-04 Topps Chrome Rookie',               setName:'Topps Chrome',        year:2003, grade:'PSA 10', currentValue:14500, percentChange:62.0,  category:'NBA' },
+  { id:'b1c',  player:'LeBron James', cardName:'2003-04 Topps Chrome Rookie',               setName:'Topps Chrome',        year:2003, grade:'PSA 8',  currentValue:2200,  percentChange:31.0,  category:'NBA' },
+  { id:'b1d',  player:'LeBron James', cardName:'2003-04 Upper Deck Rookie Exclusives',      setName:'Upper Deck',          year:2003, grade:'PSA 9',  currentValue:890,   percentChange:18.5,  category:'NBA' },
+  { id:'b1e',  player:'LeBron James', cardName:'2003-04 SP Authentic RC Patch Auto /100',   setName:'SP Authentic',        year:2003, grade:'PSA 8',  currentValue:32000, percentChange:44.2,  category:'NBA' },
+  { id:'b1f',  player:'LeBron James', cardName:'2004-05 Bowman Chrome Refractor',           setName:'Bowman Chrome',       year:2004, grade:'PSA 10', currentValue:3200,  percentChange:27.3,  category:'NBA' },
+  { id:'b1g',  player:'LeBron James', cardName:'2012-13 Panini Prizm',                      setName:'Panini Prizm',        year:2012, grade:'PSA 10', currentValue:1100,  percentChange:14.8,  category:'NBA' },
+
+  // Luka Dončić
+  { id:'b2',   player:'Luka Dončić', cardName:'2018-19 Panini Prizm Silver Rookie',         setName:'Panini Prizm',        year:2018, grade:'PSA 10', currentValue:780,   percentChange:-13.3, category:'NBA' },
+  { id:'b2b',  player:'Luka Dončić', cardName:'2018-19 Panini Prizm Silver Rookie',         setName:'Panini Prizm',        year:2018, grade:'PSA 9',  currentValue:320,   percentChange:-8.1,  category:'NBA' },
+  { id:'b2c',  player:'Luka Dončić', cardName:'2018-19 Donruss Optic Rated Rookie',         setName:'Donruss Optic',       year:2018, grade:'PSA 10', currentValue:490,   percentChange:-10.5, category:'NBA' },
+  { id:'b2d',  player:'Luka Dončić', cardName:'2018-19 Select RC Concourse',                setName:'Panini Select',       year:2018, grade:'PSA 10', currentValue:380,   percentChange:-5.2,  category:'NBA' },
+  { id:'b2e',  player:'Luka Dončić', cardName:'2018-19 Prizm Gold Rookie /10',              setName:'Panini Prizm',        year:2018, grade:'PSA 9',  currentValue:4200,  percentChange:-18.4, category:'NBA' },
+
+  // Ja Morant
+  { id:'b3',   player:'Ja Morant', cardName:'2019-20 Donruss Optic Rated Rookie',           setName:'Donruss Optic',       year:2019, grade:'PSA 10', currentValue:590,   percentChange:22.9,  category:'NBA' },
+  { id:'b3b',  player:'Ja Morant', cardName:'2019-20 Panini Prizm Rookie',                  setName:'Panini Prizm',        year:2019, grade:'PSA 10', currentValue:420,   percentChange:15.4,  category:'NBA' },
+  { id:'b3c',  player:'Ja Morant', cardName:'2019-20 Select RC Concourse',                  setName:'Panini Select',       year:2019, grade:'PSA 9',  currentValue:195,   percentChange:9.8,   category:'NBA' },
+  { id:'b3d',  player:'Ja Morant', cardName:'2019-20 Hoops Premium Stock Rookie',           setName:'Panini Hoops',        year:2019, grade:'PSA 10', currentValue:145,   percentChange:6.1,   category:'NBA' },
+
+  // Giannis
+  { id:'b4',   player:'Giannis Antetokounmpo', cardName:'2013-14 Panini Prizm Rookie',      setName:'Panini Prizm',        year:2013, grade:'PSA 9',  currentValue:1650,  percentChange:17.9,  category:'NBA' },
+  { id:'b4b',  player:'Giannis Antetokounmpo', cardName:'2013-14 Panini Prizm Rookie',      setName:'Panini Prizm',        year:2013, grade:'PSA 10', currentValue:4800,  percentChange:29.4,  category:'NBA' },
+  { id:'b4c',  player:'Giannis Antetokounmpo', cardName:'2013-14 Panini Rookie Auto',       setName:'Panini',              year:2013, grade:'PSA 9',  currentValue:2200,  percentChange:21.2,  category:'NBA' },
+  { id:'b4d',  player:'Giannis Antetokounmpo', cardName:'2016-17 Panini Prizm',             setName:'Panini Prizm',        year:2016, grade:'PSA 10', currentValue:640,   percentChange:11.5,  category:'NBA' },
+
+  // Victor Wembanyama
+  { id:'b5',   player:'Victor Wembanyama', cardName:'2023-24 Topps Chrome RC Auto',          setName:'Topps Chrome',        year:2023, grade:'PSA 10', currentValue:3400,  percentChange:28.4,  category:'NBA' },
+  { id:'b5b',  player:'Victor Wembanyama', cardName:'2023-24 Panini Prizm Rookie',           setName:'Panini Prizm',        year:2023, grade:'PSA 10', currentValue:1800,  percentChange:22.0,  category:'NBA' },
+  { id:'b5c',  player:'Victor Wembanyama', cardName:'2023-24 Donruss Optic Rated Rookie',    setName:'Donruss Optic',       year:2023, grade:'PSA 10', currentValue:950,   percentChange:18.6,  category:'NBA' },
+  { id:'b5d',  player:'Victor Wembanyama', cardName:'2023-24 Select RC Concourse Silver',    setName:'Panini Select',       year:2023, grade:'PSA 10', currentValue:1240,  percentChange:24.3,  category:'NBA' },
+  { id:'b5e',  player:'Victor Wembanyama', cardName:'2023-24 Prizm Gold Rookie /10',         setName:'Panini Prizm',        year:2023, grade:'PSA 9',  currentValue:12000, percentChange:35.1,  category:'NBA' },
+
+  // Stephen Curry
+  { id:'b6',   player:'Stephen Curry', cardName:'2009-10 Panini Prizm Rookie',               setName:'Panini Prizm',        year:2009, grade:'PSA 9',  currentValue:2100,  percentChange:9.2,   category:'NBA' },
+  { id:'b6b',  player:'Stephen Curry', cardName:'2009-10 Panini Prizm Rookie',               setName:'Panini Prizm',        year:2009, grade:'PSA 10', currentValue:6800,  percentChange:14.5,  category:'NBA' },
+  { id:'b6c',  player:'Stephen Curry', cardName:'2009-10 Topps Chrome Rookie',               setName:'Topps Chrome',        year:2009, grade:'PSA 9',  currentValue:1450,  percentChange:7.4,   category:'NBA' },
+  { id:'b6d',  player:'Stephen Curry', cardName:'2009-10 SP Authentic Rookie Auto',          setName:'SP Authentic',        year:2009, grade:'PSA 8',  currentValue:4200,  percentChange:11.8,  category:'NBA' },
+  { id:'b6e',  player:'Stephen Curry', cardName:'2013-14 Panini Prizm Gold /10',             setName:'Panini Prizm',        year:2013, grade:'PSA 9',  currentValue:8900,  percentChange:16.2,  category:'NBA' },
+
+  // Kevin Durant
+  { id:'b7',   player:'Kevin Durant', cardName:'2007-08 Topps Chrome Rookie Refractor',      setName:'Topps Chrome',        year:2007, grade:'PSA 8',  currentValue:880,   percentChange:6.4,   category:'NBA' },
+  { id:'b7b',  player:'Kevin Durant', cardName:'2007-08 Topps Chrome Rookie Refractor',      setName:'Topps Chrome',        year:2007, grade:'PSA 9',  currentValue:1650,  percentChange:9.8,   category:'NBA' },
+  { id:'b7c',  player:'Kevin Durant', cardName:'2007-08 SP Authentic Rookie Auto',           setName:'SP Authentic',        year:2007, grade:'PSA 9',  currentValue:3100,  percentChange:12.3,  category:'NBA' },
+  { id:'b7d',  player:'Kevin Durant', cardName:'2007-08 Bowman Chrome Rookie',               setName:'Bowman Chrome',       year:2007, grade:'PSA 10', currentValue:940,   percentChange:8.1,   category:'NBA' },
+
+  // Nikola Jokić
+  { id:'b8',   player:'Nikola Jokić', cardName:'2015-16 Panini Prizm Rookie Silver',         setName:'Panini Prizm',        year:2015, grade:'PSA 10', currentValue:1420,  percentChange:31.5,  category:'NBA' },
+  { id:'b8b',  player:'Nikola Jokić', cardName:'2015-16 Panini Prizm Rookie Silver',         setName:'Panini Prizm',        year:2015, grade:'PSA 9',  currentValue:620,   percentChange:18.2,  category:'NBA' },
+  { id:'b8c',  player:'Nikola Jokić', cardName:'2015-16 Donruss Rookie',                     setName:'Panini Donruss',      year:2015, grade:'PSA 10', currentValue:340,   percentChange:14.7,  category:'NBA' },
+  { id:'b8d',  player:'Nikola Jokić', cardName:'2015-16 Prizm Gold Rookie /10',              setName:'Panini Prizm',        year:2015, grade:'PSA 8',  currentValue:4800,  percentChange:38.4,  category:'NBA' },
+
+  // ── NFL ─────────────────────────────────────────────────────────────────────
+  // Patrick Mahomes
+  { id:'b9',   player:'Patrick Mahomes', cardName:'2017 Panini Prizm Rookie PSA 10',         setName:'Panini Prizm',        year:2017, grade:'PSA 10', currentValue:2950,  percentChange:63.9,  category:'NFL' },
+  { id:'b9b',  player:'Patrick Mahomes', cardName:'2017 Panini Prizm Rookie',                setName:'Panini Prizm',        year:2017, grade:'PSA 9',  currentValue:1100,  percentChange:38.2,  category:'NFL' },
+  { id:'b9c',  player:'Patrick Mahomes', cardName:'2017 Panini Prizm Rookie Auto',           setName:'Panini Prizm',        year:2017, grade:'PSA 10', currentValue:8800,  percentChange:72.4,  category:'NFL' },
+  { id:'b9d',  player:'Patrick Mahomes', cardName:'2017 Donruss Optic Rated Rookie',         setName:'Donruss Optic',       year:2017, grade:'PSA 10', currentValue:1650,  percentChange:51.3,  category:'NFL' },
+  { id:'b9e',  player:'Patrick Mahomes', cardName:'2017 Select RC Concourse',                setName:'Panini Select',       year:2017, grade:'PSA 10', currentValue:1240,  percentChange:44.8,  category:'NFL' },
+  { id:'b9f',  player:'Patrick Mahomes', cardName:'2017 Prizm Gold /10',                     setName:'Panini Prizm',        year:2017, grade:'PSA 9',  currentValue:18500, percentChange:88.2,  category:'NFL' },
+
+  // Justin Jefferson
+  { id:'b10',  player:'Justin Jefferson', cardName:'2020 Panini Prizm Rookie Silver',        setName:'Panini Prizm',        year:2020, grade:'PSA 9',  currentValue:420,   percentChange:35.5,  category:'NFL' },
+  { id:'b10b', player:'Justin Jefferson', cardName:'2020 Panini Prizm Rookie Silver',        setName:'Panini Prizm',        year:2020, grade:'PSA 10', currentValue:980,   percentChange:42.6,  category:'NFL' },
+  { id:'b10c', player:'Justin Jefferson', cardName:'2020 Donruss Optic Rated Rookie',        setName:'Donruss Optic',       year:2020, grade:'PSA 10', currentValue:310,   percentChange:28.4,  category:'NFL' },
+  { id:'b10d', player:'Justin Jefferson', cardName:'2020 Select RC Concourse Gold',          setName:'Panini Select',       year:2020, grade:'PSA 9',  currentValue:240,   percentChange:22.1,  category:'NFL' },
+
+  // Joe Burrow
+  { id:'b11',  player:'Joe Burrow', cardName:'2020 Panini Prizm Rookie Auto',                setName:'Panini Prizm',        year:2020, grade:'PSA 10', currentValue:890,   percentChange:18.2,  category:'NFL' },
+  { id:'b11b', player:'Joe Burrow', cardName:'2020 Panini Prizm Rookie',                     setName:'Panini Prizm',        year:2020, grade:'PSA 10', currentValue:440,   percentChange:12.8,  category:'NFL' },
+  { id:'b11c', player:'Joe Burrow', cardName:'2020 Select RC National Treasures Auto /99',   setName:'National Treasures',  year:2020, grade:'PSA 9',  currentValue:3400,  percentChange:24.6,  category:'NFL' },
+  { id:'b11d', player:'Joe Burrow', cardName:'2020 Donruss Optic Rated Rookie',              setName:'Donruss Optic',       year:2020, grade:'PSA 10', currentValue:320,   percentChange:9.4,   category:'NFL' },
+
+  // Ja'Marr Chase
+  { id:'b12',  player:"Ja'Marr Chase", cardName:'2021 Panini Select Rookie PSA 10',          setName:'Panini Select',       year:2021, grade:'PSA 10', currentValue:560,   percentChange:24.1,  category:'NFL' },
+  { id:'b12b', player:"Ja'Marr Chase", cardName:'2021 Panini Prizm Rookie',                  setName:'Panini Prizm',        year:2021, grade:'PSA 10', currentValue:480,   percentChange:20.8,  category:'NFL' },
+  { id:'b12c', player:"Ja'Marr Chase", cardName:'2021 Donruss Optic Rated Rookie',           setName:'Donruss Optic',       year:2021, grade:'PSA 10', currentValue:280,   percentChange:14.2,  category:'NFL' },
+
+  // Tom Brady
+  { id:'b14',  player:'Tom Brady', cardName:'2000 Playoff Contenders Rookie Auto',           setName:'Playoff Contenders',  year:2000, grade:'PSA 8',  currentValue:18500, percentChange:5.3,   category:'NFL' },
+  { id:'b14b', player:'Tom Brady', cardName:'2000 Playoff Contenders Rookie Auto',           setName:'Playoff Contenders',  year:2000, grade:'PSA 9',  currentValue:48000, percentChange:8.1,   category:'NFL' },
+  { id:'b14c', player:'Tom Brady', cardName:'2000 Bowman Chrome Rookie',                     setName:'Bowman Chrome',       year:2000, grade:'PSA 9',  currentValue:6200,  percentChange:6.4,   category:'NFL' },
+  { id:'b14d', player:'Tom Brady', cardName:'2000 Topps Chrome Rookie',                      setName:'Topps Chrome',        year:2000, grade:'PSA 8',  currentValue:3800,  percentChange:4.9,   category:'NFL' },
+  { id:'b14e', player:'Tom Brady', cardName:'2001 SP Authentic Chirography Auto',            setName:'SP Authentic',        year:2001, grade:'PSA 8',  currentValue:9200,  percentChange:7.2,   category:'NFL' },
+
+  // Caleb Williams
+  { id:'b13',  player:'Caleb Williams', cardName:'2024 Panini Prizm Draft Picks RC',         setName:'Panini Prizm',        year:2024, grade:'Raw',    currentValue:180,   percentChange:-8.1,  category:'NFL' },
+  { id:'b13b', player:'Caleb Williams', cardName:'2024 Panini Prizm Draft Picks RC',         setName:'Panini Prizm',        year:2024, grade:'PSA 9',  currentValue:420,   percentChange:-4.2,  category:'NFL' },
+  { id:'b13c', player:'Caleb Williams', cardName:'2024 Donruss Optic Rated Rookie',          setName:'Donruss Optic',       year:2024, grade:'PSA 10', currentValue:310,   percentChange:-6.5,  category:'NFL' },
+
+  // ── MLB ─────────────────────────────────────────────────────────────────────
+  // Mike Trout
+  { id:'b15',  player:'Mike Trout', cardName:'2011 Topps Update Rookie',                     setName:'Topps Update',        year:2011, grade:'PSA 8',  currentValue:740,   percentChange:19.4,  category:'MLB' },
+  { id:'b15b', player:'Mike Trout', cardName:'2011 Topps Update Rookie',                     setName:'Topps Update',        year:2011, grade:'PSA 9',  currentValue:1650,  percentChange:24.8,  category:'MLB' },
+  { id:'b15c', player:'Mike Trout', cardName:'2011 Topps Update Rookie',                     setName:'Topps Update',        year:2011, grade:'PSA 10', currentValue:5800,  percentChange:38.2,  category:'MLB' },
+  { id:'b15d', player:'Mike Trout', cardName:'2009 Bowman Chrome Prospect Auto',             setName:'Bowman Chrome',       year:2009, grade:'PSA 9',  currentValue:4200,  percentChange:32.1,  category:'MLB' },
+  { id:'b15e', player:'Mike Trout', cardName:'2011 Topps Chrome Rookie',                     setName:'Topps Chrome',        year:2011, grade:'PSA 10', currentValue:2100,  percentChange:28.4,  category:'MLB' },
+  { id:'b15f', player:'Mike Trout', cardName:'2012 Topps Triple Threads Auto /18',           setName:'Topps Triple Threads',year:2012, grade:'PSA 9',  currentValue:6800,  percentChange:21.5,  category:'MLB' },
+
+  // Shohei Ohtani
+  { id:'b16',  player:'Shohei Ohtani', cardName:'2018 Topps Chrome Rookie Refractor',        setName:'Topps Chrome',        year:2018, grade:'PSA 10', currentValue:1100,  percentChange:29.4,  category:'MLB' },
+  { id:'b16b', player:'Shohei Ohtani', cardName:'2018 Topps Chrome Rookie Refractor',        setName:'Topps Chrome',        year:2018, grade:'PSA 9',  currentValue:480,   percentChange:18.6,  category:'MLB' },
+  { id:'b16c', player:'Shohei Ohtani', cardName:'2018 Topps Update Rookie',                  setName:'Topps Update',        year:2018, grade:'PSA 10', currentValue:640,   percentChange:22.3,  category:'MLB' },
+  { id:'b16d', player:'Shohei Ohtani', cardName:'2018 Bowman Chrome Rookie Auto',            setName:'Bowman Chrome',       year:2018, grade:'PSA 9',  currentValue:3400,  percentChange:34.8,  category:'MLB' },
+  { id:'b16e', player:'Shohei Ohtani', cardName:'2018 Topps Finest Rookie Auto',             setName:'Topps Finest',        year:2018, grade:'PSA 10', currentValue:2800,  percentChange:31.2,  category:'MLB' },
+
+  // Fernando Tatis Jr.
+  { id:'b17',  player:'Fernando Tatis Jr.', cardName:'2019 Bowman Chrome Auto',              setName:'Bowman Chrome',       year:2019, grade:'PSA 10', currentValue:640,   percentChange:12.0,  category:'MLB' },
+  { id:'b17b', player:'Fernando Tatis Jr.', cardName:'2019 Bowman Chrome Auto',              setName:'Bowman Chrome',       year:2019, grade:'PSA 9',  currentValue:280,   percentChange:7.4,   category:'MLB' },
+  { id:'b17c', player:'Fernando Tatis Jr.', cardName:'2019 Topps Chrome Rookie',             setName:'Topps Chrome',        year:2019, grade:'PSA 10', currentValue:420,   percentChange:10.2,  category:'MLB' },
+
+  // Ronald Acuña Jr.
+  { id:'b18',  player:'Ronald Acuña Jr.', cardName:'2018 Topps Chrome Rookie Auto',          setName:'Topps Chrome',        year:2018, grade:'PSA 9',  currentValue:480,   percentChange:8.8,   category:'MLB' },
+  { id:'b18b', player:'Ronald Acuña Jr.', cardName:'2018 Topps Chrome Rookie Auto',          setName:'Topps Chrome',        year:2018, grade:'PSA 10', currentValue:1100,  percentChange:14.5,  category:'MLB' },
+  { id:'b18c', player:'Ronald Acuña Jr.', cardName:'2018 Topps Update Rookie',               setName:'Topps Update',        year:2018, grade:'PSA 10', currentValue:320,   percentChange:9.1,   category:'MLB' },
+
+  // Mickey Mantle
+  { id:'b19',  player:'Mickey Mantle', cardName:'1952 Topps',                                setName:'Topps',               year:1952, grade:'PSA 7',  currentValue:85000, percentChange:3.1,   category:'MLB' },
+  { id:'b19b', player:'Mickey Mantle', cardName:'1952 Topps',                                setName:'Topps',               year:1952, grade:'PSA 5',  currentValue:28000, percentChange:2.4,   category:'MLB' },
+  { id:'b19c', player:'Mickey Mantle', cardName:'1954 Topps',                                setName:'Topps',               year:1954, grade:'PSA 7',  currentValue:12000, percentChange:2.8,   category:'MLB' },
+  { id:'b19d', player:'Mickey Mantle', cardName:'1956 Topps',                                setName:'Topps',               year:1956, grade:'PSA 8',  currentValue:9800,  percentChange:3.4,   category:'MLB' },
+  { id:'b19e', player:'Mickey Mantle', cardName:'1958 Topps',                                setName:'Topps',               year:1958, grade:'PSA 8',  currentValue:4200,  percentChange:2.1,   category:'MLB' },
+
+  // ── NHL ─────────────────────────────────────────────────────────────────────
+  { id:'b20',  player:'Connor McDavid', cardName:'2015-16 Upper Deck Young Guns Rookie',     setName:'Upper Deck',          year:2015, grade:'PSA 10', currentValue:2400,  percentChange:22.7,  category:'NHL' },
+  { id:'b20b', player:'Connor McDavid', cardName:'2015-16 Upper Deck Young Guns Rookie',     setName:'Upper Deck',          year:2015, grade:'PSA 9',  currentValue:980,   percentChange:14.8,  category:'NHL' },
+  { id:'b20c', player:'Connor McDavid', cardName:'2015-16 The Cup Rookie Auto /249',         setName:'Upper Deck The Cup',  year:2015, grade:'PSA 9',  currentValue:8200,  percentChange:31.4,  category:'NHL' },
+  { id:'b20d', player:'Connor McDavid', cardName:'2015-16 SP Authentic Rookie Auto',         setName:'SP Authentic',        year:2015, grade:'PSA 10', currentValue:4100,  percentChange:26.8,  category:'NHL' },
+
+  { id:'b21',  player:'Sidney Crosby', cardName:'2005-06 Upper Deck Young Guns Rookie',      setName:'Upper Deck',          year:2005, grade:'PSA 9',  currentValue:1800,  percentChange:11.2,  category:'NHL' },
+  { id:'b21b', player:'Sidney Crosby', cardName:'2005-06 Upper Deck Young Guns Rookie',      setName:'Upper Deck',          year:2005, grade:'PSA 10', currentValue:6200,  percentChange:16.8,  category:'NHL' },
+  { id:'b21c', player:'Sidney Crosby', cardName:'2005-06 The Cup Rookie Auto /99',           setName:'Upper Deck The Cup',  year:2005, grade:'PSA 8',  currentValue:12000, percentChange:9.4,   category:'NHL' },
+  { id:'b21d', player:'Sidney Crosby', cardName:'2005-06 SP Authentic Rookie Auto',          setName:'SP Authentic',        year:2005, grade:'PSA 9',  currentValue:3800,  percentChange:13.2,  category:'NHL' },
+
+  { id:'b22',  player:'Nathan MacKinnon', cardName:'2013-14 Upper Deck Young Guns Rookie',   setName:'Upper Deck',          year:2013, grade:'PSA 9',  currentValue:980,   percentChange:16.4,  category:'NHL' },
+  { id:'b22b', player:'Nathan MacKinnon', cardName:'2013-14 Upper Deck Young Guns Rookie',   setName:'Upper Deck',          year:2013, grade:'PSA 10', currentValue:3200,  percentChange:24.1,  category:'NHL' },
+  { id:'b22c', player:'Nathan MacKinnon', cardName:'2013-14 SP Authentic Rookie Auto',       setName:'SP Authentic',        year:2013, grade:'PSA 9',  currentValue:2100,  percentChange:19.8,  category:'NHL' },
+
+  { id:'b23',  player:'Auston Matthews', cardName:'2016-17 Upper Deck Young Guns Rookie',    setName:'Upper Deck',          year:2016, grade:'PSA 10', currentValue:1150,  percentChange:19.0,  category:'NHL' },
+  { id:'b23b', player:'Auston Matthews', cardName:'2016-17 Upper Deck Young Guns Rookie',    setName:'Upper Deck',          year:2016, grade:'PSA 9',  currentValue:480,   percentChange:12.6,  category:'NHL' },
+  { id:'b23c', player:'Auston Matthews', cardName:'2016-17 The Cup Rookie Auto /249',        setName:'Upper Deck The Cup',  year:2016, grade:'PSA 9',  currentValue:4800,  percentChange:28.4,  category:'NHL' },
+
+  // ── Soccer ─────────────────────────────────────────────────────────────────
+  { id:'b24',  player:'Lionel Messi', cardName:'2004-05 Panini Rookie Card',                 setName:'Panini',              year:2004, grade:'PSA 8',  currentValue:7200,  percentChange:14.5,  category:'Soccer' },
+  { id:'b24b', player:'Lionel Messi', cardName:'2004-05 Panini Rookie Card',                 setName:'Panini',              year:2004, grade:'PSA 9',  currentValue:18500, percentChange:21.8,  category:'Soccer' },
+  { id:'b24c', player:'Lionel Messi', cardName:'2018 Topps Chrome UCC',                      setName:'Topps Chrome',        year:2018, grade:'PSA 10', currentValue:2400,  percentChange:18.2,  category:'Soccer' },
+  { id:'b24d', player:'Lionel Messi', cardName:'2022 Topps Chrome World Cup Prizm',          setName:'Topps Chrome',        year:2022, grade:'PSA 10', currentValue:1800,  percentChange:24.6,  category:'Soccer' },
+  { id:'b24e', player:'Lionel Messi', cardName:'2014 Panini Prizm World Cup',                setName:'Panini Prizm',        year:2014, grade:'PSA 9',  currentValue:3200,  percentChange:16.8,  category:'Soccer' },
+
+  { id:'b25',  player:'Cristiano Ronaldo', cardName:'2003-04 Futera Unique Rookie',          setName:'Futera Unique',       year:2003, grade:'PSA 7',  currentValue:4100,  percentChange:9.8,   category:'Soccer' },
+  { id:'b25b', player:'Cristiano Ronaldo', cardName:'2003-04 Futera Unique Rookie',          setName:'Futera Unique',       year:2003, grade:'PSA 8',  currentValue:9800,  percentChange:12.4,  category:'Soccer' },
+  { id:'b25c', player:'Cristiano Ronaldo', cardName:'2018 Topps Chrome UCC',                 setName:'Topps Chrome',        year:2018, grade:'PSA 10', currentValue:1850,  percentChange:14.2,  category:'Soccer' },
+  { id:'b25d', player:'Cristiano Ronaldo', cardName:'2022 Topps Chrome World Cup Prizm',     setName:'Topps Chrome',        year:2022, grade:'PSA 10', currentValue:1400,  percentChange:18.9,  category:'Soccer' },
+
+  { id:'b26',  player:'Erling Haaland', cardName:'2019 Topps Chrome UCC Rookie Auto',        setName:'Topps Chrome',        year:2019, grade:'PSA 10', currentValue:1850,  percentChange:38.2,  category:'Soccer' },
+  { id:'b26b', player:'Erling Haaland', cardName:'2019 Topps Chrome UCC Rookie',             setName:'Topps Chrome',        year:2019, grade:'PSA 9',  currentValue:680,   percentChange:24.4,  category:'Soccer' },
+  { id:'b26c', player:'Erling Haaland', cardName:'2022 Topps Chrome Bundesliga Rookie',      setName:'Topps Chrome',        year:2022, grade:'PSA 10', currentValue:440,   percentChange:18.6,  category:'Soccer' },
+
+  // ── WNBA ────────────────────────────────────────────────────────────────────
+  { id:'b27',  player:'Caitlin Clark', cardName:'2024 Rittenhouse WNBA Rookie',              setName:'Rittenhouse',         year:2024, grade:'PSA 10', currentValue:1200,  percentChange:41.2,  category:'WNBA' },
+  { id:'b27b', player:'Caitlin Clark', cardName:'2024 Rittenhouse WNBA Rookie',              setName:'Rittenhouse',         year:2024, grade:'PSA 9',  currentValue:540,   percentChange:28.4,  category:'WNBA' },
+  { id:'b27c', player:'Caitlin Clark', cardName:'2024 Panini Prizm WNBA Rookie',             setName:'Panini Prizm',        year:2024, grade:'PSA 10', currentValue:890,   percentChange:36.8,  category:'WNBA' },
+  { id:'b27d', player:'Caitlin Clark', cardName:'2024 Panini Prizm WNBA Rookie Auto /99',    setName:'Panini Prizm',        year:2024, grade:'PSA 9',  currentValue:4200,  percentChange:52.4,  category:'WNBA' },
+  { id:'b27e', player:'Caitlin Clark', cardName:'2024 Donruss WNBA Rated Rookie',            setName:'Panini Donruss',      year:2024, grade:'PSA 10', currentValue:420,   percentChange:24.1,  category:'WNBA' },
+
+  { id:'b28',  player:'Angel Reese', cardName:'2024 Panini Prizm WNBA Rookie',               setName:'Panini Prizm',        year:2024, grade:'PSA 10', currentValue:480,   percentChange:28.7,  category:'WNBA' },
+  { id:'b28b', player:'Angel Reese', cardName:'2024 Panini Prizm WNBA Rookie',               setName:'Panini Prizm',        year:2024, grade:'PSA 9',  currentValue:210,   percentChange:18.4,  category:'WNBA' },
+  { id:'b28c', player:'Angel Reese', cardName:'2024 Donruss WNBA Rated Rookie',              setName:'Panini Donruss',      year:2024, grade:'PSA 10', currentValue:280,   percentChange:22.1,  category:'WNBA' },
+
+  // ── UFC ─────────────────────────────────────────────────────────────────────
+  { id:'b29',  player:'Conor McGregor', cardName:'2016 Topps UFC Knockout Auto',             setName:'Topps UFC',           year:2016, grade:'PSA 9',  currentValue:520,   percentChange:7.3,   category:'UFC' },
+  { id:'b29b', player:'Conor McGregor', cardName:'2016 Topps UFC Knockout Auto',             setName:'Topps UFC',           year:2016, grade:'PSA 10', currentValue:1400,  percentChange:12.8,  category:'UFC' },
+  { id:'b29c', player:'Conor McGregor', cardName:'2015 Topps UFC Champions Rookie',          setName:'Topps UFC',           year:2015, grade:'PSA 10', currentValue:320,   percentChange:9.4,   category:'UFC' },
+  { id:'b29d', player:'Conor McGregor', cardName:'2017 Topps UFC Knockout Prizm',            setName:'Topps UFC',           year:2017, grade:'PSA 9',  currentValue:280,   percentChange:6.1,   category:'UFC' },
+
+  { id:'b30',  player:'Jon Jones', cardName:'2011 Topps UFC Finest Rookie Auto',             setName:'Topps UFC',           year:2011, grade:'PSA 8',  currentValue:310,   percentChange:-4.1,  category:'UFC' },
+  { id:'b30b', player:'Jon Jones', cardName:'2011 Topps UFC Finest Rookie Auto',             setName:'Topps UFC',           year:2011, grade:'PSA 9',  currentValue:680,   percentChange:-2.8,  category:'UFC' },
+  { id:'b30c', player:'Jon Jones', cardName:'2010 Topps UFC Knockout Rookie',                setName:'Topps UFC',           year:2010, grade:'PSA 9',  currentValue:240,   percentChange:-5.2,  category:'UFC' },
+
+  // ── Golf ────────────────────────────────────────────────────────────────────
+  { id:'b31',  player:'Tiger Woods', cardName:'2001 SP Authentic Sign of the Times Auto',   setName:'SP Authentic',        year:2001, grade:'PSA 9',  currentValue:3800,  percentChange:6.2,   category:'Golf' },
+  { id:'b31b', player:'Tiger Woods', cardName:'2001 SP Authentic Sign of the Times Auto',   setName:'SP Authentic',        year:2001, grade:'PSA 8',  currentValue:2100,  percentChange:4.8,   category:'Golf' },
+  { id:'b31c', player:'Tiger Woods', cardName:'2001 Upper Deck Pros & Prospects RC',         setName:'Upper Deck',          year:2001, grade:'PSA 10', currentValue:1650,  percentChange:8.4,   category:'Golf' },
+  { id:'b31d', player:'Tiger Woods', cardName:'2002 SP Game Used Auto',                     setName:'SP Game Used',        year:2002, grade:'PSA 9',  currentValue:4200,  percentChange:7.1,   category:'Golf' },
+  { id:'b31e', player:'Tiger Woods', cardName:'1997 Grand Slam Ventures Masters',            setName:'Grand Slam Ventures', year:1997, grade:'PSA 9',  currentValue:2800,  percentChange:5.6,   category:'Golf' },
+
+  { id:'b32',  player:'Rory McIlroy', cardName:'2012 SP Authentic Rookie Auto',             setName:'SP Authentic',        year:2012, grade:'PSA 10', currentValue:420,   percentChange:11.0,  category:'Golf' },
+  { id:'b32b', player:'Rory McIlroy', cardName:'2012 SP Authentic Rookie Auto',             setName:'SP Authentic',        year:2012, grade:'PSA 9',  currentValue:210,   percentChange:7.4,   category:'Golf' },
+  { id:'b32c', player:'Rory McIlroy', cardName:'2014 SP Game Used',                         setName:'SP Game Used',        year:2014, grade:'PSA 9',  currentValue:280,   percentChange:9.2,   category:'Golf' },
 ];
 
 // ─── NAVIGATION ─────────────────────────────────────────────────────────────
@@ -2076,43 +2589,86 @@ function showPage(name) {
   if (name === 'market') initMarketCharts();
   if (name === 'collection') renderCollection();
   if (name === 'watchlist') renderWatchlist();
-  if (name === 'home') renderHub();
+  if (name === 'home') { const s = document.getElementById('hub-global-search'); if (s) s.value = ''; acClose('hub-ac'); renderHub(); }
   if (name === 'ai-grading') agReset();
   window.scrollTo(0,0);
 }
 
 // ─── AI GRADING ──────────────────────────────────────────────────────────────
+const agFiles = { front: null, back: null };
+
 function agReset() {
   document.getElementById('ag-upload-state').style.display = '';
   document.getElementById('ag-loading').style.display = 'none';
   document.getElementById('ag-results').style.display = 'none';
-  document.getElementById('ag-dropzone').classList.remove('drag-over');
-  document.getElementById('ag-file-input').value = '';
-  document.getElementById('ag-preview-img').innerHTML = '<span>🃏</span>';
+  agClearZone('front');
+  agClearZone('back');
 }
 
-function agHandleDrop(e) {
-  e.preventDefault();
-  document.getElementById('ag-dropzone').classList.remove('drag-over');
-  const files = e.dataTransfer.files;
-  if (files.length) agHandleFiles(files);
+function agClearZone(side) {
+  agFiles[side] = null;
+  const dz    = document.getElementById('ag-dz-' + side);
+  const thumb = document.getElementById('ag-thumb-' + side);
+  const icon  = document.getElementById('ag-icon-' + side);
+  const fname = document.getElementById('ag-fname-' + side);
+  const clear = document.getElementById('ag-clear-' + side);
+  const req   = document.getElementById('ag-' + side + '-req');
+  const ok    = document.getElementById('ag-' + side + '-ok');
+  const input = document.getElementById('ag-file-' + side);
+  if (input) input.value = '';
+  thumb.style.display = 'none'; thumb.src = '';
+  icon.style.display = '';
+  fname.style.display = 'none'; fname.textContent = '';
+  clear.style.display = 'none';
+  req.style.display = ''; ok.style.display = 'none';
+  dz.classList.remove('has-file', 'drag-over', 'required-err');
+  agUpdateBtn();
 }
 
-function agHandleFiles(files) {
+function agHandleZoneFile(files, side) {
   if (!files || !files.length) return;
   const file = files[0];
+  agFiles[side] = file;
   const reader = new FileReader();
-  reader.onload = function(e) {
-    const img = document.createElement('img');
-    img.src = e.target.result;
-    document.getElementById('ag-preview-img').innerHTML = '';
-    document.getElementById('ag-preview-img').appendChild(img);
+  reader.onload = e => {
+    const thumb = document.getElementById('ag-thumb-' + side);
+    thumb.src = e.target.result;
+    thumb.style.display = 'block';
+    document.getElementById('ag-icon-' + side).style.display = 'none';
   };
   reader.readAsDataURL(file);
-  agStartGrading();
+  const dz = document.getElementById('ag-dz-' + side);
+  dz.classList.add('has-file'); dz.classList.remove('required-err');
+  const fname = document.getElementById('ag-fname-' + side);
+  fname.textContent = file.name; fname.style.display = 'block';
+  document.getElementById('ag-clear-' + side).style.display = 'block';
+  document.getElementById('ag-' + side + '-req').style.display = 'none';
+  document.getElementById('ag-' + side + '-ok').style.display = '';
+  agUpdateBtn();
+}
+
+function agHandleDrop(e, side) {
+  e.preventDefault();
+  document.getElementById('ag-dz-' + side).classList.remove('drag-over');
+  if (e.dataTransfer.files.length) agHandleZoneFile(e.dataTransfer.files, side);
+}
+
+function agUpdateBtn() {
+  const btn = document.getElementById('ag-analyze-btn');
+  if (agFiles.front && agFiles.back) btn.classList.add('ready');
+  else btn.classList.remove('ready');
 }
 
 function agStartGrading() {
+  // Populate the results preview with the front image
+  const frontThumb = document.getElementById('ag-thumb-front');
+  const preview = document.getElementById('ag-preview-img');
+  if (frontThumb && frontThumb.src && preview) {
+    preview.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = frontThumb.src;
+    preview.appendChild(img);
+  }
   document.getElementById('ag-upload-state').style.display = 'none';
   document.getElementById('ag-results').style.display = 'none';
   const loading = document.getElementById('ag-loading');
@@ -2175,9 +2731,232 @@ function renderHub() {
   });
 }
 
-function handleHubSearch(val) {
-  // Live preview: could show autocomplete — for now just lets Enter/button handle it
+function handleHubSearch(val) { /* superseded by acShow */ }
+
+// ─── AUTOCOMPLETE ENGINE ─────────────────────────────────────────────────────
+let acFocusIdx = {}; // panelId -> focused index
+
+function acIsWatched(c) {
+  return cards.some(cc => cc.player === c.player && cc.cardName === c.cardName && cc.isWatchlisted) ||
+         watchlistOnly.some(w => w.player === c.player && w.cardName === c.cardName);
 }
+
+function acBuildItems(q) {
+  if (!q || q.length < 1) return { watched: [], rest: [] };
+  const ql = q.toLowerCase();
+
+  const startsWith  = [];
+  const wordStarts  = [];
+  const contains    = [];
+  const cardMatches = [];
+
+  BROWSE_CATALOG.forEach(c => {
+    const pl  = c.player.toLowerCase();
+    const cl  = c.cardName.toLowerCase();
+    const sl  = c.setName.toLowerCase();
+    const cat = c.category.toLowerCase();
+    if (pl.startsWith(ql))                              startsWith.push(c);
+    else if (pl.split(' ').some(w => w.startsWith(ql))) wordStarts.push(c);
+    else if (pl.includes(ql))                           contains.push(c);
+    else if (cl.includes(ql) || sl.includes(ql) || cat.includes(ql)) cardMatches.push(c);
+  });
+
+  const ordered = [...startsWith, ...wordStarts, ...contains, ...cardMatches];
+  const watched = ordered.filter(c => acIsWatched(c));
+  const rest    = ordered.filter(c => !acIsWatched(c)).slice(0, 20 - watched.length);
+  return { watched, rest };
+}
+
+function acShow(inputId, panelId) {
+  const input = document.getElementById(inputId);
+  const panel = document.getElementById(panelId);
+  if (!input || !panel) return;
+  const q = input.value.trim();
+  acFocusIdx[panelId] = -1;
+
+  if (!q) { acClose(panelId); return; }
+
+  // Collection search: only suggest cards the user actually owns
+  if (panelId === 'collection-ac') {
+    const source = acBuildCollectionItems(q);
+    if (!source.length) {
+      panel.innerHTML = '<div class="ac-no-results">No matches — try a player or set name</div>';
+      panel.classList.add('open');
+      return;
+    }
+    panel.innerHTML = source.map((c, i) => acRenderItem(c, i, q, panelId)).join('');
+    panel.classList.add('open');
+    return;
+  }
+
+  const { watched, rest } = acBuildItems(q);
+
+  if (!watched.length && !rest.length) {
+    panel.innerHTML = '<div class="ac-no-results">No matches — try a player or set name</div>';
+    panel.classList.add('open');
+    return;
+  }
+
+  let html = '';
+  let idx = 0;
+
+  if (watched.length) {
+    html += '<div class="ac-section-header watching">Watchlist</div>';
+    html += watched.map(c => acRenderItem(c, idx++, q, panelId, true)).join('');
+  }
+  if (rest.length) {
+    if (watched.length) html += '<div class="ac-section-header other">All Cards</div>';
+    html += rest.map(c => acRenderItem(c, idx++, q, panelId, false)).join('');
+  }
+
+  panel.innerHTML = html;
+  panel.classList.add('open');
+}
+
+function acRenderItem(c, i, q, panelId, isWatched) {
+  const sport   = SPORTS.find(s => s.id === c.category) || { icon:'🃏', colorBg:'rgba(126,147,180,0.1)', colorBorder:'rgba(126,147,180,0.2)', color:'#7e93b4' };
+  const isUp    = (c.percentChange ?? 0) >= 0;
+  const ql      = q.toLowerCase();
+  const pi      = c.player.toLowerCase().indexOf(ql);
+  const playerHtml = pi >= 0
+    ? c.player.slice(0,pi) + '<strong style="color:var(--gold2)">' + c.player.slice(pi, pi+q.length) + '</strong>' + c.player.slice(pi+q.length)
+    : c.player;
+  const pickId  = c._collectionId ? `__coll__${c._collectionId}` : c.id;
+  const watched = isWatched ?? (c._collectionId ? false : acIsWatched(c));
+  return `<div class="ac-item${watched ? ' is-watched' : ''}" data-id="${pickId}" data-panel="${panelId}"
+      onmousedown="acPick('${pickId}','${panelId}')"
+      onmouseenter="acHover(${i},'${panelId}')">
+    <div class="ac-left">
+      <div class="ac-dot" style="background:${sport.colorBg};border:1px solid ${sport.colorBorder}">${sport.icon}</div>
+      <div class="ac-text">
+        <div class="ac-player">${playerHtml}${watched ? '<span class="ac-watch-star">★</span>' : ''}</div>
+        <div class="ac-sub">${c.cardName} · ${c.grade} · ${c.year}</div>
+      </div>
+    </div>
+    <div class="ac-right">
+      <span class="ac-price">${fmt(c.currentValue)}</span>
+      ${c._collectionId ? '' : `<span class="badge ${isUp?'badge-green':'badge-red'}" style="font-size:0.6rem">${isUp?'+':''}${(c.percentChange??0).toFixed(1)}%</span>`}
+    </div>
+  </div>`;
+}
+
+function acClose(panelId) {
+  const panel = document.getElementById(panelId);
+  if (panel) { panel.classList.remove('open'); acFocusIdx[panelId] = -1; }
+}
+
+function acCloseAll() {
+  ['hub-ac','browse-ac','collection-ac','heat-ac'].forEach(acClose);
+}
+
+function acHover(idx, panelId) {
+  acFocusIdx[panelId] = idx;
+  acUpdateFocus(panelId);
+}
+
+function acUpdateFocus(panelId) {
+  const panel = document.getElementById(panelId);
+  if (!panel) return;
+  const items = panel.querySelectorAll('.ac-item');
+  items.forEach((el, i) => el.classList.toggle('ac-focused', i === acFocusIdx[panelId]));
+}
+
+function acKey(e, inputId, panelId) {
+  const panel = document.getElementById(panelId);
+  if (!panel || !panel.classList.contains('open')) {
+    if (e.key === 'Enter') {
+      // fall through to browse
+      if (inputId === 'hub-global-search') goToBrowse(null, document.getElementById(inputId).value);
+      return;
+    }
+    return;
+  }
+  const items = panel.querySelectorAll('.ac-item');
+  const n = items.length;
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    acFocusIdx[panelId] = Math.min((acFocusIdx[panelId] ?? -1) + 1, n - 1);
+    acUpdateFocus(panelId);
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    acFocusIdx[panelId] = Math.max((acFocusIdx[panelId] ?? 0) - 1, 0);
+    acUpdateFocus(panelId);
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    const fi = acFocusIdx[panelId] ?? -1;
+    if (fi >= 0 && items[fi]) {
+      const id = items[fi].dataset.id;
+      acPick(id, panelId);
+    } else if (inputId === 'hub-global-search') {
+      goToBrowse(null, document.getElementById(inputId).value);
+      acClose(panelId);
+    } else if (inputId === 'browse-search') {
+      acClose(panelId);
+    }
+  } else if (e.key === 'Escape') {
+    acClose(panelId);
+  }
+}
+
+function acBuildCollectionItems(q) {
+  if (!q || q.length < 1) return [];
+  const ql = q.toLowerCase();
+
+  const startsWith  = [];
+  const wordStarts  = [];
+  const contains    = [];
+  const cardMatches = [];
+
+  // Deduplicate: one suggestion per unique player+card combo
+  const seen = new Set();
+  cards.forEach(c => {
+    const key = c.player + '|' + c.cardName;
+    if (seen.has(key)) return;
+    seen.add(key);
+    const item = { ...c, _collectionId: c.id };
+    const pl  = c.player.toLowerCase();
+    const cl  = c.cardName.toLowerCase();
+    const sl  = c.setName.toLowerCase();
+    if (pl.startsWith(ql))                              startsWith.push(item);
+    else if (pl.split(' ').some(w => w.startsWith(ql))) wordStarts.push(item);
+    else if (pl.includes(ql))                           contains.push(item);
+    else if (cl.includes(ql) || sl.includes(ql))       cardMatches.push(item);
+  });
+
+  return [...startsWith, ...wordStarts, ...contains, ...cardMatches].slice(0, 20);
+}
+
+function acPick(id, panelId) {
+  acClose(panelId);
+  // Collection dropdown: fill the search box and filter in place
+  if (id.startsWith('__coll__')) {
+    const collId = parseInt(id.replace('__coll__', ''), 10);
+    const card = cards.find(c => c.id === collId);
+    if (card) {
+      const input = document.getElementById('collection-search');
+      if (input) { input.value = card.player; filterCollection(); }
+    }
+    return;
+  }
+  openCardDetail(id);
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('mousedown', e => {
+  const panels = {
+    'hub-ac':        'hub-global-search',
+    'browse-ac':     'browse-search',
+    'collection-ac': 'collection-search',
+    'heat-ac':       'heat-search',
+  };
+  Object.entries(panels).forEach(([panelId, inputId]) => {
+    const panel = document.getElementById(panelId);
+    const input = document.getElementById(inputId);
+    if (panel && !panel.contains(e.target) && e.target !== input) {
+      acClose(panelId);
+    }
+  });
+});
 
 // ─── BROWSE PAGE ─────────────────────────────────────────────────────────────
 let activeBrowseSport = null; // null = all
@@ -2292,7 +3071,7 @@ function filterBrowse() {
     const inWatch = cards.some(cc => cc.player === c.player && cc.isWatchlisted) ||
                     watchlistOnly.some(w => w.player === c.player);
     return `
-    <div class="browse-card" style="--bc-color:${sport.color}">
+    <div class="browse-card" style="--bc-color:${sport.color}" onclick="openCardDetail('${c.id}')">
       <style>.browse-card[style*="${sport.color}"]:hover::after { background:${sport.color}; }</style>
       <div style="display:flex;align-items:center;justify-content:space-between">
         <div class="bc-sport-tag" style="background:${sport.colorBg};color:${sport.color};border:1px solid ${sport.colorBorder}">
@@ -2312,8 +3091,8 @@ function filterBrowse() {
         <span class="${isUp?'up':'down'}" style="font-family:var(--font-mono);font-size:0.78rem">${isUp?'▲':'▼'} ${Math.abs(c.percentChange).toFixed(1)}%</span>
       </div>
       <div class="bc-actions">
-        <button class="bc-btn bc-btn-watch ${inWatch?'active':''}" onclick="quickWatch('${c.id}', this)">${inWatch?'★ Watching':'☆ Watch'}</button>
-        <button class="bc-btn bc-btn-primary" onclick="quickAddToCollection('${c.id}')">+ Add</button>
+        <button class="bc-btn bc-btn-watch ${inWatch?'active':''}" onclick="event.stopPropagation();quickWatch('${c.id}', this)">${inWatch?'★ Watching':'☆ Watch'}</button>
+        <button class="bc-btn bc-btn-primary" onclick="event.stopPropagation();quickAddToCollection('${c.id}')">+ Add</button>
       </div>
     </div>`;
   }).join('');
@@ -3350,6 +4129,285 @@ function fmt(n) {
   if (isNaN(n)) return '$0';
   return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n);
 }
+
+// ─── PLAYER PAGE ─────────────────────────────────────────────────────────────
+let ppCard    = null;   // currently featured card
+let ppChartInst = null;
+let ppPrevPage  = 'home'; // page to go back to
+const PP_PLATFORMS = ['eBay','PWCC','MySlabs','Goldin','Fanatics'];
+const PP_CONDITIONS = ['Well-centered, sharp corners','Minor surface wear','Gloss intact, slight edge wear','Fresh pull, never touched','Minor print line, minor corner wear'];
+
+function ppMockListings(c) {
+  const base  = c.currentValue;
+  const count = 4 + (c.id.charCodeAt(1) % 4);
+  return Array.from({length: count}, (_, i) => ({
+    platform: PP_PLATFORMS[i % PP_PLATFORMS.length],
+    grade: c.grade,
+    notes: PP_CONDITIONS[i % PP_CONDITIONS.length],
+    price: Math.round(base * (0.88 + i * 0.07 + (c.id.charCodeAt(0) % 5) * 0.02)),
+  })).sort((a,b) => a.price - b.price);
+}
+
+function ppMockAuctions(c) {
+  const base  = c.currentValue;
+  const count = 2 + (c.id.charCodeAt(0) % 3);
+  const now   = Date.now();
+  return Array.from({length: count}, (_, i) => ({
+    platform: PP_PLATFORMS[(i + 2) % PP_PLATFORMS.length],
+    bid:  Math.round(base * (0.65 + i * 0.12 + (c.id.charCodeAt(1) % 4) * 0.03)),
+    bids: 3 + (c.id.charCodeAt(0) + i * 7) % 28,
+    endsMs: now + (1 + i * 2.5 + (c.id.charCodeAt(1) % 3)) * 86400000,
+  }));
+}
+
+function ppFmtEnds(ms) {
+  const h = Math.max(0, Math.round((ms - Date.now()) / 3600000));
+  return h < 24 ? h + 'h' : Math.floor(h/24) + 'd ' + (h%24) + 'h';
+}
+
+function openCardDetail(catalogId) {
+  // Determine which page we're currently on to set the back destination
+  const activePage = document.querySelector('.page.active');
+  ppPrevPage = activePage ? (activePage.id.replace('page-','')) : 'home';
+  if (ppPrevPage === 'player') ppPrevPage = 'home'; // avoid back→player loops
+
+  const c = BROWSE_CATALOG.find(x => x.id === catalogId);
+  if (!c) return;
+  ppCard = c;
+
+  const sport = SPORTS.find(s => s.id === c.category) || { icon:'🃏', color:'#7e93b4', colorBg:'rgba(126,147,180,0.1)', colorBorder:'rgba(126,147,180,0.2)', label: c.category };
+  const isUp  = c.percentChange >= 0;
+
+  // — Hero —
+  const pill = document.getElementById('pp-sport-pill');
+  pill.textContent = `${sport.icon} ${sport.label || c.category}`;
+  pill.style.cssText = `background:${sport.colorBg};color:${sport.color};border:1px solid ${sport.colorBorder}`;
+  document.getElementById('pp-name').textContent = c.player;
+  document.getElementById('pp-meta').textContent = `${c.category} · ${c.year} Rookie Class`;
+
+  // aggregate player stats across all cards
+  const allPlayerCards = BROWSE_CATALOG.filter(x => x.player === c.player);
+  const totalValue = allPlayerCards.reduce((s,x) => s + x.currentValue, 0);
+  const best = allPlayerCards.reduce((a,b) => b.currentValue > a.currentValue ? b : a, allPlayerCards[0]);
+  document.getElementById('pp-hero-stats').innerHTML = `
+    <div class="pp-hstat"><div class="pp-hstat-val">${allPlayerCards.length}</div><div class="pp-hstat-lbl">Cards Tracked</div></div>
+    <div class="pp-hstat"><div class="pp-hstat-val">${fmt(totalValue)}</div><div class="pp-hstat-lbl">Total Market Value</div></div>
+    <div class="pp-hstat"><div class="pp-hstat-val">${fmt(best.currentValue)}</div><div class="pp-hstat-lbl">Top Card Value</div></div>
+    <div class="pp-hstat"><div class="pp-hstat-val" style="color:${isUp?'#34c97a':'#e05c5c'}">${isUp?'+':''}${c.percentChange.toFixed(1)}%</div><div class="pp-hstat-lbl">12-Mo Trend</div></div>`;
+
+  // — Selected card detail —
+  ppRenderCardDetail(c);
+
+  // — Other cards grid —
+  const others = allPlayerCards.filter(x => x.id !== c.id);
+  const label = document.getElementById('pp-other-label');
+  const grid  = document.getElementById('pp-other-grid');
+  if (others.length === 0) {
+    label.textContent = '';
+    grid.innerHTML = '';
+  } else {
+    label.textContent = `Other ${c.player} Cards (${others.length})`;
+    grid.innerHTML = others.map(oc => {
+      const ocUp = oc.percentChange >= 0;
+      const ocGradeCls = oc.grade==='PSA 10'?'grade-10':oc.grade==='PSA 9'?'grade-9':oc.grade==='PSA 8'?'grade-8':'grade-7below';
+      return `<div class="browse-card" style="--bc-color:${sport.color}" onclick="ppSwitchCard('${oc.id}')">
+        <style>.browse-card[style*="${sport.color}"]:hover::after{background:${sport.color}}</style>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div class="bc-sport-tag" style="background:${sport.colorBg};color:${sport.color};border:1px solid ${sport.colorBorder}">${sport.icon} ${oc.category}</div>
+          <span class="badge ${ocUp?'badge-green':'badge-red'}">${ocUp?'+':''}${oc.percentChange.toFixed(1)}%</span>
+        </div>
+        <div class="bc-card-name" style="font-weight:600;color:var(--text)">${oc.cardName}</div>
+        <div class="bc-meta-row">
+          <span class="grade-pill ${ocGradeCls}">${oc.grade}</span>
+          <span class="bc-year">${oc.year} · ${oc.setName}</span>
+        </div>
+        <div class="bc-price-row">
+          <span class="bc-price">${fmt(oc.currentValue)}</span>
+          <span class="${ocUp?'up':'down'}" style="font-family:var(--font-mono);font-size:0.75rem">${ocUp?'▲':'▼'} ${Math.abs(oc.percentChange).toFixed(1)}%</span>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // Navigate to player page
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-player').classList.add('active');
+  window.scrollTo(0,0);
+
+  // Back button label
+  const backLabels = { home:'← Home', browse:'← Browse', market:'← Market', collection:'← Collection', watchlist:'← Watchlist' };
+  document.getElementById('pp-back-btn').textContent = backLabels[ppPrevPage] || '← Back';
+
+  // Build chart after paint
+  document.querySelectorAll('.pp-range-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.pp-range-btn[onclick*="90D"]').classList.add('active');
+  requestAnimationFrame(() => ppBuildChart(c, '90D'));
+}
+
+function ppRenderCardDetail(c) {
+  ppCard = c;
+  const isUp = c.percentChange >= 0;
+  const gradeCls = c.grade==='PSA 10'?'grade-10':c.grade==='PSA 9'?'grade-9':c.grade==='PSA 8'?'grade-8':'grade-7below';
+
+  document.getElementById('pp-cardname').textContent = c.cardName;
+  document.getElementById('pp-cardset').textContent = `${c.year} · ${c.setName}`;
+  document.getElementById('pp-detail-pills').innerHTML = `
+    <span class="grade-pill ${gradeCls}">${c.grade}</span>
+    <span style="font-family:var(--font-mono);font-size:0.7rem;color:var(--text3)">${c.category}</span>`;
+
+  const listings = ppMockListings(c);
+  const auctions = ppMockAuctions(c);
+  const avgPrice = Math.round(listings.reduce((s,l)=>s+l.price,0)/listings.length);
+  const lastSale = Math.round(c.currentValue * (0.96 + (c.id.charCodeAt(0)%5)*0.01));
+
+  document.getElementById('pp-val').textContent = fmt(c.currentValue);
+  document.getElementById('pp-change').innerHTML = `<span style="color:${isUp?'#34c97a':'#e05c5c'}">${isUp?'+':''}${c.percentChange.toFixed(1)}%</span>`;
+  document.getElementById('pp-avg').textContent = fmt(avgPrice);
+  document.getElementById('pp-last').textContent = fmt(lastSale);
+  document.getElementById('pp-listings-count').textContent = listings.length;
+  document.getElementById('pp-auctions-count').textContent = auctions.length;
+
+  document.getElementById('pp-listings-label').textContent = listings.length + ' results';
+  document.getElementById('pp-listings-body').innerHTML = listings.map(l => `
+    <tr>
+      <td><span class="cd-badge-plat">${l.platform}</span></td>
+      <td class="mono">${l.grade}</td>
+      <td style="font-size:0.72rem;color:var(--text3)">${l.notes}</td>
+      <td class="mono" style="color:var(--gold3)">${fmt(l.price)}</td>
+    </tr>`).join('');
+
+  document.getElementById('pp-auctions-label').textContent = auctions.length + ' live';
+  document.getElementById('pp-auctions-body').innerHTML = auctions.map(a => `
+    <tr>
+      <td><span class="cd-badge-plat">${a.platform}</span></td>
+      <td class="mono" style="color:var(--gold3)">${fmt(a.bid)}</td>
+      <td class="mono">${a.bids}</td>
+      <td style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text3)">${ppFmtEnds(a.endsMs)}</td>
+    </tr>`).join('');
+
+  // Watch button
+  const inWatch = watchlistOnly.some(w=>w.player===c.player&&w.cardName===c.cardName) ||
+                  cards.some(cc=>cc.player===c.player&&cc.isWatchlisted);
+  const btn = document.getElementById('pp-watch-btn');
+  btn.textContent = inWatch ? '★ Watching' : '☆ Watch';
+  btn.className = 'pp-act-btn' + (inWatch ? ' watch-on' : '');
+
+  // Rebuild chart
+  document.querySelectorAll('.pp-range-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.pp-range-btn[onclick*="90D"]').classList.add('active');
+  requestAnimationFrame(() => ppBuildChart(c, '90D'));
+}
+
+function ppSwitchCard(catalogId) {
+  const c = BROWSE_CATALOG.find(x => x.id === catalogId);
+  if (!c) return;
+  ppCard = c;
+  ppRenderCardDetail(c);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function ppGoBack() {
+  if (ppChartInst) { ppChartInst.destroy(); ppChartInst = null; }
+  showPage(ppPrevPage || 'home');
+}
+
+function ppSetRange(range, btn) {
+  document.querySelectorAll('.pp-range-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (ppCard) ppBuildChart(ppCard, range);
+}
+
+function ppBuildChart(c, range) {
+  if (ppChartInst) { ppChartInst.destroy(); ppChartInst = null; }
+  const rng = WL_RANGES.find(r => r.key === range) || WL_RANGES[2];
+  const startVal = c.currentValue * (0.75 + (c.id.charCodeAt(0)%10)*0.02);
+  const data = genHistory(startVal, c.currentValue, rng.pts, rng.vol);
+  const isUp = data[data.length-1] >= data[0];
+  const color    = isUp ? '#34c97a' : '#e05c5c';
+  const colorMid = isUp ? 'rgba(52,201,122,0.18)' : 'rgba(224,92,92,0.16)';
+  const colorFade= isUp ? 'rgba(52,201,122,0)' : 'rgba(224,92,92,0)';
+
+  const canvas = document.getElementById('pp-chart-canvas');
+  if (!canvas) return;
+  const ctx  = canvas.getContext('2d');
+  const grad = ctx.createLinearGradient(0, 0, 0, 160);
+  grad.addColorStop(0, colorMid);
+  grad.addColorStop(1, colorFade);
+
+  ppChartInst = new Chart(canvas, {
+    type: 'line',
+    data: { labels: data.map((_,i)=>i), datasets: [{
+      data, borderColor: color, borderWidth: 2,
+      pointRadius: 0, pointHoverRadius: 4, pointHoverBackgroundColor: color,
+      fill: true, backgroundColor: grad, tension: 0.35,
+    }]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 300, easing: 'easeOutQuart' },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#181818', borderColor: color, borderWidth: 1,
+          titleColor: '#fff', bodyColor: '#c8aa88',
+          titleFont: { family:"'IBM Plex Mono'", size:10 },
+          bodyFont:  { family:"'IBM Plex Mono'", size:11 },
+          callbacks: { title:()=>'', label: ctx2 => ' ' + fmt(ctx2.raw) },
+          padding: 8, displayColors: false,
+        }
+      },
+      scales: {
+        x: { display: false },
+        y: {
+          position: 'right',
+          grid: { color: 'rgba(201,168,76,0.05)', drawBorder: false },
+          border: { display: false },
+          ticks: {
+            color: '#8a7060', font: { family:"'IBM Plex Mono'", size:9 }, maxTicksLimit: 4,
+            callback: v => '$' + (v >= 1000 ? (v/1000).toFixed(1)+'k' : Math.round(v))
+          }
+        }
+      }
+    }
+  });
+}
+
+function ppToggleWatch() {
+  if (!ppCard) return;
+  const c   = ppCard;
+  const existing = watchlistOnly.find(w=>w.player===c.player&&w.cardName===c.cardName);
+  const btn = document.getElementById('pp-watch-btn');
+  if (existing) {
+    watchlistOnly = watchlistOnly.filter(w=>!(w.player===c.player&&w.cardName===c.cardName));
+    btn.textContent = '☆ Watch';
+    btn.className = 'pp-act-btn';
+  } else {
+    watchlistOnly.push({
+      id: 200 + watchlistOnly.length,
+      player: c.player, cardName: c.cardName,
+      setName: c.setName, year: c.year, grade: c.grade,
+      currentValue: c.currentValue,
+      trend: (c.percentChange>=0?'+':'')+c.percentChange.toFixed(1)+'%',
+      priceHistory: genSparkline(c.currentValue*0.8, c.currentValue),
+      isWatchlisted: true, alertEnabled: false
+    });
+    btn.textContent = '★ Watching';
+    btn.className = 'pp-act-btn watch-on';
+  }
+  updateWatchBadge();
+}
+
+function ppAddToCollection() {
+  if (!ppCard) return;
+  quickAddToCollection(ppCard.id);
+}
+
+// legacy stubs — keep so any remaining cd* references don't throw
+function closeCardDetail() {}
+function cdSetRange() {}
+function cdToggleWatch() {}
+function cdAddToCollection() {}
 
 // ─── INIT ────────────────────────────────────────────────────────────────────
 renderHub();
