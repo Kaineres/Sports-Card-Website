@@ -8,6 +8,9 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -2036,11 +2039,18 @@
         autocomplete="off" style="width:100%">
       <div class="ac-dropdown" id="collection-ac"></div>
     </div>
+    <input type="text" class="search-input" id="filter-set" placeholder="Set name…" oninput="filterCollection()" style="width:140px;flex-shrink:0">
+    <input type="number" class="search-input" id="filter-year" placeholder="Year…" oninput="filterCollection()" style="width:90px;flex-shrink:0;-moz-appearance:textfield">
     <select class="filter-sel" id="filter-sport" onchange="filterCollection()">
       <option value="">All Sports</option>
       <option value="NBA">NBA</option>
       <option value="NFL">NFL</option>
       <option value="MLB">MLB</option>
+      <option value="NHL">NHL</option>
+      <option value="Soccer">Soccer</option>
+      <option value="WNBA">WNBA</option>
+      <option value="UFC">UFC/MMA</option>
+      <option value="Golf">Golf</option>
     </select>
     <select class="filter-sel" id="filter-grade" onchange="filterCollection()">
       <option value="">All Grades</option>
@@ -2050,6 +2060,18 @@
       <option value="PSA 7 & Below">PSA 7 &amp; Below</option>
       <option value="Raw">Raw</option>
     </select>
+    <select class="filter-sel" id="coll-sort" onchange="applyCollSort()" style="min-width:148px">
+      <option value="">Sort: Default</option>
+      <option value="player-asc">Player A→Z</option>
+      <option value="player-desc">Player Z→A</option>
+      <option value="setName-asc">Set A→Z</option>
+      <option value="setName-desc">Set Z→A</option>
+      <option value="year-asc">Year: Oldest</option>
+      <option value="year-desc">Year: Newest</option>
+      <option value="grade-asc">Grade: Best First</option>
+      <option value="grade-desc">Grade: Lowest First</option>
+    </select>
+    <button class="btn-sm btn-ghost" id="coll-clear-btn" onclick="clearCollectionFilters()" style="display:none;white-space:nowrap;font-size:0.75rem;padding:6px 12px">✕ Clear</button>
     <button class="add-btn" onclick="openAddModal()">+ Add to Collection</button>
   </div>
 
@@ -2153,9 +2175,38 @@
     </div>
     <div style="display:flex;align-items:center;gap:10px">
       <span class="watchlist-count" id="wl-count">0 cards</span>
-
     </div>
   </div>
+
+  <!-- Watchlist filter bar -->
+  <div class="collection-toolbar" id="wl-filter-bar" style="gap:8px">
+    <input type="text" class="search-input" id="wl-filter-player" placeholder="Player name…" oninput="filterWatchlist()" style="flex:1;min-width:140px">
+    <input type="text" class="search-input" id="wl-filter-card" placeholder="Card name…" oninput="filterWatchlist()" style="flex:1;min-width:140px">
+    <input type="text" class="search-input" id="wl-filter-set" placeholder="Set name…" oninput="filterWatchlist()" style="width:130px;flex-shrink:0">
+    <input type="number" class="search-input" id="wl-filter-year" placeholder="Year…" oninput="filterWatchlist()" style="width:90px;flex-shrink:0;-moz-appearance:textfield">
+    <select class="filter-sel" id="wl-filter-grade" onchange="filterWatchlist()">
+      <option value="">All Grades</option>
+      <option value="PSA 10">PSA 10</option>
+      <option value="PSA 9">PSA 9</option>
+      <option value="PSA 8">PSA 8</option>
+      <option value="PSA 7">PSA 7</option>
+      <option value="Raw">Raw</option>
+    </select>
+    <select class="filter-sel" id="wl-sort" onchange="filterWatchlist()" style="min-width:148px">
+      <option value="">Sort: Default</option>
+      <option value="player-asc">Player A→Z</option>
+      <option value="player-desc">Player Z→A</option>
+      <option value="setName-asc">Set A→Z</option>
+      <option value="setName-desc">Set Z→A</option>
+      <option value="year-asc">Year: Oldest</option>
+      <option value="year-desc">Year: Newest</option>
+      <option value="grade-asc">Grade: Best First</option>
+      <option value="grade-desc">Grade: Lowest First</option>
+    </select>
+    <button class="btn-sm btn-ghost" id="wl-clear-btn" onclick="clearWatchlistFilters()" style="display:none;white-space:nowrap;font-size:0.75rem;padding:6px 12px">&#x2715; Clear</button>
+  </div>
+  <div id="wl-filter-meta" style="padding:0.4rem 2rem;font-family:var(--font-mono);font-size:0.68rem;color:var(--text3);letter-spacing:0.04em;display:none"></div>
+
   <div class="wl-grid-inner" id="watchlist-grid"></div>
 </div>
 
@@ -2451,7 +2502,7 @@
       <div class="form-group full" style="position:relative">
         <label class="form-label">Card Name</label>
         <input class="form-input" id="f-cardName" placeholder="e.g. 2003-04 Topps Chrome Rookie" autocomplete="off"
-          oninput="modalAcShow()"
+          oninput="modalAcShow(); window._modalBaseCard = null; document.getElementById('f-value-auto-tag').style.display='none';"
           onkeydown="modalAcKey(event)"
           onfocus="modalAcShow()">
       </div>
@@ -2465,7 +2516,7 @@
       </div>
       <div class="form-group">
         <label class="form-label">Grade</label>
-        <select class="form-input" id="f-grade">
+        <select class="form-input" id="f-grade" onchange="gradeAutoValue()">
           <option>PSA 10</option><option>PSA 9</option><option>PSA 8</option><option>PSA 7</option><option>PSA 6</option><option>PSA 5</option><option>PSA 4</option><option>PSA 3</option><option>PSA 2</option><option>PSA 1</option><option>Raw</option>
         </select>
       </div>
@@ -2480,8 +2531,11 @@
         <input class="form-input" id="f-purchasePrice" type="number" min="0" step="0.01" placeholder="250.00">
       </div>
       <div class="form-group">
-        <label class="form-label">Current Est. Value ($)</label>
-        <input class="form-input" id="f-currentValue" type="number" min="0" step="0.01" placeholder="310.00">
+        <label class="form-label" style="display:flex;align-items:center;gap:6px">
+          Current Est. Value ($)
+          <span id="f-value-auto-tag" style="display:none;font-size:0.6rem;font-family:var(--font-mono);background:var(--gold-bg);color:var(--gold2);border:1px solid var(--gold-border);border-radius:3px;padding:1px 5px;letter-spacing:0.05em">AUTO</span>
+        </label>
+        <input class="form-input" id="f-currentValue" type="number" min="0" step="0.01" placeholder="310.00" oninput="document.getElementById('f-value-auto-tag').style.display='none'">
       </div>
       <div class="form-group">
         <label class="form-label">Quantity</label>
@@ -3302,6 +3356,10 @@ function modalAcPick(idx) {
   document.getElementById('f-setName').value   = c.setName || '';
   document.getElementById('f-year').value      = c.year || '';
   document.getElementById('f-currentValue').value = c.currentValue || '';
+  // Store catalog reference for grade-based value adjustment
+  window._modalBaseCard = c;
+  const autoTag = document.getElementById('f-value-auto-tag');
+  if (autoTag && c.currentValue) autoTag.style.display = '';
   // Set grade select
   const gradeEl = document.getElementById('f-grade');
   if (gradeEl && c.grade) {
@@ -3343,6 +3401,57 @@ function modalAcClose() {
   const panel = document.getElementById('modal-ac');
   if (panel) panel.classList.remove('open');
   _modalAcFocusIdx = -1;
+}
+
+// ─── GRADE → VALUE AUTO-ESTIMATE ─────────────────────────────────────────────
+// Grade multipliers relative to PSA 10 baseline
+const GRADE_MULTIPLIERS = {
+  'PSA 10': 1.00,
+  'PSA 9':  0.55,
+  'PSA 8':  0.30,
+  'PSA 7':  0.18,
+  'PSA 6':  0.12,
+  'PSA 5':  0.09,
+  'PSA 4':  0.07,
+  'PSA 3':  0.05,
+  'PSA 2':  0.04,
+  'PSA 1':  0.03,
+  'Raw':    0.20,
+};
+
+function gradeAutoValue() {
+  const newGrade  = document.getElementById('f-grade')?.value;
+  const valInput  = document.getElementById('f-currentValue');
+  const autoTag   = document.getElementById('f-value-auto-tag');
+  if (!newGrade || !valInput) return;
+
+  // Try to find the exact card in BROWSE_CATALOG at the selected grade first
+  const player   = document.getElementById('f-player')?.value.trim();
+  const cardName = document.getElementById('f-cardName')?.value.trim();
+
+  // Look for an exact catalog match at the new grade
+  const exactMatch = BROWSE_CATALOG.find(c =>
+    c.player === player && c.cardName === cardName && c.grade === newGrade
+  );
+
+  if (exactMatch) {
+    valInput.value = exactMatch.currentValue;
+    if (autoTag) autoTag.style.display = '';
+    return;
+  }
+
+  // Fall back: derive from base card using grade multiplier ratio
+  const base = window._modalBaseCard;
+  if (!base || !base.currentValue || !base.grade) return;
+  const baseMult = GRADE_MULTIPLIERS[base.grade];
+  const newMult  = GRADE_MULTIPLIERS[newGrade];
+  if (!baseMult || !newMult) return;
+
+  // Normalize: base value → PSA 10 equivalent → scale to new grade
+  const psa10Equiv = base.currentValue / baseMult;
+  const estimated  = Math.round(psa10Equiv * newMult);
+  valInput.value = estimated;
+  if (autoTag) autoTag.style.display = '';
 }
 
 // Close modal AC when clicking outside
@@ -4270,27 +4379,148 @@ function renderTableBody(data) {
     }).join('');
 }
 
+// ─── GRADE SORT ORDER ─────────────────────────────────────────────────────────
+const GRADE_ORDER = ['PSA 10','PSA 9','PSA 8','PSA 7','PSA 6','PSA 5','PSA 4','PSA 3','PSA 2','PSA 1','Raw'];
+function gradeRank(g) { const i = GRADE_ORDER.indexOf(g); return i === -1 ? 99 : i; }
+
+function applySortArr(arr, sortVal) {
+  if (!sortVal) return arr;
+  const [field, dir] = sortVal.split('-');
+  const asc = dir === 'asc';
+  return [...arr].sort((a, b) => {
+    if (field === 'grade') {
+      return asc ? gradeRank(a.grade) - gradeRank(b.grade)
+                 : gradeRank(b.grade) - gradeRank(a.grade);
+    }
+    const av = a[field] ?? '', bv = b[field] ?? '';
+    if (typeof av === 'string') return asc ? av.localeCompare(bv) : bv.localeCompare(av);
+    return asc ? av - bv : bv - av;
+  });
+}
+
 function filterCollection() {
-  const search = document.getElementById('collection-search').value.toLowerCase();
-  const sport = document.getElementById('filter-sport').value;
-  const grade = document.getElementById('filter-grade').value;
+  const search = document.getElementById('collection-search').value.toLowerCase().trim();
+  const sport  = document.getElementById('filter-sport').value;
+  const grade  = document.getElementById('filter-grade').value;
+  const setQ   = (document.getElementById('filter-set')?.value || '').toLowerCase().trim();
+  const yearQ  = (document.getElementById('filter-year')?.value || '').trim();
+  const sortV  = document.getElementById('coll-sort')?.value || '';
   const psa7AndBelow = ['PSA 7','PSA 6','PSA 5','PSA 4','PSA 3','PSA 2','PSA 1'];
+
+  const hasFilter = search || sport || grade || setQ || yearQ;
+  const clearBtn = document.getElementById('coll-clear-btn');
+  if (clearBtn) clearBtn.style.display = (hasFilter || sortV) ? '' : 'none';
+
   let filtered = cards.filter(c => {
-    const matchSearch = !search || c.player.toLowerCase().includes(search) || c.cardName.toLowerCase().includes(search) || c.setName.toLowerCase().includes(search);
+    const matchSearch = !search ||
+      c.player.toLowerCase().includes(search) ||
+      c.cardName.toLowerCase().includes(search) ||
+      c.setName.toLowerCase().includes(search);
     const matchSport = !sport || c.category === sport;
     const matchGrade = !grade || (grade === 'PSA 7 & Below' ? psa7AndBelow.includes(c.grade) : c.grade === grade);
-    return matchSearch && matchSport && matchGrade;
+    const matchSet   = !setQ  || c.setName.toLowerCase().includes(setQ);
+    const matchYear  = !yearQ || String(c.year).includes(yearQ);
+    return matchSearch && matchSport && matchGrade && matchSet && matchYear;
   });
+
+  filtered = applySortArr(filtered, sortV);
   renderTableBody(filtered);
 }
 
+function clearCollectionFilters() {
+  ['collection-search','filter-set','filter-year'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  ['filter-sport','filter-grade','coll-sort'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  const clearBtn = document.getElementById('coll-clear-btn');
+  if (clearBtn) clearBtn.style.display = 'none';
+  renderTableBody(cards);
+}
+
+// ─── WATCHLIST FILTER ─────────────────────────────────────────────────────────
+function filterWatchlist() {
+  const playerQ = (document.getElementById('wl-filter-player')?.value || '').toLowerCase().trim();
+  const cardQ   = (document.getElementById('wl-filter-card')?.value  || '').toLowerCase().trim();
+  const setQ    = (document.getElementById('wl-filter-set')?.value   || '').toLowerCase().trim();
+  const yearQ   = (document.getElementById('wl-filter-year')?.value  || '').trim();
+  const grade   = document.getElementById('wl-filter-grade')?.value || '';
+  const sortV   = document.getElementById('wl-sort')?.value || '';
+
+  const allWatched = [
+    ...cards.filter(c => c.isWatchlisted).map(c => ({
+      ...c,
+      trend: (c.percentChange >= 0 ? '+' : '') + c.percentChange.toFixed(1) + '%',
+      priceHistory: genSparkline(c.purchasePrice * 0.9, c.currentValue),
+      alertEnabled: wlAlertStates[c.id] || false
+    })),
+    ...watchlistOnly
+  ];
+
+  const hasFilter = playerQ || cardQ || setQ || yearQ || grade;
+  const clearBtn  = document.getElementById('wl-clear-btn');
+  const metaEl    = document.getElementById('wl-filter-meta');
+  if (clearBtn) clearBtn.style.display = (hasFilter || sortV) ? '' : 'none';
+
+  let filtered = allWatched.filter(c => {
+    const matchPlayer = !playerQ || (c.player || '').toLowerCase().includes(playerQ);
+    const matchCard   = !cardQ   || (c.cardName || '').toLowerCase().includes(cardQ);
+    const matchSet    = !setQ    || (c.setName  || '').toLowerCase().includes(setQ);
+    const matchYear   = !yearQ   || String(c.year || '').includes(yearQ);
+    const matchGrade  = !grade   || c.grade === grade;
+    return matchPlayer && matchCard && matchSet && matchYear && matchGrade;
+  });
+
+  filtered = applySortArr(filtered, sortV);
+
+  if (metaEl) {
+    if (hasFilter || sortV) {
+      metaEl.style.display = '';
+      metaEl.textContent = `${filtered.length} of ${allWatched.length} card${allWatched.length !== 1 ? 's' : ''} shown`;
+    } else {
+      metaEl.style.display = 'none';
+    }
+  }
+
+  renderWatchlistCards(filtered);
+}
+
+function clearWatchlistFilters() {
+  ['wl-filter-player','wl-filter-card','wl-filter-set','wl-filter-year'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  ['wl-filter-grade','wl-sort'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  const clearBtn = document.getElementById('wl-clear-btn');
+  if (clearBtn) clearBtn.style.display = 'none';
+  const metaEl = document.getElementById('wl-filter-meta');
+  if (metaEl) metaEl.style.display = 'none';
+  renderWatchlist();
+}
+
+function applyCollSort() { filterCollection(); }
+
 function sortBy(field) {
+  // Keep table-header click sorting working; also sync the dropdown
   if (sortField === field) sortDir *= -1;
   else { sortField = field; sortDir = 1; }
-  cards.sort((a,b) => {
-    if (typeof a[field] === 'string') return a[field].localeCompare(b[field]) * sortDir;
-    return (a[field] - b[field]) * sortDir;
-  });
+
+  // Map field+dir to a dropdown value where possible
+  const sel = document.getElementById('coll-sort');
+  if (sel) {
+    const dirStr = sortDir === 1 ? 'asc' : 'desc';
+    const optVal = `${field}-${dirStr}`;
+    const exists = [...sel.options].some(o => o.value === optVal);
+    if (exists) sel.value = optVal;
+    else sel.value = '';
+  }
+
   filterCollection();
 }
 
@@ -4702,6 +4932,53 @@ function renderWatchlist() {
     ...watchlistOnly
   ];
   updateWatchBadge(allWatched.length);
+
+  if (allWatched.length === 0) {
+    Object.values(wlChartRegistry).forEach(ch => { try { ch.destroy(); } catch(e){} });
+    wlChartRegistry = {};
+    const grid = document.getElementById('watchlist-grid');
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-state-icon">👁</div>
+      <h3>Your watchlist is empty</h3>
+      <p>Add cards to your collection and click "Watch" to track them here.</p>
+    </div>`;
+    return;
+  }
+
+  // Re-apply any active watchlist filter + sort
+  const playerQ = (document.getElementById('wl-filter-player')?.value || '').toLowerCase().trim();
+  const cardQ   = (document.getElementById('wl-filter-card')?.value  || '').toLowerCase().trim();
+  const setQ    = (document.getElementById('wl-filter-set')?.value   || '').toLowerCase().trim();
+  const yearQ   = (document.getElementById('wl-filter-year')?.value  || '').trim();
+  const grade   = document.getElementById('wl-filter-grade')?.value || '';
+  const sortV   = document.getElementById('wl-sort')?.value || '';
+  const hasFilter = playerQ || cardQ || setQ || yearQ || grade;
+
+  let toRender = hasFilter ? allWatched.filter(c => {
+    const matchPlayer = !playerQ || (c.player || '').toLowerCase().includes(playerQ);
+    const matchCard   = !cardQ   || (c.cardName || '').toLowerCase().includes(cardQ);
+    const matchSet    = !setQ    || (c.setName  || '').toLowerCase().includes(setQ);
+    const matchYear   = !yearQ   || String(c.year || '').includes(yearQ);
+    const matchGrade  = !grade   || c.grade === grade;
+    return matchPlayer && matchCard && matchSet && matchYear && matchGrade;
+  }) : allWatched;
+
+  toRender = applySortArr(toRender, sortV);
+
+  const metaEl = document.getElementById('wl-filter-meta');
+  if (metaEl) {
+    if (hasFilter || sortV) {
+      metaEl.style.display = '';
+      metaEl.textContent = `${toRender.length} of ${allWatched.length} card${allWatched.length !== 1 ? 's' : ''} shown`;
+    } else {
+      metaEl.style.display = 'none';
+    }
+  }
+
+  renderWatchlistCards(toRender);
+}
+
+function renderWatchlistCards(allWatched) {
   const grid = document.getElementById('watchlist-grid');
 
   // Destroy old charts before re-rendering
@@ -4710,9 +4987,9 @@ function renderWatchlist() {
 
   if (allWatched.length === 0) {
     grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
-      <div class="empty-state-icon">👁</div>
-      <h3>Your watchlist is empty</h3>
-      <p>Add cards to your collection and click "Watch" to track them here.</p>
+      <div class="empty-state-icon">🔍</div>
+      <h3>No cards match your filters</h3>
+      <p>Try adjusting or clearing your filter criteria.</p>
     </div>`;
     return;
   }
@@ -4955,9 +5232,13 @@ function updateWatchBadge(count) {
 
 // ─── MODAL ───────────────────────────────────────────────────────────────────
 function openAddModal() {
+  window._modalBaseCard = null;
+  const autoTag = document.getElementById('f-value-auto-tag');
+  if (autoTag) autoTag.style.display = 'none';
   document.getElementById('add-modal').classList.add('open');
 }
 function closeModal() {
+  window._modalBaseCard = null;
   document.getElementById('add-modal').classList.remove('open');
   modalAcClose();
 }
