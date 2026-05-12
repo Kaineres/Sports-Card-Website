@@ -475,6 +475,29 @@
   .mono { font-family: var(--font-mono); }
 
   .heat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 6px; }
+  /* Player Market Search */
+  .mkt-pill {
+    background: var(--bg3); border: 1px solid var(--border2); border-radius: 99px;
+    color: var(--text2); font-family: var(--font-display); font-size: 0.7rem;
+    font-weight: 600; padding: 3px 10px; cursor: pointer; transition: all 0.15s;
+    letter-spacing: 0.02em; white-space: nowrap;
+  }
+  .mkt-pill:hover { border-color: var(--gold-border); color: var(--gold2); }
+  .mkt-pill-active { background: rgba(184,146,46,0.12); border-color: var(--gold-border); color: var(--gold2); }
+  .mkt-result-row {
+    display: flex; align-items: center; gap: 8px; padding: 7px 10px;
+    background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--radius-lg);
+    cursor: pointer; transition: border-color 0.15s, background 0.15s;
+  }
+  .mkt-result-row:hover { border-color: var(--gold-border); background: rgba(184,146,46,0.05); }
+  .mkt-result-sport { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em; padding: 2px 7px; border-radius: 99px; flex-shrink: 0; }
+  .mkt-result-info { flex: 1; min-width: 0; }
+  .mkt-result-player { font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mkt-result-card { font-size: 0.68rem; color: var(--text3); font-family: var(--font-mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
+  .mkt-result-right { text-align: right; flex-shrink: 0; }
+  .mkt-result-price { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--text); }
+  .mkt-result-change { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600; margin-top: 1px; }
+
   .heat-cell {
     border-radius: 6px;
     padding: 0.85rem 0.7rem;
@@ -616,6 +639,18 @@
   .grade-9  { background: rgba(212,168,67,0.12); color: #d4a843; border-color: rgba(212,168,67,0.28); }
   .grade-8  { background: rgba(196,92,16,0.12);  color: #c45c10; border-color: rgba(196,92,16,0.25); }
   .grade-7below { background: rgba(224,92,92,0.10); color: #e05c5c; border-color: rgba(224,92,92,0.25); }
+  .action-btn.sell-btn {
+    color: var(--gold2); border-color: rgba(184,146,46,0.25);
+    background: rgba(184,146,46,0.08);
+  }
+  .action-btn.sell-btn:hover {
+    color: #0d1117; background: var(--gold2); border-color: var(--gold2);
+  }
+  #pnl-sold-table tfoot td {
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700;
+    padding: 10px 12px; border-top: 2px solid var(--border2); color: var(--text);
+  }
+
   .action-btn {
     background: none;
     border: 1px solid var(--border);
@@ -1208,6 +1243,39 @@
 
   /* ── AUTOCOMPLETE DROPDOWN (shared) ── */
   .ac-wrap { position: relative; }
+  /* Modal autocomplete dropdown */
+  .modal-ac-dropdown {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    background: var(--bg3);
+    border: 1px solid var(--border3);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,168,76,0.08);
+    max-height: 260px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border2) transparent;
+  }
+  .modal-ac-dropdown.open { display: block; }
+  .modal-ac-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 9px 14px; gap: 10px; cursor: pointer;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.12s;
+  }
+  .modal-ac-item:last-child { border-bottom: none; }
+  .modal-ac-item:hover, .modal-ac-item.focused { background: rgba(184,146,46,0.08); }
+  .modal-ac-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .modal-ac-dot { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; }
+  .modal-ac-text { min-width: 0; }
+  .modal-ac-player { font-family: var(--font-display); font-size: 0.82rem; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .modal-ac-sub { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text3); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .modal-ac-right { flex-shrink: 0; text-align: right; }
+  .modal-ac-price { font-family: var(--font-mono); font-size: 0.78rem; color: var(--gold3); font-weight: 500; }
+  .modal-ac-pct { font-family: var(--font-mono); font-size: 0.65rem; margin-top: 2px; }
+  .modal-ac-no-results { padding: 12px 16px; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text3); }
+
   .ac-dropdown {
     position: absolute; top: calc(100% + 5px); left: 0; right: 0;
     background: var(--bg2);
@@ -1873,25 +1941,53 @@
       <div class="chart-wrap" style="height:220px"><canvas id="gradeChart" role="img" aria-label="Bar chart of grade premiums">PSA 10 commands 3.8x over PSA 7 baseline.</canvas></div>
     </div>
 
+    <!-- Player Market Search -->
+    <div class="chart-card" style="display:flex;flex-direction:column;gap:0">
+      <div class="chart-title" style="margin-bottom:2px">Player Market Search</div>
+      <div class="chart-sub" style="margin-bottom:0.9rem">Search cards, sets, or players across all sports</div>
+
+      <!-- Search input -->
+      <div style="position:relative;display:flex;align-items:center;margin-bottom:0.75rem">
+        <span style="position:absolute;left:13px;color:var(--gold2);font-size:1rem;pointer-events:none;line-height:1;z-index:1">⌕</span>
+        <input
+          type="text"
+          id="mkt-search-input"
+          placeholder="Player, set, or card name…"
+          autocomplete="off"
+          oninput="mktSearch()"
+          style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);color:var(--text);font-family:var(--font-display);font-size:0.88rem;font-weight:500;padding:9px 14px 9px 38px;outline:none;transition:border-color 0.18s,box-shadow 0.18s;box-shadow:inset 0 1px 3px rgba(0,0,0,0.35)"
+          onfocus="this.style.borderColor='var(--gold-border)';this.style.boxShadow='0 0 0 2px rgba(184,146,46,0.12),inset 0 1px 3px rgba(0,0,0,0.35)'"
+          onblur="this.style.borderColor='var(--border2)';this.style.boxShadow='inset 0 1px 3px rgba(0,0,0,0.35)'">
+      </div>
+
+      <!-- Sport filter pills -->
+      <div id="mkt-sport-pills" style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:0.75rem">
+        <button class="mkt-pill mkt-pill-active" onclick="mktSetSport('')" data-sport="">All</button>
+        <button class="mkt-pill" onclick="mktSetSport('NBA')" data-sport="NBA">🏀 NBA</button>
+        <button class="mkt-pill" onclick="mktSetSport('NFL')" data-sport="NFL">🏈 NFL</button>
+        <button class="mkt-pill" onclick="mktSetSport('MLB')" data-sport="MLB">⚾ MLB</button>
+        <button class="mkt-pill" onclick="mktSetSport('NHL')" data-sport="NHL">🏒 NHL</button>
+        <button class="mkt-pill" onclick="mktSetSport('Soccer')" data-sport="Soccer">⚽</button>
+        <button class="mkt-pill" onclick="mktSetSport('WNBA')" data-sport="WNBA">WNBA</button>
+      </div>
+
+      <!-- Empty state (outside results list so innerHTML wipes never destroy it) -->
+      <div id="mkt-empty" style="color:var(--text3);font-size:0.8rem;text-align:center;padding:1.5rem 0;font-family:var(--font-mono)">Type to search player markets</div>
+      <!-- Results list -->
+      <div id="mkt-results" style="flex:1;overflow-y:auto;max-height:200px;display:none;flex-direction:column;gap:4px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent"></div>
+
+      <!-- Footer count -->
+      <div id="mkt-footer" style="margin-top:0.6rem;font-size:0.7rem;font-family:var(--font-mono);color:var(--text3);letter-spacing:0.03em"></div>
+    </div>
+
     <!-- Market Heatmap -->
     <div class="chart-card full">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:0.25rem">
         <div>
-          <div style="font-family:var(--font-display);font-size:1.35rem;font-weight:700;letter-spacing:-0.02em;color:var(--text)">Category Heat Map</div>
+          <div style="font-family:var(--font-display);font-size:1.35rem;font-weight:700;letter-spacing:-0.02em;color:var(--text)">Heat Map</div>
           <div class="chart-sub" style="margin-top:3px">7-day price change by player — darker green = stronger gain</div>
         </div>
         <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap">
-          <div style="position:relative;display:flex;align-items:center">
-            <span style="position:absolute;left:14px;color:var(--gold2);font-size:1.05rem;pointer-events:none;line-height:1">⌕</span>
-            <input type="text" id="heat-search" placeholder="Search player…"
-              oninput="renderHeatMap();acShow('heat-search','heat-ac')"
-              onkeydown="acKey(event,'heat-search','heat-ac')"
-              autocomplete="off"
-              style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);color:var(--text);font-family:var(--font-display);font-size:0.95rem;font-weight:500;padding:10px 16px 10px 40px;width:280px;outline:none;transition:border-color 0.18s,box-shadow 0.18s;box-shadow:inset 0 1px 3px rgba(0,0,0,0.4)"
-              onfocus="this.style.borderColor='var(--gold-border)';this.style.boxShadow='0 0 0 2px rgba(184,146,46,0.12),inset 0 1px 3px rgba(0,0,0,0.4)'"
-              onblur="this.style.borderColor='var(--border2)';this.style.boxShadow='inset 0 1px 3px rgba(0,0,0,0.4)'">
-            <div class="ac-dropdown" id="heat-ac"></div>
-          </div>
           <select id="heat-sport" onchange="renderHeatMap()" style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);color:var(--text2);font-family:var(--font-display);font-size:0.92rem;font-weight:500;padding:10px 16px;outline:none;cursor:pointer;transition:border-color 0.18s;box-shadow:inset 0 1px 3px rgba(0,0,0,0.4)">
             <option value="">All Sports</option>
             <option value="NBA">NBA</option>
@@ -1975,6 +2071,33 @@
       </thead>
       <tbody id="collection-body"></tbody>
     </table>
+  </div>
+
+  <!-- P&L Tracker -->
+  <div class="alloc-section" id="pnl-section" style="padding-bottom:1.5rem">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.25rem">
+      <div>
+        <div class="section-label">Profit &amp; Loss</div>
+        <div class="section-title" style="font-size:1.1rem;font-family:var(--font-serif)">Realized vs. Unrealized</div>
+      </div>
+    </div>
+
+    <!-- Top stat strip -->
+    <div id="pnl-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border2);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:1.25rem"></div>
+
+    <!-- Sold cards table -->
+    <div id="pnl-sold-wrap">
+      <div style="font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:0.6rem">Realized Trades</div>
+      <div id="pnl-sold-empty" style="color:var(--text3);font-size:0.8rem;font-family:var(--font-mono);padding:1.5rem 0;text-align:center">No sold cards yet — mark a card as sold to track realized P&amp;L</div>
+      <table class="cd-table" id="pnl-sold-table" style="width:100%;display:none">
+        <thead><tr>
+          <th>Player</th><th>Card</th><th>Grade</th>
+          <th>Cost Basis</th><th>Sale Price</th><th>Realized P&amp;L</th><th>Return</th><th>Date Sold</th>
+        </tr></thead>
+        <tbody id="pnl-sold-body"></tbody>
+        <tfoot id="pnl-sold-foot"></tfoot>
+      </table>
+    </div>
   </div>
 
   <!-- Portfolio Value Chart -->
@@ -2156,6 +2279,160 @@
 
 </div>
 
+<!-- PLAYER MARKET PAGE -->
+<div class="page" id="page-player-mkt">
+
+  <!-- Hero -->
+  <div class="pp-hero" id="pmkt-hero">
+    <button class="pp-back" id="pmkt-back-btn" onclick="pmktGoBack()">← Back</button>
+    <div class="pp-hero-inner">
+      <div style="flex:1">
+        <div class="pp-sport-pill" id="pmkt-sport-pill"></div>
+        <div class="pp-name" id="pmkt-name"></div>
+        <div class="pp-meta" id="pmkt-meta"></div>
+        <div class="pp-hero-stats" id="pmkt-hero-stats"></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:1.5rem 2rem;display:flex;flex-direction:column;gap:1.5rem;max-width:1400px;margin:0 auto">
+
+    <!-- Row 1: Market Cap Chart + Momentum Panel -->
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:1.25rem">
+
+      <!-- Market Cap Chart -->
+      <div class="pp-detail-card" style="padding:1.5rem 1.75rem">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem">
+          <div>
+            <div style="font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:4px">Portfolio Value Over Time</div>
+            <div id="pmkt-chart-val" style="font-family:var(--font-mono);font-size:1.4rem;font-weight:500;color:var(--gold3)"></div>
+          </div>
+          <div class="pp-range-row">
+            <button class="pp-range-btn" onclick="pmktSetRange('7D',this)">7D</button>
+            <button class="pp-range-btn" onclick="pmktSetRange('30D',this)">30D</button>
+            <button class="pp-range-btn active" onclick="pmktSetRange('90D',this)">90D</button>
+            <button class="pp-range-btn" onclick="pmktSetRange('6M',this)">6M</button>
+            <button class="pp-range-btn" onclick="pmktSetRange('1Y',this)">1Y</button>
+            <button class="pp-range-btn" onclick="pmktSetRange('5Y',this)">5Y+</button>
+          </div>
+        </div>
+        <div style="height:180px;position:relative"><canvas id="pmkt-chart-canvas"></canvas></div>
+      </div>
+
+      <!-- Momentum Panel -->
+      <div class="pp-detail-card" style="padding:1.5rem">
+        <div style="font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:1rem">Market Signals</div>
+        <div id="pmkt-signals" style="display:flex;flex-direction:column;gap:0.75rem"></div>
+      </div>
+    </div>
+
+    <!-- Row 2: Top Cards Table + Grade Breakdown -->
+    <div style="display:grid;grid-template-columns:3fr 2fr;gap:1.25rem">
+
+      <!-- Top Cards Ranked -->
+      <div class="pp-detail-card" style="padding:1.5rem 1.75rem">
+        <div style="font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:1rem">Top Cards by Value</div>
+        <table class="cd-table" style="width:100%">
+          <thead><tr>
+            <th>#</th><th>Card</th><th>Grade</th><th>Value</th><th>7D</th>
+          </tr></thead>
+          <tbody id="pmkt-top-cards-body"></tbody>
+        </table>
+      </div>
+
+      <!-- Grade Breakdown -->
+      <div class="pp-detail-card" style="padding:1.5rem">
+        <div style="font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:1rem">Grade Breakdown</div>
+        <div id="pmkt-grade-bars" style="display:flex;flex-direction:column;gap:0.6rem"></div>
+      </div>
+    </div>
+
+    <!-- Row 3: Volume by Set + Recent Sales -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+
+      <!-- Volume by Set -->
+      <div class="pp-detail-card" style="padding:1.5rem 1.75rem">
+        <div style="font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:1rem">Market Share by Set</div>
+        <div id="pmkt-set-bars" style="display:flex;flex-direction:column;gap:0.55rem"></div>
+      </div>
+
+      <!-- Price Distribution -->
+      <div class="pp-detail-card" style="padding:1.5rem 1.75rem">
+        <div style="font-family:var(--font-mono);font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:1rem">Price Range Distribution</div>
+        <div id="pmkt-price-dist" style="display:flex;flex-direction:column;gap:0.55rem"></div>
+        <div id="pmkt-dist-legend" style="margin-top:1rem;display:flex;gap:1rem;flex-wrap:wrap"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SELL CARD MODAL -->
+<div class="modal-overlay" id="sell-modal">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-title">
+      <div>
+        <div style="font-size:0.65rem;font-family:var(--font-mono);color:var(--gold2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px">Mark as Sold</div>
+        <div id="sell-modal-card-name" style="font-size:0.95rem;color:var(--text2);font-weight:500"></div>
+      </div>
+      <button class="modal-close" onclick="closeSellModal()">✕</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <!-- Quantity row — only shown when qty > 1 -->
+      <div class="form-group" id="sell-qty-row" style="display:none">
+        <label class="form-label">Quantity to Sell <span id="sell-qty-held" style="color:var(--text3);font-weight:400"></span></label>
+        <div style="display:flex;align-items:center;gap:8px">
+          <input class="form-input" id="sell-qty" type="number" min="1" value="1"
+            style="width:90px;text-align:center"
+            oninput="sellUpdatePreview()">
+          <div style="display:flex;gap:6px">
+            <button type="button" onclick="sellSetQty('half')"
+              style="background:var(--bg4);border:1px solid var(--border2);border-radius:var(--radius-lg);color:var(--text2);font-family:var(--font-mono);font-size:0.68rem;padding:6px 10px;cursor:pointer;transition:0.15s"
+              onmouseover="this.style.borderColor='var(--gold-border)';this.style.color='var(--gold2)'"
+              onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--text2)'">½</button>
+            <button type="button" onclick="sellSetQty('all')"
+              style="background:var(--bg4);border:1px solid var(--border2);border-radius:var(--radius-lg);color:var(--text2);font-family:var(--font-mono);font-size:0.68rem;padding:6px 10px;cursor:pointer;transition:0.15s"
+              onmouseover="this.style.borderColor='var(--gold-border)';this.style.color='var(--gold2)'"
+              onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--text2)'">All</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sale Price <span style="color:var(--text3);font-weight:400;font-size:0.68rem">per card</span></label>
+        <input class="form-input" id="sell-price" type="number" min="0" step="0.01" placeholder="0.00"
+          style="border-color:rgba(184,146,46,0.3);font-size:1.05rem"
+          oninput="sellUpdatePreview()"
+          onkeydown="if(event.key==='Enter')confirmSell()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Date Sold</label>
+        <input class="form-input" id="sell-date" type="date" style="color:var(--text2)">
+      </div>
+      <!-- Preview P&L -->
+      <div id="sell-preview" style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:12px 16px;display:none">
+        <div style="font-family:var(--font-mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:8px">Realized P&amp;L Preview</div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-family:var(--font-mono);font-size:0.72rem;color:var(--text2)">Cost basis</span>
+          <span id="sell-preview-cost" style="font-family:var(--font-mono);font-size:0.78rem;color:var(--text)"></span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+          <span style="font-family:var(--font-mono);font-size:0.72rem;color:var(--text2)">Sale price</span>
+          <span id="sell-preview-sale" style="font-family:var(--font-mono);font-size:0.78rem;color:var(--gold2)"></span>
+        </div>
+        <div style="border-top:1px solid var(--border);margin:8px 0"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-family:var(--font-mono);font-size:0.72rem;font-weight:600;color:var(--text)">Realized P&amp;L</span>
+          <span id="sell-preview-pnl" style="font-family:var(--font-mono);font-size:1rem;font-weight:700"></span>
+        </div>
+      </div>
+    </div>
+    <div class="form-actions" style="margin-top:1.25rem">
+      <button class="btn-sm btn-ghost" onclick="closeSellModal()">Cancel</button>
+      <button class="btn-sm btn-accent" onclick="confirmSell()" style="background:linear-gradient(135deg,var(--gold),var(--gold2))">Confirm Sale</button>
+    </div>
+  </div>
+</div>
+
 <!-- ADD CARD MODAL -->
 <div class="modal-overlay" id="add-modal">
   <div class="modal">
@@ -2164,13 +2441,19 @@
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="form-grid">
-      <div class="form-group full">
+      <div class="form-group full" style="position:relative">
         <label class="form-label">Player Name</label>
-        <input class="form-input" id="f-player" placeholder="e.g. LeBron James">
+        <input class="form-input" id="f-player" placeholder="e.g. LeBron James" autocomplete="off"
+          oninput="modalAcShow()"
+          onkeydown="modalAcKey(event)"
+          onfocus="modalAcShow()">
       </div>
-      <div class="form-group full">
+      <div class="form-group full" style="position:relative">
         <label class="form-label">Card Name</label>
-        <input class="form-input" id="f-cardName" placeholder="e.g. 2003-04 Topps Chrome Rookie">
+        <input class="form-input" id="f-cardName" placeholder="e.g. 2003-04 Topps Chrome Rookie" autocomplete="off"
+          oninput="modalAcShow()"
+          onkeydown="modalAcKey(event)"
+          onfocus="modalAcShow()">
       </div>
       <div class="form-group">
         <label class="form-label">Set Name</label>
@@ -2189,20 +2472,43 @@
       <div class="form-group">
         <label class="form-label">Sport</label>
         <select class="form-input" id="f-category">
-          <option>NBA</option><option>NFL</option><option>MLB</option>
+          <option>NBA</option><option>NFL</option><option>MLB</option><option>NHL</option><option>Soccer</option><option>WNBA</option><option>UFC</option><option>Golf</option>
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">Purchase Price ($)</label>
-        <input class="form-input" id="f-purchasePrice" type="number" placeholder="250.00">
+        <label class="form-label">Price Paid ($)</label>
+        <input class="form-input" id="f-purchasePrice" type="number" min="0" step="0.01" placeholder="250.00">
       </div>
       <div class="form-group">
         <label class="form-label">Current Est. Value ($)</label>
-        <input class="form-input" id="f-currentValue" type="number" placeholder="310.00">
+        <input class="form-input" id="f-currentValue" type="number" min="0" step="0.01" placeholder="310.00">
       </div>
       <div class="form-group">
         <label class="form-label">Quantity</label>
         <input class="form-input" id="f-qty" type="number" value="1" min="1">
+      </div>
+
+      <!-- Sold toggle -->
+      <div class="form-group full" style="margin-top:0.25rem">
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none">
+          <input type="checkbox" id="f-sold-toggle" onchange="toggleSoldFields()" style="width:16px;height:16px;accent-color:var(--gold2);cursor:pointer">
+          <span style="font-family:var(--font-mono);font-size:0.72rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.08em">I already sold this card</span>
+        </label>
+      </div>
+
+      <!-- Sold fields (hidden by default) -->
+      <div id="f-sold-fields" style="display:none;grid-column:1/-1;display:none">
+        <div style="border-top:1px solid var(--border2);margin:0.5rem 0 0.75rem;"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
+          <div class="form-group">
+            <label class="form-label" style="color:var(--gold2)">Sale Price ($)</label>
+            <input class="form-input" id="f-soldPrice" type="number" min="0" step="0.01" placeholder="0.00" style="border-color:rgba(184,146,46,0.3)">
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="color:var(--gold2)">Date Sold</label>
+            <input class="form-input" id="f-soldDate" type="date" style="border-color:rgba(184,146,46,0.3);color:var(--text2)">
+          </div>
+        </div>
       </div>
     </div>
     <div class="form-actions">
@@ -2846,7 +3152,7 @@ function acClose(panelId) {
 }
 
 function acCloseAll() {
-  ['hub-ac','browse-ac','collection-ac','heat-ac'].forEach(acClose);
+  ['hub-ac','browse-ac','collection-ac'].forEach(acClose);
 }
 
 function acHover(idx, panelId) {
@@ -2898,6 +3204,170 @@ function acKey(e, inputId, panelId) {
   }
 }
 
+// ─── MODAL AUTOCOMPLETE ───────────────────────────────────────────────────────
+let _modalAcFocusIdx = -1;
+let _modalAcItems = [];
+
+function modalAcBuildItems(q) {
+  if (!q || q.length < 1) return [];
+  const ql = q.toLowerCase();
+  const startsWith = [], wordStarts = [], contains = [], cardMatches = [];
+  const seen = new Set();
+
+  BROWSE_CATALOG.forEach(c => {
+    const key = `${c.player}|${c.cardName}|${c.grade}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    const pl = c.player.toLowerCase();
+    const cl = c.cardName.toLowerCase();
+    const sl = (c.setName || '').toLowerCase();
+    if (pl.startsWith(ql))                               startsWith.push(c);
+    else if (pl.split(' ').some(w => w.startsWith(ql)))  wordStarts.push(c);
+    else if (pl.includes(ql))                            contains.push(c);
+    else if (cl.includes(ql) || sl.includes(ql))        cardMatches.push(c);
+  });
+  return [...startsWith, ...wordStarts, ...contains, ...cardMatches].slice(0, 25);
+}
+
+function modalAcShow() {
+  const playerInput = document.getElementById('f-player');
+  const cardInput   = document.getElementById('f-cardName');
+  const panel       = document.getElementById('modal-ac');
+  if (!panel) return;
+
+  // Use whichever field is active
+  const activeInput = document.activeElement === cardInput ? cardInput : playerInput;
+  const q = activeInput.value.trim();
+
+  if (!q || q.length < 2) { modalAcClose(); return; }
+
+  _modalAcItems = modalAcBuildItems(q);
+  _modalAcFocusIdx = -1;
+
+  if (!_modalAcItems.length) {
+    panel.innerHTML = '<div class="modal-ac-no-results">No cards found — keep typing</div>';
+    modalAcPosition(activeInput);
+    panel.classList.add('open');
+    return;
+  }
+
+  const ql = q.toLowerCase();
+  panel.innerHTML = _modalAcItems.map((c, i) => {
+    const sport  = (typeof SPORTS !== 'undefined' ? SPORTS : []).find(s => s.id === c.category) || { icon:'🃏', colorBg:'rgba(126,147,180,0.1)', colorBorder:'rgba(126,147,180,0.2)', color:'#7e93b4' };
+    const isUp   = (c.percentChange ?? 0) >= 0;
+    const pctCol = isUp ? '#34c97a' : '#e05c5c';
+    const pi     = c.player.toLowerCase().indexOf(ql);
+    const playerHtml = pi >= 0
+      ? c.player.slice(0,pi) + '<strong style="color:var(--gold2)">' + c.player.slice(pi, pi+q.length) + '</strong>' + c.player.slice(pi+q.length)
+      : c.player;
+    return `<div class="modal-ac-item" data-idx="${i}" onmousedown="modalAcPick(${i})" onmouseenter="modalAcHover(${i})">
+      <div class="modal-ac-left">
+        <div class="modal-ac-dot" style="background:${sport.colorBg};border:1px solid ${sport.colorBorder}">${sport.icon}</div>
+        <div class="modal-ac-text">
+          <div class="modal-ac-player">${playerHtml}</div>
+          <div class="modal-ac-sub">${c.cardName} · ${c.grade} · ${c.year}</div>
+        </div>
+      </div>
+      <div class="modal-ac-right">
+        <div class="modal-ac-price">${fmt(c.currentValue)}</div>
+        <div class="modal-ac-pct" style="color:${pctCol}">${isUp?'+':''}${(c.percentChange??0).toFixed(1)}%</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  modalAcPosition(activeInput);
+  panel.classList.add('open');
+}
+
+function modalAcPosition(input) {
+  const panel = document.getElementById('modal-ac');
+  if (!panel || !input) return;
+  const rect = input.getBoundingClientRect();
+  panel.style.top    = (rect.bottom + 4) + 'px';
+  panel.style.left   = rect.left + 'px';
+  panel.style.width  = rect.width + 'px';
+}
+
+function modalAcHover(idx) {
+  _modalAcFocusIdx = idx;
+  document.querySelectorAll('#modal-ac .modal-ac-item').forEach((el, i) =>
+    el.classList.toggle('focused', i === idx));
+}
+
+function modalAcPick(idx) {
+  const c = _modalAcItems[idx];
+  if (!c) return;
+  document.getElementById('f-player').value    = c.player;
+  document.getElementById('f-cardName').value  = c.cardName;
+  document.getElementById('f-setName').value   = c.setName || '';
+  document.getElementById('f-year').value      = c.year || '';
+  document.getElementById('f-currentValue').value = c.currentValue || '';
+  // Set grade select
+  const gradeEl = document.getElementById('f-grade');
+  if (gradeEl && c.grade) {
+    const opt = [...gradeEl.options].find(o => o.value === c.grade);
+    if (opt) gradeEl.value = c.grade;
+  }
+  // Set sport select
+  const catEl = document.getElementById('f-category');
+  if (catEl && c.category) {
+    const opt = [...catEl.options].find(o => o.value === c.category);
+    if (opt) catEl.value = c.category;
+  }
+  modalAcClose();
+  document.getElementById('f-purchasePrice').focus();
+}
+
+function modalAcKey(e) {
+  const panel = document.getElementById('modal-ac');
+  if (!panel || !panel.classList.contains('open')) return;
+  const items = panel.querySelectorAll('.modal-ac-item');
+  const n = items.length;
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    _modalAcFocusIdx = Math.min(_modalAcFocusIdx + 1, n - 1);
+    modalAcHover(_modalAcFocusIdx);
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    _modalAcFocusIdx = Math.max(_modalAcFocusIdx - 1, 0);
+    modalAcHover(_modalAcFocusIdx);
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    if (_modalAcFocusIdx >= 0) modalAcPick(_modalAcFocusIdx);
+  } else if (e.key === 'Escape') {
+    modalAcClose();
+  }
+}
+
+function modalAcClose() {
+  const panel = document.getElementById('modal-ac');
+  if (panel) panel.classList.remove('open');
+  _modalAcFocusIdx = -1;
+}
+
+// Close modal AC when clicking outside
+document.addEventListener('mousedown', e => {
+  const panel = document.getElementById('modal-ac');
+  const p = document.getElementById('f-player');
+  const c = document.getElementById('f-cardName');
+  if (panel && !panel.contains(e.target) && e.target !== p && e.target !== c) {
+    modalAcClose();
+  }
+});
+
+// Reposition on scroll/resize
+window.addEventListener('scroll', () => {
+  const panel = document.getElementById('modal-ac');
+  if (panel && panel.classList.contains('open')) {
+    const active = document.activeElement;
+    if (active && (active.id === 'f-player' || active.id === 'f-cardName')) {
+      modalAcPosition(active);
+    } else {
+      modalAcClose();
+    }
+  }
+}, true);
+
 function acBuildCollectionItems(q) {
   if (!q || q.length < 1) return [];
   const ql = q.toLowerCase();
@@ -2947,7 +3417,6 @@ document.addEventListener('mousedown', e => {
     'hub-ac':        'hub-global-search',
     'browse-ac':     'browse-search',
     'collection-ac': 'collection-search',
-    'heat-ac':       'heat-search',
   };
   Object.entries(panels).forEach(([panelId, inputId]) => {
     const panel = document.getElementById(panelId);
@@ -3347,6 +3816,379 @@ function initMarketCharts() {
   }).join('');
 }
 
+// ─── PLAYER MARKET SEARCH ────────────────────────────────────────────────────
+let _mktSport = '';
+
+function mktSetSport(sport) {
+  _mktSport = sport;
+  document.querySelectorAll('.mkt-pill').forEach(p => {
+    p.classList.toggle('mkt-pill-active', p.dataset.sport === sport);
+  });
+  mktSearch();
+}
+
+function mktTogglePlayer(key) {
+  openPlayerMarket(key);
+}
+
+// ─── PLAYER MARKET PAGE ───────────────────────────────────────────────────────
+let pmktPrevPage = 'market';
+let pmktChartInst = null;
+let pmktCurrentPlayer = null;
+
+function openPlayerMarket(playerName) {
+  pmktPrevPage = (document.querySelector('.page.active')?.id || 'page-market').replace('page-','');
+  pmktCurrentPlayer = playerName;
+
+  const sportColors = {NBA:'#5b8de8',NFL:'#c9a84c',MLB:'#34c97a',NHL:'#7eb8e8',Soccer:'#a88be0',WNBA:'#e07a5b',UFC:'#e05c5c',Golf:'#6db87a'};
+  const heatExtras = [
+    {player:'Caitlin Clark',     cardName:'2024 Rittenhouse WNBA Rookie',        setName:'Rittenhouse',  grade:'PSA 10', currentValue:1200, percentChange:41.2, category:'WNBA'},
+    {player:'Connor McDavid',    cardName:'2015-16 Upper Deck Young Guns RC',     setName:'Upper Deck',   grade:'PSA 10', currentValue:4200, percentChange:22.7, category:'NHL'},
+    {player:'Erling Haaland',    cardName:'2020 Topps Chrome UCL RC',             setName:'Topps Chrome', grade:'PSA 10', currentValue:980,  percentChange:38.2, category:'Soccer'},
+    {player:'Angel Reese',       cardName:'2024 Panini Prizm WNBA RC',            setName:'Panini Prizm', grade:'PSA 10', currentValue:620,  percentChange:28.7, category:'WNBA'},
+    {player:'Kylian Mbappé',     cardName:'2018 Panini Prizm RC',                 setName:'Panini Prizm', grade:'PSA 9',  currentValue:1850, percentChange:33.1, category:'Soccer'},
+    {player:'Joe Burrow',        cardName:'2020 Panini Prizm Rookie',             setName:'Panini Prizm', grade:'PSA 10', currentValue:740,  percentChange:18.2, category:'NFL'},
+    {player:"Ja'Marr Chase",     cardName:'2021 Panini Prizm RC Silver',          setName:'Panini Prizm', grade:'PSA 10', currentValue:610,  percentChange:24.1, category:'NFL'},
+    {player:'Jayson Tatum',      cardName:'2017-18 Panini Prizm RC',              setName:'Panini Prizm', grade:'PSA 10', currentValue:880,  percentChange:21.3, category:'NBA'},
+    {player:'Nikola Jokić',      cardName:'2015-16 Panini Prizm RC',              setName:'Panini Prizm', grade:'PSA 10', currentValue:2200, percentChange:31.5, category:'NBA'},
+    {player:'Victor Wembanyama', cardName:'2023-24 Topps Chrome RC Auto',         setName:'Topps Chrome', grade:'PSA 10', currentValue:3400, percentChange:28.4, category:'NBA'},
+  ];
+  const dedupSeen = new Set();
+  const pool = [...(typeof BROWSE_CATALOG !== 'undefined' ? BROWSE_CATALOG : []), ...heatExtras].filter(c => {
+    const k = `${c.player}|${c.cardName}|${c.grade}`;
+    if (dedupSeen.has(k)) return false;
+    dedupSeen.add(k); return true;
+  });
+
+  const allCards = pool.filter(c => c.player === playerName).sort((a,b) => (b.currentValue||0)-(a.currentValue||0));
+  if (!allCards.length) return;
+
+  const sport = allCards[0].category;
+  const col = sportColors[sport] || 'var(--gold2)';
+  const sportObj = (typeof SPORTS !== 'undefined' ? SPORTS : []).find(s => s.id === sport) || { icon:'🃏', color: col, colorBg: col+'22', colorBorder: col+'44', label: sport };
+
+  const totalMktCap = allCards.reduce((s,c) => s+(c.currentValue||0), 0);
+  const topCard = allCards[0];
+  const avgPct  = allCards.reduce((s,c) => s+(c.percentChange||0), 0) / allCards.length;
+  const gainers = allCards.filter(c => (c.percentChange||0) >= 0).length;
+
+  // ── Hero ──
+  const pill = document.getElementById('pmkt-sport-pill');
+  pill.textContent = `${sportObj.icon} ${sportObj.label || sport}`;
+  pill.style.cssText = `background:${sportObj.colorBg};color:${sportObj.color};border:1px solid ${sportObj.colorBorder}`;
+  document.getElementById('pmkt-name').textContent = playerName;
+  document.getElementById('pmkt-meta').textContent = `${sport} · ${allCards.length} card${allCards.length!==1?'s':''} tracked`;
+
+  const avgPctColor = avgPct >= 0 ? '#34c97a' : '#e05c5c';
+  document.getElementById('pmkt-hero-stats').innerHTML = `
+    <div class="pp-hstat"><div class="pp-hstat-val">${fmt(totalMktCap)}</div><div class="pp-hstat-lbl">Total Market Cap</div></div>
+    <div class="pp-hstat"><div class="pp-hstat-val">${fmt(topCard.currentValue)}</div><div class="pp-hstat-lbl">Top Card Value</div></div>
+    <div class="pp-hstat"><div class="pp-hstat-val" style="color:${avgPctColor}">${avgPct>=0?'+':''}${avgPct.toFixed(1)}%</div><div class="pp-hstat-lbl">Avg 7D Change</div></div>
+    <div class="pp-hstat"><div class="pp-hstat-val">${allCards.length}</div><div class="pp-hstat-lbl">Listings</div></div>`;
+
+  document.getElementById('pmkt-chart-val').textContent = fmt(totalMktCap);
+
+  // ── Signals ──
+  const momentum = avgPct >= 5 ? 'STRONG BUY' : avgPct >= 0 ? 'NEUTRAL' : avgPct >= -5 ? 'WATCH' : 'CAUTION';
+  const momentumColor = avgPct >= 5 ? '#34c97a' : avgPct >= 0 ? '#c9a84c' : avgPct >= -5 ? '#e0a85c' : '#e05c5c';
+  const liquidity = allCards.length >= 8 ? 'HIGH' : allCards.length >= 4 ? 'MED' : 'LOW';
+  const liqColor = allCards.length >= 8 ? '#34c97a' : allCards.length >= 4 ? '#c9a84c' : '#e05c5c';
+  const concentration = topCard.currentValue / totalMktCap;
+  const concStr = (concentration * 100).toFixed(0) + '% top card';
+  document.getElementById('pmkt-signals').innerHTML = [
+    { label:'Momentum',    val: momentum,  col: momentumColor },
+    { label:'Liquidity',   val: liquidity, col: liqColor },
+    { label:'Gainers',     val: `${gainers}/${allCards.length}`, col: gainers > allCards.length/2 ? '#34c97a' : '#e05c5c' },
+    { label:'Concentration', val: concStr, col: 'var(--gold2)' },
+    { label:'Avg Change',  val: `${avgPct>=0?'+':''}${avgPct.toFixed(1)}%`, col: avgPctColor },
+  ].map(sig => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)">
+      <span style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em">${sig.label}</span>
+      <span style="font-family:var(--font-mono);font-size:0.78rem;font-weight:600;color:${sig.col}">${sig.val}</span>
+    </div>`).join('');
+
+  // ── Top Cards Table ──
+  document.getElementById('pmkt-top-cards-body').innerHTML = allCards.slice(0,10).map((c,i) => {
+    const pct = c.percentChange ?? 0;
+    const pctColor = pct >= 0 ? '#34c97a' : '#e05c5c';
+    const gradeCls = c.grade==='PSA 10'?'grade-10':c.grade==='PSA 9'?'grade-9':c.grade==='PSA 8'?'grade-8':'grade-7below';
+    return `<tr style="cursor:pointer" onclick="openCardDetail('${c.id}')" title="View card detail">
+      <td class="mono" style="color:var(--text3);font-size:0.7rem">${i+1}</td>
+      <td style="font-size:0.75rem;font-weight:600;color:var(--text);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.cardName}</td>
+      <td><span class="grade-pill ${gradeCls}" style="font-size:0.6rem">${c.grade}</span></td>
+      <td class="mono" style="color:var(--gold3)">${fmt(c.currentValue)}</td>
+      <td class="mono" style="color:${pctColor};font-size:0.72rem">${pct>=0?'+':''}${pct.toFixed(1)}%</td>
+    </tr>`;
+  }).join('');
+
+  // ── Grade Breakdown ──
+  const gradeOrder = ['PSA 10','PSA 9','PSA 8','PSA 7','Raw'];
+  const gradeMap = {};
+  allCards.forEach(c => {
+    const g = c.grade || 'Raw';
+    const key = gradeOrder.includes(g) ? g : 'Raw';
+    if (!gradeMap[key]) gradeMap[key] = { count:0, value:0 };
+    gradeMap[key].count++;
+    gradeMap[key].value += c.currentValue||0;
+  });
+  const gradeColors = {'PSA 10':'#34c97a','PSA 9':'#5b8de8','PSA 8':'#c9a84c','PSA 7':'#a88be0','Raw':'#8a7060'};
+  const maxGradeVal = Math.max(...Object.values(gradeMap).map(g=>g.value), 1);
+  document.getElementById('pmkt-grade-bars').innerHTML = gradeOrder.filter(g=>gradeMap[g]).map(g => {
+    const d = gradeMap[g];
+    const w = ((d.value/maxGradeVal)*100).toFixed(1);
+    const gcol = gradeColors[g] || 'var(--gold2)';
+    return `<div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <span style="font-family:var(--font-mono);font-size:0.68rem;color:var(--text2)">${g}</span>
+        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text3)">${d.count} card${d.count!==1?'s':''} · ${fmt(d.value)}</span>
+      </div>
+      <div style="height:6px;background:var(--bg4);border-radius:99px;overflow:hidden">
+        <div style="height:100%;width:${w}%;background:${gcol};border-radius:99px;transition:width 0.5s ease"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // ── Set Volume ──
+  const setMap = {};
+  allCards.forEach(c => {
+    const s = c.setName || 'Unknown';
+    if (!setMap[s]) setMap[s] = { count:0, value:0 };
+    setMap[s].count++;
+    setMap[s].value += c.currentValue||0;
+  });
+  const setsSorted = Object.entries(setMap).sort((a,b)=>b[1].value-a[1].value).slice(0,6);
+  const maxSetVal = Math.max(...setsSorted.map(([,d])=>d.value), 1);
+  document.getElementById('pmkt-set-bars').innerHTML = setsSorted.map(([name,d]) => {
+    const w = ((d.value/maxSetVal)*100).toFixed(1);
+    return `<div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:160px">${name}</span>
+        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text3);flex-shrink:0;margin-left:8px">${d.count} · ${fmt(d.value)}</span>
+      </div>
+      <div style="height:6px;background:var(--bg4);border-radius:99px;overflow:hidden">
+        <div style="height:100%;width:${w}%;background:linear-gradient(90deg,${col},${col}88);border-radius:99px;transition:width 0.5s ease"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // ── Price Distribution ──
+  const buckets = [
+    { label:'< $100',     min:0,     max:100 },
+    { label:'$100–500',   min:100,   max:500 },
+    { label:'$500–1K',    min:500,   max:1000 },
+    { label:'$1K–5K',     min:1000,  max:5000 },
+    { label:'$5K+',       min:5000,  max:Infinity },
+  ];
+  const bucketColors = ['#5b8de8','#34c97a','#c9a84c','#a88be0','#e07a5b'];
+  const bucketCounts = buckets.map(b => allCards.filter(c=>(c.currentValue||0)>=b.min&&(c.currentValue||0)<b.max).length);
+  const maxBucket = Math.max(...bucketCounts, 1);
+  document.getElementById('pmkt-price-dist').innerHTML = buckets.map((b,i) => {
+    const w = ((bucketCounts[i]/maxBucket)*100).toFixed(1);
+    return `<div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
+        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text2)">${b.label}</span>
+        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text3)">${bucketCounts[i]} card${bucketCounts[i]!==1?'s':''}</span>
+      </div>
+      <div style="height:5px;background:var(--bg4);border-radius:99px;overflow:hidden">
+        <div style="height:100%;width:${w}%;background:${bucketColors[i]};border-radius:99px;transition:width 0.5s ease"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // ── Navigate ──
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-player-mkt').classList.add('active');
+  window.scrollTo(0,0);
+
+  const backLabels = { home:'← Home', browse:'← Browse', market:'← Market', collection:'← Collection', watchlist:'← Watchlist' };
+  document.getElementById('pmkt-back-btn').textContent = backLabels[pmktPrevPage] || '← Back';
+
+  // ── Build market cap chart ──
+  requestAnimationFrame(() => pmktBuildChart(totalMktCap, avgPct));
+}
+
+function pmktSetRange(range, btn) {
+  document.querySelectorAll('#page-player-mkt .pp-range-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (!pmktCurrentPlayer) return;
+  const sportColors = {NBA:'#5b8de8',NFL:'#c9a84c',MLB:'#34c97a',NHL:'#7eb8e8',Soccer:'#a88be0',WNBA:'#e07a5b',UFC:'#e05c5c',Golf:'#6db87a'};
+  const heatExtras = [{player:'Caitlin Clark',cardName:'2024 Rittenhouse WNBA Rookie',setName:'Rittenhouse',grade:'PSA 10',currentValue:1200,percentChange:41.2,category:'WNBA'},{player:'Connor McDavid',cardName:'2015-16 Upper Deck Young Guns RC',setName:'Upper Deck',grade:'PSA 10',currentValue:4200,percentChange:22.7,category:'NHL'},{player:'Erling Haaland',cardName:'2020 Topps Chrome UCL RC',setName:'Topps Chrome',grade:'PSA 10',currentValue:980,percentChange:38.2,category:'Soccer'},{player:'Angel Reese',cardName:'2024 Panini Prizm WNBA RC',setName:'Panini Prizm',grade:'PSA 10',currentValue:620,percentChange:28.7,category:'WNBA'},{player:'Kylian Mbappé',cardName:'2018 Panini Prizm RC',setName:'Panini Prizm',grade:'PSA 9',currentValue:1850,percentChange:33.1,category:'Soccer'},{player:'Joe Burrow',cardName:'2020 Panini Prizm Rookie',setName:'Panini Prizm',grade:'PSA 10',currentValue:740,percentChange:18.2,category:'NFL'},{player:"Ja'Marr Chase",cardName:'2021 Panini Prizm RC Silver',setName:'Panini Prizm',grade:'PSA 10',currentValue:610,percentChange:24.1,category:'NFL'},{player:'Jayson Tatum',cardName:'2017-18 Panini Prizm RC',setName:'Panini Prizm',grade:'PSA 10',currentValue:880,percentChange:21.3,category:'NBA'},{player:'Nikola Jokić',cardName:'2015-16 Panini Prizm RC',setName:'Panini Prizm',grade:'PSA 10',currentValue:2200,percentChange:31.5,category:'NBA'},{player:'Victor Wembanyama',cardName:'2023-24 Topps Chrome RC Auto',setName:'Topps Chrome',grade:'PSA 10',currentValue:3400,percentChange:28.4,category:'NBA'}];
+  const pool = [...(typeof BROWSE_CATALOG !== 'undefined' ? BROWSE_CATALOG : []), ...heatExtras];
+  const allCards = pool.filter(c => c.player === pmktCurrentPlayer);
+  const totalMktCap = allCards.reduce((s,c) => s+(c.currentValue||0), 0);
+  const avgPct = allCards.reduce((s,c) => s+(c.percentChange||0), 0) / (allCards.length || 1);
+  const rng = WL_RANGES.find(r => r.key === range) || WL_RANGES[2];
+  pmktBuildChart(totalMktCap, avgPct, rng);
+}
+
+function pmktBuildChart(endVal, avgPct, rng) {
+  if (pmktChartInst) { pmktChartInst.destroy(); pmktChartInst = null; }
+  rng = rng || WL_RANGES[2];
+  const startVal = endVal * (avgPct >= 0 ? (1 - Math.abs(avgPct)/100 * 0.6) : (1 + Math.abs(avgPct)/100 * 0.6));
+  const data = genHistory(Math.max(1, startVal), endVal, rng.pts, rng.vol);
+  const isUp = data[data.length-1] >= data[0];
+  const color = isUp ? '#34c97a' : '#e05c5c';
+  const canvas = document.getElementById('pmkt-chart-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const grad = ctx.createLinearGradient(0,0,0,180);
+  grad.addColorStop(0, isUp ? 'rgba(52,201,122,0.20)' : 'rgba(224,92,92,0.18)');
+  grad.addColorStop(1, 'rgba(0,0,0,0)');
+  pmktChartInst = new Chart(canvas, {
+    type:'line',
+    data:{ labels: data.map((_,i)=>i), datasets:[{
+      data, borderColor: color, borderWidth:2,
+      pointRadius:0, pointHoverRadius:4, pointHoverBackgroundColor:color,
+      fill:true, backgroundColor:grad, tension:0.35,
+    }]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      animation:{ duration:400, easing:'easeOutQuart' },
+      interaction:{ mode:'index', intersect:false },
+      plugins:{
+        legend:{ display:false },
+        tooltip:{
+          backgroundColor:'#181818', borderColor:color, borderWidth:1,
+          titleColor:'#fff', bodyColor:'#c8aa88',
+          titleFont:{ family:"'IBM Plex Mono'", size:10 },
+          bodyFont:{ family:"'IBM Plex Mono'", size:11 },
+          callbacks:{ title:()=>'', label: ctx2=>' '+fmt(ctx2.raw) },
+          padding:8, displayColors:false,
+        }
+      },
+      scales:{
+        x:{ display:false },
+        y:{ display:true, position:'right', grid:{ color:'rgba(255,255,255,0.04)', drawBorder:false },
+          ticks:{ font:{ family:"'IBM Plex Mono'", size:9 }, color:'rgba(255,255,255,0.25)', callback: v => '$'+Math.round(v).toLocaleString() } }
+      }
+    }
+  });
+}
+
+function pmktGoBack() {
+  if (pmktChartInst) { pmktChartInst.destroy(); pmktChartInst = null; }
+  const dest = pmktPrevPage || 'market';
+  if (dest === 'market') {
+    const input = document.getElementById('mkt-search-input');
+    if (input) input.value = '';
+    _mktSport = '';
+    document.querySelectorAll('.mkt-pill').forEach(p => p.classList.toggle('mkt-pill-active', p.dataset.sport === ''));
+    mktSearch();
+  }
+  showPage(dest);
+}
+
+
+
+function mktSearch() {
+  const q = (document.getElementById('mkt-search-input')?.value || '').toLowerCase().trim();
+  const container = document.getElementById('mkt-results');
+  const empty = document.getElementById('mkt-empty');
+  const footer = document.getElementById('mkt-footer');
+  if (!container) return;
+
+  const sportColors = {NBA:'#5b8de8',NFL:'#c9a84c',MLB:'#34c97a',NHL:'#7eb8e8',Soccer:'#a88be0',WNBA:'#e07a5b',UFC:'#e05c5c',Golf:'#6db87a'};
+
+  const heatExtras = [
+    {player:'Caitlin Clark',     cardName:'2024 Rittenhouse WNBA Rookie',        setName:'Rittenhouse',  grade:'PSA 10', currentValue:1200, percentChange:41.2, category:'WNBA'},
+    {player:'Victor Wembanyama', cardName:'2023-24 Topps Chrome RC Auto',         setName:'Topps Chrome', grade:'PSA 10', currentValue:3400, percentChange:28.4, category:'NBA'},
+    {player:'Connor McDavid',    cardName:'2015-16 Upper Deck Young Guns RC',     setName:'Upper Deck',   grade:'PSA 10', currentValue:4200, percentChange:22.7, category:'NHL'},
+    {player:'Erling Haaland',    cardName:'2020 Topps Chrome UCL RC',             setName:'Topps Chrome', grade:'PSA 10', currentValue:980,  percentChange:38.2, category:'Soccer'},
+    {player:'Angel Reese',       cardName:'2024 Panini Prizm WNBA RC',            setName:'Panini Prizm', grade:'PSA 10', currentValue:620,  percentChange:28.7, category:'WNBA'},
+    {player:'Kylian Mbappé',     cardName:'2018 Panini Prizm RC',                 setName:'Panini Prizm', grade:'PSA 9',  currentValue:1850, percentChange:33.1, category:'Soccer'},
+    {player:'Joe Burrow',        cardName:'2020 Panini Prizm Rookie',             setName:'Panini Prizm', grade:'PSA 10', currentValue:740,  percentChange:18.2, category:'NFL'},
+    {player:"Ja'Marr Chase",     cardName:'2021 Panini Prizm RC Silver',          setName:'Panini Prizm', grade:'PSA 10', currentValue:610,  percentChange:24.1, category:'NFL'},
+    {player:'Jayson Tatum',      cardName:'2017-18 Panini Prizm RC',              setName:'Panini Prizm', grade:'PSA 10', currentValue:880,  percentChange:21.3, category:'NBA'},
+    {player:'Nikola Jokić',      cardName:'2015-16 Panini Prizm RC',              setName:'Panini Prizm', grade:'PSA 10', currentValue:2200, percentChange:31.5, category:'NBA'},
+  ];
+  const rawPool = [...(typeof BROWSE_CATALOG !== 'undefined' ? BROWSE_CATALOG : []), ...heatExtras];
+
+  // Deduplicate pool by player+cardName+grade
+  const dedupSeen = new Set();
+  const pool = rawPool.filter(c => {
+    const key = `${c.player}|${c.cardName}|${c.grade}`;
+    if (dedupSeen.has(key)) return false;
+    dedupSeen.add(key); return true;
+  });
+
+  // Filter by sport + query (match on player name only for grouping intent)
+  const filtered = pool.filter(c => {
+    if (_mktSport && c.category !== _mktSport) return false;
+    if (!q) return true;
+    return (
+      c.player.toLowerCase().includes(q) ||
+      c.cardName.toLowerCase().includes(q) ||
+      (c.setName || '').toLowerCase().includes(q)
+    );
+  });
+
+  if (!q && !_mktSport) {
+    empty.textContent = 'Type to search player markets';
+    empty.style.display = '';
+    container.style.display = 'none';
+    container.innerHTML = '';
+    footer.textContent = '';
+    return;
+  }
+
+  // Group by player
+  const playerMap = new Map();
+  filtered.forEach(c => {
+    if (!playerMap.has(c.player)) {
+      playerMap.set(c.player, { player: c.player, category: c.category, cards: [] });
+    }
+    playerMap.get(c.player).cards.push(c);
+  });
+
+  // Aggregate per player: top card value, avg % change, card count
+  const players = [...playerMap.values()].map(p => {
+    const cards = p.cards.sort((a,b) => (b.currentValue||0) - (a.currentValue||0));
+    const topCard = cards[0];
+    const avgPct = cards.reduce((s,c) => s + (c.percentChange||0), 0) / cards.length;
+    const marketCap = cards.reduce((s,c) => s + (c.currentValue||0), 0);
+    return { ...p, cards, topCard, avgPct, marketCap };
+  });
+
+  // Sort players by top card value desc
+  players.sort((a,b) => (b.topCard.currentValue||0) - (a.topCard.currentValue||0));
+
+  if (players.length === 0) {
+    empty.textContent = 'No players found';
+    empty.style.display = '';
+    container.style.display = 'none';
+    container.innerHTML = '';
+    footer.textContent = '';
+    return;
+  }
+
+  empty.style.display = 'none';
+  container.style.display = 'flex';
+
+  container.innerHTML = players.map(p => {
+    const col = sportColors[p.category] || 'var(--gold2)';
+    const pct = p.avgPct;
+    const pctStr = (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
+    const pctColor = pct >= 0 ? '#34c97a' : '#e05c5c';
+    const topPrice = p.topCard.currentValue ? '$' + p.topCard.currentValue.toLocaleString() : '—';
+
+    return `<div class="mkt-result-row" data-pkey="${p.player.replace(/"/g,'&quot;').replace(/'/g,'&#39;')}" onclick="openPlayerMarket(this.dataset.pkey)" style="cursor:pointer">
+      <span class="mkt-result-sport" style="background:${col}22;color:${col};border:1px solid ${col}44">${p.category}</span>
+      <div class="mkt-result-info">
+        <div class="mkt-result-player">${p.player}</div>
+        <div class="mkt-result-card">${p.cards.length} card${p.cards.length !== 1 ? 's' : ''} · top: ${p.topCard.cardName.substring(0,28)}${p.topCard.cardName.length > 28 ? '…' : ''}</div>
+      </div>
+      <div class="mkt-result-right">
+        <div class="mkt-result-price">${topPrice}</div>
+        <div class="mkt-result-change" style="color:${pctColor}">${pctStr} avg</div>
+      </div>
+      <span style="color:var(--text3);font-size:0.7rem;margin-left:2px;flex-shrink:0">›</span>
+    </div>`;
+  }).join('');
+
+  footer.textContent = `${players.length} player${players.length !== 1 ? 's' : ''} · ${filtered.length} total listings`;
+}
+
 // ─── COLLECTION ──────────────────────────────────────────────────────────────
 function renderCollection() {
   renderPortfolioStats();
@@ -3356,52 +4198,76 @@ function renderCollection() {
 }
 
 function renderPortfolioStats() {
-  const totalCost = cards.reduce((a,c)=>a+c.purchasePrice*c.qty,0);
-  const totalVal = cards.reduce((a,c)=>a+c.currentValue*c.qty,0);
-  const totalGain = totalVal - totalCost;
-  const totalPct = totalCost > 0 ? ((totalGain/totalCost)*100).toFixed(1) : 0;
+  const held   = cards.filter(c => !c.isSold);
+  const sold   = cards.filter(c => c.isSold);
+  const totalCost   = cards.reduce((a,c)=>a+c.purchasePrice*c.qty,0);
+  const totalVal    = held.reduce((a,c)=>a+c.currentValue*c.qty,0);
+  const unrealGain  = held.reduce((a,c)=>a+(c.currentValue-c.purchasePrice)*c.qty,0);
+  const realGain    = sold.reduce((a,c)=>a+((c.soldPrice??0)-c.purchasePrice)*c.qty,0);
+  const totalPct    = totalCost > 0 ? (((unrealGain+realGain)/totalCost)*100).toFixed(1) : 0;
   document.getElementById('portfolio-stats').innerHTML = `
     <div class="pstat">
-      <div class="pstat-label">Total Cost Basis</div>
+      <div class="pstat-label">Cost Basis</div>
       <div class="pstat-val">${fmt(totalCost)}</div>
-      <div class="pstat-sub neutral">${cards.length} cards in collection</div>
+      <div class="pstat-sub neutral">${cards.length} card${cards.length!==1?'s':''} total</div>
     </div>
     <div class="pstat">
-      <div class="pstat-label">Current Value</div>
+      <div class="pstat-label">Holding Value</div>
       <div class="pstat-val">${fmt(totalVal)}</div>
-      <div class="pstat-sub neutral">Est. market value</div>
+      <div class="pstat-sub neutral">${held.length} held</div>
     </div>
     <div class="pstat">
-      <div class="pstat-label">Total Gain / Loss</div>
-      <div class="pstat-val ${totalGain>=0?'up':'down'}">${totalGain>=0?'+':''}${fmt(totalGain)}</div>
-      <div class="pstat-sub ${totalGain>=0?'up':'down'}">${totalGain>=0?'▲':'▼'} ${Math.abs(totalPct)}% overall</div>
+      <div class="pstat-label">Unrealized P&L</div>
+      <div class="pstat-val ${unrealGain>=0?'up':'down'}">${unrealGain>=0?'+':''}${fmt(unrealGain)}</div>
+      <div class="pstat-sub ${unrealGain>=0?'up':'down'}">${unrealGain>=0?'▲':'▼'} open positions</div>
     </div>
     <div class="pstat">
-      <div class="pstat-label">Watchlisted</div>
-      <div class="pstat-val">${cards.filter(c=>c.isWatchlisted).length}</div>
-      <div class="pstat-sub neutral">cards on watchlist</div>
+      <div class="pstat-label">Realized P&L</div>
+      <div class="pstat-val ${realGain>=0?'up':'down'}">${realGain>=0?'+':''}${fmt(realGain)}</div>
+      <div class="pstat-sub neutral">${sold.length} sold</div>
     </div>`;
+  renderPnL();
 }
 
 function renderTableBody(data) {
-  const wl = cards.filter(c=>c.isWatchlisted).map(c=>c.id);
   document.getElementById('collection-body').innerHTML = data.length === 0 ?
     `<tr><td colspan="10" style="text-align:center;padding:3rem;color:var(--text3)">No cards match your filters.</td></tr>` :
-    data.map(c=>`
-    <tr>
-      <td style="font-weight:600">${c.player}</td>
-      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis">${c.cardName}</td>
-      <td style="color:var(--text2)">${c.setName} · ${c.year}</td>
-      <td><span class="grade-pill ${c.grade==='PSA 10'?'grade-10':c.grade==='PSA 9'?'grade-9':c.grade==='PSA 8'?'grade-8':['PSA 7','PSA 6','PSA 5','PSA 4','PSA 3','PSA 2','PSA 1'].includes(c.grade)?'grade-7below':''}">${c.grade}</span></td>
-      <td class="mono" style="color:var(--text2)">${c.qty}</td>
-      <td class="mono">${fmt(c.purchasePrice)}</td>
-      <td class="mono">${fmt(c.currentValue)}</td>
-      <td class="mono ${c.change>=0?'up':'down'}">${c.change>=0?'+':''}${fmt(c.change)}</td>
-      <td><span class="badge ${c.percentChange>=0?'badge-green':'badge-red'}">${c.percentChange>=0?'+':''}${c.percentChange.toFixed(1)}%</span></td>
-      <td>
-        <button class="action-btn remove-btn" onclick="removeCard(${c.id})" title="Remove from collection">✕ Remove</button>
-      </td>
-    </tr>`).join('');
+    data.map(c => {
+      const gradeCls = c.grade==='PSA 10'?'grade-10':c.grade==='PSA 9'?'grade-9':c.grade==='PSA 8'?'grade-8':['PSA 7','PSA 6','PSA 5','PSA 4','PSA 3','PSA 2','PSA 1'].includes(c.grade)?'grade-7below':'';
+      if (c.isSold) {
+        const realizedGain = (c.soldPrice ?? 0) - c.purchasePrice;
+        const realizedPct  = c.purchasePrice > 0 ? ((realizedGain / c.purchasePrice) * 100) : 0;
+        const gainColor    = realizedGain >= 0 ? '#34c97a' : '#e05c5c';
+        const soldDateStr  = c.soldDate ? new Date(c.soldDate + 'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—';
+        return `<tr style="opacity:0.72">
+          <td style="font-weight:600">${c.player}</td>
+          <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis">${c.cardName}</td>
+          <td style="color:var(--text2)">${c.setName} · ${c.year}</td>
+          <td><span class="grade-pill ${gradeCls}">${c.grade}</span></td>
+          <td class="mono" style="color:var(--text2)">${c.qty}</td>
+          <td class="mono">${fmt(c.purchasePrice)}</td>
+          <td class="mono" style="color:var(--gold2)">${fmt(c.soldPrice ?? 0)}<br><span style="font-size:0.6rem;color:var(--text3)">sold ${soldDateStr}</span></td>
+          <td class="mono" style="color:${gainColor}">${realizedGain>=0?'+':''}${fmt(realizedGain)}</td>
+          <td><span class="badge ${realizedPct>=0?'badge-green':'badge-red'}">${realizedPct>=0?'+':''}${realizedPct.toFixed(1)}%</span>&nbsp;<span style="font-size:0.6rem;background:rgba(184,146,46,0.12);color:var(--gold2);border:1px solid rgba(184,146,46,0.25);border-radius:4px;padding:1px 5px;font-family:var(--font-mono);letter-spacing:0.05em">SOLD</span></td>
+          <td><button class="action-btn remove-btn" onclick="removeCard(${c.id})" title="Remove">✕</button></td>
+        </tr>`;
+      }
+      return `<tr>
+        <td style="font-weight:600">${c.player}</td>
+        <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis">${c.cardName}</td>
+        <td style="color:var(--text2)">${c.setName} · ${c.year}</td>
+        <td><span class="grade-pill ${gradeCls}">${c.grade}</span></td>
+        <td class="mono" style="color:var(--text2)">${c.qty}</td>
+        <td class="mono">${fmt(c.purchasePrice)}</td>
+        <td class="mono">${fmt(c.currentValue)}</td>
+        <td class="mono ${c.change>=0?'up':'down'}">${c.change>=0?'+':''}${fmt(c.change)}</td>
+        <td><span class="badge ${c.percentChange>=0?'badge-green':'badge-red'}">${c.percentChange>=0?'+':''}${c.percentChange.toFixed(1)}%</span></td>
+        <td style="white-space:nowrap">
+          <button class="action-btn sell-btn" onclick="openSellModal(${c.id})" title="Mark as sold">$ Sell</button>
+          <button class="action-btn remove-btn" onclick="removeCard(${c.id})" title="Remove from collection">✕</button>
+        </td>
+      </tr>`;
+    }).join('');
 }
 
 function filterCollection() {
@@ -4093,10 +4959,216 @@ function openAddModal() {
 }
 function closeModal() {
   document.getElementById('add-modal').classList.remove('open');
+  modalAcClose();
 }
 document.getElementById('add-modal').addEventListener('click', e => {
   if (e.target === document.getElementById('add-modal')) closeModal();
 });
+document.getElementById('sell-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('sell-modal')) closeSellModal();
+});
+
+// ─── SELL MODAL ───────────────────────────────────────────────────────────────
+let _sellCardId = null;
+
+function openSellModal(cardId) {
+  const c = cards.find(x => x.id === cardId);
+  if (!c) return;
+  _sellCardId = cardId;
+  document.getElementById('sell-modal-card-name').textContent = `${c.player} · ${c.cardName}`;
+  document.getElementById('sell-price').value = '';
+  document.getElementById('sell-date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('sell-preview').style.display = 'none';
+
+  // Quantity row: only visible when holding more than 1
+  const qtyRow = document.getElementById('sell-qty-row');
+  const qtyInput = document.getElementById('sell-qty');
+  if (c.qty > 1) {
+    qtyRow.style.display = '';
+    qtyInput.max = c.qty;
+    qtyInput.value = 1;
+    document.getElementById('sell-qty-held').textContent = `(${c.qty} held)`;
+  } else {
+    qtyRow.style.display = 'none';
+    qtyInput.value = 1;
+  }
+
+  document.getElementById('sell-modal').classList.add('open');
+  setTimeout(() => {
+    (c.qty > 1 ? qtyInput : document.getElementById('sell-price')).focus();
+  }, 80);
+}
+
+function sellGetQty() {
+  const c = cards.find(x => x.id === _sellCardId);
+  if (!c) return 1;
+  const raw = parseInt(document.getElementById('sell-qty').value) || 1;
+  return Math.min(Math.max(1, raw), c.qty);
+}
+
+function sellSetQty(mode) {
+  const c = cards.find(x => x.id === _sellCardId);
+  if (!c) return;
+  const qtyInput = document.getElementById('sell-qty');
+  if (mode === 'all')  qtyInput.value = c.qty;
+  if (mode === 'half') qtyInput.value = Math.max(1, Math.floor(c.qty / 2));
+  sellUpdatePreview();
+}
+
+function sellUpdatePreview() {
+  const c = cards.find(x => x.id === _sellCardId);
+  if (!c) return;
+  const salePrice = parseFloat(document.getElementById('sell-price').value) || 0;
+  const sellQty   = sellGetQty();
+  const cost = c.purchasePrice * sellQty;
+  const gross = salePrice * sellQty;
+  const pnl  = gross - cost;
+  const pct  = cost > 0 ? ((pnl / cost) * 100).toFixed(1) : 0;
+  const col  = pnl >= 0 ? '#34c97a' : '#e05c5c';
+  const preview = document.getElementById('sell-preview');
+  preview.style.display = salePrice > 0 ? '' : 'none';
+  if (salePrice > 0) {
+    const qtyLabel = sellQty > 1 ? ` (${sellQty}x)` : '';
+    document.getElementById('sell-preview-cost').textContent = fmt(cost) + qtyLabel;
+    document.getElementById('sell-preview-sale').textContent = fmt(gross) + qtyLabel;
+    const pnlEl = document.getElementById('sell-preview-pnl');
+    pnlEl.textContent = `${pnl>=0?'+':''}${fmt(pnl)} (${pnl>=0?'+':''}${pct}%)`;
+    pnlEl.style.color = col;
+  }
+}
+
+function closeSellModal() {
+  document.getElementById('sell-modal').classList.remove('open');
+  _sellCardId = null;
+}
+
+function confirmSell() {
+  const c = cards.find(x => x.id === _sellCardId);
+  if (!c) return;
+  const salePrice = parseFloat(document.getElementById('sell-price').value);
+  if (!salePrice || salePrice <= 0) {
+    document.getElementById('sell-price').focus();
+    document.getElementById('sell-price').style.borderColor = 'var(--red)';
+    setTimeout(() => document.getElementById('sell-price').style.borderColor = '', 1200);
+    return;
+  }
+  const soldDate  = document.getElementById('sell-date').value || new Date().toISOString().split('T')[0];
+  const sellQty   = sellGetQty();
+  const remaining = c.qty - sellQty;
+
+  if (remaining > 0) {
+    // Partial sale: reduce original qty, insert a new sold record
+    c.qty = remaining;
+    c.change       = (c.currentValue - c.purchasePrice) * remaining;
+    c.percentChange = c.purchasePrice > 0 ? parseFloat((((c.currentValue - c.purchasePrice) / c.purchasePrice) * 100).toFixed(1)) : 0;
+
+    const pnl = (salePrice - c.purchasePrice) * sellQty;
+    const pct = c.purchasePrice > 0 ? parseFloat((((salePrice - c.purchasePrice) / c.purchasePrice) * 100).toFixed(1)) : 0;
+    cards.push({
+      id: nextId++,
+      player: c.player, cardName: c.cardName, setName: c.setName, year: c.year,
+      grade: c.grade, category: c.category,
+      purchasePrice: c.purchasePrice, currentValue: c.currentValue,
+      qty: sellQty, isSold: true,
+      soldPrice: salePrice, soldDate,
+      change: pnl, percentChange: pct,
+      isWatchlisted: false,
+    });
+  } else {
+    // Full sale: mark in place
+    c.isSold     = true;
+    c.soldPrice  = salePrice;
+    c.soldDate   = soldDate;
+    c.change     = (salePrice - c.purchasePrice) * c.qty;
+    c.percentChange = c.purchasePrice > 0 ? parseFloat((((salePrice - c.purchasePrice) / c.purchasePrice) * 100).toFixed(1)) : 0;
+  }
+  closeSellModal();
+  renderCollection();
+}
+
+function renderPnL() {
+  const sold = cards.filter(c => c.isSold);
+  const held = cards.filter(c => !c.isSold);
+
+  // Stat strip
+  const realizedGross = sold.reduce((a,c) => a + (c.soldPrice??0)*c.qty, 0);
+  const realizedCost  = sold.reduce((a,c) => a + c.purchasePrice*c.qty, 0);
+  const realizedPnL   = realizedGross - realizedCost;
+  const realizedPct   = realizedCost > 0 ? ((realizedPnL/realizedCost)*100).toFixed(1) : 0;
+  const unrealPnL     = held.reduce((a,c) => a + (c.currentValue - c.purchasePrice)*c.qty, 0);
+  const winners       = sold.filter(c => (c.soldPrice??0) > c.purchasePrice).length;
+  const winRate       = sold.length > 0 ? Math.round((winners/sold.length)*100) : 0;
+  const pnlCol        = realizedPnL >= 0 ? '#34c97a' : '#e05c5c';
+  const unrealCol     = unrealPnL >= 0 ? '#34c97a' : '#e05c5c';
+
+  document.getElementById('pnl-stats').innerHTML = [
+    { label:'Realized P&L',    val: `${realizedPnL>=0?'+':''}${fmt(realizedPnL)}`, sub: `${realizedPct>=0?'+':''}${realizedPct}% return`, col: pnlCol },
+    { label:'Unrealized P&L',  val: `${unrealPnL>=0?'+':''}${fmt(unrealPnL)}`,     sub: `${held.length} open position${held.length!==1?'s':''}`, col: unrealCol },
+    { label:'Win Rate',        val: `${winRate}%`,                                  sub: `${winners}/${sold.length} trades profitable`, col: winRate >= 50 ? '#34c97a' : '#e07a5b' },
+    { label:'Total Sales',  val: fmt(realizedGross),                             sub: `from ${sold.length} sale${sold.length!==1?'s':''}`, col: 'var(--gold3)' },
+  ].map((s,i) => `
+    <div style="padding:14px 18px;${i<3?'border-right:1px solid var(--border2)':''}">
+      <div style="font-family:var(--font-mono);font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:6px">${s.label}</div>
+      <div style="font-family:var(--font-mono);font-size:1.15rem;font-weight:700;color:${s.col}">${s.val}</div>
+      <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text3);margin-top:3px">${s.sub}</div>
+    </div>`).join('');
+
+  // Sold table
+  const empty = document.getElementById('pnl-sold-empty');
+  const table = document.getElementById('pnl-sold-table');
+  const body  = document.getElementById('pnl-sold-body');
+  const foot  = document.getElementById('pnl-sold-foot');
+
+  if (!sold.length) {
+    empty.style.display = '';
+    table.style.display = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+  table.style.display = '';
+
+  const sortedSold = [...sold].sort((a,b) => (b.soldDate||'').localeCompare(a.soldDate||''));
+  body.innerHTML = sortedSold.map(c => {
+    const cost   = c.purchasePrice * c.qty;
+    const sale   = (c.soldPrice??0) * c.qty;
+    const pnl    = sale - cost;
+    const pct    = cost > 0 ? ((pnl/cost)*100).toFixed(1) : 0;
+    const pnlCol = pnl >= 0 ? '#34c97a' : '#e05c5c';
+    const gradeCls = c.grade==='PSA 10'?'grade-10':c.grade==='PSA 9'?'grade-9':c.grade==='PSA 8'?'grade-8':'grade-7below';
+    const dateStr  = c.soldDate ? new Date(c.soldDate+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—';
+    return `<tr>
+      <td style="font-weight:600">${c.player}</td>
+      <td style="color:var(--text2);font-size:0.78rem;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.cardName}</td>
+      <td><span class="grade-pill ${gradeCls}" style="font-size:0.6rem">${c.grade}</span></td>
+      <td class="mono">${fmt(cost)}</td>
+      <td class="mono" style="color:var(--gold2)">${fmt(sale)}</td>
+      <td class="mono" style="color:${pnlCol};font-weight:700">${pnl>=0?'+':''}${fmt(pnl)}</td>
+      <td><span class="badge ${pct>=0?'badge-green':'badge-red'}">${pct>=0?'+':''}${pct}%</span></td>
+      <td class="mono" style="color:var(--text3);font-size:0.7rem">${dateStr}</td>
+    </tr>`;
+  }).join('');
+
+  // Footer totals
+  const totCost = sold.reduce((a,c)=>a+c.purchasePrice*c.qty,0);
+  const totSale = sold.reduce((a,c)=>a+(c.soldPrice??0)*c.qty,0);
+  const totPnL  = totSale - totCost;
+  const totPct  = totCost > 0 ? ((totPnL/totCost)*100).toFixed(1) : 0;
+  const totCol  = totPnL >= 0 ? '#34c97a' : '#e05c5c';
+  foot.innerHTML = `<tr>
+    <td colspan="3" style="color:var(--text3)">TOTAL (${sold.length} trade${sold.length!==1?'s':''})</td>
+    <td>${fmt(totCost)}</td>
+    <td style="color:var(--gold2)">${fmt(totSale)}</td>
+    <td style="color:${totCol}">${totPnL>=0?'+':''}${fmt(totPnL)}</td>
+    <td><span class="badge ${totPnL>=0?'badge-green':'badge-red'}">${totPct>=0?'+':''}${totPct}%</span></td>
+    <td></td>
+  </tr>`;
+}
+
+function toggleSoldFields() {
+  const checked = document.getElementById('f-sold-toggle').checked;
+  const fields = document.getElementById('f-sold-fields');
+  fields.style.display = checked ? 'block' : 'none';
+}
 
 function addCard() {
   const player = document.getElementById('f-player').value.trim();
@@ -4104,15 +5176,24 @@ function addCard() {
   if (!player || !cardName) { alert('Please enter at least a player name and card name.'); return; }
   const pp = parseFloat(document.getElementById('f-purchasePrice').value) || 0;
   const cv = parseFloat(document.getElementById('f-currentValue').value) || 0;
-  const change = cv - pp;
-  const pct = pp > 0 ? ((change/pp)*100) : 0;
+  const isSold = document.getElementById('f-sold-toggle').checked;
+  const soldPrice = isSold ? (parseFloat(document.getElementById('f-soldPrice').value) || 0) : null;
+  const soldDate = isSold ? (document.getElementById('f-soldDate').value || null) : null;
+
+  // For sold cards: realized P&L uses soldPrice; for held cards: use currentValue
+  const effectiveValue = isSold ? (soldPrice ?? cv) : cv;
+  const change = effectiveValue - pp;
+  const pct = pp > 0 ? ((change / pp) * 100) : 0;
+
   cards.push({
     id: nextId++,
     player, cardName,
     setName: document.getElementById('f-setName').value.trim() || 'Unknown Set',
     year: parseInt(document.getElementById('f-year').value) || new Date().getFullYear(),
     grade: document.getElementById('f-grade').value,
-    purchasePrice: pp, currentValue: cv,
+    purchasePrice: pp,
+    currentValue: cv,
+    soldPrice, soldDate, isSold,
     change, percentChange: parseFloat(pct.toFixed(1)),
     category: document.getElementById('f-category').value,
     qty: parseInt(document.getElementById('f-qty').value) || 1,
@@ -4120,8 +5201,13 @@ function addCard() {
   });
   closeModal();
   showPage('collection');
-  ['f-player','f-cardName','f-setName','f-year','f-purchasePrice','f-currentValue'].forEach(id => document.getElementById(id).value='');
+  ['f-player','f-cardName','f-setName','f-year','f-purchasePrice','f-currentValue','f-soldPrice','f-soldDate'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
   document.getElementById('f-qty').value = '1';
+  document.getElementById('f-sold-toggle').checked = false;
+  document.getElementById('f-sold-fields').style.display = 'none';
 }
 
 // ─── UTILS ───────────────────────────────────────────────────────────────────
@@ -4413,5 +5499,8 @@ function cdAddToCollection() {}
 renderHub();
 updateWatchBadge();
 </script>
+<!-- Modal autocomplete dropdown (fixed-position, escapes modal overflow) -->
+<div id="modal-ac" class="modal-ac-dropdown"></div>
+
 </body>
 </html>
