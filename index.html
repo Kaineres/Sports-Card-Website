@@ -11,6 +11,185 @@
   input[type=number]::-webkit-inner-spin-button,
   input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 
+  /* ── PHOTO SEARCH ── */
+  .photo-search-btn {
+    position: absolute;
+    right: 10px; top: 50%; transform: translateY(-50%);
+    width: 28px; height: 28px;
+    background: var(--gold-bg);
+    border: 1px solid var(--gold-border);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    z-index: 2;
+    font-size: 0.85rem;
+    color: var(--gold2);
+    flex-shrink: 0;
+  }
+  .photo-search-btn:hover {
+    background: rgba(184,146,46,0.2);
+    border-color: var(--gold2);
+    transform: translateY(-50%) scale(1.08);
+  }
+  .photo-search-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* standalone (non-absolute) variant for inline placement */
+  .photo-search-btn-inline {
+    width: 34px; height: 34px;
+    background: var(--gold-bg);
+    border: 1px solid var(--gold-border);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    color: var(--gold2);
+    flex-shrink: 0;
+  }
+  .photo-search-btn-inline:hover { background: rgba(184,146,46,0.2); border-color: var(--gold2); transform: translateY(-1px); }
+  .photo-search-btn-inline svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Photo Search Modal */
+  .ps-overlay {
+    display: none; position: fixed; inset: 0; z-index: 900;
+    background: rgba(0,0,0,0.78); backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+  }
+  .ps-overlay.open { display: flex; }
+  .ps-modal {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-xl);
+    width: min(520px, 95vw);
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+  }
+  .ps-modal::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold3) 60%, var(--gold) 80%, transparent 100%);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+  .ps-header {
+    padding: 1.5rem 1.75rem 1rem;
+    display: flex; align-items: flex-start; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+  .ps-title { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: var(--text); }
+  .ps-sub { font-size: 0.72rem; color: var(--text3); font-family: var(--font-mono); margin-top: 3px; letter-spacing: 0.03em; }
+  .ps-close {
+    width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border2);
+    background: none; color: var(--text3); cursor: pointer; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    transition: 0.15s;
+  }
+  .ps-close:hover { background: var(--bg3); color: var(--text); }
+
+  .ps-body { padding: 1.5rem 1.75rem; }
+
+  .ps-dropzone {
+    border: 2px dashed var(--border2);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background: var(--bg3);
+    position: relative;
+    overflow: hidden;
+  }
+  .ps-dropzone:hover, .ps-dropzone.drag-over { border-color: var(--gold-border); background: var(--gold-bg); }
+  .ps-dz-icon { font-size: 2rem; margin-bottom: 0.6rem; opacity: 0.7; }
+  .ps-dz-title { font-weight: 600; font-size: 0.9rem; color: var(--text); margin-bottom: 0.25rem; }
+  .ps-dz-sub { font-size: 0.75rem; color: var(--text3); font-family: var(--font-mono); }
+  .ps-dz-preview {
+    width: 100%; max-height: 200px; object-fit: contain;
+    border-radius: var(--radius); display: none; margin-top: 0.75rem;
+  }
+  .ps-dz-fname { font-size: 0.7rem; font-family: var(--font-mono); color: var(--gold2); margin-top: 0.5rem; display: none; }
+
+  .ps-divider { display: flex; align-items: center; gap: 0.75rem; margin: 1rem 0; }
+  .ps-divider::before, .ps-divider::after { content: ''; flex: 1; height: 1px; background: var(--border2); }
+  .ps-divider span { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .ps-cam-btn {
+    width: 100%; padding: 10px;
+    background: none; border: 1px solid var(--border2);
+    border-radius: var(--radius); color: var(--text2);
+    font-family: var(--font-display); font-size: 0.82rem; font-weight: 500;
+    cursor: pointer; transition: 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .ps-cam-btn:hover { background: var(--bg3); border-color: var(--border3); color: var(--text); }
+
+  #ps-video-wrap { display: none; margin-top: 1rem; border-radius: var(--radius-lg); overflow: hidden; position: relative; }
+  #ps-video { width: 100%; border-radius: var(--radius-lg); display: block; max-height: 240px; object-fit: cover; }
+  #ps-snap-btn {
+    position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
+    border: none; border-radius: 8px; color: #0d1117;
+    font-weight: 700; font-family: var(--font-display); font-size: 0.8rem;
+    padding: 8px 20px; cursor: pointer; transition: 0.15s;
+  }
+  #ps-snap-btn:hover { background: linear-gradient(135deg, var(--gold2) 0%, var(--gold3) 100%); }
+
+  .ps-analyzing {
+    display: none; align-items: center; gap: 12px;
+    margin-top: 1rem;
+    padding: 0.85rem 1rem;
+    background: var(--gold-bg); border: 1px solid var(--gold-border);
+    border-radius: var(--radius);
+  }
+  .ps-analyzing-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold2); flex-shrink: 0;
+    animation: ps-pulse 1s ease-in-out infinite;
+  }
+  @keyframes ps-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.75)} }
+  .ps-analyzing span { font-family: var(--font-mono); font-size: 0.75rem; color: var(--gold2); letter-spacing: 0.04em; }
+
+  .ps-result {
+    display: none; margin-top: 1rem;
+    background: var(--bg3); border: 1px solid var(--border2);
+    border-radius: var(--radius-lg); overflow: hidden;
+  }
+  .ps-result-head {
+    padding: 0.65rem 1rem;
+    background: rgba(52,201,122,0.07); border-bottom: 1px solid rgba(52,201,122,0.14);
+    font-family: var(--font-mono); font-size: 0.65rem; color: var(--green);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .ps-result-body { padding: 1rem; }
+  .ps-result-card-name { font-weight: 700; font-size: 0.95rem; color: var(--text); margin-bottom: 4px; }
+  .ps-result-meta { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text3); line-height: 1.7; }
+  .ps-result-actions { display: flex; gap: 8px; margin-top: 1rem; }
+  .ps-use-btn {
+    flex: 1; padding: 9px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
+    border: none; border-radius: var(--radius); color: #0d1117;
+    font-weight: 700; font-family: var(--font-display); font-size: 0.82rem;
+    cursor: pointer; transition: 0.15s;
+  }
+  .ps-use-btn:hover { background: linear-gradient(135deg, var(--gold2) 0%, var(--gold3) 100%); transform: translateY(-1px); }
+  .ps-retry-btn {
+    padding: 9px 16px;
+    background: none; border: 1px solid var(--border2);
+    border-radius: var(--radius); color: var(--text2);
+    font-family: var(--font-display); font-size: 0.82rem; font-weight: 500;
+    cursor: pointer; transition: 0.15s;
+  }
+  .ps-retry-btn:hover { background: var(--bg4); border-color: var(--border3); color: var(--text); }
+
+  .ps-error {
+    display: none; margin-top: 1rem; padding: 0.85rem 1rem;
+    background: var(--red-bg); border: 1px solid rgba(224,92,92,0.25);
+    border-radius: var(--radius); font-family: var(--font-mono); font-size: 0.75rem;
+    color: var(--red); letter-spacing: 0.02em;
+  }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -1723,6 +1902,13 @@
         <button class="hub-search-btn" onclick="goToBrowse(null, document.getElementById('hub-global-search').value);acClose('hub-ac')">Browse All →</button>
         <div class="ac-dropdown" id="hub-ac"></div>
       </div>
+      <!-- Photo search — separate row for visibility -->
+      <div style="display:flex;justify-content:center;margin-top:10px">
+        <button onclick="psOpen('hub-global-search')" style="display:flex;align-items:center;gap:7px;background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:8px;padding:7px 16px;color:var(--gold2);font-family:var(--font-display);font-size:0.78rem;font-weight:600;cursor:pointer;transition:0.15s;letter-spacing:0.02em" onmouseover="this.style.background='rgba(184,146,46,0.18)';this.style.borderColor='var(--gold2)'" onmouseout="this.style.background='var(--gold-bg)';this.style.borderColor='var(--gold-border)'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          Search by Photo
+        </button>
+      </div>
     </div>
   </div>
 
@@ -1752,7 +1938,10 @@
         <input type="text" class="browse-search-input" id="browse-search" placeholder="Search player, set, card name…"
           oninput="filterBrowse();acShow('browse-search','browse-ac')"
           onkeydown="acKey(event,'browse-search','browse-ac')"
-          autocomplete="off">
+          autocomplete="off" style="padding-right:40px">
+        <button class="photo-search-btn" title="Search by photo" onclick="psOpen('browse-search')">
+          <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </button>
         <div class="ac-dropdown" id="browse-ac"></div>
       </div>
       <div class="browse-filters">
@@ -1958,9 +2147,12 @@
           placeholder="Player, set, or card name…"
           autocomplete="off"
           oninput="mktSearch()"
-          style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);color:var(--text);font-family:var(--font-display);font-size:0.88rem;font-weight:500;padding:9px 14px 9px 38px;outline:none;transition:border-color 0.18s,box-shadow 0.18s;box-shadow:inset 0 1px 3px rgba(0,0,0,0.35)"
+          style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-lg);color:var(--text);font-family:var(--font-display);font-size:0.88rem;font-weight:500;padding:9px 42px 9px 38px;outline:none;transition:border-color 0.18s,box-shadow 0.18s;box-shadow:inset 0 1px 3px rgba(0,0,0,0.35)"
           onfocus="this.style.borderColor='var(--gold-border)';this.style.boxShadow='0 0 0 2px rgba(184,146,46,0.12),inset 0 1px 3px rgba(0,0,0,0.35)'"
           onblur="this.style.borderColor='var(--border2)';this.style.boxShadow='inset 0 1px 3px rgba(0,0,0,0.35)'">
+        <button class="photo-search-btn" title="Search by photo" onclick="psOpen('mkt-search-input')">
+          <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </button>
       </div>
 
       <!-- Sport filter pills -->
@@ -2036,7 +2228,10 @@
       <input type="text" class="search-input" placeholder="Search cards, players..." id="collection-search"
         oninput="filterCollection();acShow('collection-search','collection-ac')"
         onkeydown="acKey(event,'collection-search','collection-ac')"
-        autocomplete="off" style="width:100%">
+        autocomplete="off" style="width:100%;padding-right:36px">
+      <button class="photo-search-btn" title="Search by photo" onclick="psOpen('collection-search')">
+        <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </button>
       <div class="ac-dropdown" id="collection-ac"></div>
     </div>
     <input type="text" class="search-input" id="filter-set" placeholder="Set name…" oninput="filterCollection()" style="width:140px;flex-shrink:0">
@@ -2180,7 +2375,12 @@
 
   <!-- Watchlist filter bar -->
   <div class="collection-toolbar" id="wl-filter-bar" style="gap:8px">
-    <input type="text" class="search-input" id="wl-filter-player" placeholder="Player name…" oninput="filterWatchlist()" style="flex:1;min-width:140px">
+    <div style="position:relative;flex:1;min-width:140px">
+      <input type="text" class="search-input" id="wl-filter-player" placeholder="Player name…" oninput="filterWatchlist()" style="width:100%;padding-right:36px">
+      <button class="photo-search-btn" title="Search by photo" onclick="psOpen('wl-filter-player')">
+        <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </button>
+    </div>
     <input type="text" class="search-input" id="wl-filter-card" placeholder="Card name…" oninput="filterWatchlist()" style="flex:1;min-width:140px">
     <input type="text" class="search-input" id="wl-filter-set" placeholder="Set name…" oninput="filterWatchlist()" style="width:130px;flex-shrink:0">
     <input type="number" class="search-input" id="wl-filter-year" placeholder="Year…" oninput="filterWatchlist()" style="width:90px;flex-shrink:0;-moz-appearance:textfield">
@@ -2485,12 +2685,231 @@
 </div>
 
 <!-- ADD CARD MODAL -->
+<style>
+  /* ── PHOTO AUTOFILL ── */
+  .af-section {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.1rem 1.1rem;
+    margin-bottom: 1.25rem;
+  }
+  .af-heading {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 0.62rem;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--gold2); margin-bottom: 0.85rem;
+  }
+  .af-heading svg { width:13px;height:13px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round; }
+  .af-zones {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    margin-bottom: 0.85rem;
+  }
+  .af-zone {
+    border: 1.5px dashed var(--border2);
+    border-radius: var(--radius);
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.18s, background 0.18s;
+    background: var(--bg2);
+    position: relative;
+    min-height: 90px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  }
+  .af-zone:hover, .af-zone.drag-over { border-color: var(--gold-border); background: var(--gold-bg); }
+  .af-zone.has-img { border-color: rgba(52,201,122,0.35); border-style: solid; }
+  .af-zone-label {
+    font-family: var(--font-mono); font-size: 0.6rem;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--text3); margin-bottom: 2px;
+  }
+  .af-zone-icon { font-size: 1.25rem; opacity: 0.55; }
+  .af-zone-sub { font-size: 0.67rem; color: var(--text3); }
+  .af-zone-thumb {
+    width: 100%; max-height: 70px; object-fit: contain;
+    border-radius: 4px; display: none;
+  }
+  .af-zone-check {
+    position: absolute; top: 5px; right: 6px;
+    font-size: 0.65rem; color: var(--green);
+    font-family: var(--font-mono); display: none;
+  }
+  .af-cam-row {
+    display: flex; gap: 6px; margin-bottom: 0.75rem;
+  }
+  .af-cam-btn {
+    flex: 1; padding: 7px 0;
+    background: none; border: 1px solid var(--border2);
+    border-radius: var(--radius); color: var(--text3);
+    font-family: var(--font-display); font-size: 0.75rem; font-weight: 500;
+    cursor: pointer; transition: 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .af-cam-btn:hover { background: var(--bg4); border-color: var(--border3); color: var(--text2); }
+  .af-cam-btn.active { border-color: var(--gold-border); color: var(--gold2); background: var(--gold-bg); }
+  .af-scan-btn {
+    width: 100%;
+    padding: 9px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
+    border: none; border-radius: var(--radius);
+    color: #0d1117; font-weight: 700;
+    font-family: var(--font-display); font-size: 0.82rem;
+    cursor: pointer; transition: 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+  }
+  .af-scan-btn:hover:not(:disabled) { background: linear-gradient(135deg, var(--gold2) 0%, var(--gold3) 100%); transform: translateY(-1px); }
+  .af-scan-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+  .af-scanning {
+    display: none; align-items: center; gap: 10px;
+    padding: 0.7rem 0.85rem;
+    background: var(--gold-bg); border: 1px solid var(--gold-border);
+    border-radius: var(--radius); margin-top: 0.75rem;
+  }
+  .af-scan-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--gold2); flex-shrink: 0;
+    animation: ps-pulse 1s ease-in-out infinite;
+  }
+  .af-scanning span { font-family: var(--font-mono); font-size: 0.72rem; color: var(--gold2); letter-spacing: 0.03em; }
+  .af-success {
+    display: none; align-items: center; gap: 8px;
+    padding: 0.6rem 0.85rem; margin-top: 0.75rem;
+    background: rgba(52,201,122,0.08); border: 1px solid rgba(52,201,122,0.22);
+    border-radius: var(--radius);
+    font-family: var(--font-mono); font-size: 0.72rem; color: var(--green); letter-spacing: 0.03em;
+  }
+  .af-error {
+    display: none; padding: 0.6rem 0.85rem; margin-top: 0.75rem;
+    background: var(--red-bg); border: 1px solid rgba(224,92,92,0.22);
+    border-radius: var(--radius);
+    font-family: var(--font-mono); font-size: 0.72rem; color: var(--red);
+  }
+  .af-form-divider {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 1.1rem;
+  }
+  .af-form-divider::before, .af-form-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border2);
+  }
+  .af-form-divider span {
+    font-family: var(--font-mono); font-size: 0.6rem;
+    color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap;
+  }
+  .af-autofilled { border-color: rgba(52,201,122,0.35) !important; }
+
+  /* Camera live view inside modal */
+  #af-video-wrap {
+    display: none; margin-bottom: 0.75rem;
+    border-radius: var(--radius); overflow: hidden; position: relative;
+  }
+  #af-video { width:100%; display:block; max-height:200px; object-fit:cover; border-radius:var(--radius); }
+  .af-cam-controls {
+    display: flex; gap: 8px; margin-bottom: 0.5rem;
+  }
+  .af-snap-btn {
+    flex:1; padding: 8px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
+    border: none; border-radius: var(--radius); color: #0d1117;
+    font-weight: 700; font-family: var(--font-display); font-size: 0.78rem;
+    cursor: pointer; transition: 0.15s;
+  }
+  .af-snap-btn:hover { background: linear-gradient(135deg, var(--gold2) 0%, var(--gold3) 100%); }
+  .af-cam-stop {
+    padding: 8px 14px;
+    background: none; border: 1px solid var(--border2);
+    border-radius: var(--radius); color: var(--text3);
+    font-family: var(--font-display); font-size: 0.78rem;
+    cursor: pointer; transition: 0.15s;
+  }
+  .af-cam-stop:hover { background: var(--bg4); color: var(--text2); }
+</style>
+
 <div class="modal-overlay" id="add-modal">
-  <div class="modal">
+  <div class="modal" style="max-width:540px">
     <div class="modal-title">
       Add Card to Collection
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
+
+    <!-- ── PHOTO AUTOFILL SECTION ── -->
+    <div class="af-section">
+      <div class="af-heading">
+        <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        Photo Autofill — snap or upload front &amp; back
+      </div>
+
+      <!-- Drop zones -->
+      <div class="af-zones">
+        <!-- Front -->
+        <div class="af-zone" id="af-zone-front"
+          ondragover="event.preventDefault();this.classList.add('drag-over')"
+          ondragleave="this.classList.remove('drag-over')"
+          ondrop="afDrop(event,'front')"
+          onclick="document.getElementById('af-file-front').click()">
+          <div class="af-zone-check" id="af-check-front">✓ Loaded</div>
+          <img class="af-zone-thumb" id="af-thumb-front" alt="">
+          <div class="af-zone-icon" id="af-icon-front">🃏</div>
+          <div class="af-zone-label">Front</div>
+          <div class="af-zone-sub" id="af-sub-front">tap or drop</div>
+        </div>
+        <input type="file" id="af-file-front" accept="image/*" style="display:none" onchange="afHandleFile(this.files[0],'front')">
+
+        <!-- Back -->
+        <div class="af-zone" id="af-zone-back"
+          ondragover="event.preventDefault();this.classList.add('drag-over')"
+          ondragleave="this.classList.remove('drag-over')"
+          ondrop="afDrop(event,'back')"
+          onclick="document.getElementById('af-file-back').click()">
+          <div class="af-zone-check" id="af-check-back">✓ Loaded</div>
+          <img class="af-zone-thumb" id="af-thumb-back" alt="">
+          <div class="af-zone-icon" id="af-icon-back">🃏</div>
+          <div class="af-zone-label">Back</div>
+          <div class="af-zone-sub" id="af-sub-back">tap or drop</div>
+        </div>
+        <input type="file" id="af-file-back" accept="image/*" style="display:none" onchange="afHandleFile(this.files[0],'back')">
+      </div>
+
+      <!-- Camera row -->
+      <div class="af-cam-row">
+        <button class="af-cam-btn" id="af-cam-front-btn" onclick="afOpenCamera('front')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          Camera — Front
+        </button>
+        <button class="af-cam-btn" id="af-cam-back-btn" onclick="afOpenCamera('back')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          Camera — Back
+        </button>
+      </div>
+
+      <!-- Live camera view -->
+      <div id="af-video-wrap">
+        <video id="af-video" autoplay playsinline muted></video>
+        <div class="af-cam-controls">
+          <button class="af-snap-btn" onclick="afSnap()">📸 Capture</button>
+          <button class="af-cam-stop" onclick="afStopCamera()">✕ Cancel</button>
+        </div>
+      </div>
+      <canvas id="af-canvas" style="display:none"></canvas>
+
+      <!-- Scan button -->
+      <button class="af-scan-btn" id="af-scan-btn" onclick="afScanAndFill()" disabled>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Scan &amp; Autofill Fields
+      </button>
+
+      <!-- States -->
+      <div class="af-scanning" id="af-scanning">
+        <div class="af-scan-dot"></div>
+        <span id="af-scanning-msg">Reading card details…</span>
+      </div>
+      <div class="af-success" id="af-success">✓ Fields autofilled — review and confirm below</div>
+      <div class="af-error" id="af-error"></div>
+    </div>
+
+    <!-- ── DIVIDER ── -->
+    <div class="af-form-divider"><span>Card Details</span></div>
+
     <div class="form-grid">
       <div class="form-group full" style="position:relative">
         <label class="form-label">Player Name</label>
@@ -5782,6 +6201,498 @@ updateWatchBadge();
 </script>
 <!-- Modal autocomplete dropdown (fixed-position, escapes modal overflow) -->
 <div id="modal-ac" class="modal-ac-dropdown"></div>
+
+<!-- ══════════════════════════════════════════
+     PHOTO SEARCH MODAL
+══════════════════════════════════════════ -->
+<div class="ps-overlay" id="ps-overlay" onclick="psOverlayClick(event)">
+  <div class="ps-modal" id="ps-modal">
+    <div class="ps-header">
+      <div>
+        <div class="ps-title">Photo Card Search</div>
+        <div class="ps-sub">Upload or snap a photo — AI identifies the card instantly</div>
+      </div>
+      <button class="ps-close" onclick="psClose()">✕</button>
+    </div>
+    <div class="ps-body">
+      <!-- Drop zone -->
+      <div class="ps-dropzone" id="ps-dropzone"
+        ondragover="event.preventDefault();this.classList.add('drag-over')"
+        ondragleave="this.classList.remove('drag-over')"
+        ondrop="psDrop(event)"
+        onclick="document.getElementById('ps-file-input').click()">
+        <div class="ps-dz-icon" id="ps-dz-icon">📸</div>
+        <div class="ps-dz-title">Drop a card photo here</div>
+        <div class="ps-dz-sub">JPG, PNG, WEBP — or click to browse</div>
+        <img class="ps-dz-preview" id="ps-dz-preview" alt="Card preview">
+        <div class="ps-dz-fname" id="ps-dz-fname"></div>
+      </div>
+      <input type="file" id="ps-file-input" accept="image/*" style="display:none" onchange="psHandleFile(this.files[0])">
+
+      <div class="ps-divider"><span>or use camera</span></div>
+
+      <button class="ps-cam-btn" id="ps-cam-open-btn" onclick="psOpenCamera()">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        Use Camera
+      </button>
+
+      <!-- Live camera view -->
+      <div id="ps-video-wrap">
+        <video id="ps-video" autoplay playsinline muted></video>
+        <button id="ps-snap-btn" onclick="psSnap()">📸 Capture</button>
+      </div>
+      <canvas id="ps-canvas" style="display:none"></canvas>
+
+      <!-- Analyzing indicator -->
+      <div class="ps-analyzing" id="ps-analyzing">
+        <div class="ps-analyzing-dot"></div>
+        <span id="ps-analyzing-msg">Identifying card with AI…</span>
+      </div>
+
+      <!-- Error -->
+      <div class="ps-error" id="ps-error"></div>
+
+      <!-- Result -->
+      <div class="ps-result" id="ps-result">
+        <div class="ps-result-head">✓ Card identified</div>
+        <div class="ps-result-body">
+          <div class="ps-result-card-name" id="ps-result-name"></div>
+          <div class="ps-result-meta" id="ps-result-meta"></div>
+          <div class="ps-result-actions">
+            <button class="ps-use-btn" onclick="psUseResult()">Use this search term →</button>
+            <button class="ps-retry-btn" onclick="psReset()">↺ Try another</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── PHOTO SEARCH ENGINE ──────────────────────────────────────────────────────
+let psTargetInputId = null;   // which search bar triggered this
+let psIdentifiedTerm = '';    // search string to inject
+let psStream = null;          // active camera stream
+
+const CAM_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`;
+
+function psOpen(targetInputId) {
+  psTargetInputId = targetInputId;
+  psReset();
+  document.getElementById('ps-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function psClose() {
+  document.getElementById('ps-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  psStopCamera();
+}
+
+function psOverlayClick(e) {
+  if (e.target === document.getElementById('ps-overlay')) psClose();
+}
+
+function psReset() {
+  const preview = document.getElementById('ps-dz-preview');
+  preview.style.display = 'none'; preview.src = '';
+  document.getElementById('ps-dz-fname').style.display = 'none';
+  document.getElementById('ps-dz-icon').style.display = '';
+  document.getElementById('ps-analyzing').style.display = 'none';
+  document.getElementById('ps-result').style.display = 'none';
+  document.getElementById('ps-error').style.display = 'none';
+  document.getElementById('ps-dropzone').classList.remove('drag-over');
+  document.getElementById('ps-video-wrap').style.display = 'none';
+  document.getElementById('ps-cam-open-btn').style.display = 'flex';
+  document.getElementById('ps-file-input').value = '';
+  psStopCamera();
+  psIdentifiedTerm = '';
+}
+
+function psDrop(e) {
+  e.preventDefault();
+  document.getElementById('ps-dropzone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) psHandleFile(file);
+}
+
+function psHandleFile(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const preview = document.getElementById('ps-dz-preview');
+    preview.src = ev.target.result;
+    preview.style.display = 'block';
+    document.getElementById('ps-dz-icon').style.display = 'none';
+    document.getElementById('ps-dz-fname').textContent = file.name;
+    document.getElementById('ps-dz-fname').style.display = 'block';
+    psAnalyzeImage(ev.target.result.split(',')[1], file.type);
+  };
+  reader.readAsDataURL(file);
+}
+
+async function psOpenCamera() {
+  try {
+    psStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+    const video = document.getElementById('ps-video');
+    video.srcObject = psStream;
+    document.getElementById('ps-video-wrap').style.display = 'block';
+    document.getElementById('ps-cam-open-btn').style.display = 'none';
+  } catch (err) {
+    psShowError('Camera access denied. Please allow camera permission and try again.');
+  }
+}
+
+function psStopCamera() {
+  if (psStream) { psStream.getTracks().forEach(t => t.stop()); psStream = null; }
+}
+
+function psSnap() {
+  const video = document.getElementById('ps-video');
+  const canvas = document.getElementById('ps-canvas');
+  canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0);
+  const dataURL = canvas.toDataURL('image/jpeg', 0.92);
+
+  // Show snapshot as preview
+  const preview = document.getElementById('ps-dz-preview');
+  preview.src = dataURL;
+  preview.style.display = 'block';
+  document.getElementById('ps-video-wrap').style.display = 'none';
+  psStopCamera();
+
+  psAnalyzeImage(dataURL.split(',')[1], 'image/jpeg');
+}
+
+async function psAnalyzeImage(base64Data, mimeType) {
+  document.getElementById('ps-analyzing').style.display = 'flex';
+  document.getElementById('ps-result').style.display = 'none';
+  document.getElementById('ps-error').style.display = 'none';
+
+  const msgs = ['Identifying card with AI…', 'Reading player name…', 'Matching set and year…', 'Finalizing identification…'];
+  let mi = 0;
+  const ticker = setInterval(() => {
+    document.getElementById('ps-analyzing-msg').textContent = msgs[Math.min(++mi, msgs.length-1)];
+  }, 1400);
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 300,
+        messages: [{
+          role: 'user',
+          content: [
+            {
+              type: 'image',
+              source: { type: 'base64', media_type: mimeType || 'image/jpeg', data: base64Data }
+            },
+            {
+              type: 'text',
+              text: `You are a sports card identification expert. Look at this card image and identify it. Respond ONLY with a valid JSON object — no markdown, no preamble — in this exact shape:
+{
+  "player": "Player Full Name",
+  "year": "YYYY",
+  "set": "Set Name",
+  "cardNumber": "#123",
+  "sport": "NBA|NFL|MLB|NHL|Soccer|WNBA|Other",
+  "searchTerm": "short search string (player name + year + set, max 5 words)",
+  "confidence": "high|medium|low",
+  "notes": "any notable details like rookie card, parallel, etc."
+}
+If this is not a sports card, set player to "Unknown" and searchTerm to "". If you cannot read details clearly, make your best guess.`
+            }
+          ]
+        }]
+      })
+    });
+
+    clearInterval(ticker);
+    document.getElementById('ps-analyzing').style.display = 'none';
+
+    if (!resp.ok) throw new Error(`API error ${resp.status}`);
+    const data = await resp.json();
+    const raw = (data.content || []).map(b => b.text || '').join('');
+    let parsed;
+    try {
+      const clean = raw.replace(/```json|```/g, '').trim();
+      parsed = JSON.parse(clean);
+    } catch { throw new Error('Could not parse AI response. Try a clearer image.'); }
+
+    if (!parsed.player || parsed.player === 'Unknown' || !parsed.searchTerm) {
+      psShowError('No card detected. Make sure the card fills most of the frame and try again.');
+      return;
+    }
+
+    psIdentifiedTerm = parsed.searchTerm;
+    document.getElementById('ps-result-name').textContent = `${parsed.player}${parsed.year ? ' · ' + parsed.year : ''}`;
+
+    let meta = '';
+    if (parsed.set) meta += `Set: ${parsed.set}\n`;
+    if (parsed.cardNumber) meta += `Card: ${parsed.cardNumber}\n`;
+    if (parsed.sport) meta += `Sport: ${parsed.sport}\n`;
+    if (parsed.notes) meta += `Note: ${parsed.notes}\n`;
+    if (parsed.confidence) meta += `Confidence: ${parsed.confidence}`;
+    document.getElementById('ps-result-meta').textContent = meta.trim();
+    document.getElementById('ps-result').style.display = 'block';
+
+  } catch (err) {
+    clearInterval(ticker);
+    document.getElementById('ps-analyzing').style.display = 'none';
+    psShowError(err.message || 'Something went wrong. Please try again.');
+  }
+}
+
+function psShowError(msg) {
+  const el = document.getElementById('ps-error');
+  el.textContent = '⚠ ' + msg;
+  el.style.display = 'block';
+}
+
+function psUseResult() {
+  if (!psIdentifiedTerm || !psTargetInputId) return;
+  const input = document.getElementById(psTargetInputId);
+  if (!input) return;
+  input.value = psIdentifiedTerm;
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+  psClose();
+  // focus and scroll to search bar
+  setTimeout(() => { input.focus(); input.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 200);
+}
+
+// keyboard shortcut: Escape closes modal
+document.addEventListener('keydown', e => { if (e.key === 'Escape') psClose(); });
+
+// ─── PHOTO AUTOFILL (Add to Collection modal) ────────────────────────────────
+const afImages = { front: null, back: null }; // { b64, mime }
+let afCamStream = null;
+let afCamTarget = null; // 'front' | 'back'
+
+function afReset() {
+  ['front','back'].forEach(side => {
+    afImages[side] = null;
+    const zone = document.getElementById('af-zone-' + side);
+    const thumb = document.getElementById('af-thumb-' + side);
+    const icon  = document.getElementById('af-icon-'  + side);
+    const check = document.getElementById('af-check-' + side);
+    const sub   = document.getElementById('af-sub-'   + side);
+    thumb.style.display = 'none'; thumb.src = '';
+    icon.style.display  = '';
+    check.style.display = 'none';
+    sub.textContent     = 'tap or drop';
+    zone.classList.remove('has-img');
+    document.getElementById('af-file-' + side).value = '';
+  });
+  document.getElementById('af-scan-btn').disabled = true;
+  document.getElementById('af-scanning').style.display = 'none';
+  document.getElementById('af-success').style.display  = 'none';
+  document.getElementById('af-error').style.display    = 'none';
+  document.getElementById('af-video-wrap').style.display = 'none';
+  afStopCamera();
+  // clear autofill highlights
+  ['f-player','f-cardName','f-setName','f-year','f-grade','f-category'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('af-autofilled');
+  });
+}
+
+function afDrop(e, side) {
+  e.preventDefault();
+  document.getElementById('af-zone-' + side).classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) afHandleFile(file, side);
+}
+
+function afHandleFile(file, side) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const dataURL = ev.target.result;
+    const b64  = dataURL.split(',')[1];
+    const mime = file.type || 'image/jpeg';
+    afSetImage(side, b64, mime, dataURL);
+  };
+  reader.readAsDataURL(file);
+}
+
+function afSetImage(side, b64, mime, dataURL) {
+  afImages[side] = { b64, mime };
+  const thumb = document.getElementById('af-thumb-' + side);
+  const icon  = document.getElementById('af-icon-'  + side);
+  const check = document.getElementById('af-check-' + side);
+  const sub   = document.getElementById('af-sub-'   + side);
+  const zone  = document.getElementById('af-zone-'  + side);
+  thumb.src = dataURL; thumb.style.display = 'block';
+  icon.style.display  = 'none';
+  check.style.display = 'block';
+  sub.textContent     = '✓ ready';
+  zone.classList.add('has-img');
+  // enable scan if at least front is loaded
+  document.getElementById('af-scan-btn').disabled = !afImages.front;
+  // clear previous states
+  document.getElementById('af-success').style.display = 'none';
+  document.getElementById('af-error').style.display   = 'none';
+}
+
+async function afOpenCamera(side) {
+  afCamTarget = side;
+  try {
+    afCamStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+    document.getElementById('af-video').srcObject = afCamStream;
+    document.getElementById('af-video-wrap').style.display = 'block';
+    document.getElementById('af-cam-' + side + '-btn').classList.add('active');
+    document.getElementById('af-video-wrap').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  } catch {
+    document.getElementById('af-error').textContent = '⚠ Camera access denied — please allow permission.';
+    document.getElementById('af-error').style.display = 'block';
+  }
+}
+
+function afSnap() {
+  const video = document.getElementById('af-video');
+  const canvas = document.getElementById('af-canvas');
+  canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0);
+  const dataURL = canvas.toDataURL('image/jpeg', 0.92);
+  afStopCamera();
+  afSetImage(afCamTarget, dataURL.split(',')[1], 'image/jpeg', dataURL);
+  document.getElementById('af-cam-' + afCamTarget + '-btn').classList.remove('active');
+}
+
+function afStopCamera() {
+  if (afCamStream) { afCamStream.getTracks().forEach(t => t.stop()); afCamStream = null; }
+  document.getElementById('af-video-wrap').style.display = 'none';
+  ['front','back'].forEach(s => document.getElementById('af-cam-' + s + '-btn').classList.remove('active'));
+}
+
+async function afScanAndFill() {
+  if (!afImages.front) return;
+
+  document.getElementById('af-scanning').style.display = 'flex';
+  document.getElementById('af-success').style.display  = 'none';
+  document.getElementById('af-error').style.display    = 'none';
+  document.getElementById('af-scan-btn').disabled = true;
+
+  const msgs = ['Reading card details…','Identifying player & set…','Detecting grade & year…','Finalizing fields…'];
+  let mi = 0;
+  const ticker = setInterval(() => {
+    document.getElementById('af-scanning-msg').textContent = msgs[Math.min(++mi, msgs.length - 1)];
+  }, 1200);
+
+  // Build content array — front always included, back optional
+  const content = [];
+  content.push({
+    type: 'image',
+    source: { type: 'base64', media_type: afImages.front.mime, data: afImages.front.b64 }
+  });
+  if (afImages.back) {
+    content.push({
+      type: 'image',
+      source: { type: 'base64', media_type: afImages.back.mime, data: afImages.back.b64 }
+    });
+  }
+  content.push({
+    type: 'text',
+    text: `You are an expert sports card cataloguer. Examine ${afImages.back ? 'these two card images (front first, back second)' : 'this card image (front)'} and extract all available information.
+
+Respond ONLY with a single valid JSON object — no markdown, no extra text:
+{
+  "player": "Full player name",
+  "cardName": "Descriptive card name including year, set, and variation if visible",
+  "setName": "Set/product name only",
+  "year": "YYYY or YYYY-YY for multi-season sets",
+  "grade": "PSA 10|PSA 9|PSA 8|PSA 7|PSA 6|PSA 5|PSA 4|PSA 3|PSA 2|PSA 1|Raw",
+  "sport": "NBA|NFL|MLB|NHL|Soccer|WNBA|UFC|Golf",
+  "cardNumber": "#XXX",
+  "parallel": "e.g. Refractor, Gold, Prizm — empty string if base",
+  "rookie": true or false,
+  "notes": "Any other notable details from the card"
+}
+
+For grade: if you see a PSA slab with a grade number, use it. If the card appears raw/ungraded, use "Raw". If uncertain, use "Raw".
+If a field cannot be determined from the image, use an empty string (never null).`
+  });
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 400,
+        messages: [{ role: 'user', content }]
+      })
+    });
+
+    clearInterval(ticker);
+    document.getElementById('af-scanning').style.display = 'none';
+
+    if (!resp.ok) throw new Error(`API error ${resp.status}`);
+    const data = await resp.json();
+    const raw = (data.content || []).map(b => b.text || '').join('');
+    let parsed;
+    try {
+      parsed = JSON.parse(raw.replace(/```json|```/g, '').trim());
+    } catch { throw new Error('Could not parse AI response. Try a clearer photo.'); }
+
+    // Fill fields
+    const fieldMap = {
+      'f-player':   parsed.player,
+      'f-cardName': parsed.cardName,
+      'f-setName':  parsed.setName,
+      'f-year':     parsed.year,
+    };
+    Object.entries(fieldMap).forEach(([id, val]) => {
+      if (val) {
+        const el = document.getElementById(id);
+        el.value = val;
+        el.classList.add('af-autofilled');
+        // clear highlight after 4s
+        setTimeout(() => el.classList.remove('af-autofilled'), 4000);
+      }
+    });
+
+    // Grade select
+    if (parsed.grade) {
+      const gradeEl = document.getElementById('f-grade');
+      const opt = Array.from(gradeEl.options).find(o => o.value === parsed.grade);
+      if (opt) { gradeEl.value = parsed.grade; gradeEl.classList.add('af-autofilled'); setTimeout(() => gradeEl.classList.remove('af-autofilled'), 4000); }
+    }
+
+    // Sport select
+    if (parsed.sport) {
+      const catEl = document.getElementById('f-category');
+      const opt = Array.from(catEl.options).find(o => o.value === parsed.sport);
+      if (opt) { catEl.value = parsed.sport; catEl.classList.add('af-autofilled'); setTimeout(() => catEl.classList.remove('af-autofilled'), 4000); }
+    }
+
+    document.getElementById('af-success').style.display = 'flex';
+    document.getElementById('af-scan-btn').disabled = false;
+
+  } catch (err) {
+    clearInterval(ticker);
+    document.getElementById('af-scanning').style.display = 'none';
+    document.getElementById('af-error').textContent = '⚠ ' + (err.message || 'Something went wrong. Try again.');
+    document.getElementById('af-error').style.display = 'block';
+    document.getElementById('af-scan-btn').disabled = false;
+  }
+}
+
+// Reset autofill state whenever the add modal opens
+const _origOpenModal = window.openModal;
+window.openModal = function(...args) {
+  afReset();
+  if (_origOpenModal) _origOpenModal(...args);
+};
+// Also reset on closeModal
+const _origCloseModal = window.closeModal;
+window.closeModal = function(...args) {
+  afReset();
+  if (_origCloseModal) _origCloseModal(...args);
+};
+</script>
 
 </body>
 </html>
