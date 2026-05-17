@@ -1,0 +1,11 @@
+apps/
+packages/
+turbo.json
+pnpm-workspace.yaml
+node_modules/
+.turbo/
+.next/
+docs/
+supabase/
+.claude/
+CLAUDE.md
