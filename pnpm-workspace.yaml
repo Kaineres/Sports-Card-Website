@@ -2,6 +2,7 @@ packages:
   - "apps/*"
   - "packages/*"
 allowBuilds:
+  # transitive devDep of shadcn CLI; deny build script to keep install non-interactive
   msw: false
   sharp: true
   unrs-resolver: true
