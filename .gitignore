@@ -2,3 +2,11 @@
 .claude/logo-extracted.png
 
 .vercel
+
+node_modules/
+.turbo/
+.next/
+dist/
+apps/*/.next/
+apps/*/node_modules/
+packages/*/node_modules/
