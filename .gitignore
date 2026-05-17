@@ -1,4 +1,14 @@
 .superpowers/
 .claude/logo-extracted.png
+.claude/settings.local.json
+docs/.obsidian/
 
 .vercel
+
+node_modules/
+.turbo/
+.next/
+dist/
+apps/*/.next/
+apps/*/node_modules/
+packages/*/node_modules/

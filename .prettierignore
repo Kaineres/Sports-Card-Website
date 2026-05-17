@@ -1,0 +1,19 @@
+# Generated / build output
+pnpm-lock.yaml
+node_modules
+.next
+dist
+.turbo
+
+# Pre-scaffold legacy site (do not reformat)
+index.html
+
+# Obsidian vault + project docs (user-managed)
+docs/
+CLAUDE.md
+
+# Supabase CLI temp
+supabase/.temp/
+
+# Vercel
+.vercel/
