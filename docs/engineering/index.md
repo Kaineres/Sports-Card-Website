@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-05-18
+updated: 2026-05-19
 ---
 
 # Engineering wiki — index
@@ -27,7 +27,7 @@ _(none yet)_
 
 ## Scratch
 
-_(none yet)_
+- [[scratch/n8n-wiki-ingest-automation]] — parked idea: use n8n's headless-browser nodes to automate the multi-tab clipping pattern when the pricing-pipeline n8n setup starts. `[Guessing]` — no source.
 
 ## Synthesis
 
