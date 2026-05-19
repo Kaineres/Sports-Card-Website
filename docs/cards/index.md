@@ -10,7 +10,7 @@ Catalog of pages in the sports cards sub-wiki. Updated on every ingest.
 ## Entities
 
 - [[psa]] — third-party trading card authentication and grading service. `[Certain]` — [[psa-grading-service]], [[psa-grading-standards]]
-- [[bgs]] — Beckett Grading Services; competing third-party grader with a four-subgrade model and Pristine label hierarchy. `[Certain]` — [[bgs-grading-scale]]
+- [[bgs]] — Beckett Grading Services; competing third-party grader with a four-subgrade model, 3-tier label hierarchy (Black/Gold/Silver), and 4-tier service structure. Grades sports, gaming, and non-sports cards. `[Certain]` — [[bgs-grading-scale]], [[bgs-grading-overview]]
 - [[sgc]] — SGC; competing third-party grader publishing a 20-step single-grade scale (no subgrades, no back-centering), 1 → 10 PRI. `[Certain]` — [[sgc-grading-scale]]
 
 ## Concepts
@@ -21,7 +21,7 @@ Catalog of pages in the sports cards sub-wiki. Updated on every ingest.
 - [[bgs-subgrades]] — BGS's four-subgrade evaluation model (centering, corners, edges, surface) plus the Pristine 10 Black/Gold label rule. `[Certain]` — [[bgs-grading-scale]]
 - [[grading-qualifiers]] — defect suffixes attached to a numeric grade (PSA MK detailed; other PSA categories stubbed; BGS/SGC qualifier systems not yet ingested — BGS appears to use subgrades in lieu of qualifiers). `[Certain — partial capture]` — [[psa-grading-standards]]
 - [[no-grade-outcomes]] — N1–N9 codes and Authentic / Authentic Altered encapsulation labels (PSA only; BGS and SGC no-grade taxonomies not yet ingested). `[Certain]` — [[psa-grading-standards]]
-- [[grading-service-tiers]] — how grading services structure pricing: declared value × turnaround speed (PSA only; BGS and SGC pricing not yet ingested). `[Certain]` — [[psa-grading-service]]
+- [[grading-service-tiers]] — how grading services structure pricing: PSA uses 14 tiers (declared value × speed); BGS uses 4 tiers (speed only, no declared-value axis captured). SGC not yet ingested. `[Certain]` — [[psa-grading-service]], [[bgs-grading-overview]]
 
 ## Sources
 
@@ -34,6 +34,7 @@ Catalog of pages in the sports cards sub-wiki. Updated on every ingest.
 - [[goingtwice-graded-pop-reports]] — Going Twice explainer covering PSA, BGS, and CGC pop reports (ingested 2026-05-19); cross-grader grade rate comparison (Umbreon VMAX Alt Art example).
 - [[sundocards-psa-bgs-pop-reports]] — Sundo Cards guide to PSA and BGS pop reports (ingested 2026-05-19); cross-grading inflation, within-grade quality variation.
 - [[yahoo-population-count-explained]] — Yahoo Sports / Hockey News pop count explainer (ingested 2026-05-19); "Population Higher" field definition, PSA no-half-grades at 9+, liquidity vs. pricing-power dynamics.
+- [[bgs-grading-overview]] — BGS public grading landing page at `beckett.com/grading` (crawled 2026-05-19); 3-label system, 4 service tiers, Pristine 10 Black centering tolerance, label security features.
 
 ## Synthesis
 

@@ -69,6 +69,16 @@ Chronological, append-only.
   - `yahoo` file captured a live sports page; only first ~80 lines cover pop counts; remainder is a Knicks-Cavs playoff preview, excluded.
 - capture quality: good across all five. One claim flagged `[Likely]` — grading difficulty thresholds (PSA 10 rate < 10% / < 5%) stated in packz source without a PSA primary citation; consistent with market convention but not verified against a PSA document.
 
+## [2026-05-19] ingest | BGS Grading Overview (beckett.com/grading)
+
+- source: [[bgs-grading-overview]]
+- raw: `cards/raw/card-grading-sports-gaming-non-sports-cards-beckett-202605192240.md`
+- capture method: Obsidian Site Crawler (n8n + Firecrawl crawl workflow); Claude Haiku filtered Beckett site URLs → single relevant page selected and scraped automatically.
+- new pages: [[bgs-grading-overview]] (source)
+- updated pages: [[bgs]] (Silver label added; service tiers section added; security features added; card scope expanded to gaming/non-sports), [[bgs-subgrades]] (Pristine 10 Black centering tolerance 50/50 front / 55/45 back confirmed; half-points confirmed as applying to subgrades), [[grading-service-tiers]] (BGS 4-tier section added; open question on BGS tiers closed), `index.md`
+- contradictions flagged: none. New content is additive; no conflicts with [[bgs-grading-scale]] data.
+- notes: Silver label (all grades below Gem Mint 9.5) was not present in the prior grade-by-grade clip ingest — those clips focused on grade criteria, not label branding. Specific dollar prices for BGS tiers not captured (dynamic pricing table). BGS tier structure uses turnaround speed only as pricing axis; no declared-value component found (contrast with PSA's 14-tier value × speed matrix).
+
 ## [2026-05-18] ingest | SGC Grading Scale (grade-by-grade clip)
 
 - source: [[sgc-grading-scale]]

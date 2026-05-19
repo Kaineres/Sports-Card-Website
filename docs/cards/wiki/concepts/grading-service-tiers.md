@@ -1,8 +1,8 @@
 ---
 type: concept
 tags: [grading, pricing, services]
-updated: 2026-05-18
-sources: [[psa-grading-service]]
+updated: 2026-05-19
+sources: [[psa-grading-service]], [[bgs-grading-overview]]
 certainty: Certain
 ---
 
@@ -39,12 +39,29 @@ Turnaround speed is a separately-priced premium independent of value. PSA's tier
 
 Total tier count: **14** `[Certain]` — [[psa-grading-service]].
 
+## BGS service tiers
+
+`[Certain]` — [[bgs-grading-overview]]. BGS uses **turnaround speed only** as the pricing axis — no declared-value tiers captured. Four tiers:
+
+| Tier | Turnaround |
+|---|---|
+| Base | 75+ business days |
+| Standard | 45 business days |
+| Express | 15 business days |
+| Priority | 5 business days |
+
+BGS's tier structure is simpler than PSA's 14-tier menu. No declared-value component was found in the source — `[Likely]` BGS handles high-value cards differently but this is not published on the main grading page. Specific per-tier prices were not captured (dynamic pricing table). Turnaround times are estimated and subject to change.
+
+Add-on fees: Autograph Card (+$5), Oversized Card (+$8), Relabel (from $9.95), Graded Card Review (+$0), Recase BGS only (from $9.95) `[Certain]` — [[bgs-grading-overview]].
+
 ## Open questions
 
-- How do BGS / SGC / CGC structure their tiers? Do they use the same value × speed axes? `[unknown — no source ingested]`
-- Do grading services offer volume discounts at the bulk end? PSA's "50-card minimum" hints at bulk handling but specifics aren't in this source.
+- How does SGC structure its tiers? `[unknown — no source ingested]`
+- Does BGS use a declared-value axis not shown on the main grading page? `[Likely yes, unverified]`
+- Do grading services offer volume discounts? PSA's "50-card minimum" hints at bulk handling but specifics not captured.
 
 ## See also
 
-- [[psa]] — the grading service whose tiers this page describes.
+- [[psa]] — PSA tier structure.
+- [[bgs]] — BGS entity page; tier table also reproduced there.
 - [[card-grading]] — what the grading process actually is.

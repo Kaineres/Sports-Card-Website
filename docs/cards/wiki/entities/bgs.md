@@ -2,7 +2,7 @@
 type: entity
 tags: [grading-service, company, beckett]
 updated: 2026-05-19
-sources: [[bgs-grading-scale]], [[goingtwice-graded-pop-reports]]
+sources: [[bgs-grading-scale]], [[goingtwice-graded-pop-reports]], [[bgs-grading-overview]]
 certainty: Certain
 ---
 
@@ -10,22 +10,35 @@ certainty: Certain
 
 ## TL;DR
 
-BGS (Beckett Grading Services) is a third-party trading card grading company. They grade cards on a 1–10 scale with half-points at every step, but unlike PSA, BGS publishes **four subgrades per card** (centering, corners, edges, surface) plus a composite overall grade `[Certain]` — [[bgs-grading-scale]]. See [[bgs-subgrades]] for the subgrade mechanics.
+BGS (Beckett Grading Services) is a third-party trading card grading company. They grade cards on a 1–10 scale with half-points at every step, publishing **four subgrades per card** (centering, corners, edges, surface) plus a composite overall grade — and are the only major grader to display all four subgrades directly on the slab label `[Certain]` — [[bgs-grading-scale]], [[bgs-grading-overview]]. Grades sports, gaming (Pokémon), and non-sports (Star Wars, etc.) cards. See [[bgs-subgrades]] for subgrade mechanics.
 
 ## What BGS does
 
-- **Four-subgrade evaluation** — every card receives four subgrades, one for each dimension (centering, corners, edges, surface). The overall grade is composited from the four. `[Certain]` — [[bgs-grading-scale]]. Mechanics in [[bgs-subgrades]].
-- **Grading on a 1–10 scale with half-points** — final grades are issued in half-point increments (10, 9.5, 9, 8.5, …, 1.5, 1). `[Certain]` — [[bgs-grading-scale]]. BGS publishes detailed criteria for integer grades plus 9.5; half-points are interpolated between the published levels.
-- **Pristine 10 label variants** — see below.
+- **Four-subgrade evaluation** — every card receives four subgrades (centering, corners, edges, surface); overall grade is composited from the four. `[Certain]` — [[bgs-grading-scale]]. Mechanics in [[bgs-subgrades]].
+- **Grading on a 1–10 scale with half-points** — final grades in half-point increments (10, 9.5, 9, 8.5, …, 1.5, 1). `[Certain]` — [[bgs-grading-scale]], [[bgs-grading-overview]].
+- **3-tier label system** — see below.
+- **Authenticity check included** — every card examined for trimming, doctoring, and alteration before grading begins `[Certain]` — [[bgs-grading-overview]].
+- **Card scope** — sports, gaming (Pokémon), and non-sports (Star Wars, etc.) `[Certain]` — [[bgs-grading-overview]].
 
-## Pristine 10 — Black vs Gold Label
+## Label hierarchy — Black, Gold, Silver
 
-`[Certain]` — [[bgs-grading-scale]]:
+`[Certain]` — [[bgs-grading-scale]], [[bgs-grading-overview]]:
 
-- **Black Label** — issued when all four subgrades are 10. Top of the BGS hierarchy.
-- **Gold Label** — issued when three subgrades are 10 and one is 9.5, in any combination. The "the only difference" language in BGS's own copy makes clear this is a deliberate, formally-defined hierarchy — not a marketing flourish.
+| Label | Issued when |
+|---|---|
+| **Black** | All four subgrades = 10. Perfect Pristine. Top of the BGS hierarchy. |
+| **Gold** | Pristine 10 or Gem Mint 9.5. Three subgrades = 10, one = 9.5 (any combination) qualifies for Pristine 10 Gold. |
+| **Silver** | All other grades (everything below Gem Mint 9.5). |
 
-This label distinction has no PSA equivalent.
+The Black/Gold distinction has no PSA or SGC equivalent. Silver is the default label for the vast majority of graded cards.
+
+## Label security features
+
+`[Certain]` — [[bgs-grading-overview]]. New Beckett labels include:
+- Holographic metallic material
+- Hidden UV pattern
+- Anti-counterfeit light reactive badge
+- QR code linking to cert verification at beckett.com
 
 ## BGS-specific terminology
 
@@ -40,7 +53,18 @@ Not captured in the current source set — BGS's "about" / "history" copy lives 
 
 ## Service tiers / pricing
 
-Not captured in the current source set. The scale clips are scale-only; pricing parallel to [[grading-service-tiers]] would require a separate clip from BGS submission pages.
+`[Certain]` — [[bgs-grading-overview]]. BGS offers four turnaround tiers (all prices per card; specific dollar amounts not captured — dynamic pricing table):
+
+| Tier | Turnaround |
+|---|---|
+| Base | 75+ business days |
+| Standard | 45 business days |
+| Express | 15 business days |
+| Priority | 5 business days |
+
+Available add-ons: Autograph Card (+$5), Oversized Card (+$8), Relabel (from $9.95), Graded Card Review (+$0), Recase BGS only (from $9.95). Turnaround times are estimated and subject to change `[Certain]` — [[bgs-grading-overview]].
+
+See [[grading-service-tiers]] for cross-service tier comparison.
 
 ## Population Report
 

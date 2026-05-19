@@ -1,8 +1,8 @@
 ---
 type: concept
 tags: [grading, bgs, subgrades]
-updated: 2026-05-18
-sources: [[bgs-grading-scale]]
+updated: 2026-05-19
+sources: [[bgs-grading-scale]], [[bgs-grading-overview]]
 certainty: Certain
 ---
 
@@ -31,18 +31,18 @@ BGS evaluates every card across **four subgrade dimensions** — centering, corn
 
 ## Pristine 10 label hierarchy
 
-`[Certain]` — [[bgs-grading-scale]]. At the overall grade of 10 Pristine, BGS issues one of two labels based on subgrade composition:
+`[Certain]` — [[bgs-grading-scale]], [[bgs-grading-overview]]. At overall grade 10 Pristine, BGS issues one of two labels based on subgrade composition:
 
-| Label | Subgrade composition |
-|---|---|
-| **Black Label** | All four subgrades = 10. |
-| **Gold Label** | Exactly three subgrades = 10, one subgrade = 9.5, in any combination of categories. |
+| Label | Subgrade composition | Centering (Black only) |
+|---|---|---|
+| **Black Label** | All four subgrades = 10. | 50/50 front; 55/45 or better back. |
+| **Gold Label** | Three subgrades = 10, one = 9.5, any combination. | — |
 
-The Black/Gold distinction has no PSA equivalent and carries strong market value implications among BGS-graded high-grade cards.
+The Black/Gold distinction has no PSA or SGC equivalent and carries strong market value implications. The 50/50 front centering requirement for Black Label is stricter than any other published BGS standard `[Certain]` — [[bgs-grading-overview]].
 
 ## Half-points
 
-`[Certain]` — [[bgs-grading-scale]]. BGS-published criteria cover integer grades plus 9.5 only. Half-points (8.5, 7.5, …, 1.5) are explicitly described by BGS as interpolations: a card receives a half-point grade when it "typically share[s] characteristics from both the level above and the level below the actual grade given." Whether subgrades themselves are also issued in half-points (or only the overall) is not made explicit in the captured source — `[Likely yes]` based on the Gold Label rule requiring a 9.5 subgrade, but worth verifying.
+`[Certain]` — [[bgs-grading-scale]], [[bgs-grading-overview]]. BGS issues grades in half-point increments. Half-points are explicitly defined as interpolations: a card receives a half-point grade when it "typically share[s] characteristics from both the level above and the level below the actual grade given." Subgrades are also issued in half-points — confirmed by the Gold Label rule requiring a 9.5 subgrade `[Certain]` — [[bgs-grading-overview]].
 
 ## BGS-specific defect terminology
 
