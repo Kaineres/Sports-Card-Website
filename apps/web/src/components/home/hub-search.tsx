@@ -174,44 +174,52 @@ export default function HubSearch() {
                   transition: 'background 0.1s',
                 }}
               >
-                {/* Left: sport icon + text */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
+                {/* Left: sport pill + text */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
+                  {/* Sport badge pill */}
                   <div style={{
-                    width: '32px', height: '32px', borderRadius: '8px', flexShrink: 0,
-                    background: `${meta.color}18`,
-                    border: `1px solid ${meta.color}40`,
+                    width: '44px', height: '44px', borderRadius: '10px', flexShrink: 0,
+                    background: `${meta.color}20`,
+                    border: `1px solid ${meta.color}50`,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '0.9rem',
-                  }}>{meta.icon}</div>
+                  }}>
+                    <span style={{
+                      fontFamily: 'var(--font-mono)', fontSize: '0.6rem', fontWeight: 800,
+                      color: meta.color, letterSpacing: '0.04em',
+                      lineHeight: 1, textAlign: 'center',
+                    }}>{card.sport}</span>
+                  </div>
+
                   <div style={{ minWidth: 0 }}>
                     <div style={{
-                      fontFamily: 'var(--font-display)', fontSize: '0.85rem', fontWeight: 600,
-                      color: 'var(--text)', lineHeight: 1.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                      fontFamily: 'var(--font-display)', fontSize: '0.88rem', fontWeight: 700,
+                      color: 'var(--text)', lineHeight: 1.3,
+                      whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                     }}>
                       {highlight(card.player, query)}
                     </div>
                     <div style={{
-                      fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text3)',
-                      marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                      fontFamily: 'var(--font-mono)', fontSize: '0.63rem', color: 'var(--text3)',
+                      marginTop: '3px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                     }}>
-                      {card.cardName} · {card.grade} · {card.year}
+                      {card.setName} · {card.grade} · {card.year}
                     </div>
                   </div>
                 </div>
 
-                {/* Right: price + change */}
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px', flexShrink: 0, marginLeft: '12px' }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.83rem', fontWeight: 600, color: 'var(--text)' }}>
+                {/* Right: price + % avg */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px', flexShrink: 0, marginLeft: '16px' }}>
+                  <span style={{
+                    fontFamily: 'var(--font-mono)', fontSize: '0.9rem', fontWeight: 700,
+                    color: 'var(--gold2)', letterSpacing: '-0.01em',
+                  }}>
                     ${card.currentValue.toLocaleString()}
                   </span>
                   <span style={{
-                    padding: '1px 6px', borderRadius: '4px',
-                    background: isUp ? 'var(--green-bg)' : 'var(--red-bg)',
-                    border: `1px solid ${isUp ? 'rgba(52,201,122,0.2)' : 'rgba(224,92,92,0.2)'}`,
-                    fontFamily: 'var(--font-mono)', fontSize: '0.6rem', fontWeight: 600,
+                    fontFamily: 'var(--font-mono)', fontSize: '0.62rem', fontWeight: 600,
                     color: isUp ? 'var(--green)' : 'var(--red)',
                   }}>
-                    {isUp ? '+' : ''}{card.percentChange.toFixed(1)}%
+                    {isUp ? '+' : ''}{card.percentChange.toFixed(1)}% avg
                   </span>
                 </div>
               </div>
