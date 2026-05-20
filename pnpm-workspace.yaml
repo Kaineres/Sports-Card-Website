@@ -3,6 +3,7 @@ packages:
   - "packages/*"
 allowBuilds:
   # transitive devDep of shadcn CLI; deny build script to keep install non-interactive
+  '@clerk/shared': true
   msw: false
   sharp: true
   unrs-resolver: true

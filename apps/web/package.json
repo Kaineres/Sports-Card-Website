@@ -12,6 +12,10 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@clerk/nextjs": "^7.3.7",
+    "@supabase/supabase-js": "^2.106.0",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.16.0",
@@ -20,7 +24,8 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "shadcn": "^4.7.0",
-    "tailwind-merge": "^3.6.0"
+    "tailwind-merge": "^3.6.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
