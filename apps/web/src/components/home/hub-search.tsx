@@ -176,21 +176,20 @@ export default function HubSearch() {
               >
                 {/* Left: text + inline sport badge */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
-                  {/* Sport square badge */}
+                  {/* Sport square badge — solid background */}
                   <div style={{
                     width: '40px', height: '40px', borderRadius: '8px', flexShrink: 0,
-                    background: `${meta.color}22`,
-                    border: `1px solid ${meta.color}55`,
+                    background: meta.color,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
                     <span style={{
                       fontFamily: 'var(--font-mono)', fontSize: '0.58rem', fontWeight: 800,
-                      color: meta.color, letterSpacing: '0.03em', lineHeight: 1,
+                      color: '#0d1117', letterSpacing: '0.03em', lineHeight: 1,
                     }}>{card.sport}</span>
                   </div>
 
                   <div style={{ minWidth: 0 }}>
-                    {/* Player name + inline league pill */}
+                    {/* Player name + inline league pill — solid */}
                     <div style={{
                       display: 'flex', alignItems: 'center', gap: '7px',
                       whiteSpace: 'nowrap', overflow: 'hidden',
@@ -203,11 +202,10 @@ export default function HubSearch() {
                         {highlight(card.player, query)}
                       </span>
                       <span style={{
-                        padding: '1px 6px', borderRadius: '4px', flexShrink: 0,
-                        background: `${meta.color}20`,
-                        border: `1px solid ${meta.color}50`,
-                        fontFamily: 'var(--font-mono)', fontSize: '0.58rem', fontWeight: 700,
-                        color: meta.color, letterSpacing: '0.04em', lineHeight: 1.6,
+                        padding: '2px 7px', borderRadius: '4px', flexShrink: 0,
+                        background: meta.color,
+                        fontFamily: 'var(--font-mono)', fontSize: '0.58rem', fontWeight: 800,
+                        color: '#0d1117', letterSpacing: '0.04em', lineHeight: 1.6,
                       }}>{card.sport}</span>
                     </div>
                     <div style={{
