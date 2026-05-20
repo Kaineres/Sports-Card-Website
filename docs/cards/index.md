@@ -12,6 +12,8 @@ Catalog of pages in the sports cards sub-wiki. Updated on every ingest.
 - [[psa]] — third-party trading card authentication and grading service. `[Certain]` — [[psa-grading-service]], [[psa-grading-standards]]
 - [[bgs]] — Beckett Grading Services; competing third-party grader with a four-subgrade model, 3-tier label hierarchy (Black/Gold/Silver), and 4-tier service structure. Grades sports, gaming, and non-sports cards. `[Certain]` — [[bgs-grading-scale]], [[bgs-grading-overview]]
 - [[sgc]] — SGC; competing third-party grader publishing a 20-step single-grade scale (no subgrades, no back-centering), 1 → 10 PRI. `[Certain]` — [[sgc-grading-scale]]
+- [[panini]] — major US trading card manufacturer (NFL/NBA licenses); known for chrome sets with extensive parallel rainbow structures. `[Certain]` — [[beckett-2024-panini-mosaic-football]]
+- [[2024-panini-mosaic-football]] — 400-card chrome football set (released Nov 27 2024); 38 base parallels per card, 2 auto hits per hobby box, 100-card 2024 rookie subset. `[Certain]` — [[beckett-2024-panini-mosaic-football]]
 
 ## Concepts
 
@@ -22,6 +24,7 @@ Catalog of pages in the sports cards sub-wiki. Updated on every ingest.
 - [[grading-qualifiers]] — defect suffixes attached to a numeric grade (PSA MK detailed; other PSA categories stubbed; BGS/SGC qualifier systems not yet ingested — BGS appears to use subgrades in lieu of qualifiers). `[Certain — partial capture]` — [[psa-grading-standards]]
 - [[no-grade-outcomes]] — N1–N9 codes and Authentic / Authentic Altered encapsulation labels (PSA only; BGS and SGC no-grade taxonomies not yet ingested). `[Certain]` — [[psa-grading-standards]]
 - [[grading-service-tiers]] — how grading services structure pricing: PSA uses 14 tiers (declared value × speed); BGS uses 4 tiers (speed only, no declared-value axis captured). SGC not yet ingested. `[Certain]` — [[psa-grading-service]], [[bgs-grading-overview]]
+- [[card-parallels]] — parallel card variants: same image in different colors/patterns at successively lower print runs; 1/1 is the rarest tier; print run stamped on numbered variants. `[Certain]` — [[beckett-2024-panini-mosaic-football]]
 
 ## Sources
 
@@ -35,6 +38,7 @@ Catalog of pages in the sports cards sub-wiki. Updated on every ingest.
 - [[sundocards-psa-bgs-pop-reports]] — Sundo Cards guide to PSA and BGS pop reports (ingested 2026-05-19); cross-grading inflation, within-grade quality variation.
 - [[yahoo-population-count-explained]] — Yahoo Sports / Hockey News pop count explainer (ingested 2026-05-19); "Population Higher" field definition, PSA no-half-grades at 9+, liquidity vs. pricing-power dynamics.
 - [[bgs-grading-overview]] — BGS public grading landing page at `beckett.com/grading` (crawled 2026-05-19); 3-label system, 4 service tiers, Pristine 10 Black centering tolerance, label security features.
+- [[beckett-2024-panini-mosaic-football]] — Beckett News checklist article for 2024 Panini Mosaic Football (ingested 2026-05-19); set specs, 38-variant parallel list, rookie subset, autograph sets, short-print inserts.
 
 ## Synthesis
 

@@ -89,3 +89,20 @@ Chronological, append-only.
 - capture status: **all 20 SGC grade levels captured** (1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10 GM, 10 PRI). Front centering, corner, surface, and crease criteria documented per-grade.
 - not captured (would need additional clips): SGC pricing / service-tier structure, SGC qualifier system (if any), SGC no-grade / ungradable taxonomy, SGC authentication-only encapsulation labels, SGC company background.
 - notes: SGC publishes **no back-centering tolerances** (only one centering figure per grade — front-implied) — a meaningful asymmetry vs both PSA and BGS. SGC publishes **no subgrades** (single overall grade only) — unlike BGS. SGC's 10 PRI vs 10 GM distinction parallels BGS's Black/Gold Pristine concept but operates on stricter top-level criteria rather than subgrade composition. Vocabulary observations: SGC shares "diamond cut" and "refractor lines" with BGS but not with PSA; SGC uniquely names "spider crease" and "pinhole" as defect categories. SGC's half-grade structure splits into two kinds — criterion-defined (8.5, 7.5, and partially 9.5) vs "+" tier (6.5, 5.5, 4.5, 3.5, 2.5).
+
+## [2026-05-19] assess | junk / no-content files (4 files)
+
+- raw: `cards/raw/example-domain-202605192206.md`, `cards/raw/verify-card-certification-look-up-a-cgc-certification-number-202605200056.md`, `cards/raw/psa-grading-standards-202605192207.md`, `cards/raw/psa-grading-standards-202605192304.md`
+- assessment: `example-domain` is a test artifact (example.com placeholder from n8n pipeline initialization). CGC cert-lookup file contains only a rate-limit error banner and a single cert result for a Pokémon Fossil Golduck CGC 8.5 — not representative grading methodology content, product of CGC's anti-scraping throttle. Both PSA crawl files are identical full-page dumps of psacard.com/gradingstandards — PSA 10 text and N1–N9 definitions are present in text (already ingested 2026-05-18); all other grade definitions (9 down to 1.5) and qualifier codes (OC/MC/ST/PD/OF) are image-carousel only, same gap as the original clip ingest. No new extractable claims in any of these files.
+- new pages: none
+- updated pages: none
+- notes: PSA 8.5 text definition and qualifier code letters (MC/OC/ST/PD/OF) remain missing from all sources — the page uses JavaScript accordion tabs that a full-page crawl cannot expand. Requires per-tab clips using the manual bookmarklet.
+
+## [2026-05-19] ingest | 2024 Panini Mosaic Football Checklist (Beckett)
+
+- source: [[beckett-2024-panini-mosaic-football]]
+- raw: `cards/raw/2024-panini-mosaic-football-checklist-team-sets-hobby-box-in-202605200037.md`
+- new pages: [[panini]] (entity), [[2024-panini-mosaic-football]] (entity), [[card-parallels]] (concept), [[beckett-2024-panini-mosaic-football]] (source)
+- updated pages: `index.md`
+- contradictions flagged: none
+- notes: first card-set and manufacturer entity in the wiki. Raw file is a 5-tab Beckett News article dumped sequentially by the crawler (16,615 lines); same per-card player list appears 2–3× across tab sections. Structural data captured: set specs, 38 base parallel variants with print runs, named subsets, all 16 key rookies, Hall of Fame subset, autograph set roster, short-print insert names. Full insert checklist tab not extracted in this pass — named short-prints (Money, Micro Mosaic, Stained Glass) captured from article header only. 100-card rookie subset fully enumerated on [[2024-panini-mosaic-football]] entity page.
