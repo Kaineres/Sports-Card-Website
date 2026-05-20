@@ -98,6 +98,13 @@ Chronological, append-only.
 - updated pages: none
 - notes: PSA 8.5 text definition and qualifier code letters (MC/OC/ST/PD/OF) remain missing from all sources — the page uses JavaScript accordion tabs that a full-page crawl cannot expand. Requires per-tab clips using the manual bookmarklet.
 
+## [2026-05-19] assess | CGC cert-lookup retry files (2 files)
+
+- raw: `cards/raw/verify-card-certification-look-up-a-cgc-certification-number-202605200100.md`, `cards/raw/verify-card-certification-look-up-a-cgc-certification-number-202605200114.md`
+- assessment: identical content to the previously logged CGC cert-lookup file (202605200056) — same URL (cgccards.com/certlookup/6031819005), same rate-limit error banner, same Golduck Fossil 8.5 cert data. n8n workflow retried the same blocked page twice more after the initial crawl. No new content.
+- new pages: none
+- updated pages: none
+
 ## [2026-05-19] ingest | 2024 Panini Mosaic Football Checklist (Beckett)
 
 - source: [[beckett-2024-panini-mosaic-football]]
