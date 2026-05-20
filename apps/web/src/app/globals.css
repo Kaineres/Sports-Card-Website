@@ -160,3 +160,71 @@
   background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold3) 50%, var(--gold) 70%, transparent 100%);
   opacity: 0.6;
 }
+
+/* ── Feature cards ── */
+.feature-card {
+  padding: 1.75rem;
+  background: var(--bg2);
+  display: flex; flex-direction: column; gap: 10px;
+  transition: background 0.15s;
+  cursor: default;
+}
+.feature-card:hover { background: var(--bg3); }
+
+/* ── Trending cards ── */
+.trending-card {
+  background: var(--bg2);
+  border: 1px solid var(--border-md);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  display: flex; flex-direction: column; gap: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  position: relative; overflow: hidden;
+}
+.trending-card:hover {
+  background: var(--bg3);
+  border-color: var(--border-lg);
+}
+
+/* ── Sport tile cards ── */
+.sport-tile-card {
+  background: var(--bg2);
+  border: 1px solid var(--border-md);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  display: flex; flex-direction: column; gap: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  position: relative; overflow: hidden;
+}
+.sport-tile-card:hover {
+  background: var(--bg3);
+  border-color: var(--border-lg);
+}
+.sport-tile-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold2), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.sport-tile-card:hover::before { opacity: 1; }
+
+/* ── Browse card grid items ── */
+.browse-card {
+  background: var(--bg2);
+  border: 1px solid var(--border-md);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.15s, background 0.15s;
+}
+.browse-card:hover {
+  background: var(--bg3);
+  border-color: var(--border-lg);
+}
+
+/* ── Market investor pick cards ── */
+.investor-pick-card:hover { background: var(--bg4) !important; }
+
+/* ── Collection table rows ── */
+.table-row:hover { background: var(--bg3) !important; }
