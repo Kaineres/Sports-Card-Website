@@ -3,57 +3,13 @@
 import { Suspense, useState, useMemo, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { BROWSE_CATALOG, SPORT_META, type Sport, type CatalogCard } from '@/lib/catalog'
 
-/* ── Types ── */
-type Sport = 'NBA' | 'NFL' | 'MLB' | 'NHL' | 'Soccer' | 'WNBA' | 'UFC/MMA' | 'Golf'
 type SortKey = 'value-desc' | 'value-asc' | 'change-desc' | 'change-asc' | 'player-asc'
 
-interface CatalogCard {
-  id: number
-  player: string
-  cardName: string
-  setName: string
-  year: number
-  grade: string
-  currentValue: number
-  percentChange: number
-  sport: Sport
-}
-
-/* ── Mock catalog (swap for Supabase query once catalog is seeded) ── */
-const BROWSE_CATALOG: CatalogCard[] = [
-  { id:1,  player:'Caleb Williams',       cardName:'Base RC',        setName:'Panini Mosaic',    year:2024, grade:'PSA 10', currentValue:285.00,  percentChange:+12.4, sport:'NFL'  },
-  { id:2,  player:'Jayden Daniels',       cardName:'Base RC',        setName:'Panini Mosaic',    year:2024, grade:'PSA 10', currentValue:195.00,  percentChange:+22.1, sport:'NFL'  },
-  { id:3,  player:'Drake Maye',           cardName:'Base RC',        setName:'Panini Mosaic',    year:2024, grade:'PSA 10', currentValue:175.00,  percentChange:-3.2,  sport:'NFL'  },
-  { id:4,  player:'Marvin Harrison Jr',   cardName:'Base RC',        setName:'Panini Mosaic',    year:2024, grade:'PSA 10', currentValue:260.00,  percentChange:+18.4, sport:'NFL'  },
-  { id:5,  player:'Brock Bowers',         cardName:'Base RC',        setName:'Panini Mosaic',    year:2024, grade:'PSA 10', currentValue:220.00,  percentChange:+6.5,  sport:'NFL'  },
-  { id:6,  player:'Victor Wembanyama',    cardName:'Base RC',        setName:'Panini Prizm',     year:2023, grade:'PSA 10', currentValue:1240.00, percentChange:+8.7,  sport:'NBA'  },
-  { id:7,  player:'Chet Holmgren',        cardName:'Base RC',        setName:'Panini Prizm',     year:2022, grade:'PSA 10', currentValue:380.00,  percentChange:-2.1,  sport:'NBA'  },
-  { id:8,  player:'Paolo Banchero',       cardName:'Base RC',        setName:'Panini Prizm',     year:2022, grade:'PSA 10', currentValue:310.00,  percentChange:+4.3,  sport:'NBA'  },
-  { id:9,  player:'Scoot Henderson',      cardName:'Base RC',        setName:'Panini Prizm',     year:2023, grade:'PSA 10', currentValue:145.00,  percentChange:-6.8,  sport:'NBA'  },
-  { id:10, player:'Brandon Miller',       cardName:'Base RC',        setName:'Panini Prizm',     year:2023, grade:'PSA 10', currentValue:120.00,  percentChange:+1.2,  sport:'NBA'  },
-  { id:11, player:'Jackson Holliday',     cardName:'Base RC',        setName:'Topps Chrome',     year:2024, grade:'PSA 10', currentValue:320.00,  percentChange:+9.8,  sport:'MLB'  },
-  { id:12, player:'Jackson Chourio',      cardName:'Base RC',        setName:'Topps Chrome',     year:2024, grade:'PSA 10', currentValue:280.00,  percentChange:+14.2, sport:'MLB'  },
-  { id:13, player:'Yoshinobu Yamamoto',   cardName:'Base RC',        setName:'Topps Chrome',     year:2024, grade:'PSA 10', currentValue:510.00,  percentChange:+4.2,  sport:'MLB'  },
-  { id:14, player:'Paul Skenes',          cardName:'Base RC',        setName:'Topps Chrome',     year:2024, grade:'PSA 10', currentValue:445.00,  percentChange:+15.3, sport:'MLB'  },
-  { id:15, player:'Wyatt Langford',       cardName:'Base RC',        setName:'Topps Chrome',     year:2024, grade:'PSA 10', currentValue:190.00,  percentChange:+7.6,  sport:'MLB'  },
-  { id:16, player:'Connor Bedard',        cardName:'Base RC',        setName:'Upper Deck Series', year:2023, grade:'PSA 10', currentValue:620.00, percentChange:+11.5, sport:'NHL'  },
-  { id:17, player:'Matvei Michkov',       cardName:'Base RC',        setName:'Upper Deck Series', year:2024, grade:'PSA 10', currentValue:380.00, percentChange:+22.8, sport:'NHL'  },
-  { id:18, player:'Caitlin Clark',        cardName:'Base RC',        setName:'Parkside WNBA',    year:2024, grade:'PSA 10', currentValue:890.00,  percentChange:+31.2, sport:'WNBA' },
-  { id:19, player:'Angel Reese',          cardName:'Base RC',        setName:'Parkside WNBA',    year:2024, grade:'PSA 10', currentValue:420.00,  percentChange:+18.6, sport:'WNBA' },
-  { id:20, player:'Erling Haaland',       cardName:'Base',           setName:'Topps Chrome UCL', year:2023, grade:'PSA 10', currentValue:340.00,  percentChange:+5.9,  sport:'Soccer'},
-]
-
-const SPORT_COLORS: Record<Sport, string> = {
-  'NBA':     '#f0c96a',
-  'NFL':     '#34c97a',
-  'MLB':     '#60a5fa',
-  'NHL':     '#a78bfa',
-  'Soccer':  '#34d399',
-  'WNBA':    '#f0c96a',
-  'UFC/MMA': '#e05c5c',
-  'Golf':    '#34c97a',
-}
+const SPORT_COLORS: Record<Sport, string> = Object.fromEntries(
+  Object.entries(SPORT_META).map(([k, v]) => [k, v.color])
+) as Record<Sport, string>
 
 const SPORTS: (Sport | 'All')[] = ['All', 'NBA', 'NFL', 'MLB', 'NHL', 'Soccer', 'WNBA', 'UFC/MMA', 'Golf']
 
