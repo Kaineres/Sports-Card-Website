@@ -1,8 +1,8 @@
 ---
 type: concept
 tags: [grading, scale, condition]
-updated: 2026-05-18
-sources: [[psa-grading-standards]], [[bgs-grading-scale]], [[sgc-grading-scale]]
+updated: 2026-05-19
+sources: [[psa-grading-standards]], [[bgs-grading-scale]], [[sgc-grading-scale]], [[cgc-grading-scale]]
 certainty: Certain
 ---
 
@@ -10,7 +10,7 @@ certainty: Certain
 
 ## TL;DR
 
-Grade scales are the numeric ranges grading services use to summarize a card's condition. PSA's scale (1–10 with two half-grades at 1.5 and 8.5) is documented except PSA 8.5. BGS's scale (1–10 with half-points at every step, four published subgrades, Pristine Black/Gold label variants) is documented for integer grades plus 9.5 — half-points are interpolations per BGS policy. SGC's scale (1–10 with half-grades at every step plus a separate Pristine 10 above the Gem 10, 20 distinct levels total) is now fully documented; SGC publishes a single overall grade with no subgrades and no back-centering tolerance. CGC scale not yet ingested `[Certain]` — [[psa-grading-standards]], [[bgs-grading-scale]], [[sgc-grading-scale]].
+Grade scales are the numeric ranges grading services use to summarize a card's condition. PSA's scale (1–10 with two half-grades at 1.5 and 8.5) is documented except PSA 8.5. BGS's scale (1–10 with half-points at every step, four published subgrades, Pristine Black/Gold label variants) is documented for integer grades plus 9.5 — half-points are interpolations per BGS policy. SGC's scale (1–10 with half-grades at every step plus a separate Pristine 10 above the Gem 10, 20 distinct levels total) is fully documented. CGC's scale (1–Pristine 10, also 20 grades with half-steps, Pristine 10 / Gem Mint 10 two-tier top) is now fully documented. `[Certain]` — [[psa-grading-standards]], [[bgs-grading-scale]], [[sgc-grading-scale]], [[cgc-grading-scale]].
 
 ## PSA scale
 
@@ -396,9 +396,182 @@ Cross-service equivalence claims (e.g., "BGS 9.5 ≈ PSA 10 ≈ SGC 10 GM") are 
 
 ## CGC scale
 
-_(not yet ingested — placeholder)_
+CGC uses a **20-grade scale** (1 → Pristine 10) with half-grades at every step `[Certain]` — [[cgc-grading-scale]]. CGC publishes a **single overall grade** with **no subgrades**. Uniquely among the four major graders covered here, CGC **explicitly distinguishes TCG criteria from sports/non-sports criteria** at several grade levels. See [[entities/cgc]] for label history (the "Gem Mint 9.5 → Gem Mint 10" relabeling).
 
-When CGC's grading-standards page is ingested, this section will detail and compare.
+### CGC 10 — Pristine
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- **Centering** — 50/50.
+- Virtually flawless to the naked eye; perfect color and registration.
+- Special Pristine 10 label issued on the holder.
+
+### CGC 10 — Gem Mint
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- **Centering** — 55/45 front, 75/25 back.
+- Overall 10 grade; one criterion does not meet Pristine 10 requirements.
+- Corners appear perfect to naked eye, Mint+ under 10× magnification.
+- Surface free of print spots, perfect gloss, no surface flaws.
+
+### CGC 9.5 — Mint+
+
+`[Certain]` — [[cgc-grading-scale]]. Qualitative: "displays premium eye appeal for a Mint card. Qualities such as exceptional centering, surface qualities/color or other key elements can elevate a card to a Mint+ grade." No published centering floor.
+
+### CGC 9 — Mint
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- **Centering (sports/non-sports)** — 60/40 front, 90/10 back.
+- Four sharp corners; slight minor flaws on edges may be visible.
+- Surface: original gloss intact; small number of specks or one minor spot or surface defect allowed.
+- TCG: only a few minor manufacturing or handling defects.
+
+### CGC 8.5 — NM/Mint+
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- **Centering** — not stated for sports/non-sports (gap vs. grade 8).
+- Relatively smooth edges, minor touches of wear; original color borders and gloss.
+- One of the following very minor flaws allowed: corners sharp to naked eye but slight imperfections under magnification; small amount of minor print spots; subtle focus imperfections.
+- Very slight diamond cut allowed.
+- TCG: small handling defects allowed.
+
+### CGC 8 — NM/Mint
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- **Centering (sports/non-sports)** — 65/35.
+- Same flaw allowances as 8.5; very slight diamond cut allowed.
+- TCG: small-to-moderate handling defects (looser than 8.5's "small").
+
+### CGC 7.5 — Near Mint+
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- **Centering (sports/non-sports)** — 65/35.
+- Touch of wear on two or three corners or slightly rough edges.
+- Image may be slightly out of register; slight diamond cut allowed.
+- Very slight wax staining allowed on reverse.
+- TCG: moderate defect or a number of small handling defects.
+
+### CGC 7 — Near Mint
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- **Centering (sports/non-sports)** — 70/30.
+- Touch of wear on three or more corners and/or slightly rough edges.
+- Image may be slightly out of register; slight diamond cut allowed.
+- Very slight wax staining on reverse.
+
+### CGC 6.5 — Ex/NM+
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- No more than one slightly "dinged" corner, or no more than two of: two or three fuzzy corners; slightly rough edges; noticeable print spots.
+- Moderate diamond cut allowed; light wax staining on front acceptable.
+
+### CGC 6 — Ex/NM
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- **Centering (sports/non-sports)** — 75/25.
+- No more than one "dinged" corner, or no more than two of: two or three fuzzy corners; slightly rough edges; noticeable print spots.
+- Moderate diamond cut; wax staining on front acceptable.
+
+### CGC 5.5 — Excellent+
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- Corners may exhibit light fuzziness and very minor rounding; may come to a point but one or two "dinged" corners allowed.
+- Chipping on edges; minor border discoloration; noticeable print spots; color or focus imperfections.
+
+### CGC 5 — Excellent
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- Corners may exhibit fuzziness and very minor rounding; two to three "dinged" corners allowed.
+- Chipping on edges; minor border discoloration; noticeable print spots; color or focus imperfections.
+- On scratch-off surface cards, coating may be removed but surface not damaged.
+
+### CGC 4.5 — VG/Ex+
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- **Centering (sports/non-sports)** — 85/15; extremely noticeable diamond cut allowed.
+- Corners may display slight rounding.
+- Noticeable surface flaws: scuffing, scratches, or one light crease.
+- Some original gloss may be visible; borders may be off-white; small amount of minor staining.
+
+### CGC 4 — VG/Ex
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- Corners may display slight rounding.
+- Noticeable surface flaws: scuffing, scratches, one or more light creases.
+- Some original gloss visible; borders may be off-white; some minor staining.
+- Extremely noticeable diamond cut allowed.
+
+### CGC 3.5 — Very Good+
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- **Centering** — 90/10; four rounded corners (not extreme rounding).
+- One moderate crease or more than one light crease; scuffing or scratches; loss of original gloss.
+- Edges: moderate wear; moderate staining visible.
+
+### CGC 3 — Very Good
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- Four rounded corners (not extreme rounding).
+- One moderate crease or more than one light crease; scuffing or scratches; loss of original gloss.
+- Edges: moderate wear; heavier staining visible on front and back.
+
+### CGC 2.5 — Good+
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- Heavier creasing that does not travel edge-to-edge.
+- May have one small writing mark on back.
+- Extremely heavy diamond cut resulting in a near-miscut allowed.
+
+### CGC 2 — Good
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- Heavier creasing that **may travel edge-to-edge**.
+- Small amount of writing on front or back.
+- Extremely heavy diamond cut / near-miscut allowed.
+
+### CGC 1.5 — Fair
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- One catastrophic flaw: staple hole, small area of missing surface, severe creasing, and/or writing on surface.
+- Card may be miscut.
+
+### CGC 1 — Poor
+
+`[Certain]` — [[cgc-grading-scale]]:
+
+- Multiple catastrophic flaws.
+- Severe creasing that breaks the card surface.
+- May be missing a small portion of the cardstock (e.g., a torn corner).
+
+## Cross-service grade observations
+
+`[Certain — derived from above]`:
+
+- **Centering tolerances differ at the top.** PSA 10 ≤ 55/45 front; BGS 10 Pristine 50/50 front; SGC 10 PRI 50/50 front, SGC 10 GM 55/45 front; CGC Pristine 10 50/50, CGC Gem Mint 10 55/45 front / 75/25 back. BGS, SGC, and CGC's *Pristine* tier all converge on 50/50; PSA's single top grade is 55/45.
+- **Back-centering treatment diverges.** PSA publishes 90/10 back across most of the scale; BGS publishes back tolerances that loosen quickly and dramatically; SGC publishes **no separate back tolerance at all**; CGC publishes 75/25 at Gem Mint 10 and 90/10 at Mint 9, with gaps in between.
+- **"Diamond cut" terminology is shared by BGS, SGC, and CGC; PSA doesn't use it.**
+- **"Refractor lines" / "metallic print lines" are named defect categories on BGS and SGC; CGC and PSA don't name this defect** in their published standards.
+- **The "Pristine 10 above Gem Mint 10" pattern is shared by BGS, SGC, and CGC.** PSA has no Pristine label; its top is Gem Mint 10. The mechanism differs: BGS uses subgrade composition; SGC and CGC use stricter top-level criteria.
+- **Half-grade philosophy varies.** PSA: only 1.5 and 8.5, criterion-defined. BGS: half-points at every step, explicitly interpolations. SGC: half-grades at every step, mixed (some criterion-defined, most relational "+"). CGC: half-grades at every step, all criterion-defined or qualitatively distinct.
+- **TCG card criteria are uniquely published by CGC.** PSA and BGS do not publish separate criteria for trading card games vs. sports cards in their publicly accessible grading standards. CGC distinguishes them explicitly from grade 9 down.
+- **Cross-service equivalence claims** (e.g., "BGS 9.5 ≈ PSA 10") are common in collector discourse but are **not supported** by the published standards or differing centering/defect vocabularies `[Likely]`. Any synthesis page making such a claim should flag it as market consensus, not standard.
 
 ## See also
 
@@ -410,3 +583,4 @@ When CGC's grading-standards page is ingested, this section will detail and comp
 - [[bgs]] — the second service whose scale this page documents.
 - [[bgs-subgrades]] — BGS-specific four-subgrade evaluation model.
 - [[sgc]] — the third service whose scale this page documents.
+- [[cgc]] — the fourth service whose scale this page documents.

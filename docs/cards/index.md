@@ -12,13 +12,14 @@ Catalog of pages in the sports cards sub-wiki. Updated on every ingest.
 - [[psa]] — third-party trading card authentication and grading service. `[Certain]` — [[psa-grading-service]], [[psa-grading-standards]]
 - [[bgs]] — Beckett Grading Services; competing third-party grader with a four-subgrade model, 3-tier label hierarchy (Black/Gold/Silver), and 4-tier service structure. Grades sports, gaming, and non-sports cards. `[Certain]` — [[bgs-grading-scale]], [[bgs-grading-overview]]
 - [[sgc]] — SGC; competing third-party grader publishing a 20-step single-grade scale (no subgrades, no back-centering), 1 → 10 PRI. `[Certain]` — [[sgc-grading-scale]]
+- [[cgc]] — CGC Cards; third-party grading service; 20-grade scale (Poor 1 → Pristine 10), Pristine 10 / Gem Mint 10 two-tier top, explicitly covers TCG cards; no subgrades. `[Certain]` — [[cgc-grading-scale]]
 - [[panini]] — major US trading card manufacturer (NFL/NBA licenses); known for chrome sets with extensive parallel rainbow structures. `[Certain]` — [[beckett-2024-panini-mosaic-football]]
 - [[2024-panini-mosaic-football]] — 400-card chrome football set (released Nov 27 2024); 38 base parallels per card, 2 auto hits per hobby box, 100-card 2024 rookie subset. `[Certain]` — [[beckett-2024-panini-mosaic-football]]
 
 ## Concepts
 
 - [[card-grading]] — what grading is: two-step (authenticate + grade), produces an encapsulated slab carrying a numeric grade or alternative label. `[Certain]` — [[psa-grading-service]], [[psa-grading-standards]], [[bgs-grading-scale]], [[sgc-grading-scale]]
-- [[grading-scales]] — the 1–10 numeric grade scale across services. PSA grades 1, 1.5, 2–10 (except 8.5) fully defined; BGS integer grades + 9.5 + Pristine Black/Gold variants fully defined; **SGC 20-step scale (1 → 10 PRI) fully defined**; CGC stubbed. `[Certain]` — [[psa-grading-standards]], [[bgs-grading-scale]], [[sgc-grading-scale]]
+- [[grading-scales]] — the 1–10 numeric grade scale across services. PSA grades 1, 1.5, 2–10 (except 8.5) fully defined; BGS integer grades + 9.5 + Pristine Black/Gold variants fully defined; SGC 20-step scale fully defined; **CGC 20-step scale (1 → Pristine 10) now fully defined**. `[Certain]` — [[psa-grading-standards]], [[bgs-grading-scale]], [[sgc-grading-scale]], [[cgc-grading-scale]]
 - [[population-report]] — grade-distribution database maintained by PSA, BGS, and CGC; tracks how many copies of a card exist at each grade level. Core rarity-assessment tool; covers distortion factors (crack-and-resubmit, cross-grading, submission rate) and value implications. `[Certain]` — [[packz-psa-population-report-guide]], [[goingtwice-graded-pop-reports]], [[sundocards-psa-bgs-pop-reports]], [[yahoo-population-count-explained]], [[psa-market-report-population-perspective]]
 - [[bgs-subgrades]] — BGS's four-subgrade evaluation model (centering, corners, edges, surface) plus the Pristine 10 Black/Gold label rule. `[Certain]` — [[bgs-grading-scale]]
 - [[grading-qualifiers]] — defect suffixes attached to a numeric grade (PSA MK detailed; other PSA categories stubbed; BGS/SGC qualifier systems not yet ingested — BGS appears to use subgrades in lieu of qualifiers). `[Certain — partial capture]` — [[psa-grading-standards]]
@@ -38,6 +39,7 @@ Catalog of pages in the sports cards sub-wiki. Updated on every ingest.
 - [[sundocards-psa-bgs-pop-reports]] — Sundo Cards guide to PSA and BGS pop reports (ingested 2026-05-19); cross-grading inflation, within-grade quality variation.
 - [[yahoo-population-count-explained]] — Yahoo Sports / Hockey News pop count explainer (ingested 2026-05-19); "Population Higher" field definition, PSA no-half-grades at 9+, liquidity vs. pricing-power dynamics.
 - [[bgs-grading-overview]] — BGS public grading landing page at `beckett.com/grading` (crawled 2026-05-19); 3-label system, 4 service tiers, Pristine 10 Black centering tolerance, label security features.
+- [[cgc-grading-scale]] — CGC's grading standards page (ingested 2026-05-19); all 20 grades fully defined; Pristine 10 / Gem Mint 10 distinction; TCG vs. sports/non-sports criteria; label history note.
 - [[beckett-2024-panini-mosaic-football]] — Beckett News checklist article for 2024 Panini Mosaic Football (ingested 2026-05-19); set specs, 38-variant parallel list, rookie subset, autograph sets, short-print inserts.
 
 ## Synthesis

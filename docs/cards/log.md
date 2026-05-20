@@ -112,4 +112,15 @@ Chronological, append-only.
 - new pages: [[panini]] (entity), [[2024-panini-mosaic-football]] (entity), [[card-parallels]] (concept), [[beckett-2024-panini-mosaic-football]] (source)
 - updated pages: `index.md`
 - contradictions flagged: none
-- notes: first card-set and manufacturer entity in the wiki. Raw file is a 5-tab Beckett News article dumped sequentially by the crawler (16,615 lines); same per-card player list appears 2–3× across tab sections. Structural data captured: set specs, 38 base parallel variants with print runs, named subsets, all 16 key rookies, Hall of Fame subset, autograph set roster, short-print insert names. Full insert checklist tab not extracted in this pass — named short-prints (Money, Micro Mosaic, Stained Glass) captured from article header only. 100-card rookie subset fully enumerated on [[2024-panini-mosaic-football]] entity page.
+- notes: first card-set and manufacturer entity in the wiki.
+
+## [2026-05-19] ingest | CGC Grading Scale (cgccards.com/card-grading/grading-scale/)
+
+- source: [[cgc-grading-scale]]
+- raw: `cards/raw/Grading Scale.md`
+- new pages: [[cgc]] (entity), [[cgc-grading-scale]] (source)
+- updated pages: [[grading-scales]] (CGC section added — all 20 grades; cross-service observations section updated for 4-service coverage), `index.md`
+- contradictions flagged: none across sources. One label-history note on [[cgc]]: CGC previously labeled what is now "Gem Mint 10" as "Gem Mint 9.5" — those slabs now display as "Gem Mint 10." Old "Gem Mint 10" is now "Pristine 10." This is not a contradiction with the current published standards but is a known caveat for evaluating older CGC slabs.
+- capture status: **all 20 CGC grade levels captured** (Poor 1, Fair 1.5, Good 2, Good+ 2.5, Very Good 3, Very Good+ 3.5, VG/Ex 4, VG/Ex+ 4.5, Excellent 5, Excellent+ 5.5, Ex/NM 6, Ex/NM+ 6.5, Near Mint 7, Near Mint+ 7.5, NM/Mint 8, NM/Mint+ 8.5, Mint 9, Mint+ 9.5, Gem Mint 10, Pristine 10).
+- not captured: CGC service tiers / pricing, CGC qualifier system (if any), CGC no-grade taxonomy, CGC authentication-only labels.
+- notes: source page is a clean single-scroll page — no accordion tabs. All 20 grades captured in one clip. One gap: CGC 8.5 centering for sports/non-sports cards is not stated in the source (only TCG distinction separates 8.5 from 8). Grading-scales cross-service observations section updated to cover all four services. Raw file is a 5-tab Beckett News article dumped sequentially by the crawler (16,615 lines); same per-card player list appears 2–3× across tab sections. Structural data captured: set specs, 38 base parallel variants with print runs, named subsets, all 16 key rookies, Hall of Fame subset, autograph set roster, short-print insert names. Full insert checklist tab not extracted in this pass — named short-prints (Money, Micro Mosaic, Stained Glass) captured from article header only. 100-card rookie subset fully enumerated on [[2024-panini-mosaic-football]] entity page.
