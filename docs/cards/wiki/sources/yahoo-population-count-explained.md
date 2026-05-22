@@ -9,6 +9,11 @@ certainty: Certain
 
 # Sports Card Investing: Population Count Explained (Yahoo Sports / The Hockey News)
 
+## For future Claude
+This page summarizes a Yahoo Sports / The Hockey News article (sports.yahoo.com) explaining PSA pop counts — covers the definitions of "Population" and "Population Higher," the pricing dynamics of high-POP vs. low-POP cards, and a concrete modern-card growth example using the 2023-24 Connor Bedard Young Guns.
+It feeds: [[concepts/population-report]].
+Key fact: only the first ~80 lines of the raw file are card-relevant — the remainder is a Knicks-Cavs Eastern Conference Finals preview that was excluded; do not re-ingest the full file without filtering.
+
 ## TL;DR
 
 - "POP count" = number of graded cards with the same grade; "Population Higher" = count of cards graded above that level. PSA does not issue half-grades at grade 9 or above.

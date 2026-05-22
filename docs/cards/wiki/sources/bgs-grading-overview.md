@@ -9,6 +9,11 @@ certainty: Certain
 
 # BGS Grading Overview (beckett.com/grading)
 
+## For future Claude
+This page summarizes BGS's public-facing grading landing page (beckett.com/grading) — covers the 3-label system (Black/Gold/Silver), four-subgrade philosophy, four service tiers (Base/Standard/Express/Priority), Pristine 10 Black centering tolerance, and label security features; specific dollar prices were not scraped due to dynamic UI.
+It feeds: [[entities/bgs]], [[concepts/bgs-subgrades]], [[concepts/grading-service-tiers]].
+Key fact: this source fills the "BGS service tiers not yet ingested" gap that [[bgs-grading-scale]] left open, and is the first source to confirm Silver as a third BGS label covering all grades below Pristine/Gem Mint.
+
 ## TL;DR
 
 - BGS's public-facing grading landing page. Covers the 3-label system (Black/Gold/Silver), four-subgrade philosophy, service types, 4-tier service structure, Pristine 10 Black centering tolerance, and new label security features.

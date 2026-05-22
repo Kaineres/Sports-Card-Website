@@ -22,6 +22,11 @@ certainty: Certain
 
 # PSA Grading Standards
 
+## For future Claude
+This page summarizes PSA's official grading standards (psacard.com/gradingstandards#cards), captured across 13 raw files covering grade definitions for PSA 1–10 (11 of 12 numeric grades), N1–N9 no-grade codes, qualifier MK, and policy carve-outs for hand-cut cards, pins/coins, and the MG option.
+It feeds: [[concepts/grading-scales]], [[concepts/grading-qualifiers]], [[concepts/no-grade-outcomes]], [[entities/psa]].
+Key fact: clip `PSA Grading Standards 11.md` is a botched single-line fragment of the N1 definition and is unusable; PSA 8.5 was never clipped and remains a gap in the grading-scales page.
+
 ## TL;DR
 
 - PSA's official grading standards page, captured across **13 raw files** — eleven per-grade tab clicks plus two supplementary re-clips of the page's trailing sections.

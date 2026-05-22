@@ -9,6 +9,11 @@ certainty: Likely
 
 # How to Use the PSA Population Report to Invest (Packz Blog)
 
+## For future Claude
+This page summarizes a Packz blog article (packz.io/blog/psa-population-report-guide) — covers the PSA Population Report as a daily-updated graded-card census, how grade distribution (especially PSA 10 rate) signals rarity, and the crack-and-resubmit inflation problem.
+It feeds: [[concepts/population-report]], [[entities/psa]].
+Key fact: the "PSA 10 rate below 5% = extreme grading difficulty and potential value premium" rule-of-thumb is tagged [Likely] — stated in this source without a PSA primary citation, and should not be presented to users as authoritative.
+
 ## TL;DR
 
 - PSA Population Report is a daily-updated, publicly searchable database of every card PSA has ever graded, broken down by grade level.

@@ -9,6 +9,11 @@ certainty: Certain
 
 # Graded Pop Reports — What Do They Mean? (Going Twice)
 
+## For future Claude
+This page summarizes a Going Twice blog article (goingtwice.com/blogs/grading) — covers all three major grading companies' (PSA, BGS, CGC) free public pop reports with direct URLs, grade distribution as a signal of manufacturing print quality, and a cross-grader hit-rate comparison for the same card.
+It feeds: [[concepts/population-report]], [[entities/psa]], [[entities/bgs]], [[entities/cgc]].
+Key fact: the Umbreon VMAX Alt Art cross-grader comparison shows PSA awarded a 10 to 80% of submissions vs. CGC's 13% Pristine rate — higher PSA 10 hit rates create more supply on the market, which may suppress individual PSA 10 prices relative to rarer CGC Pristines.
+
 ## TL;DR
 
 - All three major grading companies (PSA, BGS, CGC) publish free, publicly accessible pop reports; the same card shows different grade distributions across companies.
@@ -32,3 +37,5 @@ certainty: Certain
 
 - [[concepts/population-report]] (new)
 - [[entities/bgs]] (pop report URL)
+- [[entities/psa]] (pop report URL; cross-grader comparison data)
+- [[entities/cgc]] (pop report URL; cross-grader comparison data)

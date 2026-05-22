@@ -8,6 +8,11 @@ source_url: https://www.beckett.com/news/2024-panini-mosaic-football-cards
 
 # Beckett: 2024 Panini Mosaic Football Checklist
 
+## For future Claude
+This page summarizes a Beckett News article by Ryan Cracknell (beckett.com/news/2024-panini-mosaic-football-cards, November 27, 2024) — covers the full 400-card set structure, hobby box hit guarantee (2 autos, 20 inserts, 15 Mosaic Prizm, 5 Silver Prizm), 38 base parallel variants, autograph sets, and key 2024 rookie card numbers.
+It feeds: [[entities/panini]], [[entities/2024-panini-mosaic-football]], [[concepts/card-parallels]].
+Key fact: the raw file is 16,615 lines because Beckett's tabbed navigation caused the crawler to dump all 5 tabs sequentially with content repeating 2–3x; the full insert checklist tab was not extracted in this ingest pass — named short-prints were captured from the article header only.
+
 Beckett News article by Ryan Cracknell (November 27, 2024). Full checklist, set structure, hobby box hit breakdown, and team sets for 2024 Panini Mosaic Football.
 
 ## TL;DR

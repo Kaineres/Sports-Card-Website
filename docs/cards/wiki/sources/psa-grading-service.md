@@ -9,6 +9,11 @@ certainty: Certain
 
 # Official Trading Card Grading Service
 
+## For future Claude
+This page summarizes PSA's public-facing services page (psacard.com/services/grading) — covers authentication + grading process, 14 service tiers from $24.99 Value Bulk to $9,999+ Premium 10, and adjacent products (Set Registry, Price Guide, CardFacts, Auction Prices).
+It feeds: [[entities/psa]], [[concepts/card-grading]], [[concepts/grading-service-tiers]].
+Key fact: pricing and turnaround data is volatile and was captured 2026-05-18 — treat all dollar figures and business-day counts as point-in-time only.
+
 ## TL;DR
 
 - PSA's public-facing services page. Describes their authentication + grading process, 14 service tiers (pricing × turnaround × insured-value cap), and adjacent products (Set Registry, Price Guide, CardFacts, Auction Prices).

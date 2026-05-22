@@ -21,6 +21,11 @@ certainty: Certain
 
 # BGS Grading Scale
 
+## For future Claude
+This page summarizes BGS's official grading scale (beckett.com/grading), captured across 12 raw files named "Back Button.md" through "Back Button 11.md" due to Web Clipper mislabeling — covers integer grades 1–10 plus the 9.5 Gem Mint level and the four-subgrade (centering/corners/edges/surface) composite model.
+It feeds: [[entities/bgs]], [[concepts/bgs-subgrades]], [[concepts/grading-scales]], [[concepts/card-grading]].
+Key fact: half-grades 8.5, 7.5, etc. have no separately published criteria — BGS explicitly defines them only as interpolations sharing characteristics of the grades above and below, which is the complete published standard, not a capture gap.
+
 ## TL;DR
 
 - Beckett Grading Services' official 1–10 grading scale, captured across **12 raw files** — one per grade-tab click on `beckett.com/grading`. File-naming reflects the Web Clipper's misidentification of a "Back Button" element as the page title, not the grade contained. Mapping table below.

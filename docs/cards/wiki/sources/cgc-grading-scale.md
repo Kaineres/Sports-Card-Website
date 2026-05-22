@@ -8,6 +8,11 @@ source_url: https://www.cgccards.com/card-grading/grading-scale/
 
 # CGC Grading Scale
 
+## For future Claude
+This page summarizes CGC's grading standards page (cgccards.com/card-grading/grading-scale/) — a clean single-scroll source covering all 20 grade levels from Poor 1 to Pristine 10, with the unique feature of explicitly distinguishing TCG card criteria from sports/non-sports criteria at several grade levels.
+It feeds: [[entities/cgc]], [[concepts/grading-scales]].
+Key fact: CGC 8.5 centering for sports/non-sports cards is not stated in the published text — only a TCG handling distinction separates 8.5 from 8, leaving an explicit gap in cross-service centering comparisons at that grade.
+
 CGC's published grading standards page covering all 20 grade levels from Poor 1 to Pristine 10.
 
 ## TL;DR

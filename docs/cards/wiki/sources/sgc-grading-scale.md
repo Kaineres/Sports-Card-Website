@@ -30,6 +30,11 @@ certainty: Certain
 
 # SGC Grading Scale
 
+## For future Claude
+This page summarizes SGC's official grading scale (gosgc.com/card-grading/scale), captured across 21 raw files — one intro plus one per grade tab — covering all 20 steps from Poor 1 to Pristine 10 PRI; this is the cleanest multi-file capture of all four grading-service ingests with no missing tabs.
+It feeds: [[entities/sgc]], [[concepts/grading-scales]], [[concepts/card-grading]].
+Key fact: SGC's own intro copy claims the scale "eliminates the grades known as tweeners," but five of the nine half-grades (6.5, 5.5, 4.5, 3.5, 2.5) are textbook tweeners defined only as "high-end overall quality and eye appeal" — the self-claim is internally inconsistent.
+
 ## TL;DR
 
 - SGC's official grading scale page, captured across **21 raw files** — one intro file plus one per grade tab. Every grade tab clipped successfully; this is the cleanest capture of the three grading-service ingests so far.

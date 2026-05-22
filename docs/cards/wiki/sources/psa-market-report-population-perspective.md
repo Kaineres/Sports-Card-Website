@@ -10,6 +10,11 @@ certainty: Certain
 
 # Market Report: Population Perspective (PSA, Joe Orlando)
 
+## For future Claude
+This page summarizes a PSA primary-source article by Joe Orlando (psacard.com/articles/articleview/3631) — covers PSA's own definition of the Pop Report, the critical warning that low pop can reflect non-submission rather than rarity, and the fact that pop totals exclude rejected/altered cards and all unsubmitted raws.
+It feeds: [[concepts/population-report]], [[entities/psa]].
+Key fact: PSA directly warns in this article that a "Pop 4 Mint 9" card sold for ~$500 when its true value was ~$10 — this is the most concrete primary-source evidence for the submission-bias misreading risk, and should be cited in any product feature that surfaces pop data to users.
+
 ## TL;DR
 
 - PSA's own article defines the Pop Report and warns directly that low pop can mean nobody submitted the card, not that it's rare — cites a "$500 for a $10 card" example.
