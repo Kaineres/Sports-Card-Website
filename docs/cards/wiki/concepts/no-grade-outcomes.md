@@ -8,6 +8,11 @@ certainty: Certain
 
 # No-grade outcomes
 
+## For future Claude
+This page catalogs the 9 PSA N-codes (N1–N9) that explain why a card receives no numeric grade, along with the "Authentic" and "Authentic Altered" encapsulation labels that serve as non-numeric alternatives.
+Relevant when: interpreting a PSA return with an N-code, understanding what happens to altered or counterfeit cards, or building submission-outcome logic that must handle non-numeric results.
+Key fact: N4 (Questionable Authenticity — counterfeit or fake autograph) is the only N-code that can never result in any encapsulation; all other N-codes can potentially yield an "Authentic" or "Authentic Altered" label if the submitter pre-requested it on the form.
+
 ## TL;DR
 
 A card submitted to PSA can come back without a numeric grade. PSA documents 9 distinct N-codes (N1–N9) for "why this card got no number," each with specific fee and re-encapsulation policies. Cards that pass authentication but flunk numeric grading may still be encapsulated as "Authentic" or "Authentic Altered" if the submitter pre-requested it `[Certain]` — [[psa-grading-standards]].
@@ -99,7 +104,10 @@ PSA does not grade or cannot encapsulate the issue (oversized cards, obscure iss
 
 ## See also
 
-- [[psa]] — the service issuing these designations.
+- [[psa]] — the only service whose no-grade taxonomy (N1–N9, Authentic, Authentic Altered) is documented here.
 - [[card-grading]] — what grading is.
 - [[grading-scales]] — the numeric grades these outcomes are an alternative to.
 - [[grading-qualifiers]] — when a defect is severe but not severe enough to prevent a numeric grade.
+- [[bgs]] — no-grade taxonomy not yet ingested; BGS likely has equivalent encapsulation labels.
+- [[sgc]] — no-grade taxonomy not yet ingested; not documented on the scale page.
+- [[cgc]] — no-grade taxonomy not yet ingested.

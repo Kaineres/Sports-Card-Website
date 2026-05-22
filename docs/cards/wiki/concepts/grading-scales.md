@@ -8,6 +8,11 @@ certainty: Certain
 
 # Grading scales
 
+## For future Claude
+This page is the authoritative side-by-side reference for the numeric grading scales used by all four major services — PSA (10-point, 2 half-grades), BGS (10-point, half-points at every step, 4 subgrades), SGC (20-step with half-grades), and CGC (20-grade, half-steps, TCG criteria distinguished).
+Relevant when: comparing how a specific grade level translates across services, understanding centering tolerances at any grade, or evaluating cross-service equivalence claims.
+Key fact: cross-service equivalence claims like "BGS 9.5 ≈ PSA 10" are not supported by the published standards — centering tolerances and defect vocabularies differ meaningfully between services.
+
 ## TL;DR
 
 Grade scales are the numeric ranges grading services use to summarize a card's condition. PSA's scale (1–10 with two half-grades at 1.5 and 8.5) is documented except PSA 8.5. BGS's scale (1–10 with half-points at every step, four published subgrades, Pristine Black/Gold label variants) is documented for integer grades plus 9.5 — half-points are interpolations per BGS policy. SGC's scale (1–10 with half-grades at every step plus a separate Pristine 10 above the Gem 10, 20 distinct levels total) is fully documented. CGC's scale (1–Pristine 10, also 20 grades with half-steps, Pristine 10 / Gem Mint 10 two-tier top) is now fully documented. `[Certain]` — [[psa-grading-standards]], [[bgs-grading-scale]], [[sgc-grading-scale]], [[cgc-grading-scale]].
@@ -578,6 +583,7 @@ CGC uses a **20-grade scale** (1 → Pristine 10) with half-grades at every step
 - [[card-grading]] — what grading is, conceptually.
 - [[grading-qualifiers]] — defect suffixes that modify a numeric grade.
 - [[no-grade-outcomes]] — why a card might not receive a numeric grade.
+- [[grading-service-tiers]] — how services price their work; tier structure often maps to declared card value and turnaround speed, not grade level.
 - [[population-report]] — how grade distribution across the scale is tracked and used for valuation.
 - [[psa]] — the service whose scale this page primarily documents.
 - [[bgs]] — the second service whose scale this page documents.

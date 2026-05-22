@@ -8,6 +8,11 @@ certainty: Certain
 
 # BGS Subgrades
 
+## For future Claude
+This page explains BGS's four-subgrade evaluation model (centering, corners, edges, surface) and how subgrades composite into an overall grade, including the Pristine Black Label vs Gold Label distinction at grade 10.
+Relevant when: interpreting a BGS slab's four individual scores, understanding why a BGS 10 Black Label commands a premium over a BGS 10 Gold Label, or comparing BGS's grading structure to PSA or SGC (which publish only a single overall grade).
+Key fact: BGS 10 Pristine Black Label requires all four subgrades to equal 10 with 50/50 front centering; Gold Label allows one 9.5 subgrade among three 10s — this Black/Gold distinction has no PSA or SGC equivalent and carries strong market value implications.
+
 ## TL;DR
 
 BGS evaluates every card across **four subgrade dimensions** — centering, corners, edges, surface — then composites them into an **overall grade** `[Certain]` — [[bgs-grading-scale]]. This is the structural difference between BGS and PSA: PSA publishes a single number; BGS publishes four numbers plus a composite. The four-subgrade record is what enables the BGS **Pristine Black Label vs Gold Label** distinction at grade 10.
@@ -55,3 +60,6 @@ The Black/Gold distinction has no PSA or SGC equivalent and carries strong marke
 - [[grading-scales]] — the 1–10 numeric scale; BGS section reproduces grade-by-grade subgrade tolerances.
 - [[grading-qualifiers]] — PSA-style qualifier suffixes; BGS appears to use the subgrade record itself in lieu of single-letter qualifiers, but this needs verification.
 - [[card-grading]] — grading as a general concept.
+- [[psa]] — key contrast: PSA publishes a single overall grade with no subgrade breakdown; this makes BGS's four-subgrade model the primary structural differentiator between the two services.
+- [[sgc]] — key contrast: SGC also publishes a single overall grade (no subgrades); neither SGC nor PSA surfaces centering/corners/edges/surface individually on the slab.
+- [[population-report]] — BGS subgrades create distinct population categories (Black Label vs Gold Label at Pristine 10); pop reports reflect this label hierarchy.

@@ -10,6 +10,11 @@ certainty: Certain
 
 A parallel is a variant of a base card using the same player image but a different color, pattern, or stock — produced in lower quantities than the base, creating a rarity hierarchy within a single card number.
 
+## For future Claude
+This page explains what card parallels are, how print-run stamping creates a rarity hierarchy within a single card number, and how parallels factor into pricing and grading decisions.
+Relevant when: modeling rarity for a specific parallel variant, understanding why two PSA 10s of the same player can have very different values, or ingesting a set checklist that lists parallel variants.
+Key fact: lower print run does not automatically mean higher value — demand is independent; a /10 parallel of a low-demand player may sell for less than an unlimited Silver parallel of a franchise QB.
+
 ## TL;DR
 
 Parallels are rarity tiers stacked on top of a base card. Modern chrome sets (especially Panini) produce 20–40 named parallel variants per card; numbered parallels carry a print-run stamp. Lower print run = higher scarcity = higher market premium, all else equal.
@@ -51,7 +56,9 @@ Unlimited → /199 → /99 → /96 → /80 → /75 → /50 → /49 → /25 → /
 
 ## See also
 
-- [[entities/panini]]
-- [[entities/2024-panini-mosaic-football]]
-- [[concepts/population-report]]
-- [[concepts/card-grading]]
+- [[entities/panini]] — primary manufacturer of modern parallel-heavy chrome sets.
+- [[entities/2024-panini-mosaic-football]] — concrete example with 38 named parallel variants and full print-run ladder.
+- [[concepts/population-report]] — grade distribution within a parallel's print-run ceiling defines actual graded scarcity; pop reports are less decisive for numbered parallels than for base cards because the print run is the hard ceiling.
+- [[concepts/card-grading]] — grading applies to parallels; PSA 10 of a /10 parallel can be a genuinely scarce asset.
+- [[concepts/grading-scales]] — grade levels determine premium within a given parallel variant; PSA 10 is the dominant investment-grade target.
+- [[entities/psa]] — primary grading service for investment-grade parallels.

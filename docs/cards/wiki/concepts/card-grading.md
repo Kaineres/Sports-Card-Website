@@ -8,6 +8,11 @@ certainty: Certain
 
 # Card grading
 
+## For future Claude
+This is the foundational concept page explaining what card grading is and how the authentication-then-grading process works across all services.
+Relevant when: explaining grading to someone new to it, understanding why authentication precedes condition grading, or orienting before reading service-specific entity pages.
+Key fact: grading is a two-step process — authentication (detect fakes/alterations) must pass first; a passing card gets a numeric grade and is sealed in a tamper-evident slab with a cert number.
+
 ## TL;DR
 
 Card grading is the process by which a third party authenticates a trading card's genuineness, assesses its condition on a numeric scale, and encapsulates it in a tamper-evident case. The grade then travels with the card as a public, verifiable attribute `[Certain]` — [[psa-grading-service]].
@@ -65,8 +70,10 @@ The ingested sources don't directly explain economic impact, but the existence o
 - [[bgs]] — second grading service ingested.
 - [[bgs-subgrades]] — BGS's four-subgrade evaluation model.
 - [[sgc]] — third grading service ingested.
+- [[cgc]] — fourth grading service ingested; 20-grade scale, Pristine 10 / Gem Mint 10 two-tier top; TCG criteria published separately.
 - [[grading-scales]] — the 1–10 numeric scale.
 - [[grading-qualifiers]] — defect suffixes attached to grades.
 - [[no-grade-outcomes]] — N1–N9 codes and Authentic/Authentic Altered encapsulation.
 - [[grading-service-tiers]] — how grading services price their work.
 - [[population-report]] — the grade-distribution database that grading activity produces; key tool for assessing card rarity and value.
+- [[card-parallels]] — grading applies to parallels; PSA 10 pop counts within a numbered parallel's print-run ceiling are the core rarity signal.

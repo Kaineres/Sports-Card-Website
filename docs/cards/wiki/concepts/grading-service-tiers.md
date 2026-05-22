@@ -8,6 +8,11 @@ certainty: Certain
 
 # Grading service tiers
 
+## For future Claude
+This page explains how grading services structure their pricing menus, covering PSA's 14-tier system (declared value × turnaround speed) and BGS's 4-tier system (turnaround speed only).
+Relevant when: deciding which tier to submit a card to, understanding why high-value cards cost more to grade, or building features that surface grading cost estimates to users.
+Key fact: PSA's pricing spans a >400× range ($25 to $10,000+/card), driven by two independent axes — the card's declared value (which sets the insured cap) and desired turnaround speed.
+
 ## TL;DR
 
 Grading services structure their pricing as a menu of tiers. Two axes drive cost: **declared card value** (which sets the insured-value cap during handling) and **desired turnaround speed**. Higher-value or faster-turnaround tiers cost dramatically more per card and may include additional features `[Certain]` — [[psa-grading-service]].
@@ -62,6 +67,9 @@ Add-on fees: Autograph Card (+$5), Oversized Card (+$8), Relabel (from $9.95), G
 
 ## See also
 
-- [[psa]] — PSA tier structure.
-- [[bgs]] — BGS entity page; tier table also reproduced there.
+- [[psa]] — PSA tier structure; 14 tiers scaling on declared value × turnaround.
+- [[bgs]] — BGS entity page; 4 tiers, turnaround only (no declared-value axis captured).
+- [[sgc]] — SGC tier structure not yet ingested; open question flagged.
+- [[cgc]] — CGC tier structure not yet ingested; open question flagged.
 - [[card-grading]] — what the grading process actually is.
+- [[grading-scales]] — grade levels that slots into each tier's value range; a PSA 10 card warrants a higher-value tier than a PSA 5 of the same set.

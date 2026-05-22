@@ -8,6 +8,11 @@ certainty: Certain
 
 # Population Report
 
+## For future Claude
+This page explains what a grading company's population ("pop") report is, what distorts its counts, and how to interpret it correctly for rarity and value assessment across PSA, BGS, and CGC.
+Relevant when: evaluating whether a card is genuinely scarce at a given grade, understanding why the same card shows wildly different grade distributions at different services, or building pricing or rarity-scoring features.
+Key fact: grade distribution matters more than total population — a card with 20,000 total graded copies but only 50 PSA 10s has genuinely scarce Gem Mints; pop counts are also distorted by crack-and-resubmit, cross-grading between services, and submission inactivity on low-demand cards.
+
 ## TL;DR
 
 A population report ("pop report") is a publicly searchable database maintained by each grading company counting how many copies of a specific card have been graded at each grade level. Grade distribution matters more than total population; low pop alone does not guarantee rarity or value.
