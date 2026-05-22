@@ -44,4 +44,6 @@ Catalog of pages in the sports cards sub-wiki. Updated on every ingest.
 
 ## Synthesis
 
-_(none yet)_
+- [[concepts/grading-services-landscape]] — synthesis: side-by-side comparison of PSA, BGS, SGC, CGC grade scales, tiers, and pop reports
+- [[concepts/population-report-guide]] — synthesis: how to read and use pop reports across all services for investment decisions
+- [[concepts/parallels-and-variations]] — synthesis: parallel types, print run tiers, rainbow chase mechanics, and value implications
