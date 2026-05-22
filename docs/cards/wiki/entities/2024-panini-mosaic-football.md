@@ -8,6 +8,11 @@ certainty: Certain
 
 # 2024 Panini Mosaic Football
 
+## For future Claude
+This page covers the 2024 Panini Mosaic Football card set in full detail: set specs, hobby box hit breakdown, base set subsets, complete 38-parallel rainbow, autograph sets, and key rookies with their card numbers.
+Relevant when: looking up specific card numbers (e.g., Caleb Williams #301), parallel names and print runs, hobby box configuration, autograph set checklists, or using this set as a concrete example of Panini's parallel rainbow model.
+Key fact: 400-card chrome set released November 27, 2024; each base card has 38 named parallels ranging from unlimited unprinted variants down to three 1/1 variants (Black Mosaic, Nebula Choice Mosaic, No Huddle Black Mosaic); top 2024 rookies (Caleb Williams #301, Jayden Daniels #302, Marvin Harrison Jr. #304) appear twice in the base set — once in NFL Debut (#271–290) and once in the Rookies subset (#301–400).
+
 Chrome football card set released November 27, 2024. 400-card base set with 38 parallel variants per card, 2 guaranteed autographs per hobby box, and a 100-card rookie subset covering the full 2024 NFL Draft class.
 
 ## TL;DR
@@ -99,6 +104,8 @@ Caleb Williams (#301), Jayden Daniels (#302), Drake Maye (#303), Marvin Harrison
 
 ## See also
 
-- [[entities/panini]]
-- [[concepts/card-parallels]]
-- [[concepts/population-report]]
+- [[entities/panini]] — manufacturer; Mosaic is one of Panini's major chrome product lines.
+- [[concepts/card-parallels]] — the 38-variant parallel rainbow is the central rarity mechanic of this set.
+- [[concepts/population-report]] — grade distribution within each parallel's print run is the key investment data point; pop counts + print run ceiling define actual scarcity.
+- [[concepts/grading-scales]] — PSA 10 and BGS Black Label are the primary target grades for investment copies of this set.
+- [[entities/psa]] — primary grading service used for investment submissions of modern chrome cards like Mosaic.

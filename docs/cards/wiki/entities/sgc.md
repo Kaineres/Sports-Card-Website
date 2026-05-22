@@ -8,6 +8,11 @@ certainty: Certain
 
 # SGC
 
+## For future Claude
+SGC is a third-party trading card grading company using a 20-step scale (half-grades at every step) with a single overall grade and no subgrades — the simplest output format among the four major graders.
+Relevant when: answering questions about SGC's grade scale, the 10 PRI vs 10 GM distinction, SGC-specific defect terminology (diamond cut, refractor lines, spider crease, pinhole), or comparing SGC to PSA/BGS/CGC.
+Key fact: SGC issues two distinct "10" labels — Pristine 10 (50/50 centering, no wear under magnification) and Gem Mint 10 (55/45, slight print spot allowed) — based on stricter top-level criteria, not subgrade composition like BGS; SGC publishes only front-centering tolerances and has no documented qualifier system or authentication N-codes.
+
 ## TL;DR
 
 SGC is a third-party trading card grading company. They grade cards on a 1–10 scale with **half-grades at every step plus a Pristine 10 above the Gem 10**, producing a 20-step scale `[Certain]` — [[sgc-grading-scale]]. Unlike BGS, SGC publishes a **single overall grade** with no subgrades. Unlike both PSA and BGS, SGC publishes only one centering tolerance per grade (no separate back-centering figure).
@@ -63,5 +68,8 @@ Not captured in the current source set. Pricing parallel to [[grading-service-ti
 
 - [[card-grading]] — grading as a general concept; SGC is one of multiple services.
 - [[grading-scales]] — the 1–10 numeric scale; SGC section reproduces every grade.
+- [[grading-service-tiers]] — service tier comparison; SGC's tiers not yet ingested.
+- [[population-report]] — SGC maintains a pop report; cross-grader grade-rate differences are documented there.
 - [[psa]] — counterpart entity. Key differences: SGC has half-grades at every step (PSA has only 1.5 and 8.5); SGC has no qualifier system or N-codes documented; SGC publishes front-centering only.
 - [[bgs]] — counterpart entity. Key differences: BGS publishes four subgrades, SGC publishes a single overall; BGS bases its Pristine label hierarchy on subgrade composition, SGC bases its 10 PRI/GM distinction on stricter top-level criteria; BGS publishes back-centering, SGC does not.
+- [[cgc]] — counterpart entity. Both use 20-step scales with Pristine 10 / Gem Mint 10 split; both publish single overall grades (no subgrades).

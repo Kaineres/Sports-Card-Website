@@ -8,6 +8,11 @@ certainty: Certain
 
 # CGC
 
+## For future Claude
+CGC Cards (Certified Guaranty Company) is a third-party grading service distinguished by publishing explicit, separate grading criteria for TCG cards (Pokémon, Magic) alongside sports and non-sports cards — a distinction no other major grader publishes.
+Relevant when: answering questions about CGC's grade scale, the Pristine 10 vs Gem Mint 10 label split, CGC's historical relabeling (former "Gem Mint 9.5" slabs now read "Gem Mint 10"), TCG-specific grading criteria, or comparing CGC to PSA/BGS/SGC.
+Key fact: CGC uses a 20-step scale (Poor 1 to Pristine 10); both top grades are labeled "10" but Pristine 10 requires 50/50 centering while Gem Mint 10 allows 55/45 front / 75/25 back; CGC publishes a single overall grade with no subgrades; older CGC slabs labeled "Gem Mint 10" correspond to what is now called "Pristine 10" due to a historical relabeling.
+
 CGC Cards (a division of Certified Guaranty Company) is a third-party trading card grading service. Uses a 20-grade scale with a two-tier top structure (Pristine 10 / Gem Mint 10) and explicitly covers TCG cards alongside sports and non-sports cards.
 
 ## TL;DR
@@ -51,9 +56,12 @@ CGC maintains a population report. The cert-lookup page references per-grade and
 
 ## See also
 
-- [[concepts/grading-scales]]
-- [[concepts/card-grading]]
-- [[concepts/population-report]]
-- [[psa]]
-- [[bgs]]
-- [[sgc]]
+- [[concepts/grading-scales]] — per-grade criteria across all four major graders including CGC.
+- [[concepts/card-grading]] — grading as a general concept; CGC as one of multiple services.
+- [[concepts/population-report]] — CGC maintains a pop report at cgccards.com/population-report; cross-grader grade-rate comparisons documented there.
+- [[concepts/grading-service-tiers]] — tier structure; CGC's pricing tiers not yet ingested.
+- [[concepts/grading-qualifiers]] — PSA uses qualifiers; CGC's qualifier system (if any) not yet ingested.
+- [[concepts/no-grade-outcomes]] — PSA's N-code taxonomy documented; CGC's equivalent not yet ingested.
+- [[psa]] — counterpart; 10-point scale with half-grades at 1.5 and 8.5 only; qualifier system and N-codes documented.
+- [[bgs]] — counterpart; four subgrades per card, Black/Gold Pristine label hierarchy.
+- [[sgc]] — closest structural counterpart; both use 20-step scales and single overall grades; both have Pristine 10 / Gem Mint 10 two-tier top.

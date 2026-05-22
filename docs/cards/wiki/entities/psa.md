@@ -8,6 +8,11 @@ certainty: Certain
 
 # PSA
 
+## For future Claude
+PSA (Professional Sports Authenticator) is the dominant third-party card grading service by volume, covering authentication, numeric grading, and encapsulation of trading cards.
+Relevant when: answering questions about PSA grade definitions, authentication N-codes, service tiers, the PSA Population Report, hand-cut card policies, or comparing PSA to BGS/SGC/CGC.
+Key fact: PSA uses integer grades 1–10 with half-grades only at 1.5 and 8.5; authentication screening (9 N-codes) must pass before grading; every graded card is encapsulated with a unique LightHouse™ certification number; the PSA pop report is the most widely cited in the hobby and is updated daily.
+
 ## TL;DR
 
 PSA is a third-party trading card authentication and grading company. They authenticate cards for genuineness, grade condition on a 1–10 scale (with half-grades at 1.5 and 8.5), and encapsulate graded cards in tamper-evident slabs `[Certain]` — [[psa-grading-service]], [[psa-grading-standards]].
@@ -76,3 +81,6 @@ Each warrants its own page after further ingest of the relevant product page.
 - [[no-grade-outcomes]] — N1–N9 codes and Authentic/Authentic Altered encapsulation.
 - [[grading-service-tiers]] — pricing structure.
 - [[population-report]] — PSA pop report mechanics, limitations, and value implications.
+- [[bgs]] — competing grading service; key differences: BGS publishes four subgrades, has Pristine Black/Gold label hierarchy, defines half-points at every step.
+- [[sgc]] — competing grading service; 20-step scale (half-grades at every step + Pristine 10); single overall grade, no subgrades; no qualifier system documented.
+- [[cgc]] — competing grading service; 20-grade scale, Pristine 10 / Gem Mint 10 two-tier top; explicit TCG criteria published alongside sports/non-sports.

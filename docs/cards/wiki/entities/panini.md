@@ -8,6 +8,11 @@ certainty: Certain
 
 # Panini
 
+## For future Claude
+Panini America is the primary US trading card manufacturer for NFL and NBA licensed products, and the manufacturer behind this vault's most-detailed ingested set (2024 Mosaic Football).
+Relevant when: answering questions about Panini's product brands (Mosaic, Prizm), the parallel rainbow model, numbered variants, or deciding which manufacturer entity to link from a card set or concept page.
+Key fact: Panini sets are built around a "parallel rainbow" structure — the same card exists across many colored/patterned variants at successively lower print runs (down to 1/1 uniques); a single 2024 Mosaic Football base card has 38 named parallel variants.
+
 Panini America is a major US trading card manufacturer holding NFL and NBA licenses. Sets are characterized by chrome construction and extensive parallel rainbow structures with many numbered and 1/1 variants.
 
 ## TL;DR
@@ -31,5 +36,8 @@ See [[concepts/card-parallels]].
 
 ## See also
 
-- [[concepts/card-parallels]]
-- [[concepts/card-grading]]
+- [[concepts/card-parallels]] — the parallel rainbow model Panini sets are built around.
+- [[concepts/card-grading]] — grading applies directly to Panini cards; PSA 10 status is a primary value driver for numbered parallels.
+- [[concepts/population-report]] — parallel rarity (print run) and grade-level scarcity both feed into pop report investment analysis; numbered parallels have a hard ceiling equal to their print run.
+- [[concepts/grading-scales]] — grade levels that determine slab value for Panini cards; PSA 10 is the dominant target grade.
+- [[entities/psa]] — primary grading service for Panini investment cards.

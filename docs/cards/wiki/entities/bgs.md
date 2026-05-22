@@ -8,6 +8,11 @@ certainty: Certain
 
 # BGS
 
+## For future Claude
+BGS (Beckett Grading Services) is a third-party grading company and the only major grader that publishes four subgrades per card (centering, corners, edges, surface) directly on the slab label.
+Relevant when: answering questions about BGS subgrade mechanics, the Black/Gold/Silver label hierarchy, BGS centering tolerances (including the looser back-centering standard), service tier pricing, or comparing BGS to PSA/SGC/CGC.
+Key fact: BGS grades on a 1–10 scale with half-points at every step; a Black label requires all four subgrades to be 10 (perfect Pristine), while a Gold label requires Pristine 10 or Gem Mint 9.5 — a distinction with no PSA or SGC equivalent that significantly affects slab market value.
+
 ## TL;DR
 
 BGS (Beckett Grading Services) is a third-party trading card grading company. They grade cards on a 1–10 scale with half-points at every step, publishing **four subgrades per card** (centering, corners, edges, surface) plus a composite overall grade — and are the only major grader to display all four subgrades directly on the slab label `[Certain]` — [[bgs-grading-scale]], [[bgs-grading-overview]]. Grades sports, gaming (Pokémon), and non-sports (Star Wars, etc.) cards. See [[bgs-subgrades]] for subgrade mechanics.
@@ -79,5 +84,8 @@ Not yet ingested. Beckett's broader ecosystem (Beckett Registry, BVG, BCCG sibli
 - [[card-grading]] — grading as a general concept, BGS as one of multiple services.
 - [[bgs-subgrades]] — the four-subgrade evaluation model.
 - [[grading-scales]] — the 1–10 grade scale; BGS section reproduces grade-by-grade subgrade tolerances.
+- [[grading-service-tiers]] — cross-service tier comparison; BGS's four-tier structure (no declared-value axis).
 - [[population-report]] — cross-grader grade rate comparisons; BGS pop report URL.
 - [[psa]] — counterpart entity; key differences: BGS publishes subgrades, has Pristine label variants, defines half-points as interpolations.
+- [[sgc]] — counterpart entity; key differences: SGC uses single overall grade (no subgrades), bases its PRI/GM distinction on top-level criteria rather than subgrade composition, publishes front-centering only.
+- [[cgc]] — counterpart entity; 20-grade scale, single overall grade (no subgrades), Pristine 10 / Gem Mint 10 two-tier top.
