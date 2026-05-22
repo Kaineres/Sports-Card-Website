@@ -8,6 +8,12 @@ certainty: Guessing
 
 # n8n for wiki-ingest automation
 
+## For future Claude
+
+This page documents a parked automation idea — using n8n headless-browser nodes to automate multi-tab clipping of grading standards pages.
+Current state: real content with documented pain points from May 2026 manual ingest work; parked pending pricing-pipeline n8n setup.
+Key fact: automation would replace 21–45 manual Web Clipper actions per source (PSA, BGS, SGC) with a single n8n workflow; deferred because standards-page content is 95% ingested already, and pricing-pipeline automation has higher ROI.
+
 ## TL;DR
 
 Park: use **n8n** to automate the multi-tab clipping pattern that's currently manual via Obsidian Web Clipper. Pick this up when starting n8n setup for the pricing pipeline — same headless-browser tooling, reuse the investment `[Guessing]`.
@@ -76,3 +82,4 @@ Promote this to a `topics/` page or a `decisions/` ADR if any of these happen `[
 ## See also
 
 - [[topics/pricing-pipeline]] — the actual reason n8n exists in the stack; this scratch note is a downstream beneficiary.
+- [[company/business-plan]] — n8n is listed in the tech stack (Section 1 / CLAUDE.md); the pricing pipeline's comp data ingestion is where n8n investment is justified, not grading-standards automation.
