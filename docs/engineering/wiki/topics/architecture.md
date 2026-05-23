@@ -22,6 +22,6 @@ Pending. See parent `Sports-Card-Website/CLAUDE.md` for the current tech stack.
 
 ## See also
 
-- [[business-plan]] — defines the product and feature scope this architecture must support
-- [[pricing-pipeline]] — comp data ingestion is the most complex subsystem; deserves its own topic page
-- [[data-model]] — Postgres schema that the architecture depends on
+- [[company/business-plan]] — defines the product and feature scope this architecture must support
+- [[topics/pricing-pipeline]] — comp data ingestion is the most complex subsystem; deserves its own topic page
+- [[topics/data-model]] — Postgres schema that the architecture depends on

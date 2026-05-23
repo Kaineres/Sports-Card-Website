@@ -86,3 +86,6 @@ Each warrants its own page after further ingest of the relevant product page.
 - [[sgc]] — competing grading service; 20-step scale (half-grades at every step + Pristine 10); single overall grade, no subgrades; no qualifier system documented.
 - [[cgc]] — competing grading service; 20-grade scale, Pristine 10 / Gem Mint 10 two-tier top; explicit TCG criteria published alongside sports/non-sports.
 - [[company/business-plan]] — PSA pop report signal is a candidate Buy/Hold/Sell wedge input; PSA comp data is the planned free-tier data source.
+- [[vendors/card-ladder]] — competitor that integrates PSA pop report data; benchmarks SlabMetrics pop-report feature
+- [[vendors/market-movers]] — competitor that ingests PSA data; intelligence reports use PSA grade distributions
+- [[vendors/ebay-api]] — primary source of PSA-graded card comp data for SlabMetrics pipeline

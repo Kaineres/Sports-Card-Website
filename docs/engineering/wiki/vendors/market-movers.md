@@ -28,7 +28,7 @@ Market Movers is a sports card analytics and collection platform with comps, ale
 
 ## Data Sources
 
-eBay, Fanatics Collect, Goldin, Heritage Auctions, Pristine Auctions, Cards HQ, MySlabs, PSA, SGC, Beckett, CGC. `[Certain]` — [[sources/marketmovers-features]]
+eBay, Fanatics Collect, Goldin, Heritage Auctions, Pristine Auctions, Cards HQ, MySlabs, [[entities/psa|PSA]], SGC, Beckett, CGC. `[Certain]` — [[sources/marketmovers-features]]
 
 ## Pricing
 
@@ -54,3 +54,6 @@ Annual plans: 17% discount. `[Certain]` — [[sources/marketmovers-features]]
 - [[vendors/collx]] — competitor; hobbyist/scanner, marketplace focus.
 - [[vendors/alt]] — competitor; premium marketplace + vault.
 - [[company/business-plan]] — competitive landscape table Section 7.
+- [[concepts/population-report]] — Market Movers ingests PSA, SGC, Beckett, CGC pop data; pop report integration is a baseline feature SlabMetrics must match
+- [[topics/pricing-pipeline]] — Market Movers' data sources (eBay, Goldin, Heritage, Fanatics Collect, etc.) define the landscape for comp pipeline construction
+- [[entities/psa]] — primary grading service whose pop report data Market Movers ingests

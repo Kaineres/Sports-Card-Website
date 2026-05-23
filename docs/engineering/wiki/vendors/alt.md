@@ -56,3 +56,5 @@ $31M Series A + $75M Series B = $106M raised. Notable investors: Naval Ravikant 
 - [[vendors/market-movers]] — competitor; analytics + community.
 - [[vendors/collx]] — competitor; hobbyist scanner + peer marketplace.
 - [[company/business-plan]] — Section 7 competitive table; Section 3 market segment analysis (Alt targets high-end, SlabMetrics targets $50–$500 modern graded).
+- [[entities/psa]] — Alt Exchange only lists graded, authenticated cards; PSA is the dominant grading service for the $1k+ segment Alt targets
+- [[concepts/population-report]] — Alt's daily valuations from comps depend on the same data sources as SlabMetrics; pop report scarcity signals are relevant to Alt's premium segment

@@ -61,3 +61,4 @@ CollX is a free sports card scanner and peer-to-peer marketplace with an optiona
 - [[vendors/market-movers]] — competitor; analytics + community.
 - [[vendors/alt]] — competitor; premium marketplace + vault.
 - [[company/business-plan]] — Section 3 explicitly excludes CollX-type users from v1 target; Phase 2 conversion arc gated on investor product retention.
+- [[topics/pricing-pipeline]] — CollX's photo-identification and pricing pipeline represents a simpler comp-lookup model; SlabMetrics' comp pipeline will need to do what CollX does plus grading-service data

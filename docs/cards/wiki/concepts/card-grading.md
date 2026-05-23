@@ -78,3 +78,5 @@ The ingested sources don't directly explain economic impact, but the existence o
 - [[population-report]] — the grade-distribution database that grading activity produces; key tool for assessing card rarity and value.
 - [[card-parallels]] — grading applies to parallels; PSA 10 pop counts within a numbered parallel's print-run ceiling are the core rarity signal.
 - [[company/business-plan]] — grading submission ("Submit" vs Pass) is one of the three core decision types the SlabMetrics product is built to answer.
+- [[vendors/card-ladder]] — competitor; pop report integration and historical comp data for graded cards
+- [[vendors/ebay-api]] — primary source of graded-card comp data for SlabMetrics; Marketplace Insights API access is required for sold-listing data

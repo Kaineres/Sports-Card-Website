@@ -90,3 +90,5 @@ Not yet ingested. Beckett's broader ecosystem (Beckett Registry, BVG, BCCG sibli
 - [[psa]] — counterpart entity; key differences: BGS publishes subgrades, has Pristine label variants, defines half-points as interpolations.
 - [[sgc]] — counterpart entity; key differences: SGC uses single overall grade (no subgrades), bases its PRI/GM distinction on top-level criteria rather than subgrade composition, publishes front-centering only.
 - [[cgc]] — counterpart entity; 20-grade scale, single overall grade (no subgrades), Pristine 10 / Gem Mint 10 two-tier top.
+- [[vendors/card-ladder]] — competitor that integrates BGS pop report data alongside PSA, SGC, CGC
+- [[vendors/market-movers]] — competitor that lists Beckett (BGS) as a data source

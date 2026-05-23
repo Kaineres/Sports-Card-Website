@@ -45,11 +45,11 @@
 
 | Tool | Strength | Weakness |
 |---|---|---|
-| **Card Ladder** | Established data, multi-year history, indices, portfolio tracking. ~$200/yr | Lookup-oriented, not decision-oriented. Comp lookup requires multiple clicks. Does not connect data to actionable decisions. |
-| **Market Movers** | Real-time price alerts, active-trader focus, strong content ecosystem | Alert-driven UX favors flippers over portfolio holders. No decision synthesis. |
-| **CollX** | Free entry, photo-ID onboarding, large user base, mobile-first | Hobbyist-default framing. No decision intelligence. Community pricing is noisy. Free tier suppresses willingness to pay. |
-| **Alt** | Premium brand, asset-class framing, vertically integrated (marketplace + analytics) | Positioned toward $1k+ cards; underserves the $50–$500 modern-graded beachhead. Decision intelligence absent. |
-| **130point** | Comp data | Data source, not a decision layer. |
+| **[[vendors/card-ladder|Card Ladder]]** | Established data, multi-year history, indices, portfolio tracking. ~$200/yr | Lookup-oriented, not decision-oriented. Comp lookup requires multiple clicks. Does not connect data to actionable decisions. |
+| **[[vendors/market-movers|Market Movers]]** | Real-time price alerts, active-trader focus, strong content ecosystem | Alert-driven UX favors flippers over portfolio holders. No decision synthesis. |
+| **[[vendors/collx|CollX]]** | Free entry, photo-ID onboarding, large user base, mobile-first | Hobbyist-default framing. No decision intelligence. Community pricing is noisy. Free tier suppresses willingness to pay. |
+| **[[vendors/alt|Alt]]** | Premium brand, asset-class framing, vertically integrated (marketplace + analytics) | Positioned toward $1k+ cards; underserves the $50–$500 modern-graded beachhead. Decision intelligence absent. |
+| **[[vendors/130point|130point]]** | Comp data | Data source, not a decision layer. |
 
 ### Our framing
 
@@ -94,7 +94,7 @@ For each card in a user's collection or watchlist, produce a specific recommenda
 
 **Five candidate signals (to be validated in 90-day experiment):**
 
-1. Prediction market movements (Kalshi / PolyMarket player-event odds)
+1. Prediction market movements ([[vendors/kalshi|Kalshi]] / [[vendors/polymarket|PolyMarket]] player-event odds)
 2. Player injury status
 3. Season phase (preseason / regular season / postseason)
 4. [[population-report|Pop report changes]] ([[psa|PSA]] population shifts = scarcity dynamics)
@@ -122,7 +122,7 @@ For each card in a user's collection or watchlist, produce a specific recommenda
 
 **Must-haves:**
 - User accounts (Clerk) + auth
-- Comp lookup powered by real eBay + 130point data (basketball, football, baseball — v1 scope)
+- Comp lookup powered by real [[vendors/ebay-api|eBay]] + [[vendors/130point|130point]] data (basketball, football, baseball — v1 scope)
   - Free tier: watchlist capped ~5 cards, 30-day history cap
 - Buy/Hold/Sell Recommendation Engine with ≥1 validated signal (paid/Pro tier)
 - Stripe billing for Pro tier
@@ -162,7 +162,7 @@ For each card in a user's collection or watchlist, produce a specific recommenda
 
 ## 7. Competitive Landscape
 
-| Capability | Card Ladder | Market Movers | CollX | Alt | 130point | SlabMetrics |
+| Capability | [[vendors/card-ladder|Card Ladder]] | [[vendors/market-movers|Market Movers]] | [[vendors/collx|CollX]] | [[vendors/alt|Alt]] | [[vendors/130point|130point]] | SlabMetrics |
 |---|---|---|---|---|---|---|
 | Sold-comp lookup | ✓ | ✓ | partial | partial | ✓ | ✓ |
 | Collection / portfolio tracking | ✓ | ✓ | ✓ | ✓ | — | ✓ |
@@ -313,3 +313,13 @@ Both are sophomore-equivalent UGA undergraduates. Part-time during academic term
 - [[architecture]] — system architecture for the platform described in this plan
 - [[pricing-pipeline]] — comp data ingestion infrastructure; free-tier product depends on this being live
 - [[data-model]] — Postgres schema that persists cards, comps, watchlists, and recommendations
+
+### Vendors
+- [[vendors/kalshi]] — Wedge Signal #1 data source; prediction market odds for player-level sports markets
+- [[vendors/polymarket]] — Wedge Signal #1 data source (parallel to Kalshi); larger volume, no auth required
+- [[vendors/ebay-api]] — primary comp data source; Finding API decommissioned Feb 2025; Marketplace Insights approval is Risk #3
+- [[vendors/130point]] — primary comp data fallback; Card Pricing Direct B2B product is the parallel track to eBay approval
+- [[vendors/card-ladder]] — closest direct competitor; $200/yr price anchor for SlabMetrics Pro tier
+- [[vendors/market-movers]] — competitor; Intelligence Reports feature is the closest incumbent analog to signal synthesis
+- [[vendors/collx]] — competitor; free tier anchors WTP at $0; Phase 2 conversion target gated on investor-product PMF
+- [[vendors/alt]] — competitor; targets $1k+ premium segment; low overlap with SlabMetrics v1 beachhead

@@ -21,7 +21,7 @@ Card Ladder is a sports card price guide and analytics platform with 100M+ histo
 - **Sales history**: 100M+ sales back to 2000 from eBay, Goldin, Heritage Auctions, Fanatics Collect, and others. `[Likely]` — [[sources/cardladder-features]]
 - **Card Ladder Index**: Total market index per player/character. Tracks fluctuations over time. `[Certain]` — [[sources/cardladder-features]]
 - **Card Ladder Value**: Price modeling using player index + individual card's historical relationship. Fills gaps for cards with no recent sale. `[Certain]` — [[sources/cardladder-features]]
-- **Pop report integration**: PSA, BGS, SGC, and CGC population data in card detail views. `[Certain]` — [[sources/cardladder-features]]
+- **Pop report integration**: [[concepts/population-report|PSA, BGS, SGC, and CGC population data]] in card detail views. `[Certain]` — [[sources/cardladder-features]]
 - **Collection tracking**: Daily value updates for tracked cards. `[Certain]` — [[sources/cardladder-features]]
 - **Advanced filters / saved searches**: Pro only. `[Certain]` — [[sources/cardladder-features]]
 
@@ -53,3 +53,6 @@ Price increased from $15/$150 to $20/$200 in February 2025. `[Certain]` — [[so
 - [[vendors/collx]] — competitor; hobbyist/scanner focus, large free user base.
 - [[vendors/alt]] — competitor; premium marketplace + vault, not analytics.
 - [[company/business-plan]] — competitive landscape table Section 7; price anchor ($200/yr) discussion Section 9.
+- [[vendors/ebay-api]] — Card Ladder already has eBay data access; benchmarks what comp lookup should look like for SlabMetrics
+- [[concepts/population-report]] — Card Ladder integrates PSA, BGS, SGC, CGC pop reports; SlabMetrics will need to replicate this
+- [[topics/pricing-pipeline]] — Card Ladder's data depth (100M+ sales since 2000) sets the benchmark for what this pipeline must deliver

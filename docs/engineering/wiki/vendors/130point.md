@@ -74,3 +74,5 @@ SlabMetrics cannot access eBay sold listings directly via API without eBay's exp
 - [[vendors/card-ladder]] — competitor that also aggregates eBay + other marketplace data; they solved the same API access problem.
 - [[vendors/market-movers]] — competitor using eBay + Goldin + Heritage + others; same pipeline problem solved.
 - [[company/business-plan]] — Section 5 build sequence: comp pipeline is the Months 1–2 focus; Section 12 risk #3: "data access fails (eBay production rejected + 130point unworkable)."
+- [[concepts/population-report]] — pop report data (PSA, BGS) is a complementary signal to the comp data 130point provides; pipeline will likely ingest both
+- [[entities/psa]] — PSA comp data and PSA pop report are the two primary data dependencies; 130point provides one leg of the comp data

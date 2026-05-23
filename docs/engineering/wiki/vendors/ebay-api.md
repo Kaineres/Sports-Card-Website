@@ -89,3 +89,5 @@ This means even if SlabMetrics gets Browse API production access, it can't repro
 - [[vendors/card-ladder]] — competitor that already has eBay data access; benchmarks what comp lookup should look like.
 - [[vendors/market-movers]] — competitor that already has eBay data access.
 - [[company/business-plan]] — Section 12 Risk #3: "Data access fails (eBay production rejected + 130point unworkable)."
+- [[concepts/population-report]] — PSA pop report data is a separate pipeline dependency from eBay comp data; the two signals (comp prices + grade scarcity) combine in the recommendation engine
+- [[entities/psa]] — PSA is the primary grading service whose comps drive eBay sold-listing value; PSA-graded cards are the primary comp lookup use case for v1

@@ -122,3 +122,6 @@ Low-POP cards give sellers pricing power: fewer comps, fewer competing sellers �
 - [[psa]] — PSA's pop report is the most commonly cited.
 - [[bgs]] — BGS pop report at beckett.com/grading/pop-report.
 - [[company/business-plan]] — pop report changes (PSA population shifts) are listed as candidate signal #4 in the Buy/Hold/Sell Recommendation Engine wedge.
+- [[vendors/card-ladder]] — competitor that already integrates PSA, BGS, SGC, CGC pop reports into card detail views
+- [[vendors/market-movers]] — competitor that ingests PSA, SGC, Beckett, CGC pop data
+- [[topics/pricing-pipeline]] — the engineering pipeline that will ingest pop report data as candidate signal #4

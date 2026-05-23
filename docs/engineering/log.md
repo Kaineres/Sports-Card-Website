@@ -46,6 +46,13 @@ Chronological, append-only.
 - contradictions flagged: none
 - critical finding: Both Kalshi and Polymarket provide public market data with **zero authentication required** — frictionless Wedge Signal #1 data sources. Kalshi is CFTC-regulated; Polymarket has higher volume. Both have sports player-level markets relevant to card demand signals. Key gotcha: Polymarket sports orders auto-cancel at game start — read-only polling unaffected. Sports-specific tickers/tag IDs must be inventoried before signal pipeline can be designed.
 
+## [2026-05-23] cross-link | vault backlink audit applied
+
+- fixes applied: 14 files edited (business-plan, 3 topic stubs, 8 vendor pages, 3 cards wiki pages)
+- issues resolved: broken bare-stem links in topic stubs, missing business-plan→vendor backlinks, missing cross-wiki See also entries
+- orphan improvement: source pages remain source-side only (design decision — source pages are intentionally minimal bridges)
+- method: cross-linker agent audit → user approved all fixes → applied in batch
+
 ## [2026-05-19] scratch | n8n for wiki-ingest automation
 
 - filed as: [[scratch/n8n-wiki-ingest-automation]]

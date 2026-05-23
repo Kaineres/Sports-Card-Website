@@ -22,6 +22,6 @@ Pending. Will hold Postgres table sketches once the first decisions are made.
 
 ## See also
 
-- [[business-plan]] — product scope and v1 feature set determine which entities need Postgres tables (cards, comps, watchlists, collections, recommendations, subscriptions)
-- [[pricing-pipeline]] — comp ingestion writes to the tables defined here
-- [[architecture]] — overall system context for how the data model fits in
+- [[company/business-plan]] — product scope and v1 feature set determine which entities need Postgres tables (cards, comps, watchlists, collections, recommendations, subscriptions)
+- [[topics/pricing-pipeline]] — comp ingestion writes to the tables defined here
+- [[topics/architecture]] — overall system context for how the data model fits in
