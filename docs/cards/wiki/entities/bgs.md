@@ -86,6 +86,7 @@ Not yet ingested. Beckett's broader ecosystem (Beckett Registry, BVG, BCCG sibli
 - [[grading-scales]] — the 1–10 grade scale; BGS section reproduces grade-by-grade subgrade tolerances.
 - [[grading-service-tiers]] — cross-service tier comparison; BGS's four-tier structure (no declared-value axis).
 - [[population-report]] — cross-grader grade rate comparisons; BGS pop report URL.
+- [[concepts/grading-services-landscape]] — synthesis: side-by-side comparison of all four grading services.
 - [[psa]] — counterpart entity; key differences: BGS publishes subgrades, has Pristine label variants, defines half-points as interpolations.
 - [[sgc]] — counterpart entity; key differences: SGC uses single overall grade (no subgrades), bases its PRI/GM distinction on top-level criteria rather than subgrade composition, publishes front-centering only.
 - [[cgc]] — counterpart entity; 20-grade scale, single overall grade (no subgrades), Pristine 10 / Gem Mint 10 two-tier top.

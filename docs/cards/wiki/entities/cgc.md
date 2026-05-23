@@ -58,6 +58,7 @@ CGC maintains a population report. The cert-lookup page references per-grade and
 
 - [[concepts/grading-scales]] — per-grade criteria across all four major graders including CGC.
 - [[concepts/card-grading]] — grading as a general concept; CGC as one of multiple services.
+- [[concepts/grading-services-landscape]] — synthesis: side-by-side comparison of all four grading services.
 - [[concepts/population-report]] — CGC maintains a pop report at cgccards.com/population-report; cross-grader grade-rate comparisons documented there.
 - [[concepts/grading-service-tiers]] — tier structure; CGC's pricing tiers not yet ingested.
 - [[concepts/grading-qualifiers]] — PSA uses qualifiers; CGC's qualifier system (if any) not yet ingested.

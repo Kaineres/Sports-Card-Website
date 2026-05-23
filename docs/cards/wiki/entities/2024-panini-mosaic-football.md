@@ -106,6 +106,7 @@ Caleb Williams (#301), Jayden Daniels (#302), Drake Maye (#303), Marvin Harrison
 
 - [[entities/panini]] — manufacturer; Mosaic is one of Panini's major chrome product lines.
 - [[concepts/card-parallels]] — the 38-variant parallel rainbow is the central rarity mechanic of this set.
+- [[concepts/parallels-and-variations]] — synthesis: print run tiers, rainbow chase mechanics, and value implications.
 - [[concepts/population-report]] — grade distribution within each parallel's print run is the key investment data point; pop counts + print run ceiling define actual scarcity.
 - [[concepts/grading-scales]] — PSA 10 and BGS Black Label are the primary target grades for investment copies of this set.
 - [[entities/psa]] — primary grading service used for investment submissions of modern chrome cards like Mosaic.

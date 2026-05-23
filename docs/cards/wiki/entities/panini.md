@@ -37,6 +37,7 @@ See [[concepts/card-parallels]].
 ## See also
 
 - [[concepts/card-parallels]] — the parallel rainbow model Panini sets are built around.
+- [[concepts/parallels-and-variations]] — synthesis: print run tiers, rainbow chase mechanics, and value implications.
 - [[concepts/card-grading]] — grading applies directly to Panini cards; PSA 10 status is a primary value driver for numbered parallels.
 - [[concepts/population-report]] — parallel rarity (print run) and grade-level scarcity both feed into pop report investment analysis; numbered parallels have a hard ceiling equal to their print run.
 - [[concepts/grading-scales]] — grade levels that determine slab value for Panini cards; PSA 10 is the dominant target grade.

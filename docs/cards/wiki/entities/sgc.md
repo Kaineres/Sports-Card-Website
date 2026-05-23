@@ -70,6 +70,7 @@ Not captured in the current source set. Pricing parallel to [[grading-service-ti
 - [[grading-scales]] — the 1–10 numeric scale; SGC section reproduces every grade.
 - [[grading-service-tiers]] — service tier comparison; SGC's tiers not yet ingested.
 - [[population-report]] — SGC maintains a pop report; cross-grader grade-rate differences are documented there.
+- [[concepts/grading-services-landscape]] — synthesis: side-by-side comparison of all four grading services.
 - [[psa]] — counterpart entity. Key differences: SGC has half-grades at every step (PSA has only 1.5 and 8.5); SGC has no qualifier system or N-codes documented; SGC publishes front-centering only.
 - [[bgs]] — counterpart entity. Key differences: BGS publishes four subgrades, SGC publishes a single overall; BGS bases its Pristine label hierarchy on subgrade composition, SGC bases its 10 PRI/GM distinction on stricter top-level criteria; BGS publishes back-centering, SGC does not.
 - [[cgc]] — counterpart entity. Both use 20-step scales with Pristine 10 / Gem Mint 10 split; both publish single overall grades (no subgrades).

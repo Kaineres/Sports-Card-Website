@@ -56,6 +56,7 @@ Unlimited → /199 → /99 → /96 → /80 → /75 → /50 → /49 → /25 → /
 
 ## See also
 
+- [[concepts/parallels-and-variations]] — synthesis: print run tiers, rainbow chase mechanics, and value implications.
 - [[entities/panini]] — primary manufacturer of modern parallel-heavy chrome sets.
 - [[entities/2024-panini-mosaic-football]] — concrete example with 38 named parallel variants and full print-run ladder.
 - [[concepts/population-report]] — grade distribution within a parallel's print-run ceiling defines actual graded scarcity; pop reports are less decisive for numbered parallels than for base cards because the print run is the hard ceiling.
