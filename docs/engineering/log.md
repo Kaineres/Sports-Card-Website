@@ -37,6 +37,15 @@ Chronological, append-only.
 - notes: Card Ladder blocks automated crawlers (HTTP 403) — raw file assembled from search snippets and App Store/Zendesk listings; direct manual crawl recommended before launch competitive review. Alt's alt.xyz is JavaScript-rendered — sourced from third-party review + moneymade.io fee data; fee structure should be verified manually.
 - contradictions flagged: none
 
+## [2026-05-23] ingest | Kalshi and Polymarket API documentation
+
+- sources: [[sources/kalshi-api-docs]], [[sources/polymarket-api-docs]]
+- raw: `engineering/raw/2026-05-23-kalshi-api-docs.md`, `engineering/raw/2026-05-23-polymarket-api-docs.md`
+- new pages: [[vendors/kalshi]], [[vendors/polymarket]]
+- updated pages: `index.md` (Vendors and Sources sections updated with both prediction-market data sources)
+- contradictions flagged: none
+- critical finding: Both Kalshi and Polymarket provide public market data with **zero authentication required** — frictionless Wedge Signal #1 data sources. Kalshi is CFTC-regulated; Polymarket has higher volume. Both have sports player-level markets relevant to card demand signals. Key gotcha: Polymarket sports orders auto-cancel at game start — read-only polling unaffected. Sports-specific tickers/tag IDs must be inventoried before signal pipeline can be designed.
+
 ## [2026-05-19] scratch | n8n for wiki-ingest automation
 
 - filed as: [[scratch/n8n-wiki-ingest-automation]]
