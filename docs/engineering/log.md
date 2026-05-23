@@ -9,6 +9,15 @@ Chronological, append-only.
 - ADR template: [[decisions/0000-template]]
 - empty directories: `raw/`, `raw/assets/`, `wiki/vendors/`, `wiki/sources/`, `wiki/scratch/`, `wiki/synthesis/`
 
+## [2026-05-23] ingest | competitor intelligence (Card Ladder, Market Movers, CollX, Alt)
+
+- sources: [[sources/cardladder-features]], [[sources/marketmovers-features]], [[sources/collx-pro-features]], [[sources/alt-platform-features]]
+- raw: `engineering/raw/2026-05-23-cardladder-features.md`, `engineering/raw/2026-05-23-marketmovers-features.md`, `engineering/raw/2026-05-23-collx-pro-features.md`, `engineering/raw/2026-05-23-alt-platform-features.md`
+- new pages: [[vendors/card-ladder]], [[vendors/market-movers]], [[vendors/collx]], [[vendors/alt]]
+- updated pages: `index.md` (Vendors and Sources sections populated for first time)
+- notes: Card Ladder blocks automated crawlers (HTTP 403) — raw file assembled from search snippets and App Store/Zendesk listings; direct manual crawl recommended before launch competitive review. Alt's alt.xyz is JavaScript-rendered — sourced from third-party review + moneymade.io fee data; fee structure should be verified manually.
+- contradictions flagged: none
+
 ## [2026-05-19] scratch | n8n for wiki-ingest automation
 
 - filed as: [[scratch/n8n-wiki-ingest-automation]]

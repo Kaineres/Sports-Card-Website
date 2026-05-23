@@ -19,11 +19,17 @@ _(none yet — see [[decisions/0000-template]] for the ADR template)_
 
 ## Vendors
 
-_(none yet)_
+- [[vendors/card-ladder]] — competitor; analytics/price guide with 100M+ sales since 2000, player index model, pop report integration. $20/mo Pro. Blocks crawlers. `[Likely]` — [[sources/cardladder-features]]
+- [[vendors/market-movers]] — competitor; analytics + collection + alerts + Intelligence Reports (grade/variation ratio analysis). $9.99–$49.99/mo. 75k+ users. Strong community moat. `[Certain]` — [[sources/marketmovers-features]]
+- [[vendors/collx]] — competitor; free scanner + peer marketplace + Pro subscription. Hobbyist framing. $9.99/mo Pro. Large free user base; WTP anchored at $0. `[Certain]` — [[sources/collx-pro-features]]
+- [[vendors/alt]] — competitor; vertically integrated (portfolio + authenticated marketplace + physical vault). $106M raised. Targets $1k+ premium graded cards — underserves SlabMetrics beachhead. `[Likely]` — [[sources/alt-platform-features]]
 
 ## Sources
 
-_(none yet)_
+- [[sources/cardladder-features]] — Card Ladder features and pricing (assembled from search/listings; direct crawl blocked). Ingested 2026-05-23.
+- [[sources/marketmovers-features]] — Market Movers homepage features and pricing. Ingested 2026-05-23.
+- [[sources/collx-pro-features]] — CollX Pro features and pricing page. Ingested 2026-05-23.
+- [[sources/alt-platform-features]] — Alt platform features (third-party review + fee data; alt.xyz is JS-rendered). Ingested 2026-05-23.
 
 ## Scratch
 
@@ -32,3 +38,7 @@ _(none yet)_
 ## Synthesis
 
 _(none yet)_
+
+## Related
+
+- [[company/index]] — business plan and founders' agreement that define what this engineering wiki is building toward
