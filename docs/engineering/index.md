@@ -1,6 +1,6 @@
 ---
 type: index
-updated: 2026-05-19
+updated: 2026-05-23
 ---
 
 # Engineering wiki — index
@@ -9,13 +9,17 @@ Catalog of pages in the Sports-Card-Website engineering sub-wiki. Updated on eve
 
 ## Decisions
 
-_(none yet — see [[decisions/0000-template]] for the ADR template)_
+- [[decisions/0001-clerk-over-supabase-auth]] — Clerk handles all auth; Supabase Auth disabled; RLS keys off Clerk JWT `sub` claim. `[Certain]`
+- [[decisions/0002-nextjs-app-router]] — Next.js 16 App Router; Server Components default; `"use client"` for islands only; card pages SSG/ISR for SEO. `[Certain]`
+- [[decisions/0003-ebay-130point-parallel-tracks]] — eBay Marketplace Insights + 130point Card Pricing Direct run simultaneously; never serialize. `[Certain]`
+
+_(See [[decisions/0000-template]] for the ADR template.)_
 
 ## Topics
 
-- [[topics/architecture]] — system diagram, data flow _(stub)_
-- [[topics/pricing-pipeline]] — pricing data sources, ingestion, validation _(stub)_
-- [[topics/data-model]] — Postgres schema sketches _(stub)_
+- [[topics/architecture]] — full tech stack, component map, data flow, Clerk+Supabase RLS wiring, non-negotiables
+- [[topics/pricing-pipeline]] — comp data sources (eBay + 130point parallel tracks), wedge signal architecture, n8n orchestration sketch, accuracy non-negotiables
+- [[topics/data-model]] — Postgres table sketches (cards, comps, collections, watchlist, recommendations, subscriptions, pop_snapshots), RLS pattern
 
 ## Vendors
 

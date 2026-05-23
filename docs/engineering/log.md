@@ -46,6 +46,19 @@ Chronological, append-only.
 - contradictions flagged: none
 - critical finding: Both Kalshi and Polymarket provide public market data with **zero authentication required** — frictionless Wedge Signal #1 data sources. Kalshi is CFTC-regulated; Polymarket has higher volume. Both have sports player-level markets relevant to card demand signals. Key gotcha: Polymarket sports orders auto-cancel at game start — read-only polling unaffected. Sports-specific tickers/tag IDs must be inventoried before signal pipeline can be designed.
 
+## [2026-05-23] topic | engineering topic stubs fleshed out
+
+- updated pages: [[topics/architecture]], [[topics/pricing-pipeline]], [[topics/data-model]]
+- all three pages promoted from empty stubs to substantive drafts: tech stack table, data flow sketch, comp data parallel tracks, wedge signal table, Postgres table sketches, Clerk+Supabase RLS pattern
+- certainty: Likely (pre-MVP designs; no sources — derived from CLAUDE.md tech stack and [[company/business-plan]])
+- updated pages: `index.md` (Topics section de-stubbed)
+
+## [2026-05-23] decision | first ADRs written
+
+- new pages: [[decisions/0001-clerk-over-supabase-auth]], [[decisions/0002-nextjs-app-router]], [[decisions/0003-ebay-130point-parallel-tracks]]
+- records decisions already made but previously undocumented: Clerk over Supabase Auth, Next.js App Router + Server Components default, eBay + 130point parallel comp data tracks
+- updated pages: `index.md` (Decisions section populated for the first time)
+
 ## [2026-05-23] cross-link | vault backlink audit applied
 
 - fixes applied: 14 files edited (business-plan, 3 topic stubs, 8 vendor pages, 3 cards wiki pages)
