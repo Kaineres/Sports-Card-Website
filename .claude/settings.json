@@ -22,6 +22,19 @@
           }
         ]
       }
+    ],
+    "PostCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NonInteractive -File \".claude/scripts/obsidian-bg-agent.ps1\"",
+            "timeout": 120,
+            "async": true
+          }
+        ]
+      }
     ]
   }
 }
