@@ -85,3 +85,4 @@ Each warrants its own page after further ingest of the relevant product page.
 - [[bgs]] — competing grading service; key differences: BGS publishes four subgrades, has Pristine Black/Gold label hierarchy, defines half-points at every step.
 - [[sgc]] — competing grading service; 20-step scale (half-grades at every step + Pristine 10); single overall grade, no subgrades; no qualifier system documented.
 - [[cgc]] — competing grading service; 20-grade scale, Pristine 10 / Gem Mint 10 two-tier top; explicit TCG criteria published alongside sports/non-sports.
+- [[company/business-plan]] — PSA pop report signal is a candidate Buy/Hold/Sell wedge input; PSA comp data is the planned free-tier data source.

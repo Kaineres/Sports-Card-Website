@@ -121,3 +121,4 @@ Low-POP cards give sellers pricing power: fewer comps, fewer competing sellers �
 - [[card-grading]] — the grading process that generates each pop count entry.
 - [[psa]] — PSA's pop report is the most commonly cited.
 - [[bgs]] — BGS pop report at beckett.com/grading/pop-report.
+- [[company/business-plan]] — pop report changes (PSA population shifts) are listed as candidate signal #4 in the Buy/Hold/Sell Recommendation Engine wedge.
