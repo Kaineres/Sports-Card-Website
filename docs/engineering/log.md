@@ -9,6 +9,16 @@ Chronological, append-only.
 - ADR template: [[decisions/0000-template]]
 - empty directories: `raw/`, `raw/assets/`, `wiki/vendors/`, `wiki/sources/`, `wiki/scratch/`, `wiki/synthesis/`
 
+## [2026-05-23] ingest | eBay API documentation
+
+- source: [[sources/ebay-api-docs]]
+- raw: `engineering/raw/2026-05-23-ebay-api-docs.md`
+- new pages: [[vendors/ebay-api]]
+- updated pages: `index.md`; [[vendors/130point]] (Best Offer Accepted finding reinforces 130point's data moat)
+- contradictions flagged: none
+- critical finding: Finding API decommissioned Feb 2025. Only Marketplace Insights API has sold data — Limited Release, pre-approved eBay partners only. Small developers routinely denied. Browse API (EPN approval) returns active listings only — cannot build comp lookup on it alone. SlabMetrics must pursue both eBay Marketplace Insights approval and 130point Card Pricing Direct in parallel, not serially.
+- developer.ebay.com and community.ebay.com both block crawlers; content assembled from search snippets and community forum summaries.
+
 ## [2026-05-23] ingest | 130point data source profile
 
 - source: [[sources/130point-data-source]]

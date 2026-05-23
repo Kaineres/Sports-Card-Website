@@ -19,6 +19,7 @@ _(none yet — see [[decisions/0000-template]] for the ADR template)_
 
 ## Vendors
 
+- [[vendors/ebay-api]] — **critical-path data source**; Finding API decommissioned Feb 2025; Browse API (active listings only, EPN approval); Marketplace Insights API (sold data, Limited Release, partner approval only). `[Certain]` — [[sources/ebay-api-docs]]
 - [[vendors/130point]] — **critical-path data source**; free comp aggregator surfacing eBay Best Offer Accepted prices; B2B product (Card Pricing Direct) requires direct outreach; eBay API decommissioned Feb 2025 — Marketplace Insights approval required. `[Likely]` — [[sources/130point-data-source]]
 - [[vendors/card-ladder]] — competitor; analytics/price guide with 100M+ sales since 2000, player index model, pop report integration. $20/mo Pro. Blocks crawlers. `[Likely]` — [[sources/cardladder-features]]
 - [[vendors/market-movers]] — competitor; analytics + collection + alerts + Intelligence Reports (grade/variation ratio analysis). $9.99–$49.99/mo. 75k+ users. Strong community moat. `[Certain]` — [[sources/marketmovers-features]]
@@ -27,6 +28,7 @@ _(none yet — see [[decisions/0000-template]] for the ADR template)_
 
 ## Sources
 
+- [[sources/ebay-api-docs]] — eBay API landscape post-Finding API decommission; Marketplace Insights access requirements. Ingested 2026-05-23.
 - [[sources/130point-data-source]] — 130point data source profile including eBay API deprecation risk. Ingested 2026-05-23.
 - [[sources/cardladder-features]] — Card Ladder features and pricing (assembled from search/listings; direct crawl blocked). Ingested 2026-05-23.
 - [[sources/marketmovers-features]] — Market Movers homepage features and pricing. Ingested 2026-05-23.
