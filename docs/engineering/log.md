@@ -9,6 +9,15 @@ Chronological, append-only.
 - ADR template: [[decisions/0000-template]]
 - empty directories: `raw/`, `raw/assets/`, `wiki/vendors/`, `wiki/sources/`, `wiki/scratch/`, `wiki/synthesis/`
 
+## [2026-05-23] ingest | 130point data source profile
+
+- source: [[sources/130point-data-source]]
+- raw: `engineering/raw/2026-05-23-130point-data-source.md`
+- new pages: [[vendors/130point]]
+- updated pages: `index.md` (130point added to Vendors and Sources)
+- contradictions flagged: none
+- critical finding: eBay Finding API decommissioned Feb 2025 — only Marketplace Insights API (pre-approved vendors) remains. SlabMetrics needs eBay production approval or 130point Card Pricing Direct licensing deal. Both tracks should run in parallel. Direct crawl of 130point.com blocked (HTTP 403); Card Pricing Direct product details require direct outreach.
+
 ## [2026-05-23] ingest | competitor intelligence (Card Ladder, Market Movers, CollX, Alt)
 
 - sources: [[sources/cardladder-features]], [[sources/marketmovers-features]], [[sources/collx-pro-features]], [[sources/alt-platform-features]]
