@@ -18,3 +18,28 @@ export function toGrayscale(frame: RgbaFrame): Uint8ClampedArray {
   }
   return gray
 }
+
+/**
+ * Sharpness via variance of the Laplacian. Higher = sharper / more in focus.
+ * Applies a 4-neighbour Laplacian kernel to the grayscale image and returns the
+ * variance of the response. Blurry images produce a low-variance response.
+ */
+export function sharpnessScore(frame: RgbaFrame): number {
+  const { width, height } = frame
+  if (width < 3 || height < 3) return 0
+  const gray = toGrayscale(frame)
+  const lap: number[] = []
+  for (let y = 1; y < height - 1; y++) {
+    for (let x = 1; x < width - 1; x++) {
+      const i = y * width + x
+      const v = -4 * gray[i] + gray[i - 1] + gray[i + 1] + gray[i - width] + gray[i + width]
+      lap.push(v)
+    }
+  }
+  let mean = 0
+  for (const v of lap) mean += v
+  mean /= lap.length
+  let varSum = 0
+  for (const v of lap) varSum += (v - mean) * (v - mean)
+  return varSum / lap.length
+}
