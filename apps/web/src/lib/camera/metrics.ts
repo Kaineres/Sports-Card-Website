@@ -43,3 +43,23 @@ export function sharpnessScore(frame: RgbaFrame): number {
   for (const v of lap) varSum += (v - mean) * (v - mean)
   return varSum / lap.length
 }
+
+export interface LightingMetrics {
+  meanLuminance: number // 0-255
+  glareRatio: number    // fraction of near-white (>=250) pixels
+  darkRatio: number     // fraction of near-black (<=10) pixels
+}
+
+/** Brightness + glare + darkness metrics from the grayscale histogram. */
+export function lightingMetrics(frame: RgbaFrame): LightingMetrics {
+  const gray = toGrayscale(frame)
+  let sum = 0, glare = 0, dark = 0
+  for (let p = 0; p < gray.length; p++) {
+    const v = gray[p]
+    sum += v
+    if (v >= 250) glare++
+    if (v <= 10) dark++
+  }
+  const n = gray.length || 1
+  return { meanLuminance: sum / n, glareRatio: glare / n, darkRatio: dark / n }
+}

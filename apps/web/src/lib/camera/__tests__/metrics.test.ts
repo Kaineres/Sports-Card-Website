@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { toGrayscale, sharpnessScore, type RgbaFrame } from '../metrics'
+import { toGrayscale, sharpnessScore, lightingMetrics, type RgbaFrame } from '../metrics'
 
 // ---- shared synthetic-frame helpers (reused by later tasks) ----
 export function solidFrame(w: number, h: number, gray: number): RgbaFrame {
@@ -47,5 +47,25 @@ describe('sharpnessScore', () => {
     const sharp = sharpnessScore(checkerFrame(16, 16, 100, 160))
     const flat = sharpnessScore(solidFrame(16, 16, 130))
     expect(sharp).toBeGreaterThan(flat)
+  })
+})
+
+describe('lightingMetrics', () => {
+  it('reports mid luminance and no glare/dark for a neutral-gray frame', () => {
+    const m = lightingMetrics(solidFrame(10, 10, 130))
+    expect(m.meanLuminance).toBeCloseTo(130, 0)
+    expect(m.glareRatio).toBe(0)
+    expect(m.darkRatio).toBe(0)
+  })
+
+  it('reports full glare for a blown-out white frame', () => {
+    const m = lightingMetrics(solidFrame(10, 10, 255))
+    expect(m.glareRatio).toBe(1)
+  })
+
+  it('reports full darkness for a crushed-black frame', () => {
+    const m = lightingMetrics(solidFrame(10, 10, 0))
+    expect(m.darkRatio).toBe(1)
+    expect(m.meanLuminance).toBe(0)
   })
 })
