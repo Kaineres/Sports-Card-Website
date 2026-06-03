@@ -183,7 +183,7 @@ export default function GradingPage() {
                             fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer',
                           }}
                         >
-                          {side === 'front' ? 'Upload Front' : 'Upload Back'}
+                          {side === 'front' ? 'Retake Front' : 'Retake Back'}
                         </button>
                         {/* Remove — bottom-left */}
                         <button
@@ -220,14 +220,14 @@ export default function GradingPage() {
                             fontSize: '0.85rem', fontWeight: 700, cursor: 'pointer',
                           }}
                         >
-                          {side === 'front' ? 'Upload Front' : 'Upload Back'}
+                          {side === 'front' ? 'Capture Front' : 'Capture Back'}
                         </button>
                       </>
                     )}
 
                     <input
                       ref={side === 'front' ? frontRef : backRef}
-                      type="file" accept="image/*"
+                      type="file" accept="image/*" capture="environment"
                       style={{ display: 'none' }}
                       onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f, side) }}
                     />
