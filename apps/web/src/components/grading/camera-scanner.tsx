@@ -26,7 +26,7 @@ export function CameraScanner() {
           video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } },
           audio: false,
         })
-        if (cancelled) return
+        if (cancelled) { stream.getTracks().forEach(t => t.stop()); return }
         const video = videoRef.current
         if (!video) return
         video.srcObject = stream
@@ -40,13 +40,16 @@ export function CameraScanner() {
     }
 
     function loop() {
+      if (cancelled) return
       const video = videoRef.current
       const canvas = canvasRef.current
       if (video && canvas && video.videoWidth > 0) {
         const w = PROC_WIDTH
         const h = Math.round(w * (video.videoHeight / video.videoWidth))
-        canvas.width = w
-        canvas.height = h
+        if (canvas.width !== w || canvas.height !== h) {
+          canvas.width = w
+          canvas.height = h
+        }
         const ctx = canvas.getContext('2d', { willReadFrequently: true })
         if (ctx) {
           ctx.drawImage(video, 0, 0, w, h)
