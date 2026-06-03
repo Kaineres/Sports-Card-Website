@@ -469,6 +469,11 @@ TURNSTILE_SECRET_KEY=...
 - **Phase 4 — value linkage:** map estimated grade to the existing eBay/price
   pipeline ("at PSA 9 this is worth ~$X").
 - **Phase 5 — more houses:** SGC, CGC rubrics (structure already supports them).
+- **Phase 6 — bulk grading via Batch API (cost lever, deferred):** when a
+  "grade my whole collection" flow exists (user uploads many cards, tolerates
+  async results), route those grades through Anthropic's **Batch API** for ~50%
+  off, with no accuracy loss. Not for single live grades (those must stay
+  interactive). Explicitly out of scope for now — noted so the lever isn't lost.
 - **Later:** grading history (Supabase Storage), admin rubric editor, Pinecone
   "similar graded cards," n8n batch grading, Expo mobile-app port.
 
