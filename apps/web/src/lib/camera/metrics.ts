@@ -63,3 +63,17 @@ export function lightingMetrics(frame: RgbaFrame): LightingMetrics {
   const n = gray.length || 1
   return { meanLuminance: sum / n, glareRatio: glare / n, darkRatio: dark / n }
 }
+
+/**
+ * Mean absolute difference between two grayscale buffers (0-255).
+ * Used for stability/motion: ~0 = still, large = moving. Buffers must match length.
+ */
+export function frameDifference(prev: Uint8ClampedArray, curr: Uint8ClampedArray): number {
+  if (prev.length !== curr.length) {
+    throw new Error('frameDifference: frames must be the same length')
+  }
+  if (prev.length === 0) return 0
+  let sum = 0
+  for (let p = 0; p < prev.length; p++) sum += Math.abs(prev[p] - curr[p])
+  return sum / prev.length
+}

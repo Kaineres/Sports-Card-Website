@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { toGrayscale, sharpnessScore, lightingMetrics, type RgbaFrame } from '../metrics'
+import { toGrayscale, sharpnessScore, lightingMetrics, frameDifference, type RgbaFrame } from '../metrics'
 
 // ---- shared synthetic-frame helpers (reused by later tasks) ----
 export function solidFrame(w: number, h: number, gray: number): RgbaFrame {
@@ -67,5 +67,24 @@ describe('lightingMetrics', () => {
     const m = lightingMetrics(solidFrame(10, 10, 0))
     expect(m.darkRatio).toBe(1)
     expect(m.meanLuminance).toBe(0)
+  })
+})
+
+describe('frameDifference', () => {
+  it('is 0 for identical buffers', () => {
+    const a = new Uint8ClampedArray([10, 20, 30, 40])
+    const b = new Uint8ClampedArray([10, 20, 30, 40])
+    expect(frameDifference(a, b)).toBe(0)
+  })
+
+  it('equals the per-pixel delta for a uniform shift', () => {
+    const a = new Uint8ClampedArray([0, 0, 0, 0])
+    const b = new Uint8ClampedArray([255, 255, 255, 255])
+    expect(frameDifference(a, b)).toBe(255)
+  })
+
+  it('throws when buffers differ in length', () => {
+    expect(() => frameDifference(new Uint8ClampedArray([1]), new Uint8ClampedArray([1, 2])))
+      .toThrow('same length')
   })
 })
