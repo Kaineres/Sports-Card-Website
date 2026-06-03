@@ -233,3 +233,16 @@
 
 /* ── Collection table rows ── */
 .table-row:hover { background: var(--bg3) !important; }
+
+/* ── Mobile nav ── */
+@media (max-width: 767px) {
+  .nav-desktop-links { display: none !important; }
+  .nav-desktop-auth  { display: none !important; }
+  .nav-mobile-spacer { display: flex !important; }
+  .nav-hamburger     { display: flex !important; }
+}
+@media (min-width: 768px) {
+  .nav-mobile-spacer { display: none !important; }
+  .nav-hamburger     { display: none !important; }
+  .nav-mobile-menu   { display: none !important; }
+}
