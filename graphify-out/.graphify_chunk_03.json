@@ -1,0 +1,809 @@
+{
+  "nodes": [
+    {
+      "id": "sgc_grading_scale_sgc_grading_scale",
+      "label": "SGC Grading Scale",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_sgc",
+      "label": "SGC (Sportscard Guaranty Corporation)",
+      "file_type": "rationale",
+      "source_file": "docs/cards/raw/SGC Grading Scale.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_no_tweeners_principle",
+      "label": "SGC No-Tweeners Grading Principle",
+      "file_type": "rationale",
+      "source_file": "docs/cards/raw/SGC Grading Scale.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null,
+      "rationale": "SGC's scale is designed to eliminate 'tweener' grades — ambiguous in-between values — producing a more precise and consistent grading output, which in turn supports more accurate market pricing for cards."
+    },
+    {
+      "id": "sgc_grading_scale_2_grade_10_gem",
+      "label": "SGC Grade 10 GM (Gem Mint)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 2.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_3_grade_9_5_mint_plus",
+      "label": "SGC Grade 9.5 (Mint+)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 3.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_4_grade_9_mint",
+      "label": "SGC Grade 9 (Mint)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 4.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_5_grade_8_5_nm_mt_plus",
+      "label": "SGC Grade 8.5 (NM/MT+)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 5.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_6_grade_8_nm_mt",
+      "label": "SGC Grade 8 (NM/MT)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 6.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_7_grade_7_5_nm_plus",
+      "label": "SGC Grade 7.5 (NM+)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 7.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_8_grade_7_nrmt",
+      "label": "SGC Grade 7 (NRMT - Near Mint)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 8.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_9_grade_6_5_ex_nm_plus",
+      "label": "SGC Grade 6.5 (EX/NM+)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 9.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_10_grade_6_ex_nm",
+      "label": "SGC Grade 6 (EX/NM)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 10.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_11_grade_5_5_ex_plus",
+      "label": "SGC Grade 5.5 (EX+)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 11.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_12_grade_5_ex",
+      "label": "SGC Grade 5 (EX - Excellent)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 12.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_13_grade_4_5_vg_ex_plus",
+      "label": "SGC Grade 4.5 (VG/EX+)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 13.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_14_grade_4_vg_ex",
+      "label": "SGC Grade 4 (VG/EX)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 14.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_15_grade_3_5_vg_plus",
+      "label": "SGC Grade 3.5 (VG+)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 15.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_16_grade_3_vg",
+      "label": "SGC Grade 3 (VG - Very Good)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 16.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_17_grade_2_5_good_plus",
+      "label": "SGC Grade 2.5 (GOOD+)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 17.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_18_grade_2_good",
+      "label": "SGC Grade 2 (GOOD)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 18.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_19_grade_1_5_fair",
+      "label": "SGC Grade 1.5 (FAIR)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 19.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_grading_scale_20_grade_1_poor",
+      "label": "SGC Grade 1 (POOR)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/SGC Grading Scale 20.md",
+      "source_location": null,
+      "source_url": "https://www.gosgc.com/card-grading/scale",
+      "captured_at": "2026-05-18",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "pop_count_pop_count_concept",
+      "label": "Population Count (POP Count)",
+      "file_type": "rationale",
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "source_url": "https://sports.yahoo.com/sports-card-investing-population-count-155709943.html",
+      "captured_at": "2026-05-19",
+      "author": "Chris Gawlik",
+      "contributor": "Dan Devine",
+      "rationale": "POP count is the number of graded cards with the same score at a given grade level. It represents market supply competition for sellers and pricing leverage for buyers. High POP = easy to price and sell quickly, but competitive. Low POP = seller controls pricing, less comparable sales."
+    },
+    {
+      "id": "pop_count_psa_population_report",
+      "label": "PSA Population Report",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "source_url": "https://sports.yahoo.com/sports-card-investing-population-count-155709943.html",
+      "captured_at": "2026-05-19",
+      "author": "Chris Gawlik",
+      "contributor": "Dan Devine"
+    },
+    {
+      "id": "pop_count_psa",
+      "label": "PSA (Professional Sports Authenticator)",
+      "file_type": "rationale",
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "source_url": "https://sports.yahoo.com/sports-card-investing-population-count-155709943.html",
+      "captured_at": "2026-05-19",
+      "author": "Chris Gawlik",
+      "contributor": "Dan Devine"
+    },
+    {
+      "id": "pop_count_connor_bedard_young_guns",
+      "label": "Connor Bedard Young Guns Rookie Card (2023-24 Upper Deck)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "source_url": "https://sports.yahoo.com/sports-card-investing-population-count-155709943.html",
+      "captured_at": "2026-05-19",
+      "author": "Chris Gawlik",
+      "contributor": "Dan Devine"
+    },
+    {
+      "id": "pop_count_young_guns_outburst_parallel",
+      "label": "Young Guns Outburst Parallel",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "source_url": "https://sports.yahoo.com/sports-card-investing-population-count-155709943.html",
+      "captured_at": "2026-05-19",
+      "author": "Chris Gawlik",
+      "contributor": "Dan Devine"
+    },
+    {
+      "id": "pop_count_high_pop_strategy",
+      "label": "High POP Count Investment Strategy",
+      "file_type": "rationale",
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "source_url": "https://sports.yahoo.com/sports-card-investing-population-count-155709943.html",
+      "captured_at": "2026-05-19",
+      "author": "Chris Gawlik",
+      "contributor": "Dan Devine",
+      "rationale": "High POP count cards trade frequently on eBay, enabling easy price discovery by averaging last 3-5 sales. Sellers face competition and may accept 80-90% of comps. Buyers benefit from supply availability."
+    },
+    {
+      "id": "pop_count_low_pop_strategy",
+      "label": "Low POP Count Investment Strategy",
+      "file_type": "rationale",
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "source_url": "https://sports.yahoo.com/sports-card-investing-population-count-155709943.html",
+      "captured_at": "2026-05-19",
+      "author": "Chris Gawlik",
+      "contributor": "Dan Devine",
+      "rationale": "Low POP count cards allow sellers to set their own price due to sparse comparable sales and limited availability. Seller holds pricing power: 'Yesterday's price is not today's price.'"
+    },
+    {
+      "id": "cgc_certlookup_56_golduck_fossil",
+      "label": "CGC Cert Lookup: Golduck Fossil 35/62 (Cert #6031819005)",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/verify-card-certification-look-up-a-cgc-certification-number-202605200056.md",
+      "source_location": null,
+      "source_url": "https://www.cgccards.com/certlookup/6031819005",
+      "captured_at": "2026-05-20",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "cgc_certlookup_cgc_cert_verification",
+      "label": "CGC Card Certification Verification",
+      "file_type": "rationale",
+      "source_file": "docs/cards/raw/verify-card-certification-look-up-a-cgc-certification-number-202605200056.md",
+      "source_location": null,
+      "source_url": "https://www.cgccards.com/certlookup/6031819005",
+      "captured_at": "2026-05-20",
+      "author": null,
+      "contributor": null,
+      "rationale": "CGC provides a public cert lookup tool (certlookup/) where any certification number can be verified. The lookup returns card name, game, year, language, set, card number, variant, grade, grader notes, obverse/reverse images, and population breakdown (cards at same grade vs higher grades). This is the anti-counterfeiting and trust layer for the secondary market."
+    },
+    {
+      "id": "cgc_certlookup_cgc_guarantee",
+      "label": "CGC Guarantee",
+      "file_type": "rationale",
+      "source_file": "docs/cards/raw/verify-card-certification-look-up-a-cgc-certification-number-202605200056.md",
+      "source_location": null,
+      "source_url": "https://www.cgccards.com/certlookup/6031819005",
+      "captured_at": "2026-05-20",
+      "author": null,
+      "contributor": null,
+      "rationale": "Every CGC-certified card is backed by the CGC Guarantee, providing protection for buyers and sellers. This is CGC's market trust mechanism, distinguishing their slabs from ungraded or competitor-graded cards."
+    },
+    {
+      "id": "cgc_certlookup_cgc",
+      "label": "CGC (Certified Guaranty Company) Cards",
+      "file_type": "rationale",
+      "source_file": "docs/cards/raw/verify-card-certification-look-up-a-cgc-certification-number-202605200056.md",
+      "source_location": null,
+      "source_url": "https://www.cgccards.com/certlookup/6031819005",
+      "captured_at": "2026-05-20",
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "cgc_certlookup_cgc_population_report",
+      "label": "CGC Population Report",
+      "file_type": "document",
+      "source_file": "docs/cards/raw/verify-card-certification-look-up-a-cgc-certification-number-202605200056.md",
+      "source_location": null,
+      "source_url": "https://www.cgccards.com/certlookup/6031819005",
+      "captured_at": "2026-05-20",
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "sgc_grading_scale_sgc_grading_scale",
+      "target": "sgc_grading_scale_sgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc_grading_scale",
+      "target": "sgc_grading_scale_no_tweeners_principle",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_no_tweeners_principle",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_2_grade_10_gem",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 2.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_3_grade_9_5_mint_plus",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 3.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_4_grade_9_mint",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 4.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_5_grade_8_5_nm_mt_plus",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 5.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_6_grade_8_nm_mt",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 6.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_7_grade_7_5_nm_plus",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 7.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_8_grade_7_nrmt",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 8.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_9_grade_6_5_ex_nm_plus",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 9.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_10_grade_6_ex_nm",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 10.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_11_grade_5_5_ex_plus",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 11.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_12_grade_5_ex",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 12.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_13_grade_4_5_vg_ex_plus",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 13.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_14_grade_4_vg_ex",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 14.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_15_grade_3_5_vg_plus",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 15.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_16_grade_3_vg",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 16.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_17_grade_2_5_good_plus",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 17.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_18_grade_2_good",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 18.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_19_grade_1_5_fair",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 19.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "sgc_grading_scale_20_grade_1_poor",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale 20.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "pop_count_pop_count_concept",
+      "target": "pop_count_psa_population_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "pop_count_psa_population_report",
+      "target": "pop_count_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "pop_count_psa_population_report",
+      "target": "pop_count_connor_bedard_young_guns",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "pop_count_pop_count_concept",
+      "target": "pop_count_high_pop_strategy",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "pop_count_pop_count_concept",
+      "target": "pop_count_low_pop_strategy",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "pop_count_connor_bedard_young_guns",
+      "target": "pop_count_young_guns_outburst_parallel",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "pop_count_young_guns_outburst_parallel",
+      "target": "pop_count_low_pop_strategy",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "weight": 0.85
+    },
+    {
+      "source": "cgc_certlookup_56_golduck_fossil",
+      "target": "cgc_certlookup_cgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/verify-card-certification-look-up-a-cgc-certification-number-202605200056.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "cgc_certlookup_56_golduck_fossil",
+      "target": "cgc_certlookup_cgc_cert_verification",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/verify-card-certification-look-up-a-cgc-certification-number-202605200056.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "cgc_certlookup_56_golduck_fossil",
+      "target": "cgc_certlookup_cgc_population_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/verify-card-certification-look-up-a-cgc-certification-number-202605200056.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "cgc_certlookup_cgc",
+      "target": "cgc_certlookup_cgc_guarantee",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/verify-card-certification-look-up-a-cgc-certification-number-202605200056.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "cgc_certlookup_cgc_population_report",
+      "target": "pop_count_pop_count_concept",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "docs/cards/raw/verify-card-certification-look-up-a-cgc-certification-number-202605200056.md",
+      "source_location": null,
+      "weight": 0.95
+    },
+    {
+      "source": "pop_count_psa_population_report",
+      "target": "cgc_certlookup_cgc_population_report",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "weight": 0.95
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "pop_count_psa",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "weight": 0.75
+    },
+    {
+      "source": "sgc_grading_scale_sgc",
+      "target": "cgc_certlookup_cgc",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/cards/raw/SGC Grading Scale.md",
+      "source_location": null,
+      "weight": 0.75
+    },
+    {
+      "source": "pop_count_pop_count_concept",
+      "target": "sgc_grading_scale_no_tweeners_principle",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md",
+      "source_location": null,
+      "weight": 0.65
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "grading_company_population_report_triad",
+      "label": "Grading Company Population Report Systems (PSA, CGC, SGC)",
+      "nodes": [
+        "pop_count_psa_population_report",
+        "cgc_certlookup_cgc_population_report",
+        "pop_count_pop_count_concept"
+      ],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md"
+    },
+    {
+      "id": "sgc_full_grade_spectrum",
+      "label": "SGC Full Grading Scale (Grades 1–10)",
+      "nodes": [
+        "sgc_grading_scale_sgc",
+        "sgc_grading_scale_2_grade_10_gem",
+        "sgc_grading_scale_20_grade_1_poor"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/SGC Grading Scale.md"
+    },
+    {
+      "id": "card_investment_pop_count_strategy",
+      "label": "Card Investment Strategy via POP Count Analysis",
+      "nodes": [
+        "pop_count_pop_count_concept",
+        "pop_count_high_pop_strategy",
+        "pop_count_low_pop_strategy"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md"
+    }
+  ],
+  "input_tokens": 8200,
+  "output_tokens": 2100
+}

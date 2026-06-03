@@ -1,0 +1,47 @@
+{
+  "nodes": [
+    {
+      "id": "crawl_obsidian_js",
+      "label": "crawl-obsidian.js",
+      "file_type": "code",
+      "source_file": "crawl-obsidian.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "bookmarklets_crawl_obsidian_sec",
+      "label": "sec()",
+      "file_type": "code",
+      "source_file": "crawl-obsidian.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "bookmarklets_crawl_obsidian_chip",
+      "label": "chip()",
+      "file_type": "code",
+      "source_file": "crawl-obsidian.js",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "crawl_obsidian_js",
+      "target": "bookmarklets_crawl_obsidian_sec",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "crawl-obsidian.js",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "crawl_obsidian_js",
+      "target": "bookmarklets_crawl_obsidian_chip",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "crawl-obsidian.js",
+      "source_location": "L1",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

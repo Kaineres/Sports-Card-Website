@@ -17,13 +17,24 @@ function highlight(text: string, q: string) {
 }
 
 export default function HubSearch() {
-  const [query, setQuery]       = useState('')
-  const [results, setResults]   = useState<CatalogCard[]>([])
-  const [open, setOpen]         = useState(false)
-  const [focusIdx, setFocusIdx] = useState(-1)
-  const router   = useRouter()
-  const wrapRef  = useRef<HTMLDivElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
+  const [query, setQuery]         = useState('')
+  const [results, setResults]     = useState<CatalogCard[]>([])
+  const [open, setOpen]           = useState(false)
+  const [focusIdx, setFocusIdx]   = useState(-1)
+  const [photoModal, setPhotoModal] = useState(false)
+  const [dragOver, setDragOver]   = useState(false)
+  const router    = useRouter()
+  const wrapRef   = useRef<HTMLDivElement>(null)
+  const inputRef  = useRef<HTMLInputElement>(null)
+  const photoRef  = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setPhotoModal(false)
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [])
 
   function handleChange(val: string) {
     setQuery(val)
@@ -42,7 +53,8 @@ export default function HubSearch() {
 
   function pickCard(card: CatalogCard) {
     setQuery(card.player)
-    navigate(card.player)
+    setOpen(false)
+    router.push(`/player/${encodeURIComponent(card.player)}`)
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {
@@ -84,7 +96,8 @@ export default function HubSearch() {
   }
 
   return (
-    <div ref={wrapRef} style={{ width: '100%', maxWidth: '560px', position: 'relative' }}>
+    <div ref={wrapRef} style={{ width: '100%', maxWidth: '560px' }}>
+      <div style={{ position: 'relative' }}>
       <form onSubmit={handleSubmit}>
         <div style={{
           display: 'flex', alignItems: 'center', gap: '10px',
@@ -174,45 +187,33 @@ export default function HubSearch() {
                   transition: 'background 0.1s',
                 }}
               >
-                {/* Left: text + inline sport badge */}
+                {/* Left: circular sport badge + player info */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
-                  {/* Sport square badge — solid background */}
                   <div style={{
-                    width: '40px', height: '40px', borderRadius: '8px', flexShrink: 0,
+                    width: '42px', height: '42px', borderRadius: '50%', flexShrink: 0,
                     background: meta.color,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
                     <span style={{
-                      fontFamily: 'var(--font-mono)', fontSize: '0.58rem', fontWeight: 800,
-                      color: '#0d1117', letterSpacing: '0.03em', lineHeight: 1,
+                      fontFamily: 'var(--font-mono)', fontSize: '0.62rem', fontWeight: 800,
+                      color: '#fff', letterSpacing: '0.03em', lineHeight: 1,
                     }}>{card.sport}</span>
                   </div>
 
                   <div style={{ minWidth: 0 }}>
-                    {/* Player name + inline league pill — solid */}
-                    <div style={{
-                      display: 'flex', alignItems: 'center', gap: '7px',
-                      whiteSpace: 'nowrap', overflow: 'hidden',
-                    }}>
+                    <div style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       <span style={{
-                        fontFamily: 'var(--font-display)', fontSize: '0.88rem', fontWeight: 700,
-                        color: 'var(--text)', lineHeight: 1.3, flexShrink: 1,
-                        overflow: 'hidden', textOverflow: 'ellipsis',
+                        fontFamily: 'var(--font-display)', fontSize: '0.9rem', fontWeight: 700,
+                        color: 'var(--text)', lineHeight: 1.3,
                       }}>
                         {highlight(card.player, query)}
                       </span>
-                      <span style={{
-                        padding: '2px 7px', borderRadius: '4px', flexShrink: 0,
-                        background: meta.color,
-                        fontFamily: 'var(--font-mono)', fontSize: '0.58rem', fontWeight: 800,
-                        color: '#0d1117', letterSpacing: '0.04em', lineHeight: 1.6,
-                      }}>{card.sport}</span>
                     </div>
                     <div style={{
-                      fontFamily: 'var(--font-mono)', fontSize: '0.63rem', color: 'var(--text3)',
+                      fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text3)',
                       marginTop: '3px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                     }}>
-                      {card.setName} · {card.grade} · {card.year}
+                      {card.grade} · {card.setName} · {card.year}
                     </div>
                   </div>
                 </div>
@@ -275,39 +276,188 @@ export default function HubSearch() {
         </div>
       )}
 
-      {/* Photo search */}
+      </div>{/* end position:relative inner wrapper */}
+
+      {/* Photo search trigger */}
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '12px' }}>
-        <button type="button" style={{
-          display: 'flex', alignItems: 'center', gap: '7px',
-          padding: '7px 16px',
-          background: 'var(--bg3)',
-          border: '1px solid var(--border-md)',
-          borderRadius: '8px',
-          color: 'var(--text2)',
-          fontFamily: 'var(--font-display)',
-          fontSize: '0.8rem',
-          fontWeight: 500,
-          cursor: 'pointer',
-          transition: '0.15s',
-        }}
-        onMouseEnter={e => {
-          (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-lg)'
-          ;(e.currentTarget as HTMLElement).style.color = 'var(--text)'
-        }}
-        onMouseLeave={e => {
-          (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-md)'
-          ;(e.currentTarget as HTMLElement).style.color = 'var(--text2)'
-        }}
+        <button
+          type="button"
+          onClick={() => setPhotoModal(true)}
+          style={{
+            display: 'flex', alignItems: 'center', gap: '7px',
+            padding: '7px 16px',
+            background: 'var(--bg3)',
+            border: '1px solid var(--border-md)',
+            borderRadius: '8px',
+            color: 'var(--text2)',
+            fontFamily: 'var(--font-display)',
+            fontSize: '0.8rem',
+            fontWeight: 500,
+            cursor: 'pointer',
+            transition: '0.15s',
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLElement).style.borderColor = 'var(--gold-border)'
+            ;(e.currentTarget as HTMLElement).style.color = 'var(--text)'
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-md)'
+            ;(e.currentTarget as HTMLElement).style.color = 'var(--text2)'
+          }}
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-          >
-            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
-            <circle cx="12" cy="13" r="3"/>
-          </svg>
+          <CameraIcon size={14} />
           Search by Photo
         </button>
       </div>
+
+      {/* ── Photo Search Modal ── */}
+      {photoModal && (
+        <div
+          style={{
+            position: 'fixed', inset: 0, zIndex: 999,
+            background: 'rgba(0,0,0,0.72)',
+            backdropFilter: 'blur(8px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '1rem',
+          }}
+          onClick={() => setPhotoModal(false)}
+        >
+          <div
+            style={{
+              background: 'var(--bg2)',
+              border: '1px solid var(--border-md)',
+              borderRadius: '16px',
+              padding: '1.75rem',
+              width: '100%', maxWidth: '460px',
+              boxShadow: '0 32px 80px rgba(0,0,0,0.7)',
+            }}
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '6px' }}>
+              <h2 style={{
+                fontFamily: 'var(--font-display)', fontSize: '1.3rem', fontWeight: 700,
+                color: 'var(--text)', margin: 0,
+              }}>Photo Card Search</h2>
+              <button
+                onClick={() => setPhotoModal(false)}
+                style={{
+                  width: '30px', height: '30px', borderRadius: '7px',
+                  border: '1px solid var(--border-md)', background: 'var(--bg3)',
+                  color: 'var(--text2)', fontSize: '1rem', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  flexShrink: 0,
+                }}
+              >✕</button>
+            </div>
+            <p style={{
+              fontFamily: 'var(--font-mono)', fontSize: '0.71rem', color: 'var(--text3)',
+              marginBottom: '1.5rem', lineHeight: 1.55, marginTop: '4px',
+            }}>
+              Upload or snap a photo — AI identifies the card instantly
+            </p>
+
+            {/* Drop zone */}
+            <div
+              onClick={() => photoRef.current?.click()}
+              onDragOver={e => { e.preventDefault(); setDragOver(true) }}
+              onDragLeave={() => setDragOver(false)}
+              onDrop={e => { e.preventDefault(); setDragOver(false) }}
+              style={{
+                border: `1.5px dashed ${dragOver ? 'var(--gold2)' : 'rgba(184,146,46,0.32)'}`,
+                borderRadius: '10px',
+                background: dragOver ? 'rgba(184,146,46,0.06)' : 'rgba(255,255,255,0.02)',
+                padding: '2.5rem 1.5rem',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px',
+                cursor: 'pointer', textAlign: 'center',
+                transition: 'border-color 0.15s, background 0.15s',
+                marginBottom: '1.25rem',
+              }}
+            >
+              <DropCameraIcon />
+              <div style={{
+                fontFamily: 'var(--font-display)', fontWeight: 700,
+                fontSize: '1rem', color: 'var(--text)',
+              }}>
+                Drop a card photo here
+              </div>
+              <div style={{
+                fontFamily: 'var(--font-mono)', fontSize: '0.69rem', color: 'var(--text3)',
+              }}>
+                JPG, PNG, WEBP — or click to browse
+              </div>
+              <input ref={photoRef} type="file" accept="image/*" style={{ display: 'none' }} />
+            </div>
+
+            {/* Divider */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1rem' }}>
+              <div style={{ flex: 1, height: '1px', background: 'var(--border-md)' }} />
+              <span style={{
+                fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--text3)',
+                letterSpacing: '0.14em', textTransform: 'uppercase', whiteSpace: 'nowrap',
+              }}>OR USE CAMERA</span>
+              <div style={{ flex: 1, height: '1px', background: 'var(--border-md)' }} />
+            </div>
+
+            {/* Use Camera button */}
+            <button style={{
+              width: '100%', padding: '12px',
+              background: 'none',
+              border: '1px solid var(--border-md)',
+              borderRadius: '8px',
+              color: 'var(--text2)',
+              fontFamily: 'var(--font-display)', fontSize: '0.9rem', fontWeight: 600,
+              cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '9px',
+              transition: '0.15s',
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLElement).style.borderColor = 'var(--gold-border)'
+              ;(e.currentTarget as HTMLElement).style.color = 'var(--text)'
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-md)'
+              ;(e.currentTarget as HTMLElement).style.color = 'var(--text2)'
+            }}
+            >
+              <CameraIcon size={16} />
+              Use Camera
+            </button>
+          </div>
+        </div>
+      )}
     </div>
+  )
+}
+
+function CameraIcon({ size }: { size: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+    >
+      <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+      <circle cx="12" cy="13" r="3"/>
+    </svg>
+  )
+}
+
+function DropCameraIcon() {
+  return (
+    <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Hat brim */}
+      <rect x="14" y="14" width="24" height="3" rx="1.5" fill="rgba(184,146,46,0.6)"/>
+      {/* Hat top */}
+      <rect x="19" y="7" width="14" height="8" rx="2" fill="rgba(184,146,46,0.5)"/>
+      {/* Camera body */}
+      <rect x="8" y="22" width="36" height="24" rx="4" fill="none" stroke="rgba(184,146,46,0.7)" strokeWidth="2"/>
+      {/* Lens ring */}
+      <circle cx="26" cy="34" r="8" fill="none" stroke="rgba(184,146,46,0.7)" strokeWidth="2"/>
+      {/* Lens inner */}
+      <circle cx="26" cy="34" r="4" fill="rgba(184,146,46,0.25)"/>
+      {/* Viewfinder bump */}
+      <rect x="20" y="19" width="6" height="4" rx="1.5" fill="rgba(184,146,46,0.5)"/>
+      {/* Flash dot */}
+      <circle cx="38" cy="27" r="2" fill="rgba(184,146,46,0.5)"/>
+    </svg>
   )
 }

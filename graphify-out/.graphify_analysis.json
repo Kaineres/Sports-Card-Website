@@ -1,0 +1,416 @@
+{
+  "communities": {
+    "0": [
+      "cards_index_concept_bgs_subgrades",
+      "cards_index_concept_card_grading",
+      "cards_index_concept_grading_qualifiers",
+      "cards_index_concept_grading_scales",
+      "cards_index_concept_grading_service_tiers",
+      "cards_index_concept_no_grade_outcomes",
+      "cards_index_concept_population_report",
+      "cards_index_entity_bgs",
+      "cards_index_entity_cgc",
+      "cards_index_entity_psa",
+      "cards_index_entity_sgc",
+      "cards_log",
+      "cards_log_bgs_overview_ingest",
+      "cards_log_bgs_scale_ingest",
+      "cards_log_cgc_scale_ingest",
+      "cards_log_pop_report_ingest",
+      "concept_bgs_black_gold_label_distinction",
+      "concept_bgs_four_subgrade_model",
+      "concept_bgs_security_label",
+      "concept_cgc_pristine_vs_gem_mint",
+      "concept_cross_grader_grade_rate",
+      "concept_pop_report_value_mechanics",
+      "raw_bgs_grading_overview",
+      "raw_bgs_scale_back_button",
+      "raw_bgs_scale_back_button_1",
+      "raw_bgs_scale_back_button_10",
+      "raw_bgs_scale_back_button_11",
+      "raw_bgs_scale_back_button_2",
+      "raw_bgs_scale_back_button_3",
+      "raw_bgs_scale_back_button_4",
+      "raw_bgs_scale_back_button_5",
+      "raw_bgs_scale_back_button_6",
+      "raw_bgs_scale_back_button_7",
+      "raw_bgs_scale_back_button_8",
+      "raw_bgs_scale_back_button_9",
+      "raw_cgc_grading_scale",
+      "raw_graded_pop_reports_goingtwice"
+    ],
+    "1": [
+      "cgc_certlookup_56_golduck_fossil",
+      "cgc_certlookup_cgc",
+      "cgc_certlookup_cgc_cert_verification",
+      "cgc_certlookup_cgc_guarantee",
+      "cgc_certlookup_cgc_population_report",
+      "pop_count_connor_bedard_young_guns",
+      "pop_count_high_pop_strategy",
+      "pop_count_low_pop_strategy",
+      "pop_count_pop_count_concept",
+      "pop_count_psa",
+      "pop_count_psa_population_report",
+      "pop_count_young_guns_outburst_parallel",
+      "sgc_grading_scale_10_grade_6_ex_nm",
+      "sgc_grading_scale_11_grade_5_5_ex_plus",
+      "sgc_grading_scale_12_grade_5_ex",
+      "sgc_grading_scale_13_grade_4_5_vg_ex_plus",
+      "sgc_grading_scale_14_grade_4_vg_ex",
+      "sgc_grading_scale_15_grade_3_5_vg_plus",
+      "sgc_grading_scale_16_grade_3_vg",
+      "sgc_grading_scale_17_grade_2_5_good_plus",
+      "sgc_grading_scale_18_grade_2_good",
+      "sgc_grading_scale_19_grade_1_5_fair",
+      "sgc_grading_scale_20_grade_1_poor",
+      "sgc_grading_scale_2_grade_10_gem",
+      "sgc_grading_scale_3_grade_9_5_mint_plus",
+      "sgc_grading_scale_4_grade_9_mint",
+      "sgc_grading_scale_5_grade_8_5_nm_mt_plus",
+      "sgc_grading_scale_6_grade_8_nm_mt",
+      "sgc_grading_scale_7_grade_7_5_nm_plus",
+      "sgc_grading_scale_8_grade_7_nrmt",
+      "sgc_grading_scale_9_grade_6_5_ex_nm_plus",
+      "sgc_grading_scale_no_tweeners_principle",
+      "sgc_grading_scale_sgc",
+      "sgc_grading_scale_sgc_grading_scale"
+    ],
+    "2": [
+      "2024-panini-mosaic-football_2024_panini_mosaic_football",
+      "bgs-subgrades_bgs_subgrades",
+      "bgs_bgs",
+      "card-grading_card_grading",
+      "card-parallels_card_parallels",
+      "cgc_cgc",
+      "concept_crack_resubmit",
+      "concept_cross_grading",
+      "concept_diamond_cutting",
+      "concept_grader_subjectivity",
+      "concept_metallic_print_lines",
+      "concept_parallel_rainbow",
+      "concept_print_run",
+      "concept_pristine_above_gem_mint",
+      "concept_pristine_black_gold_label",
+      "concept_psa_n_codes",
+      "grading-qualifiers_grading_qualifiers",
+      "grading-scales_grading_scales",
+      "grading-service-tiers_grading_service_tiers",
+      "no-grade-outcomes_no_grade_outcomes",
+      "panini_panini",
+      "population-report_population_report",
+      "psa_psa",
+      "sgc_sgc",
+      "src_beckett-2024-panini-mosaic-football",
+      "src_bgs-grading-overview",
+      "src_bgs-grading-scale",
+      "src_cgc-grading-scale",
+      "src_goingtwice-graded-pop-reports",
+      "src_packz-psa-population-report-guide",
+      "src_psa-grading-service",
+      "src_psa-grading-standards"
+    ],
+    "3": [
+      "adr_template",
+      "architecture_topic",
+      "business_plan",
+      "business_plan_carson_froy",
+      "business_plan_competitors",
+      "business_plan_decision_intelligence",
+      "business_plan_decision_logging_experiment",
+      "business_plan_kain_kim",
+      "business_plan_subscription_tiers",
+      "business_plan_wedge",
+      "company_index",
+      "data_model_topic",
+      "ebay_pipeline_catalog_refresh_flow",
+      "ebay_pipeline_data_model",
+      "ebay_pipeline_live_search_flow",
+      "ebay_pipeline_three_layer_arch",
+      "engineering_index",
+      "engineering_log",
+      "founder_agreement",
+      "founder_agreement_equity_vesting",
+      "founder_agreement_georgia_llc",
+      "founder_agreement_ip_assignment",
+      "n8n_wiki_ingest_automation",
+      "n8n_wiki_ingest_rationale",
+      "plan_ebay_pricing_pipeline",
+      "pricing_pipeline_topic",
+      "spec_ebay_pricing_pipeline"
+    ],
+    "4": [
+      "print_lines_defect",
+      "psa_eye_appeal_subjectivity",
+      "psa_grade_1",
+      "psa_grade_10",
+      "psa_grade_1_5",
+      "psa_grade_2",
+      "psa_grade_3",
+      "psa_grade_4",
+      "psa_grade_5",
+      "psa_grade_6",
+      "psa_grade_7",
+      "psa_grade_8",
+      "psa_grade_9",
+      "psa_grading_scale",
+      "psa_no_grade_codes",
+      "psa_qualifiers",
+      "sgc_grade_10_pri",
+      "sgc_grade_5_5",
+      "sgc_grade_6",
+      "sgc_grading_scale",
+      "sgc_grading_scale_20step",
+      "sgc_grading_scale_defect_vocab",
+      "sgc_grading_scale_halfgrades",
+      "sgc_grading_service"
+    ],
+    "5": [
+      "bgs_grading_service",
+      "bgs_population_report",
+      "cross_grading",
+      "junk_wax_era",
+      "market_report_population_perspective",
+      "official_trading_card_grading_service",
+      "pop_report_context_limitation",
+      "pop_report_crack_resubmit",
+      "pop_report_grade_distribution",
+      "pop_report_market_demand_intersection",
+      "pop_report_rarity_assessment",
+      "psa_authentication_process",
+      "psa_cardfacts",
+      "psa_certification_number",
+      "psa_grading_service",
+      "psa_population_report",
+      "psa_price_guide",
+      "psa_service_tiers",
+      "psa_set_registry"
+    ],
+    "6": [
+      "crawl_obsidian_bookmarklet",
+      "crawl_obsidian_n8n_webhook",
+      "crawl_obsidian_research_criteria",
+      "crawl_obsidian_sport_filter",
+      "docs_claude_ingest_operation",
+      "docs_claude_lint_operation",
+      "docs_claude_ownership_model",
+      "docs_claude_page_frontmatter",
+      "docs_claude_query_operation",
+      "docs_claude_source_summary_pages",
+      "docs_claude_wiki_schema",
+      "docs_readme_cards_subwiki",
+      "docs_readme_engineering_subwiki",
+      "docs_readme_vault"
+    ],
+    "7": [
+      "business_plan_five_signals",
+      "psa_market_report_exclusions",
+      "psa_market_report_pop_misreading_warning",
+      "psa_market_report_pop_report_definition",
+      "psa_market_report_population_perspective",
+      "sundocards_cross_grading_inflation",
+      "sundocards_pop_pipeline",
+      "sundocards_pop_reports",
+      "sundocards_within_grade_variation",
+      "yahoo_pop_count_definition",
+      "yahoo_pop_count_explained",
+      "yahoo_pop_count_modern_growth",
+      "yahoo_pop_count_seller_competition"
+    ],
+    "8": [
+      "cards_index_concept_card_parallels",
+      "cards_index_entity_2024_panini_mosaic",
+      "cards_index_entity_panini",
+      "cards_log_panini_mosaic_ingest",
+      "concept_2024_mosaic_parallel_rainbow",
+      "raw_panini_mosaic_checklist"
+    ],
+    "9": [
+      "bookmarklets_crawl_obsidian_chip",
+      "bookmarklets_crawl_obsidian_sec",
+      "crawl_obsidian_js"
+    ],
+    "10": [
+      "frontend_scaffold_turborepo_monorepo",
+      "plan_frontend_scaffold",
+      "spec_frontend_scaffold"
+    ],
+    "11": [
+      "llm_wiki_obsidian_vault",
+      "plan_llm_wiki",
+      "spec_llm_wiki"
+    ],
+    "12": [
+      "cards_log_junk_file_assess",
+      "raw_example_domain"
+    ],
+    "13": [
+      "cards_log_psa_grading_service_ingest"
+    ],
+    "14": [
+      "cards_log_sgc_scale_ingest"
+    ]
+  },
+  "cohesion": {
+    "0": 0.07807807807807808,
+    "1": 0.0677361853832442,
+    "2": 0.21774193548387097,
+    "3": 0.1282051282051282,
+    "4": 0.09420289855072464,
+    "5": 0.14035087719298245,
+    "6": 0.18681318681318682,
+    "7": 0.20512820512820512,
+    "8": 0.4666666666666667,
+    "9": 0.6666666666666666,
+    "10": 1.0,
+    "11": 1.0,
+    "12": 1.0,
+    "13": 1.0,
+    "14": 1.0
+  },
+  "gods": [
+    {
+      "id": "sgc_grading_scale_sgc",
+      "label": "SGC (Sportscard Guaranty Corporation)",
+      "degree": 23
+    },
+    {
+      "id": "grading-scales_grading_scales",
+      "label": "Grading Scales",
+      "degree": 18
+    },
+    {
+      "id": "psa_psa",
+      "label": "PSA (Professional Sports Authenticator)",
+      "degree": 18
+    },
+    {
+      "id": "psa_grading_scale",
+      "label": "PSA 10-Point Grading Scale",
+      "degree": 17
+    },
+    {
+      "id": "card-grading_card_grading",
+      "label": "Card Grading",
+      "degree": 16
+    },
+    {
+      "id": "population-report_population_report",
+      "label": "Population Report",
+      "degree": 15
+    },
+    {
+      "id": "bgs_bgs",
+      "label": "BGS (Beckett Grading Services)",
+      "degree": 14
+    },
+    {
+      "id": "business_plan",
+      "label": "SlabMetrics Business Plan v0.1",
+      "degree": 14
+    },
+    {
+      "id": "cards_index_concept_grading_scales",
+      "label": "Grading Scales (1-10 Numeric Scale Across Services)",
+      "degree": 13
+    },
+    {
+      "id": "sgc_sgc",
+      "label": "SGC (Sportscard Guaranty Corporation)",
+      "degree": 13
+    }
+  ],
+  "surprises": [
+    {
+      "source": "Crawl Site to Obsidian Bookmarklet",
+      "target": "Ingest Operation Protocol",
+      "source_files": [
+        "docs/bookmarklets/crawl-obsidian.js",
+        "docs/CLAUDE.md"
+      ],
+      "confidence": "INFERRED",
+      "relation": "conceptually_related_to",
+      "why": "inferred connection - not explicitly stated in source; crosses file types (code ↔ doc)"
+    },
+    {
+      "source": "PSA Eye Appeal and Subjectivity in Grading",
+      "target": "Population Report Rarity Assessment",
+      "source_files": [
+        "docs/cards/raw/PSA Grading Standards.md",
+        "docs/cards/raw/How to Use PSA and BGS Pop Reports to Your Advantage.md"
+      ],
+      "confidence": "INFERRED",
+      "relation": "semantically_similar_to",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities; semantically similar concepts with no structural link"
+    },
+    {
+      "source": "SGC (Sportscard Guaranty Corporation)",
+      "target": "PSA (Professional Sports Authenticator)",
+      "source_files": [
+        "docs/cards/raw/SGC Grading Scale.md",
+        "docs/cards/raw/Sports Card Investing Population Count Explained and What it Means to You.md"
+      ],
+      "confidence": "INFERRED",
+      "relation": "semantically_similar_to",
+      "why": "inferred connection - not explicitly stated in source; semantically similar concepts with no structural link; peripheral node `PSA (Professional Sports Authenticator)` unexpectedly reaches hub `SGC (Sportscard Guaranty Corporation)`"
+    },
+    {
+      "source": "Cards Wiki Log (Append-Only Ingest History)",
+      "target": "Wiki Ownership Model (raw=human, wiki=LLM, log=append-only)",
+      "source_files": [
+        "docs/cards/log.md",
+        "docs/CLAUDE.md"
+      ],
+      "confidence": "INFERRED",
+      "relation": "implements",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities"
+    },
+    {
+      "source": "Population Report Value Mechanics (Rarity + Grade Distribution)",
+      "target": "Grading Scales (1-10 Numeric Scale Across Services)",
+      "source_files": [
+        "docs/cards/raw/Graded Pop Reports - What do they mean.md",
+        "docs/cards/index.md"
+      ],
+      "confidence": "INFERRED",
+      "relation": "conceptually_related_to",
+      "why": "inferred connection - not explicitly stated in source; peripheral node `Population Report Value Mechanics (Rarity + Grade Distribution)` unexpectedly reaches hub `Grading Scales (1-10 Numeric Scale Across Services)`"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `PSA 10-Point Grading Scale` connect `Community 4` to `Community 5`?",
+      "why": "High betweenness centrality (0.027) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `Cards Wiki Log (Append-Only Ingest History)` connect `Community 0` to `Community 6`?",
+      "why": "High betweenness centrality (0.023) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `SlabMetrics Business Plan v0.1` connect `Community 3` to `Community 7`?",
+      "why": "High betweenness centrality (0.022) - this node is a cross-community bridge."
+    },
+    {
+      "type": "verify_inferred",
+      "question": "Are the 2 inferred relationships involving `SGC (Sportscard Guaranty Corporation)` (e.g. with `PSA (Professional Sports Authenticator)` and `CGC (Certified Guaranty Company) Cards`) actually correct?",
+      "why": "`SGC (Sportscard Guaranty Corporation)` has 2 INFERRED edges - model-reasoned connections that need verification."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `n8n Crawl Webhook Endpoint`, `Sport Context Filter (NFL/NBA/MLB/NHL/Soccer/Golf/Tennis)`, `Research Focus Criteria (Card Values / Player / Grading / Investment)` to the rest of the system?",
+      "why": "80 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 0` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.07807807807807808 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 1` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.0677361853832442 - nodes in this community are weakly interconnected."
+    }
+  ]
+}

@@ -3,18 +3,20 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { SignInButton, SignUpButton, UserButton, useUser } from '@clerk/nextjs'
+import { useWatchlist } from '@/lib/watchlist-context'
 
 const NAV_LINKS = [
   { href: '/',           label: 'Home' },
   { href: '/market',     label: 'Market Analysis' },
   { href: '/collection', label: 'Collection' },
-  { href: '/watchlist',  label: 'Watchlist', badge: '0' },
+  { href: '/watchlist',  label: 'Watchlist', badge: true },
   { href: '/grading',    label: 'AI Grading', isAI: true },
 ]
 
 export default function Nav() {
   const pathname = usePathname()
   const { isSignedIn } = useUser()
+  const { watchedIds } = useWatchlist()
 
   return (
     <nav
@@ -34,20 +36,11 @@ export default function Nav() {
       <Link
         href="/"
         style={{
-          display: 'flex', alignItems: 'center', gap: '10px',
+          display: 'flex', alignItems: 'center',
           textDecoration: 'none', marginRight: '2.5rem', flexShrink: 0,
         }}
       >
-        <LogoMark />
-        <span style={{
-          fontFamily: 'var(--font-serif)',
-          fontWeight: 700,
-          fontSize: '1.05rem',
-          color: 'var(--text)',
-          letterSpacing: '-0.01em',
-        }}>
-          SlabMetrics
-        </span>
+        <img src="/logo.png" alt="SlabMetrics" style={{ height: '72px', width: 'auto' }} />
       </Link>
 
       {/* Nav links */}
@@ -93,7 +86,7 @@ export default function Nav() {
                   }}>+</span>
                 )}
                 {link.label}
-                {link.badge && (
+                {link.badge && watchedIds.size > 0 && (
                   <span style={{
                     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                     minWidth: '18px', height: '18px', borderRadius: '9px',
@@ -101,7 +94,7 @@ export default function Nav() {
                     fontSize: '0.6rem', fontWeight: 600, color: 'var(--gold2)',
                     fontFamily: 'var(--font-mono)', padding: '0 5px',
                   }}>
-                    {link.badge}
+                    {watchedIds.size}
                   </span>
                 )}
               </Link>
@@ -155,19 +148,3 @@ export default function Nav() {
   )
 }
 
-function LogoMark() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="32" height="32" rx="7" fill="#0d1117"/>
-      <rect x="0.5" y="0.5" width="31" height="31" rx="6.5" stroke="rgba(201,168,76,0.3)"/>
-      {/* Card slab outline */}
-      <rect x="8" y="7" width="11" height="15" rx="1.5" stroke="#b8922e" strokeWidth="1.2"/>
-      <rect x="10" y="9" width="7" height="9" rx="0.8" fill="rgba(184,146,46,0.12)" stroke="#d4a843" strokeWidth="0.8"/>
-      {/* Grade label */}
-      <rect x="8" y="19" width="11" height="3" rx="0" fill="rgba(184,146,46,0.15)"/>
-      <line x1="10" y1="20.5" x2="17" y2="20.5" stroke="#f0c96a" strokeWidth="0.7"/>
-      {/* Analytics line */}
-      <polyline points="21,22 23,18 25,19 27,14" stroke="#34c97a" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  )
-}

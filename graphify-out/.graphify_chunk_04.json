@@ -1,0 +1,2147 @@
+{
+  "nodes": [
+    {
+      "id": "bgs-subgrades_bgs_subgrades",
+      "label": "BGS Subgrades",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/bgs-subgrades.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "card-grading_card_grading",
+      "label": "Card Grading",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "card-parallels_card_parallels",
+      "label": "Card Parallels",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/card-parallels.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "grading-qualifiers_grading_qualifiers",
+      "label": "Grading Qualifiers",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/grading-qualifiers.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "grading-scales_grading_scales",
+      "label": "Grading Scales",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "grading-service-tiers_grading_service_tiers",
+      "label": "Grading Service Tiers",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/grading-service-tiers.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "no-grade-outcomes_no_grade_outcomes",
+      "label": "No-Grade Outcomes",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/no-grade-outcomes.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "population-report_population_report",
+      "label": "Population Report",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/population-report.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "2024-panini-mosaic-football_2024_panini_mosaic_football",
+      "label": "2024 Panini Mosaic Football",
+      "file_type": "document",
+      "source_file": "docs/cards/wiki/entities/2024-panini-mosaic-football.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "bgs_bgs",
+      "label": "BGS (Beckett Grading Services)",
+      "file_type": "document",
+      "source_file": "docs/cards/wiki/entities/bgs.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "cgc_cgc",
+      "label": "CGC (Certified Guaranty Company Cards)",
+      "file_type": "document",
+      "source_file": "docs/cards/wiki/entities/cgc.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "panini_panini",
+      "label": "Panini America",
+      "file_type": "document",
+      "source_file": "docs/cards/wiki/entities/panini.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "psa_psa",
+      "label": "PSA (Professional Sports Authenticator)",
+      "file_type": "document",
+      "source_file": "docs/cards/wiki/entities/psa.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sgc_sgc",
+      "label": "SGC (Sportscard Guaranty Corporation)",
+      "file_type": "document",
+      "source_file": "docs/cards/wiki/entities/sgc.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_beckett-2024-panini-mosaic-football",
+      "label": "Source: Beckett 2024 Panini Mosaic Football Checklist",
+      "file_type": "document",
+      "source_file": "docs/cards/wiki/sources/beckett-2024-panini-mosaic-football.md",
+      "source_location": null,
+      "source_url": "https://www.beckett.com/news/2024-panini-mosaic-football-cards",
+      "captured_at": null,
+      "author": "Ryan Cracknell",
+      "contributor": null
+    },
+    {
+      "id": "src_bgs-grading-overview",
+      "label": "Source: BGS Grading Overview (beckett.com/grading)",
+      "file_type": "document",
+      "source_file": "docs/cards/wiki/sources/bgs-grading-overview.md",
+      "source_location": null,
+      "source_url": "https://www.beckett.com/grading",
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_bgs-grading-scale",
+      "label": "Source: BGS Grading Scale",
+      "file_type": "document",
+      "source_file": "docs/cards/wiki/sources/bgs-grading-scale.md",
+      "source_location": null,
+      "source_url": "https://www.beckett.com/grading",
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_cgc-grading-scale",
+      "label": "Source: CGC Grading Scale",
+      "file_type": "document",
+      "source_file": "docs/cards/wiki/sources/cgc-grading-scale.md",
+      "source_location": null,
+      "source_url": "https://www.cgccards.com/card-grading/grading-scale/",
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_goingtwice-graded-pop-reports",
+      "label": "Source: Graded Pop Reports — What Do They Mean? (Going Twice)",
+      "file_type": "document",
+      "source_file": "docs/cards/wiki/sources/goingtwice-graded-pop-reports.md",
+      "source_location": null,
+      "source_url": "https://www.goingtwice.com/blogs/grading/graded-pop-reports-what-do-they-mean",
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_packz-psa-population-report-guide",
+      "label": "Source: How to Use the PSA Population Report to Invest (Packz Blog)",
+      "file_type": "document",
+      "source_file": "docs/cards/wiki/sources/packz-psa-population-report-guide.md",
+      "source_location": null,
+      "source_url": "https://packz.io/blog/psa-population-report-guide",
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_psa-grading-service",
+      "label": "Source: PSA Official Trading Card Grading Service",
+      "file_type": "document",
+      "source_file": "docs/cards/wiki/sources/psa-grading-service.md",
+      "source_location": null,
+      "source_url": "https://www.psacard.com/services/grading",
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "src_psa-grading-standards",
+      "label": "Source: PSA Grading Standards",
+      "file_type": "document",
+      "source_file": "docs/cards/wiki/sources/psa-grading-standards.md",
+      "source_location": null,
+      "source_url": "https://www.psacard.com/gradingstandards#cards",
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_pristine_black_gold_label",
+      "label": "BGS Pristine Black Label vs Gold Label Distinction",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/bgs-subgrades.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_diamond_cutting",
+      "label": "Diamond Cutting (Card Defect Term)",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/bgs-subgrades.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_metallic_print_lines",
+      "label": "Metallic Print Lines / Refractor Lines (Surface Defect)",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/bgs-subgrades.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_parallel_rainbow",
+      "label": "Parallel Rainbow (Complete Parallel Variant Set for One Card)",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/card-parallels.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_print_run",
+      "label": "Print Run (Numbered Parallel Scarcity)",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/card-parallels.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_crack_resubmit",
+      "label": "Crack and Resubmit (Pop Report Distortion)",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/population-report.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_cross_grading",
+      "label": "Cross-Grading (Pop Report Distortion)",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/population-report.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_psa_n_codes",
+      "label": "PSA N-Codes (N1–N9 No-Grade Taxonomy)",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/no-grade-outcomes.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_grader_subjectivity",
+      "label": "Grader Subjectivity (Eye Appeal and Market Acceptability)",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_pristine_above_gem_mint",
+      "label": "Pristine 10 Above Gem Mint 10 Pattern (BGS/SGC/CGC)",
+      "file_type": "rationale",
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "bgs-subgrades_bgs_subgrades",
+      "target": "src_bgs-grading-scale",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/bgs-subgrades.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs-subgrades_bgs_subgrades",
+      "target": "src_bgs-grading-overview",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/bgs-subgrades.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs-subgrades_bgs_subgrades",
+      "target": "bgs_bgs",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/bgs-subgrades.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs-subgrades_bgs_subgrades",
+      "target": "grading-scales_grading_scales",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/bgs-subgrades.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs-subgrades_bgs_subgrades",
+      "target": "grading-qualifiers_grading_qualifiers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/bgs-subgrades.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs-subgrades_bgs_subgrades",
+      "target": "card-grading_card_grading",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/bgs-subgrades.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs-subgrades_bgs_subgrades",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/bgs-subgrades.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs-subgrades_bgs_subgrades",
+      "target": "sgc_sgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/bgs-subgrades.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs-subgrades_bgs_subgrades",
+      "target": "population-report_population_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/bgs-subgrades.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs-subgrades_bgs_subgrades",
+      "target": "concept_pristine_black_gold_label",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/bgs-subgrades.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs-subgrades_bgs_subgrades",
+      "target": "concept_diamond_cutting",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/bgs-subgrades.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs-subgrades_bgs_subgrades",
+      "target": "concept_metallic_print_lines",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/bgs-subgrades.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-grading_card_grading",
+      "target": "src_psa-grading-service",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-grading_card_grading",
+      "target": "src_psa-grading-standards",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-grading_card_grading",
+      "target": "src_bgs-grading-scale",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-grading_card_grading",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-grading_card_grading",
+      "target": "bgs_bgs",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-grading_card_grading",
+      "target": "sgc_sgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-grading_card_grading",
+      "target": "cgc_cgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-grading_card_grading",
+      "target": "grading-scales_grading_scales",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-grading_card_grading",
+      "target": "grading-qualifiers_grading_qualifiers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-grading_card_grading",
+      "target": "no-grade-outcomes_no_grade_outcomes",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-grading_card_grading",
+      "target": "grading-service-tiers_grading_service_tiers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-grading_card_grading",
+      "target": "population-report_population_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-grading_card_grading",
+      "target": "card-parallels_card_parallels",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-grading_card_grading",
+      "target": "bgs-subgrades_bgs_subgrades",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-grading_card_grading",
+      "target": "concept_grader_subjectivity",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-parallels_card_parallels",
+      "target": "src_beckett-2024-panini-mosaic-football",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-parallels.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-parallels_card_parallels",
+      "target": "panini_panini",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-parallels.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-parallels_card_parallels",
+      "target": "2024-panini-mosaic-football_2024_panini_mosaic_football",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-parallels.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-parallels_card_parallels",
+      "target": "population-report_population_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-parallels.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-parallels_card_parallels",
+      "target": "card-grading_card_grading",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-parallels.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-parallels_card_parallels",
+      "target": "grading-scales_grading_scales",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-parallels.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-parallels_card_parallels",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-parallels.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-parallels_card_parallels",
+      "target": "concept_parallel_rainbow",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-parallels.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "card-parallels_card_parallels",
+      "target": "concept_print_run",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-parallels.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-qualifiers_grading_qualifiers",
+      "target": "src_psa-grading-standards",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-qualifiers.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-qualifiers_grading_qualifiers",
+      "target": "grading-scales_grading_scales",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-qualifiers.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-qualifiers_grading_qualifiers",
+      "target": "no-grade-outcomes_no_grade_outcomes",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-qualifiers.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-qualifiers_grading_qualifiers",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-qualifiers.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-qualifiers_grading_qualifiers",
+      "target": "bgs_bgs",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-qualifiers.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-qualifiers_grading_qualifiers",
+      "target": "sgc_sgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-qualifiers.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-qualifiers_grading_qualifiers",
+      "target": "cgc_cgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-qualifiers.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-scales_grading_scales",
+      "target": "src_psa-grading-standards",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-scales_grading_scales",
+      "target": "src_bgs-grading-scale",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-scales_grading_scales",
+      "target": "src_cgc-grading-scale",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-scales_grading_scales",
+      "target": "card-grading_card_grading",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-scales_grading_scales",
+      "target": "grading-qualifiers_grading_qualifiers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-scales_grading_scales",
+      "target": "no-grade-outcomes_no_grade_outcomes",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-scales_grading_scales",
+      "target": "grading-service-tiers_grading_service_tiers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-scales_grading_scales",
+      "target": "population-report_population_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-scales_grading_scales",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-scales_grading_scales",
+      "target": "bgs_bgs",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-scales_grading_scales",
+      "target": "bgs-subgrades_bgs_subgrades",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-scales_grading_scales",
+      "target": "sgc_sgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-scales_grading_scales",
+      "target": "cgc_cgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-scales_grading_scales",
+      "target": "concept_pristine_above_gem_mint",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-service-tiers_grading_service_tiers",
+      "target": "src_psa-grading-service",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-service-tiers.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-service-tiers_grading_service_tiers",
+      "target": "src_bgs-grading-overview",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-service-tiers.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-service-tiers_grading_service_tiers",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-service-tiers.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-service-tiers_grading_service_tiers",
+      "target": "bgs_bgs",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-service-tiers.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-service-tiers_grading_service_tiers",
+      "target": "sgc_sgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-service-tiers.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-service-tiers_grading_service_tiers",
+      "target": "cgc_cgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-service-tiers.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-service-tiers_grading_service_tiers",
+      "target": "card-grading_card_grading",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-service-tiers.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "grading-service-tiers_grading_service_tiers",
+      "target": "grading-scales_grading_scales",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/grading-service-tiers.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "no-grade-outcomes_no_grade_outcomes",
+      "target": "src_psa-grading-standards",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/no-grade-outcomes.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "no-grade-outcomes_no_grade_outcomes",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/no-grade-outcomes.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "no-grade-outcomes_no_grade_outcomes",
+      "target": "card-grading_card_grading",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/no-grade-outcomes.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "no-grade-outcomes_no_grade_outcomes",
+      "target": "grading-scales_grading_scales",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/no-grade-outcomes.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "no-grade-outcomes_no_grade_outcomes",
+      "target": "grading-qualifiers_grading_qualifiers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/no-grade-outcomes.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "no-grade-outcomes_no_grade_outcomes",
+      "target": "bgs_bgs",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/no-grade-outcomes.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "no-grade-outcomes_no_grade_outcomes",
+      "target": "concept_psa_n_codes",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/no-grade-outcomes.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "population-report_population_report",
+      "target": "src_packz-psa-population-report-guide",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/population-report.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "population-report_population_report",
+      "target": "src_goingtwice-graded-pop-reports",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/population-report.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "population-report_population_report",
+      "target": "grading-scales_grading_scales",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/population-report.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "population-report_population_report",
+      "target": "card-grading_card_grading",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/population-report.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "population-report_population_report",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/population-report.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "population-report_population_report",
+      "target": "bgs_bgs",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/population-report.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "population-report_population_report",
+      "target": "cgc_cgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/population-report.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "population-report_population_report",
+      "target": "concept_crack_resubmit",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/population-report.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "population-report_population_report",
+      "target": "concept_cross_grading",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/population-report.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "2024-panini-mosaic-football_2024_panini_mosaic_football",
+      "target": "src_beckett-2024-panini-mosaic-football",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/2024-panini-mosaic-football.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "2024-panini-mosaic-football_2024_panini_mosaic_football",
+      "target": "panini_panini",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/2024-panini-mosaic-football.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "2024-panini-mosaic-football_2024_panini_mosaic_football",
+      "target": "card-parallels_card_parallels",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/2024-panini-mosaic-football.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "2024-panini-mosaic-football_2024_panini_mosaic_football",
+      "target": "population-report_population_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/2024-panini-mosaic-football.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "2024-panini-mosaic-football_2024_panini_mosaic_football",
+      "target": "grading-scales_grading_scales",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/2024-panini-mosaic-football.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "2024-panini-mosaic-football_2024_panini_mosaic_football",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/2024-panini-mosaic-football.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs_bgs",
+      "target": "src_bgs-grading-scale",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/bgs.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs_bgs",
+      "target": "src_bgs-grading-overview",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/bgs.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs_bgs",
+      "target": "src_goingtwice-graded-pop-reports",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/bgs.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs_bgs",
+      "target": "card-grading_card_grading",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/bgs.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs_bgs",
+      "target": "bgs-subgrades_bgs_subgrades",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/bgs.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs_bgs",
+      "target": "grading-scales_grading_scales",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/bgs.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs_bgs",
+      "target": "grading-service-tiers_grading_service_tiers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/bgs.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs_bgs",
+      "target": "population-report_population_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/bgs.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs_bgs",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/bgs.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs_bgs",
+      "target": "sgc_sgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/bgs.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs_bgs",
+      "target": "cgc_cgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/bgs.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "bgs_bgs",
+      "target": "concept_pristine_black_gold_label",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/bgs.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "cgc_cgc",
+      "target": "src_cgc-grading-scale",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/cgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "cgc_cgc",
+      "target": "grading-scales_grading_scales",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/cgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "cgc_cgc",
+      "target": "card-grading_card_grading",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/cgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "cgc_cgc",
+      "target": "population-report_population_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/cgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "cgc_cgc",
+      "target": "grading-service-tiers_grading_service_tiers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/cgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "cgc_cgc",
+      "target": "grading-qualifiers_grading_qualifiers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/cgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "cgc_cgc",
+      "target": "no-grade-outcomes_no_grade_outcomes",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/cgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "cgc_cgc",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/cgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "cgc_cgc",
+      "target": "bgs_bgs",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/cgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "cgc_cgc",
+      "target": "sgc_sgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/cgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "cgc_cgc",
+      "target": "concept_pristine_above_gem_mint",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/cgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "panini_panini",
+      "target": "src_beckett-2024-panini-mosaic-football",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/panini.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "panini_panini",
+      "target": "2024-panini-mosaic-football_2024_panini_mosaic_football",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/panini.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "panini_panini",
+      "target": "card-parallels_card_parallels",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/panini.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "panini_panini",
+      "target": "card-grading_card_grading",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/panini.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "panini_panini",
+      "target": "population-report_population_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/panini.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "panini_panini",
+      "target": "grading-scales_grading_scales",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/panini.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "panini_panini",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/panini.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "psa_psa",
+      "target": "src_psa-grading-service",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/psa.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "psa_psa",
+      "target": "src_psa-grading-standards",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/psa.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "psa_psa",
+      "target": "src_packz-psa-population-report-guide",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/psa.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "psa_psa",
+      "target": "card-grading_card_grading",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/psa.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "psa_psa",
+      "target": "grading-scales_grading_scales",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/psa.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "psa_psa",
+      "target": "grading-qualifiers_grading_qualifiers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/psa.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "psa_psa",
+      "target": "no-grade-outcomes_no_grade_outcomes",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/psa.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "psa_psa",
+      "target": "grading-service-tiers_grading_service_tiers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/psa.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "psa_psa",
+      "target": "population-report_population_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/psa.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "psa_psa",
+      "target": "bgs_bgs",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/psa.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "psa_psa",
+      "target": "sgc_sgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/psa.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "psa_psa",
+      "target": "cgc_cgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/psa.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "psa_psa",
+      "target": "concept_psa_n_codes",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/psa.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_sgc",
+      "target": "src_bgs-grading-scale",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/sgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_sgc",
+      "target": "card-grading_card_grading",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/sgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_sgc",
+      "target": "grading-scales_grading_scales",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/sgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_sgc",
+      "target": "grading-service-tiers_grading_service_tiers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/sgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_sgc",
+      "target": "population-report_population_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/sgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_sgc",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/sgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_sgc",
+      "target": "bgs_bgs",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/sgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_sgc",
+      "target": "cgc_cgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/sgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_sgc",
+      "target": "concept_diamond_cutting",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/sgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_sgc",
+      "target": "concept_metallic_print_lines",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/sgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sgc_sgc",
+      "target": "concept_pristine_above_gem_mint",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/entities/sgc.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_beckett-2024-panini-mosaic-football",
+      "target": "panini_panini",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/beckett-2024-panini-mosaic-football.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_beckett-2024-panini-mosaic-football",
+      "target": "2024-panini-mosaic-football_2024_panini_mosaic_football",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/beckett-2024-panini-mosaic-football.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_beckett-2024-panini-mosaic-football",
+      "target": "card-parallels_card_parallels",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/beckett-2024-panini-mosaic-football.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_bgs-grading-overview",
+      "target": "bgs_bgs",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/bgs-grading-overview.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_bgs-grading-overview",
+      "target": "bgs-subgrades_bgs_subgrades",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/bgs-grading-overview.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_bgs-grading-overview",
+      "target": "grading-service-tiers_grading_service_tiers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/bgs-grading-overview.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_bgs-grading-scale",
+      "target": "bgs_bgs",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/bgs-grading-scale.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_bgs-grading-scale",
+      "target": "bgs-subgrades_bgs_subgrades",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/bgs-grading-scale.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_bgs-grading-scale",
+      "target": "grading-scales_grading_scales",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/bgs-grading-scale.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_bgs-grading-scale",
+      "target": "card-grading_card_grading",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/bgs-grading-scale.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_cgc-grading-scale",
+      "target": "cgc_cgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/cgc-grading-scale.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_cgc-grading-scale",
+      "target": "grading-scales_grading_scales",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/cgc-grading-scale.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_goingtwice-graded-pop-reports",
+      "target": "population-report_population_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/goingtwice-graded-pop-reports.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_goingtwice-graded-pop-reports",
+      "target": "bgs_bgs",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/goingtwice-graded-pop-reports.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_goingtwice-graded-pop-reports",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/goingtwice-graded-pop-reports.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_goingtwice-graded-pop-reports",
+      "target": "cgc_cgc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/goingtwice-graded-pop-reports.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_packz-psa-population-report-guide",
+      "target": "population-report_population_report",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/packz-psa-population-report-guide.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_packz-psa-population-report-guide",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/packz-psa-population-report-guide.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_psa-grading-service",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/psa-grading-service.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_psa-grading-service",
+      "target": "card-grading_card_grading",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/psa-grading-service.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_psa-grading-service",
+      "target": "grading-service-tiers_grading_service_tiers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/psa-grading-service.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_psa-grading-standards",
+      "target": "grading-scales_grading_scales",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/psa-grading-standards.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_psa-grading-standards",
+      "target": "grading-qualifiers_grading_qualifiers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/psa-grading-standards.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_psa-grading-standards",
+      "target": "no-grade-outcomes_no_grade_outcomes",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/psa-grading-standards.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_psa-grading-standards",
+      "target": "card-grading_card_grading",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/psa-grading-standards.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "src_psa-grading-standards",
+      "target": "psa_psa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/sources/psa-grading-standards.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_diamond_cutting",
+      "target": "concept_metallic_print_lines",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "weight": 0.75
+    },
+    {
+      "source": "concept_pristine_black_gold_label",
+      "target": "concept_pristine_above_gem_mint",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/cards/wiki/concepts/grading-scales.md",
+      "source_location": null,
+      "weight": 0.85
+    },
+    {
+      "source": "concept_crack_resubmit",
+      "target": "concept_cross_grading",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/cards/wiki/concepts/population-report.md",
+      "source_location": null,
+      "weight": 0.85
+    },
+    {
+      "source": "concept_print_run",
+      "target": "population-report_population_report",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "docs/cards/wiki/concepts/card-parallels.md",
+      "source_location": null,
+      "weight": 0.95
+    },
+    {
+      "source": "concept_grader_subjectivity",
+      "target": "grading-scales_grading_scales",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md",
+      "source_location": null,
+      "weight": 0.85
+    },
+    {
+      "source": "bgs_bgs",
+      "target": "sgc_sgc",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/cards/wiki/entities/cgc.md",
+      "source_location": null,
+      "weight": 0.85
+    },
+    {
+      "source": "cgc_cgc",
+      "target": "sgc_sgc",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "docs/cards/wiki/entities/cgc.md",
+      "source_location": null,
+      "weight": 0.95
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "grading_service_ecosystem",
+      "label": "Four Major Grading Services Share the Card Grading Ecosystem",
+      "nodes": [
+        "psa_psa",
+        "bgs_bgs",
+        "sgc_sgc",
+        "cgc_cgc",
+        "card-grading_card_grading",
+        "grading-scales_grading_scales",
+        "population-report_population_report"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/card-grading.md"
+    },
+    {
+      "id": "pop_report_distortion_factors",
+      "label": "Population Report Distortion Factors (Crack-Resubmit, Cross-Grading, Submission Rate)",
+      "nodes": [
+        "concept_crack_resubmit",
+        "concept_cross_grading",
+        "population-report_population_report"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/cards/wiki/concepts/population-report.md"
+    },
+    {
+      "id": "panini_parallel_rarity_investment",
+      "label": "Panini Parallel Rarity and Investment Value Chain (Print Run + Grade + Pop Report)",
+      "nodes": [
+        "card-parallels_card_parallels",
+        "concept_print_run",
+        "population-report_population_report",
+        "grading-scales_grading_scales",
+        "panini_panini"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/cards/wiki/concepts/card-parallels.md"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

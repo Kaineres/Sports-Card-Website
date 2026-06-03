@@ -45,6 +45,11 @@
   --border-md: rgba(201,168,76,0.16);
   --border-lg: rgba(201,168,76,0.28);
 
+  /* index.html naming aliases */
+  --border:  rgba(201,168,76,0.08);
+  --border2: rgba(201,168,76,0.16);
+  --border3: rgba(201,168,76,0.28);
+
   /* ── Text ── */
   --text:  #ffffff;
   --text2: #c8aa88;
@@ -62,8 +67,8 @@
   --green-bg: rgba(52,201,122,0.09);
   --red:      #e05c5c;
   --red-bg:   rgba(224,92,92,0.09);
-  --blue:     #60a5fa;
-  --blue-bg:  rgba(96,165,250,0.09);
+  --blue:     #c9a84c;
+  --blue-bg:  rgba(201,168,76,0.08);
 
   /* ── Typography ── */
   --font-display: var(--font-jakarta, 'Plus Jakarta Sans', sans-serif);

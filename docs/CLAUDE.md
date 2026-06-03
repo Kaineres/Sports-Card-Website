@@ -45,6 +45,14 @@ certainty: Certain | Likely | Guessing
 
 Use Obsidian-style `[[wikilinks]]`, not standard markdown links. They survive renames and populate the graph view.
 
+**Backlinks are mandatory.** Every new or updated page must include `[[wikilinks]]` to all clearly related pages already in the vault. This is not optional — it populates the graph view and prevents orphan pages. Specifically:
+
+- When creating a page, scan the entire vault for pages whose content overlaps with the new page. Add every meaningful link, not just obvious ones.
+- Add a `## See also` section at the bottom of every page listing related pages with one-line explanations of *why* they're related.
+- When a page references a concept, entity, or topic that has its own page, always wikilink the reference in-line — don't just list it in See also.
+- Cross-wiki links are expected and encouraged: `company/` pages should link to `cards/` and `engineering/` pages they depend on; `engineering/` pages should link to `cards/` domain concepts they reference.
+- After adding content to any page, re-scan that page's See also for staleness — new vault pages may warrant new links.
+
 Every factual claim carries `[Certain]`, `[Likely]`, or `[Guessing]` — same scheme as the parent CLAUDE.md. If a claim can't be tagged, it doesn't belong on the page.
 
 Every claim has a source citation: `[[sources/<slug>]]`. No source = the claim doesn't go in.

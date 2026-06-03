@@ -1,0 +1,542 @@
+{
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\bookmarklets\\crawl-obsidian.js": {
+    "mtime": 1779237198.0372026,
+    "ast_hash": "cc3c6d314596fb76956a5fafe770b1e8",
+    "semantic_hash": "cc3c6d314596fb76956a5fafe770b1e8"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\CLAUDE.md": {
+    "mtime": 1779420304.1312878,
+    "ast_hash": "09aecec14e3c19f7bc2ac73ea2f5cb49",
+    "semantic_hash": "09aecec14e3c19f7bc2ac73ea2f5cb49"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\README.md": {
+    "mtime": 1779128486.9086452,
+    "ast_hash": "8dac01c993a710bd19c7aff0ece91f67",
+    "semantic_hash": "8dac01c993a710bd19c7aff0ece91f67"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\index.md": {
+    "mtime": 1779240054.3238103,
+    "ast_hash": "2b43184d63b166180164b633e22526a7",
+    "semantic_hash": "2b43184d63b166180164b633e22526a7"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\log.md": {
+    "mtime": 1779240068.9753728,
+    "ast_hash": "eb6d3da893121bc3716eb9e81a9cc2a2",
+    "semantic_hash": "eb6d3da893121bc3716eb9e81a9cc2a2"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\2024-panini-mosaic-football-checklist-team-sets-hobby-box-in-202605200037.md": {
+    "mtime": 1779237598.118757,
+    "ast_hash": "f20f46f62148d934ef9f04e1bc68afb5",
+    "semantic_hash": "f20f46f62148d934ef9f04e1bc68afb5"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Back Button 1.md": {
+    "mtime": 1779152197.6972218,
+    "ast_hash": "402fd69c2131f4e7db24b3537eb5f9f6",
+    "semantic_hash": "402fd69c2131f4e7db24b3537eb5f9f6"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Back Button 10.md": {
+    "mtime": 1779152292.6127057,
+    "ast_hash": "2354257c71a2d1acd386efffe21adfe6",
+    "semantic_hash": "2354257c71a2d1acd386efffe21adfe6"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Back Button 11.md": {
+    "mtime": 1779152802.111538,
+    "ast_hash": "7238cbd65f5f059cd34574ae7fef01e4",
+    "semantic_hash": "7238cbd65f5f059cd34574ae7fef01e4"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Back Button 2.md": {
+    "mtime": 1779152212.883826,
+    "ast_hash": "29f979457574602cb56449c5ce389624",
+    "semantic_hash": "29f979457574602cb56449c5ce389624"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Back Button 3.md": {
+    "mtime": 1779152218.9843926,
+    "ast_hash": "3a1e982a694a2df391b4cd075d801b84",
+    "semantic_hash": "3a1e982a694a2df391b4cd075d801b84"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Back Button 4.md": {
+    "mtime": 1779152222.0109165,
+    "ast_hash": "eef77d913fd957c90faf094dfdcd665f",
+    "semantic_hash": "eef77d913fd957c90faf094dfdcd665f"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Back Button 5.md": {
+    "mtime": 1779152227.256874,
+    "ast_hash": "16fe18631542c04f5e38fd9da2136ad1",
+    "semantic_hash": "16fe18631542c04f5e38fd9da2136ad1"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Back Button 6.md": {
+    "mtime": 1779152259.9272685,
+    "ast_hash": "782a1b23fc8218077cc0dbb86a867427",
+    "semantic_hash": "782a1b23fc8218077cc0dbb86a867427"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Back Button 7.md": {
+    "mtime": 1779152265.5083487,
+    "ast_hash": "dbc477fca34ba8c5999246cf17cc8113",
+    "semantic_hash": "dbc477fca34ba8c5999246cf17cc8113"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Back Button 8.md": {
+    "mtime": 1779152270.6439219,
+    "ast_hash": "e0ca12dcae5db4b40adfa6c4bf0ac3bc",
+    "semantic_hash": "e0ca12dcae5db4b40adfa6c4bf0ac3bc"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Back Button 9.md": {
+    "mtime": 1779152288.3328085,
+    "ast_hash": "8483ac63b5d0f649f3949a24b965b02e",
+    "semantic_hash": "8483ac63b5d0f649f3949a24b965b02e"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Back Button.md": {
+    "mtime": 1779152167.413436,
+    "ast_hash": "ded0b067ff6719e800431dd40724f387",
+    "semantic_hash": "ded0b067ff6719e800431dd40724f387"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\card-grading-sports-gaming-non-sports-cards-beckett-202605192240.md": {
+    "mtime": 1779230509.9704177,
+    "ast_hash": "3cbd48a15d91522082a59a54b617260e",
+    "semantic_hash": "3cbd48a15d91522082a59a54b617260e"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\example-domain-202605192206.md": {
+    "mtime": 1779228425.5213118,
+    "ast_hash": "4db85f2709c36915c75807e95185c672",
+    "semantic_hash": "4db85f2709c36915c75807e95185c672"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Graded Pop Reports - What do they mean.md": {
+    "mtime": 1779217867.8619637,
+    "ast_hash": "ef4738227ab02d6bc90ba2e48507b815",
+    "semantic_hash": "ef4738227ab02d6bc90ba2e48507b815"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Grading Scale.md": {
+    "mtime": 1779240262.4769235,
+    "ast_hash": "72aec17d810696eebe0b39dd48c27a08",
+    "semantic_hash": "72aec17d810696eebe0b39dd48c27a08"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\How to Use PSA and BGS Pop Reports to Your Advantage.md": {
+    "mtime": 1779217883.667495,
+    "ast_hash": "ab7a7035e831ebe539078aeff2736aff",
+    "semantic_hash": "ab7a7035e831ebe539078aeff2736aff"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\How to Use the PSA Population Report to Invest.md": {
+    "mtime": 1779217854.2188787,
+    "ast_hash": "838f1739bf2ecbf5714fda2ea60a9f29",
+    "semantic_hash": "838f1739bf2ecbf5714fda2ea60a9f29"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Market Report Population Perspective.md": {
+    "mtime": 1779217894.6763742,
+    "ast_hash": "d35dcc29ce2fd0f2e8d327b768feebcd",
+    "semantic_hash": "d35dcc29ce2fd0f2e8d327b768feebcd"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Official Trading Card Grading Service.md": {
+    "mtime": 1779130411.0947335,
+    "ast_hash": "f9b60e92fee01da1965fd20889694979",
+    "semantic_hash": "f9b60e92fee01da1965fd20889694979"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\PSA Grading Standards 1.md": {
+    "mtime": 1779131983.1506646,
+    "ast_hash": "5bf96df2d3b00def1ddba1663d648f57",
+    "semantic_hash": "5bf96df2d3b00def1ddba1663d648f57"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\PSA Grading Standards 10.md": {
+    "mtime": 1779132188.6521869,
+    "ast_hash": "c94fa72e328baa789a222ee949023f3c",
+    "semantic_hash": "c94fa72e328baa789a222ee949023f3c"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\PSA Grading Standards 11.md": {
+    "mtime": 1779132227.3946588,
+    "ast_hash": "cba51f0f389e8a9b092460fb038008f7",
+    "semantic_hash": "cba51f0f389e8a9b092460fb038008f7"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\PSA Grading Standards 12.md": {
+    "mtime": 1779132537.5689776,
+    "ast_hash": "849191de146061c5e39e0e95b293310e",
+    "semantic_hash": "849191de146061c5e39e0e95b293310e"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\PSA Grading Standards 2.md": {
+    "mtime": 1779131995.2446043,
+    "ast_hash": "edf817f15b5679fb032bd58e2fca46fd",
+    "semantic_hash": "edf817f15b5679fb032bd58e2fca46fd"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\PSA Grading Standards 3.md": {
+    "mtime": 1779132017.2262013,
+    "ast_hash": "dd64fac8f38aeea5c50e1fcdfd3d6b2c",
+    "semantic_hash": "dd64fac8f38aeea5c50e1fcdfd3d6b2c"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\PSA Grading Standards 4.md": {
+    "mtime": 1779132102.7326171,
+    "ast_hash": "d36c1dbf9150c91f177c726d836ff8bd",
+    "semantic_hash": "d36c1dbf9150c91f177c726d836ff8bd"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\PSA Grading Standards 5.md": {
+    "mtime": 1779132105.989762,
+    "ast_hash": "cb2a328579d817ad09758152ca03bc4b",
+    "semantic_hash": "cb2a328579d817ad09758152ca03bc4b"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\PSA Grading Standards 6.md": {
+    "mtime": 1779132110.8381746,
+    "ast_hash": "b942d966cbe8bfb61e04038c54a3087b",
+    "semantic_hash": "b942d966cbe8bfb61e04038c54a3087b"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\PSA Grading Standards 7.md": {
+    "mtime": 1779132115.5009553,
+    "ast_hash": "9a010c55935ac73d03308bb013a0d219",
+    "semantic_hash": "9a010c55935ac73d03308bb013a0d219"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\PSA Grading Standards 8.md": {
+    "mtime": 1779132119.6497052,
+    "ast_hash": "61c9c90ac6d4355750c4f0cb23f16b8e",
+    "semantic_hash": "61c9c90ac6d4355750c4f0cb23f16b8e"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\PSA Grading Standards 9.md": {
+    "mtime": 1779132125.210245,
+    "ast_hash": "c4a86beb5a6495d7e0ea4918cef63a64",
+    "semantic_hash": "c4a86beb5a6495d7e0ea4918cef63a64"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\PSA Grading Standards.md": {
+    "mtime": 1779131069.8304734,
+    "ast_hash": "970c5a2d7b5d9b9108281fffc9f94cc8",
+    "semantic_hash": "970c5a2d7b5d9b9108281fffc9f94cc8"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\psa-grading-standards-202605192207.md": {
+    "mtime": 1779228481.5210705,
+    "ast_hash": "00ae25d07e3d21d6c275b5c41566c6c5",
+    "semantic_hash": "00ae25d07e3d21d6c275b5c41566c6c5"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\psa-grading-standards-202605192304.md": {
+    "mtime": 1779231906.5493627,
+    "ast_hash": "397176344d3a8809a0fc2acca3cf155a",
+    "semantic_hash": "397176344d3a8809a0fc2acca3cf155a"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 1.md": {
+    "mtime": 1779152859.9671297,
+    "ast_hash": "d041cb561fc304d74a21ecfb7d9dea74",
+    "semantic_hash": "d041cb561fc304d74a21ecfb7d9dea74"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 10.md": {
+    "mtime": 1779152909.7272375,
+    "ast_hash": "a81e959acb8a6656bfe87983375a4712",
+    "semantic_hash": "a81e959acb8a6656bfe87983375a4712"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 11.md": {
+    "mtime": 1779152914.0491693,
+    "ast_hash": "2e80a3b12b05513166f626c003395ae9",
+    "semantic_hash": "2e80a3b12b05513166f626c003395ae9"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 12.md": {
+    "mtime": 1779152919.968936,
+    "ast_hash": "24cb4420a4ebce648f1b46b25dc10b04",
+    "semantic_hash": "24cb4420a4ebce648f1b46b25dc10b04"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 13.md": {
+    "mtime": 1779152924.9876142,
+    "ast_hash": "54e940ffa7d5fd09576607b285a84bfe",
+    "semantic_hash": "54e940ffa7d5fd09576607b285a84bfe"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 14.md": {
+    "mtime": 1779152929.0599048,
+    "ast_hash": "bad5d0253a35dbbfbcd9ee8ac3822ee2",
+    "semantic_hash": "bad5d0253a35dbbfbcd9ee8ac3822ee2"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 15.md": {
+    "mtime": 1779152934.5391073,
+    "ast_hash": "d818baccbe80d11c3b63e1311a4768d7",
+    "semantic_hash": "d818baccbe80d11c3b63e1311a4768d7"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 16.md": {
+    "mtime": 1779152939.4731283,
+    "ast_hash": "959adb1062f2f4357e685b199fa02c45",
+    "semantic_hash": "959adb1062f2f4357e685b199fa02c45"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 17.md": {
+    "mtime": 1779152944.4086213,
+    "ast_hash": "0b304ce02c8c006cc1ced810b773667a",
+    "semantic_hash": "0b304ce02c8c006cc1ced810b773667a"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 18.md": {
+    "mtime": 1779152949.1354468,
+    "ast_hash": "071fe829e7dd5046cec67cbcd25d3925",
+    "semantic_hash": "071fe829e7dd5046cec67cbcd25d3925"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 19.md": {
+    "mtime": 1779152953.652452,
+    "ast_hash": "0d1c13f5121507ddd244764cfbb8ea51",
+    "semantic_hash": "0d1c13f5121507ddd244764cfbb8ea51"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 2.md": {
+    "mtime": 1779152864.8374681,
+    "ast_hash": "cc58ef3a15beec4b8002d2f058ed8088",
+    "semantic_hash": "cc58ef3a15beec4b8002d2f058ed8088"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 20.md": {
+    "mtime": 1779152981.54109,
+    "ast_hash": "8bb2a72a1c803ebbc08dc3c655ffd4f0",
+    "semantic_hash": "8bb2a72a1c803ebbc08dc3c655ffd4f0"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 3.md": {
+    "mtime": 1779152873.8586268,
+    "ast_hash": "b8602631d864fb87a7215750eb270099",
+    "semantic_hash": "b8602631d864fb87a7215750eb270099"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 4.md": {
+    "mtime": 1779152878.9301026,
+    "ast_hash": "c92d40d084931cb0995e9231e91fb9f9",
+    "semantic_hash": "c92d40d084931cb0995e9231e91fb9f9"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 5.md": {
+    "mtime": 1779152884.3623672,
+    "ast_hash": "01711cfb253be84d276dfa4775bfb84c",
+    "semantic_hash": "01711cfb253be84d276dfa4775bfb84c"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 6.md": {
+    "mtime": 1779152890.5886228,
+    "ast_hash": "fbc16c72f1899afdfd27fdfb09ae8eb6",
+    "semantic_hash": "fbc16c72f1899afdfd27fdfb09ae8eb6"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 7.md": {
+    "mtime": 1779152894.6388443,
+    "ast_hash": "e26c289ef36c932b1e51ec2e8570e504",
+    "semantic_hash": "e26c289ef36c932b1e51ec2e8570e504"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 8.md": {
+    "mtime": 1779152899.989856,
+    "ast_hash": "0eda19999178769fcee14d43a1d2faa3",
+    "semantic_hash": "0eda19999178769fcee14d43a1d2faa3"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale 9.md": {
+    "mtime": 1779152904.2491062,
+    "ast_hash": "46af905444259777679260218c94e768",
+    "semantic_hash": "46af905444259777679260218c94e768"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\SGC Grading Scale.md": {
+    "mtime": 1779152847.6240747,
+    "ast_hash": "3a1f93a7e6cb754600f913e3b3227640",
+    "semantic_hash": "3a1f93a7e6cb754600f913e3b3227640"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\Sports Card Investing Population Count Explained and What it Means to You.md": {
+    "mtime": 1779239674.920184,
+    "ast_hash": "aed6be00b909ee43393a235e9785c6a7",
+    "semantic_hash": "aed6be00b909ee43393a235e9785c6a7"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\verify-card-certification-look-up-a-cgc-certification-number-202605200056.md": {
+    "mtime": 1779238710.7874951,
+    "ast_hash": "c7a8ef52c48742ad8d6062c667565f60",
+    "semantic_hash": "c7a8ef52c48742ad8d6062c667565f60"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\verify-card-certification-look-up-a-cgc-certification-number-202605200100.md": {
+    "mtime": 1779239675.3291104,
+    "ast_hash": "c7a8ef52c48742ad8d6062c667565f60",
+    "semantic_hash": "c7a8ef52c48742ad8d6062c667565f60"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\raw\\verify-card-certification-look-up-a-cgc-certification-number-202605200114.md": {
+    "mtime": 1779239675.3296115,
+    "ast_hash": "c7a8ef52c48742ad8d6062c667565f60",
+    "semantic_hash": "c7a8ef52c48742ad8d6062c667565f60"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\concepts\\bgs-subgrades.md": {
+    "mtime": 1779421805.8683684,
+    "ast_hash": "035880302a2891c4abb3db4b08e9a694",
+    "semantic_hash": "035880302a2891c4abb3db4b08e9a694"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\concepts\\card-grading.md": {
+    "mtime": 1779421753.381054,
+    "ast_hash": "326547c64f5ec867db10b164e25f9389",
+    "semantic_hash": "326547c64f5ec867db10b164e25f9389"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\concepts\\card-parallels.md": {
+    "mtime": 1779421815.160838,
+    "ast_hash": "cd11ce14b395004e18f6c43d330e9b49",
+    "semantic_hash": "cd11ce14b395004e18f6c43d330e9b49"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\concepts\\grading-qualifiers.md": {
+    "mtime": 1779421785.472853,
+    "ast_hash": "3e5426bc6c38d6435543612c794a1aa8",
+    "semantic_hash": "3e5426bc6c38d6435543612c794a1aa8"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\concepts\\grading-scales.md": {
+    "mtime": 1779421768.383112,
+    "ast_hash": "94752f475cdaff83d060f45985d5190f",
+    "semantic_hash": "94752f475cdaff83d060f45985d5190f"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\concepts\\grading-service-tiers.md": {
+    "mtime": 1779421776.2768464,
+    "ast_hash": "349b2e348a666da00912ccb9274f6b24",
+    "semantic_hash": "349b2e348a666da00912ccb9274f6b24"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\concepts\\no-grade-outcomes.md": {
+    "mtime": 1779421793.7873688,
+    "ast_hash": "7d7808465448ddd466af7ddc170afa55",
+    "semantic_hash": "7d7808465448ddd466af7ddc170afa55"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\concepts\\population-report.md": {
+    "mtime": 1779218488.3620086,
+    "ast_hash": "0e75ce7aaeda821757a17fe91ba8c455",
+    "semantic_hash": "0e75ce7aaeda821757a17fe91ba8c455"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\entities\\2024-panini-mosaic-football.md": {
+    "mtime": 1779421741.6310503,
+    "ast_hash": "c17ce9528dc8162f5296e918ba1ab0bd",
+    "semantic_hash": "c17ce9528dc8162f5296e918ba1ab0bd"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\entities\\bgs.md": {
+    "mtime": 1779421703.055472,
+    "ast_hash": "52c07bbe3ddd81e0a9a9d53838f3d854",
+    "semantic_hash": "52c07bbe3ddd81e0a9a9d53838f3d854"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\entities\\cgc.md": {
+    "mtime": 1779421722.2150497,
+    "ast_hash": "079abbfe3678906e3c0bae0b8e8c759f",
+    "semantic_hash": "079abbfe3678906e3c0bae0b8e8c759f"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\entities\\panini.md": {
+    "mtime": 1779421730.4450877,
+    "ast_hash": "ceeb51209b4355870e369e3939a83a7d",
+    "semantic_hash": "ceeb51209b4355870e369e3939a83a7d"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\entities\\psa.md": {
+    "mtime": 1779421693.1459067,
+    "ast_hash": "bf3697c2b344570a1544b8afc25e0203",
+    "semantic_hash": "bf3697c2b344570a1544b8afc25e0203"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\entities\\sgc.md": {
+    "mtime": 1779421713.1852586,
+    "ast_hash": "98d2291c1a999da05485577c13f5c8be",
+    "semantic_hash": "98d2291c1a999da05485577c13f5c8be"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\sources\\beckett-2024-panini-mosaic-football.md": {
+    "mtime": 1779239675.3671832,
+    "ast_hash": "443219561189a28a8c065df7e2340ba3",
+    "semantic_hash": "443219561189a28a8c065df7e2340ba3"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\sources\\bgs-grading-overview.md": {
+    "mtime": 1779230668.4769304,
+    "ast_hash": "df066fd8240578e0d3362b4410305f27",
+    "semantic_hash": "df066fd8240578e0d3362b4410305f27"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\sources\\bgs-grading-scale.md": {
+    "mtime": 1779152548.104442,
+    "ast_hash": "e4ab89f6c6cd15d83f6fd24bc59fd08c",
+    "semantic_hash": "e4ab89f6c6cd15d83f6fd24bc59fd08c"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\sources\\cgc-grading-scale.md": {
+    "mtime": 1779239919.399645,
+    "ast_hash": "a2bd9d0b796760d0ed94b87303f152bb",
+    "semantic_hash": "a2bd9d0b796760d0ed94b87303f152bb"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\sources\\goingtwice-graded-pop-reports.md": {
+    "mtime": 1779421839.9265256,
+    "ast_hash": "1dd74f1d805d43148ba1cd333752f368",
+    "semantic_hash": "1dd74f1d805d43148ba1cd333752f368"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\sources\\packz-psa-population-report-guide.md": {
+    "mtime": 1779218413.1200125,
+    "ast_hash": "e583abd88bb9a41008c3a099388d606c",
+    "semantic_hash": "e583abd88bb9a41008c3a099388d606c"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\sources\\psa-grading-service.md": {
+    "mtime": 1779130721.9654517,
+    "ast_hash": "d55f039ef0e07bee6940cdd39ed485b0",
+    "semantic_hash": "d55f039ef0e07bee6940cdd39ed485b0"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\sources\\psa-grading-standards.md": {
+    "mtime": 1779151922.700189,
+    "ast_hash": "f9818392e957d7375d0104dcbaa3ea85",
+    "semantic_hash": "f9818392e957d7375d0104dcbaa3ea85"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\sources\\psa-market-report-population-perspective.md": {
+    "mtime": 1779218453.0687785,
+    "ast_hash": "e469c32a2056759b7be0693284c9dcca",
+    "semantic_hash": "e469c32a2056759b7be0693284c9dcca"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\sources\\sgc-grading-scale.md": {
+    "mtime": 1779153252.1460285,
+    "ast_hash": "815f9a872dea5b4ed8f96adf6ef6d699",
+    "semantic_hash": "815f9a872dea5b4ed8f96adf6ef6d699"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\sources\\sundocards-psa-bgs-pop-reports.md": {
+    "mtime": 1779421844.859881,
+    "ast_hash": "8cae9cd4f459b8cec3f7c444e5c69fcf",
+    "semantic_hash": "8cae9cd4f459b8cec3f7c444e5c69fcf"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\cards\\wiki\\sources\\yahoo-population-count-explained.md": {
+    "mtime": 1779218440.5748732,
+    "ast_hash": "d433cbd527b5228fdbec8d1872da4775",
+    "semantic_hash": "d433cbd527b5228fdbec8d1872da4775"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\company\\business-plan.md": {
+    "mtime": 1779420259.3683636,
+    "ast_hash": "c3c5ef32a77e51c42b5c7ee01a2e2b64",
+    "semantic_hash": "c3c5ef32a77e51c42b5c7ee01a2e2b64"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\company\\founder-agreement.md": {
+    "mtime": 1779420264.6222098,
+    "ast_hash": "0ac837b5b6170cd98e02dbf168e7e6af",
+    "semantic_hash": "0ac837b5b6170cd98e02dbf168e7e6af"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\company\\index.md": {
+    "mtime": 1779421859.384406,
+    "ast_hash": "6d64ac3e8793f1010a150de52db61048",
+    "semantic_hash": "6d64ac3e8793f1010a150de52db61048"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\engineering\\index.md": {
+    "mtime": 1779420290.4855409,
+    "ast_hash": "9ad8061040b98276b3ad2d9d9e44ad1c",
+    "semantic_hash": "9ad8061040b98276b3ad2d9d9e44ad1c"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\engineering\\log.md": {
+    "mtime": 1779168054.5590599,
+    "ast_hash": "421c79472c53c6c74023b5dc9f053473",
+    "semantic_hash": "421c79472c53c6c74023b5dc9f053473"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\engineering\\wiki\\decisions\\0000-template.md": {
+    "mtime": 1779128823.4891295,
+    "ast_hash": "0b1c554bbc8d0f11b41660b7923cc9b3",
+    "semantic_hash": "0b1c554bbc8d0f11b41660b7923cc9b3"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\engineering\\wiki\\scratch\\n8n-wiki-ingest-automation.md": {
+    "mtime": 1779421850.6937795,
+    "ast_hash": "aa35c9b39b8a5ad94cb1c37ea3e558c8",
+    "semantic_hash": "aa35c9b39b8a5ad94cb1c37ea3e558c8"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\engineering\\wiki\\topics\\architecture.md": {
+    "mtime": 1779420278.5561292,
+    "ast_hash": "e3ef353b57ad81038b4f4244c5d10585",
+    "semantic_hash": "e3ef353b57ad81038b4f4244c5d10585"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\engineering\\wiki\\topics\\data-model.md": {
+    "mtime": 1779420285.6527698,
+    "ast_hash": "6ef67fa91f355a2ce725084b6aef12de",
+    "semantic_hash": "6ef67fa91f355a2ce725084b6aef12de"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\engineering\\wiki\\topics\\pricing-pipeline.md": {
+    "mtime": 1779420272.9987612,
+    "ast_hash": "c616df56f9f4750a9bcfb2b0912a7410",
+    "semantic_hash": "c616df56f9f4750a9bcfb2b0912a7410"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\superpowers\\plans\\2026-05-16-frontend-framework-scaffold.md": {
+    "mtime": 1779051983.0783865,
+    "ast_hash": "a959123825d603d15a50e1a56d0751fe",
+    "semantic_hash": "a959123825d603d15a50e1a56d0751fe"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\superpowers\\plans\\2026-05-18-llm-wiki.md": {
+    "mtime": 1779128252.3287256,
+    "ast_hash": "c8c7266029bf617aef1e0b7cae67916d",
+    "semantic_hash": "c8c7266029bf617aef1e0b7cae67916d"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\superpowers\\plans\\2026-05-19-ebay-pricing-pipeline.md": {
+    "mtime": 1779243031.5912616,
+    "ast_hash": "03c03a8aaae4830ef809debc99eb72c9",
+    "semantic_hash": "03c03a8aaae4830ef809debc99eb72c9"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\superpowers\\specs\\2026-05-16-frontend-framework-scaffold-design.md": {
+    "mtime": 1778972345.8033066,
+    "ast_hash": "be15a5c0e0e5ac0dcc7db067239c219b",
+    "semantic_hash": "be15a5c0e0e5ac0dcc7db067239c219b"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\superpowers\\specs\\2026-05-18-llm-wiki-design.md": {
+    "mtime": 1779128003.7555215,
+    "ast_hash": "94f29584a41b617d7fa13ee4e07feed2",
+    "semantic_hash": "94f29584a41b617d7fa13ee4e07feed2"
+  },
+  "C:\\Users\\kaink\\OneDrive\\Documents\\GitHub\\Sports-Card-Website\\docs\\superpowers\\specs\\2026-05-19-ebay-pricing-pipeline-design.md": {
+    "mtime": 1779242158.6680157,
+    "ast_hash": "1d11bcf811f18ace004a19640053156a",
+    "semantic_hash": "1d11bcf811f18ace004a19640053156a"
+  }
+}
