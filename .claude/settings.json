@@ -1,5 +1,18 @@
 {
   "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$changes = git status --porcelain 2>$null; if ($changes) { git add -A; $ts = Get-Date -Format 'yyyy-MM-dd HH:mm'; git commit -m \"auto-deploy $ts\"; git push origin main }",
+            "shell": "powershell",
+            "timeout": 60,
+            "statusMessage": "Deploying to production..."
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Write|Edit",
