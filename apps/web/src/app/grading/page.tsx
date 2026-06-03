@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useCallback } from 'react'
+import { CardScannerModal } from '@/components/grading/card-scanner-modal'
 
 type GradingState = 'upload' | 'loading' | 'results'
 
@@ -48,6 +49,7 @@ export default function GradingPage() {
   const [progress, setProgress]   = useState(0)
   const [msgIdx, setMsgIdx]       = useState(0)
   const [dragOver, setDragOver]   = useState<'front' | 'back' | null>(null)
+  const [scanner, setScanner]     = useState<'front' | 'back' | null>(null)
   const frontRef = useRef<HTMLInputElement>(null)
   const backRef  = useRef<HTMLInputElement>(null)
 
@@ -90,6 +92,18 @@ export default function GradingPage() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
 
+      {/* ── Card scanner modal ── */}
+      {scanner && (
+        <CardScannerModal
+          side={scanner}
+          onCapture={file => {
+            handleFile(file, scanner)
+            setScanner(null)
+          }}
+          onClose={() => setScanner(null)}
+        />
+      )}
+
       {/* ── Page header ── */}
       <div style={{ borderBottom: '1px solid var(--border-md)', padding: '1.5rem 2rem' }}>
         <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.8rem', fontWeight: 700, color: 'var(--gold2)', margin: 0 }}>
@@ -115,7 +129,7 @@ export default function GradingPage() {
                 return (
                   <div
                     key={side}
-                    onClick={() => (side === 'front' ? frontRef : backRef).current?.click()}
+                    onClick={() => setScanner(side)}
                     onDragOver={e => { e.preventDefault(); setDragOver(side) }}
                     onDragLeave={() => setDragOver(null)}
                     onDrop={e => handleDrop(e, side)}
@@ -174,7 +188,7 @@ export default function GradingPage() {
                           {file?.name}
                         </div>
                         <button
-                          onClick={e => { e.stopPropagation(); (side === 'front' ? frontRef : backRef).current?.click() }}
+                          onClick={e => { e.stopPropagation(); setScanner(side) }}
                           style={{
                             padding: '8px 24px', marginTop: '2px',
                             background: 'linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%)',
@@ -211,7 +225,7 @@ export default function GradingPage() {
                           JPG or PNG
                         </div>
                         <button
-                          onClick={e => { e.stopPropagation(); (side === 'front' ? frontRef : backRef).current?.click() }}
+                          onClick={e => { e.stopPropagation(); setScanner(side) }}
                           style={{
                             padding: '9px 30px', marginTop: '4px',
                             background: 'linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%)',
