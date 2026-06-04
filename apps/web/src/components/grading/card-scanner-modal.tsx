@@ -103,6 +103,7 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
         body: JSON.stringify({ image: dataUrl }),
         signal: controller.signal,
       })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const { cardVisible } = await res.json() as { cardVisible: boolean }
       if (cardVisible) {
         accept()
@@ -146,16 +147,12 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
         video.srcObject = stream
         await video.play()
 
-        // Auto-enable torch
+        // Detect torch support but leave it OFF by default.
+        // Foil, chrome, prizm, and refractor cards (very common) glare badly under
+        // direct torch; users who need light can tap ⚡. We surface a hint when too dark.
         const track = stream.getVideoTracks()[0]
         const caps = track.getCapabilities() as MediaTrackCapabilities & { torch?: boolean }
-        if (caps.torch) {
-          setTorchAvail(true)
-          try {
-            await track.applyConstraints({ advanced: [{ torch: true } as MediaTrackConstraintSet] })
-            setTorchOn(true)
-          } catch { /* ignored */ }
-        }
+        if (caps.torch) setTorchAvail(true)
 
         loop()
       } catch (e) {
@@ -187,6 +184,7 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
             if (motion !== null && motion > MOTION_ABORT_THRESHOLD) {
               abortRef.current?.abort()
               passCountRef.current = 0
+              lastHaikuRef.current = 0 // reset cooldown — re-check fires immediately on re-stabilize
               setStatus({ kind: 'coaching', message: 'Hold steady…' })
             }
           } else if (result.pass) {
@@ -222,15 +220,17 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
       cancelled = true
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
       streamRef.current?.getTracks().forEach(t => t.stop())
+      abortRef.current?.abort() // prevent in-flight Haiku from calling onCapture after close
     }
   }, [runHaikuCheck])
 
   // ── Status text ────────────────────────────────────────────────────────────
   const coachingMessage = (() => {
     if (status.kind !== 'coaching') return ''
-    // When the torch is on and glare fires, hint to turn it off
     if (torchOn && status.message.startsWith('Glare'))
       return 'Glare on card — try turning off the flashlight ⚡'
+    if (!torchOn && torchAvail && status.message.startsWith('Too dark'))
+      return 'Too dark — try enabling the flashlight ⚡'
     return status.message
   })()
 
