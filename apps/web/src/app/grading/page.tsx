@@ -304,6 +304,11 @@ export default function GradingPage() {
                     body: 'Use a background that contrasts with the card\'s border. Dark surface (black felt, dark table) for white-bordered cards like Topps and Panini base sets. Light or neutral gray for dark-bordered cards like Prizm Black or Select. Avoid busy patterns or stacking cards.',
                   },
                   {
+                    icon: '🛡️',
+                    title: 'Remove from sleeve if possible',
+                    body: 'Plastic sleeves cause soft focus and glare that reduce grade accuracy. For best results, scan the bare card. If the card must stay sleeved, use a clean penny sleeve — scratched or hazy sleeves hurt the most. Scanning through any sleeve will lower accuracy.',
+                  },
+                  {
                     icon: '↩️',
                     title: 'Scan both sides',
                     body: 'The front is required. Scanning the back as well gives the AI more to work with — especially useful for detecting edge and corner wear on the reverse.',
