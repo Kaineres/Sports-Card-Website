@@ -251,7 +251,27 @@ export default function GradingPage() {
               })}
             </div>
 
-            {/* Tips accordion */}
+            {/* Analyze Card button */}
+            <button
+              onClick={startGrading}
+              disabled={!frontFile}
+              style={{
+                padding: '15px',
+                background: frontFile
+                  ? 'linear-gradient(135deg, rgba(160,118,28,0.95) 0%, rgba(110,80,14,0.95) 100%)'
+                  : 'rgba(184,146,46,0.12)',
+                border: `1px solid ${frontFile ? 'rgba(184,146,46,0.45)' : 'rgba(184,146,46,0.18)'}`,
+                borderRadius: '10px',
+                color: frontFile ? 'rgba(240,201,106,0.95)' : 'rgba(184,146,46,0.38)',
+                fontFamily: 'var(--font-display)', fontSize: '1rem', fontWeight: 600,
+                cursor: frontFile ? 'pointer' : 'not-allowed',
+                letterSpacing: '0.04em', transition: '0.2s',
+              }}
+            >
+              Analyze Card
+            </button>
+
+            {/* Tips accordion (includes disclaimer) */}
             <div style={{
               border: '1px solid rgba(184,146,46,0.22)',
               borderRadius: '12px',
@@ -321,41 +341,20 @@ export default function GradingPage() {
                       </div>
                     </div>
                   ))}
+
+                  {/* Disclaimer — lives at the bottom of the tips */}
+                  <div style={{
+                    marginTop: '4px', paddingTop: '12px',
+                    borderTop: '1px solid rgba(184,146,46,0.12)',
+                    display: 'flex', gap: '8px', alignItems: 'flex-start',
+                  }}>
+                    <span style={{ fontSize: '0.85rem', flexShrink: 0, color: 'var(--gold2)', marginTop: '1px' }}>⚠</span>
+                    <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.69rem', color: 'var(--gold2)', letterSpacing: '0.02em', lineHeight: 1.65, margin: 0, opacity: 0.8 }}>
+                      Grade accuracy depends on image quality. Well-lit, sharp, straight-on photos produce the most accurate estimates. Blurry or dark images reduce precision.
+                    </p>
+                  </div>
                 </div>
               )}
-            </div>
-
-            {/* Analyze Card button */}
-            <button
-              onClick={startGrading}
-              disabled={!frontFile}
-              style={{
-                padding: '15px',
-                background: frontFile
-                  ? 'linear-gradient(135deg, rgba(160,118,28,0.95) 0%, rgba(110,80,14,0.95) 100%)'
-                  : 'rgba(184,146,46,0.12)',
-                border: `1px solid ${frontFile ? 'rgba(184,146,46,0.45)' : 'rgba(184,146,46,0.18)'}`,
-                borderRadius: '10px',
-                color: frontFile ? 'rgba(240,201,106,0.95)' : 'rgba(184,146,46,0.38)',
-                fontFamily: 'var(--font-display)', fontSize: '1rem', fontWeight: 600,
-                cursor: frontFile ? 'pointer' : 'not-allowed',
-                letterSpacing: '0.04em', transition: '0.2s',
-              }}
-            >
-              Analyze Card
-            </button>
-
-            {/* Disclaimer */}
-            <div style={{
-              display: 'flex', alignItems: 'flex-start', gap: '0.75rem',
-              padding: '0.9rem 1.1rem',
-              background: 'rgba(184,146,46,0.07)', border: '1px solid rgba(184,146,46,0.2)',
-              borderRadius: '10px',
-            }}>
-              <span style={{ fontSize: '0.88rem', flexShrink: 0, marginTop: '1px', color: 'var(--gold2)' }}>⚠</span>
-              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.71rem', color: 'var(--gold2)', letterSpacing: '0.02em', lineHeight: 1.65, margin: 0 }}>
-                <strong>Disclaimer:</strong> Grading accuracy depends on image quality. Higher resolution, well-lit photos with minimal glare will produce the most accurate estimated grade. Blurry or low-quality images may result in reduced precision.
-              </p>
             </div>
           </div>
         )}
