@@ -74,12 +74,12 @@ export function evaluateQuality(
   const stable = motion === null ? false : motion <= thresholds.maxMotion
 
   const messages: string[] = []
-  if (tooDark) messages.push('Too dark — find brighter light')
-  else if (tooBright) messages.push('Too bright — reduce direct light')
-  if (glary) messages.push('Glare detected — tilt the card or move the light')
-  if (crushed) messages.push('Shadows too deep — even out the lighting')
-  if (!sharp) messages.push('Hold steady to focus')
-  if (motion !== null && !stable) messages.push('Hold still')
+  if (tooDark) messages.push('Too dark — move to brighter light')
+  else if (tooBright) messages.push('Too bright — back away from the light')
+  if (glary) messages.push('Glare on card — tilt card or try a different angle')
+  if (crushed) messages.push('Uneven shadows — try a flat, even light source')
+  if (!sharp) messages.push('Blurry — hold the camera still')
+  if (motion !== null && !stable) messages.push('Moving — hold the camera steady')
 
   return {
     sharp, lit, stable,

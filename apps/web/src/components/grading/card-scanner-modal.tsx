@@ -87,12 +87,17 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
     const dataUrl = captureFrame()
     if (!dataUrl) { checkingRef.current = false; return }
 
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 8000)
+
     try {
       const res = await fetch('/api/grading/quality-check', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ image: dataUrl }),
+        signal: controller.signal,
       })
+      clearTimeout(timeoutId)
       const { cardVisible } = await res.json() as { cardVisible: boolean }
 
       if (cardVisible) {
@@ -101,13 +106,23 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
         setTimeout(() => { setFlash(false); onCapture(captureToFile(dataUrl)) }, 350)
       } else {
         passCountRef.current = 0
-        setStatus({ kind: 'coaching', message: 'Center the card in the box' })
+        setStatus({ kind: 'coaching', message: 'Card not recognized — make sure the full card fills the frame' })
       }
-    } catch {
-      passCountRef.current = 0
-      setStatus({ kind: 'coaching', message: 'Hold steady…' })
+    } catch (e) {
+      clearTimeout(timeoutId)
+      if (e instanceof Error && e.name === 'AbortError') {
+        // API timed out — local gates already passed so accept the captured frame
+        setFlash(true)
+        setStatus({ kind: 'captured' })
+        setTimeout(() => { setFlash(false); onCapture(captureToFile(dataUrl)) }, 350)
+      } else {
+        passCountRef.current = 0
+        setStatus({ kind: 'coaching', message: 'Check failed — hold steady and try again' })
+      }
     } finally {
       checkingRef.current = false
+      // Reset prev frame so the next diff doesn't misread post-check movement as motion
+      prevGrayRef.current = null
     }
   }, [captureFrame, captureToFile, onCapture])
 
@@ -188,12 +203,28 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
   }, [runHaikuCheck])
 
   // ── Status text ────────────────────────────────────────────────────────────
+  const coachingMessage = (() => {
+    if (status.kind !== 'coaching') return ''
+    // When the torch is on and glare fires, hint to turn it off
+    if (torchOn && status.message.startsWith('Glare'))
+      return 'Glare on card — try turning off the flashlight ⚡'
+    return status.message
+  })()
+
   const statusText =
     status.kind === 'starting'  ? 'Starting camera…' :
     status.kind === 'checking'  ? 'Checking quality…' :
     status.kind === 'captured'  ? '✓ Captured!' :
     status.kind === 'error'     ? status.message :
-    status.message
+    coachingMessage || status.message
+
+  const subText =
+    status.kind === 'checking'  ? 'AI verifying the card…' :
+    status.kind === 'captured'  ? '' :
+    status.kind === 'starting'  ? '' :
+    status.kind === 'error'     ? '' :
+    status.message === 'Hold steady…' ? 'About to capture…' :
+    'Position card to auto-capture, or use the button →'
 
   const isPass = status.kind === 'checking' || status.kind === 'captured'
 
@@ -288,6 +319,9 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
       />
 
       {/* Bottom status */}
+      {status.kind === 'checking' && (
+        <style>{`@keyframes slab-pulse{0%,100%{opacity:1}50%{opacity:0.45}}`}</style>
+      )}
       <div style={{
         position: 'absolute', bottom: 0, left: 0, right: 0,
         padding: '20px 24px 44px',
@@ -300,15 +334,18 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
           margin: 0, letterSpacing: '0.01em',
           textShadow: '0 1px 6px rgba(0,0,0,0.8)',
           transition: 'color 0.2s',
+          animation: status.kind === 'checking' ? 'slab-pulse 1.2s ease-in-out infinite' : 'none',
         }}>
           {statusText}
         </p>
-        <p style={{
-          fontFamily: 'var(--font-display)', fontSize: '0.75rem',
-          color: 'rgba(255,255,255,0.5)', margin: '6px 0 0',
-        }}>
-          We'll take the photo, or use the button →
-        </p>
+        {subText ? (
+          <p style={{
+            fontFamily: 'var(--font-display)', fontSize: '0.75rem',
+            color: 'rgba(255,255,255,0.5)', margin: '6px 0 0',
+          }}>
+            {subText}
+          </p>
+        ) : null}
       </div>
 
       {/* Hidden canvases */}
