@@ -66,30 +66,10 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
     return new File([u8], `card-${side}-${Date.now()}.jpg`, { type: mime })
   }, [side])
 
-  // ── Manual capture ─────────────────────────────────────────────────────────
-  const handleManualCapture = useCallback(() => {
-    const dataUrl = captureFrame()
-    if (!dataUrl) return
-    setFlash(true)
-    setStatus({ kind: 'captured' })
-    setTimeout(() => { setFlash(false); onCapture(captureToFile(dataUrl)) }, 350)
-  }, [captureFrame, captureToFile, onCapture])
-
-  // ── Haiku quality gate ─────────────────────────────────────────────────────
-  const runHaikuCheck = useCallback(async () => {
-    if (checkingRef.current) return
-    const now = Date.now()
-    if (now - lastHaikuRef.current < HAIKU_COOLDOWN_MS) return
-    checkingRef.current = true
-    lastHaikuRef.current = now
-
-    setStatus({ kind: 'checking' })
-    const dataUrl = captureFrame()
-    if (!dataUrl) { checkingRef.current = false; return }
-
+  // ── Shared Haiku check (accepts a pre-captured dataUrl) ───────────────────
+  const doHaikuCheck = useCallback(async (dataUrl: string) => {
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 8000)
-
     try {
       const res = await fetch('/api/grading/quality-check', {
         method: 'POST',
@@ -99,7 +79,6 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
       })
       clearTimeout(timeoutId)
       const { cardVisible } = await res.json() as { cardVisible: boolean }
-
       if (cardVisible) {
         setFlash(true)
         setStatus({ kind: 'captured' })
@@ -111,7 +90,7 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
     } catch (e) {
       clearTimeout(timeoutId)
       if (e instanceof Error && e.name === 'AbortError') {
-        // API timed out — local gates already passed so accept the captured frame
+        // Timed out — accept the frame since it was deemed good enough to attempt
         setFlash(true)
         setStatus({ kind: 'captured' })
         setTimeout(() => { setFlash(false); onCapture(captureToFile(dataUrl)) }, 350)
@@ -121,10 +100,33 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
       }
     } finally {
       checkingRef.current = false
-      // Reset prev frame so the next diff doesn't misread post-check movement as motion
       prevGrayRef.current = null
     }
-  }, [captureFrame, captureToFile, onCapture])
+  }, [captureToFile, onCapture])
+
+  // ── Manual capture — runs same Haiku gate as auto-capture ─────────────────
+  const handleManualCapture = useCallback(async () => {
+    if (checkingRef.current) return
+    const dataUrl = captureFrame()
+    if (!dataUrl) return
+    checkingRef.current = true
+    lastHaikuRef.current = Date.now()
+    setStatus({ kind: 'checking' })
+    await doHaikuCheck(dataUrl)
+  }, [captureFrame, doHaikuCheck])
+
+  // ── Auto-capture Haiku gate (guards cooldown + pass count) ────────────────
+  const runHaikuCheck = useCallback(async () => {
+    if (checkingRef.current) return
+    const now = Date.now()
+    if (now - lastHaikuRef.current < HAIKU_COOLDOWN_MS) return
+    checkingRef.current = true
+    lastHaikuRef.current = now
+    setStatus({ kind: 'checking' })
+    const dataUrl = captureFrame()
+    if (!dataUrl) { checkingRef.current = false; return }
+    await doHaikuCheck(dataUrl)
+  }, [captureFrame, doHaikuCheck])
 
   // ── Camera + quality loop ─────────────────────────────────────────────────
   useEffect(() => {
