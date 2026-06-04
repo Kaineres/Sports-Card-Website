@@ -10,6 +10,17 @@ const HAIKU_COOLDOWN_MS = 2500    // min gap between Haiku calls
 const MSG_STABLE_FRAMES = 12      // coaching message must hold for ~200ms at 60fps before displaying
 const MOTION_ABORT_THRESHOLD = 14 // mean abs frame-diff that cancels an in-flight AI check
 
+// TEMPORARY — set to true to download every AI-accepted frame for threshold calibration.
+// Remove before shipping.
+const DEBUG_DOWNLOAD_ACCEPTED = true
+
+function debugDownload(dataUrl: string) {
+  const a = document.createElement('a')
+  a.href = dataUrl
+  a.download = `card-scan-${Date.now()}.jpg`
+  a.click()
+}
+
 interface Props {
   side: 'front' | 'back'
   onCapture: (file: File) => void
@@ -79,6 +90,7 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
     const timeoutId = setTimeout(() => { timedOut = true; controller.abort() }, 8000)
 
     const accept = () => {
+      if (DEBUG_DOWNLOAD_ACCEPTED) debugDownload(dataUrl)
       setFlash(true)
       setStatus({ kind: 'captured' })
       setTimeout(() => { setFlash(false); onCapture(captureToFile(dataUrl)) }, 350)
