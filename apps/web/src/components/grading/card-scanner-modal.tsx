@@ -175,10 +175,11 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
               passCountRef.current++
               msgCandidateRef.current = ''
               msgCandidateCount.current = 0
-              setStatus({ kind: 'coaching', message: 'Hold steady…' })
               if (passCountRef.current >= PASS_FRAMES_REQUIRED) {
                 passCountRef.current = 0
-                runHaikuCheck()
+                runHaikuCheck()  // sets status to 'checking' — no competing setStatus here
+              } else {
+                setStatus({ kind: 'coaching', message: 'Hold steady…' })
               }
             } else {
               passCountRef.current = 0
