@@ -74,7 +74,7 @@ export function evaluateQuality(
   const stable = motion === null ? false : motion <= thresholds.maxMotion
 
   const messages: string[] = []
-  if (tooDark) messages.push('Too dark — move to brighter light')
+  if (tooDark) messages.push('Too dark — try a window, lamp, or phone flashlight nearby')
   else if (tooBright) messages.push('Too bright — back away from the light')
   if (glary) messages.push('Glare on card — tilt card or try a different angle')
   if (crushed) messages.push('Uneven shadows — try a flat, even light source')
