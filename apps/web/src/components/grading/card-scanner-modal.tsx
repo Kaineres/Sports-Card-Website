@@ -66,10 +66,8 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
     return new File([u8], `card-${side}-${Date.now()}.jpg`, { type: mime })
   }, [side])
 
-  // ── Shared Haiku check (accepts a pre-captured dataUrl) ───────────────────
-  // source='auto'   → local quality gates already passed; timeout may accept
-  // source='manual' → user tapped button; timeout must NOT accept (no local gate)
-  const doHaikuCheck = useCallback(async (dataUrl: string, source: 'auto' | 'manual') => {
+  // ── Haiku quality check ────────────────────────────────────────────────────
+  const doHaikuCheck = useCallback(async (dataUrl: string) => {
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 8000)
     try {
@@ -92,16 +90,10 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
     } catch (e) {
       clearTimeout(timeoutId)
       if (e instanceof Error && e.name === 'AbortError') {
-        if (source === 'auto') {
-          // Auto-capture timed out — local gates passed so accept the frame
-          setFlash(true)
-          setStatus({ kind: 'captured' })
-          setTimeout(() => { setFlash(false); onCapture(captureToFile(dataUrl)) }, 350)
-        } else {
-          // Manual capture timed out — require Haiku confirmation; don't accept
-          passCountRef.current = 0
-          setStatus({ kind: 'coaching', message: 'Check timed out — please try again' })
-        }
+        // Local gates passed — accept the frame on timeout
+        setFlash(true)
+        setStatus({ kind: 'captured' })
+        setTimeout(() => { setFlash(false); onCapture(captureToFile(dataUrl)) }, 350)
       } else {
         passCountRef.current = 0
         setStatus({ kind: 'coaching', message: 'Check failed — hold steady and try again' })
@@ -111,17 +103,6 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
       prevGrayRef.current = null
     }
   }, [captureToFile, onCapture])
-
-  // ── Manual capture — runs same Haiku gate as auto-capture ─────────────────
-  const handleManualCapture = useCallback(async () => {
-    if (checkingRef.current) return
-    const dataUrl = captureFrame()
-    if (!dataUrl) return
-    checkingRef.current = true
-    lastHaikuRef.current = Date.now()
-    setStatus({ kind: 'checking' })
-    await doHaikuCheck(dataUrl, 'manual')
-  }, [captureFrame, doHaikuCheck])
 
   // ── Auto-capture Haiku gate (guards cooldown + pass count) ────────────────
   const runHaikuCheck = useCallback(async () => {
@@ -133,7 +114,7 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
     setStatus({ kind: 'checking' })
     const dataUrl = captureFrame()
     if (!dataUrl) { checkingRef.current = false; return }
-    await doHaikuCheck(dataUrl, 'auto')
+    await doHaikuCheck(dataUrl)
   }, [captureFrame, doHaikuCheck])
 
   // ── Camera + quality loop ─────────────────────────────────────────────────
@@ -234,7 +215,7 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
     status.kind === 'starting'  ? '' :
     status.kind === 'error'     ? '' :
     status.message === 'Hold steady…' ? 'About to capture…' :
-    'Position card to auto-capture, or use the button →'
+    'Position the card to capture automatically'
 
   const isPass = status.kind === 'checking' || status.kind === 'captured'
 
@@ -314,19 +295,6 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
         )}
       </div>
 
-      {/* Manual capture button — right side center */}
-      <button
-        onClick={handleManualCapture}
-        aria-label="Capture photo"
-        style={{
-          position: 'absolute', right: 18, top: '50%', transform: 'translateY(-50%)',
-          width: 62, height: 62, borderRadius: '50%',
-          background: 'rgba(255,255,255,0.92)',
-          border: '4px solid rgba(255,255,255,0.5)',
-          cursor: 'pointer', zIndex: 20,
-          boxShadow: '0 2px 16px rgba(0,0,0,0.55)',
-        }}
-      />
 
       {/* Bottom status */}
       {status.kind === 'checking' && (
