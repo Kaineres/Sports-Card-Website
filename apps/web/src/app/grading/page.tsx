@@ -50,7 +50,6 @@ export default function GradingPage() {
   const [msgIdx, setMsgIdx]       = useState(0)
   const [dragOver, setDragOver]   = useState<'front' | 'back' | null>(null)
   const [scanner, setScanner]     = useState<'front' | 'back' | null>(null)
-  const [showTips, setShowTips]   = useState(false)
   const frontRef = useRef<HTMLInputElement>(null)
   const backRef  = useRef<HTMLInputElement>(null)
 
@@ -271,90 +270,69 @@ export default function GradingPage() {
               Analyze Card
             </button>
 
-            {/* Tips accordion (includes disclaimer) */}
+            {/* Tips section */}
             <div style={{
               border: '1px solid rgba(184,146,46,0.22)',
               borderRadius: '12px',
-              overflow: 'hidden',
               background: 'rgba(16,14,8,0.85)',
+              padding: '16px',
             }}>
-              <button
-                onClick={() => setShowTips(v => !v)}
-                style={{
-                  width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  padding: '13px 16px', background: 'none', border: 'none', cursor: 'pointer',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ fontSize: '0.9rem' }}>📋</span>
-                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '0.88rem', fontWeight: 600, color: 'var(--gold2)' }}>
-                    How to get the best scan
-                  </span>
-                </div>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text3)', letterSpacing: '0.05em' }}>
-                  {showTips ? 'HIDE ▲' : 'SHOW ▼'}
-                </span>
-              </button>
+              <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', fontWeight: 700, color: 'var(--gold2)', marginBottom: '14px' }}>
+                How to get the best scan
+              </div>
 
-              {showTips && (
-                <div style={{
-                  borderTop: '1px solid rgba(184,146,46,0.14)',
-                  padding: '16px',
-                  display: 'flex', flexDirection: 'column', gap: '12px',
-                }}>
-                  {[
-                    {
-                      icon: '💡',
-                      title: 'Use good ambient lighting',
-                      body: 'Scan near a window, under a lamp, or hold a flashlight nearby at an angle. For foil, chrome, prizm, or refractor cards, avoid pointing any light directly at the card — it causes glare that obscures the surface.',
-                    },
-                    {
-                      icon: '📐',
-                      title: 'Fill the scanning box',
-                      body: 'Position the card so it fills the corner marks. Hold your phone directly above the card, parallel to it — any tilt makes it harder to assess centering and edges accurately.',
-                    },
-                    {
-                      icon: '🧘',
-                      title: 'Hold steady until the corners turn green',
-                      body: 'The scanner checks sharpness, brightness, and motion on every frame. When all three pass, the corner marks turn green and the AI verifies the card automatically — no button needed.',
-                    },
-                    {
-                      icon: '🖤',
-                      title: 'Use a dark, flat surface',
-                      body: 'Place the card on a dark background (black felt, dark table) with no other cards nearby. This gives the scanner clean contrast to find the card edges.',
-                    },
-                    {
-                      icon: '↩️',
-                      title: 'Scan both sides',
-                      body: 'The front is required. Scanning the back as well gives the AI more to work with — especially useful for detecting edge and corner wear on the reverse.',
-                    },
-                  ].map(tip => (
-                    <div key={tip.title} style={{ display: 'flex', gap: '11px', alignItems: 'flex-start' }}>
-                      <span style={{ fontSize: '1rem', flexShrink: 0, marginTop: '1px' }}>{tip.icon}</span>
-                      <div>
-                        <div style={{ fontFamily: 'var(--font-display)', fontSize: '0.82rem', fontWeight: 700, color: 'var(--gold2)', marginBottom: '3px' }}>
-                          {tip.title}
-                        </div>
-                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.71rem', color: 'var(--text3)', lineHeight: 1.6, letterSpacing: '0.01em' }}>
-                          {tip.body}
-                        </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {[
+                  {
+                    icon: '💡',
+                    title: 'Use good ambient lighting',
+                    body: 'Scan near a window, under a lamp, or hold a flashlight nearby at an angle. For foil, chrome, prizm, or refractor cards, avoid pointing any light directly at the card — it causes glare that obscures the surface.',
+                  },
+                  {
+                    icon: '📐',
+                    title: 'Fill the scanning box',
+                    body: 'Position the card so it fills the corner marks. Hold your phone directly above the card, parallel to it — any tilt makes it harder to assess centering and edges accurately.',
+                  },
+                  {
+                    icon: '🧘',
+                    title: 'Hold steady until the corners turn green',
+                    body: 'The scanner checks sharpness, brightness, and motion on every frame. When all three pass, the corner marks turn green and the AI verifies the card automatically — no button needed.',
+                  },
+                  {
+                    icon: '🖤',
+                    title: 'Use a dark, flat surface',
+                    body: 'Place the card on a dark background (black felt, dark table) with no other cards nearby. This gives the scanner clean contrast to find the card edges.',
+                  },
+                  {
+                    icon: '↩️',
+                    title: 'Scan both sides',
+                    body: 'The front is required. Scanning the back as well gives the AI more to work with — especially useful for detecting edge and corner wear on the reverse.',
+                  },
+                ].map(tip => (
+                  <div key={tip.title} style={{ display: 'flex', gap: '11px', alignItems: 'flex-start' }}>
+                    <span style={{ fontSize: '1rem', flexShrink: 0, marginTop: '1px' }}>{tip.icon}</span>
+                    <div>
+                      <div style={{ fontFamily: 'var(--font-display)', fontSize: '0.82rem', fontWeight: 700, color: 'var(--gold2)', marginBottom: '3px' }}>
+                        {tip.title}
+                      </div>
+                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.71rem', color: 'var(--text3)', lineHeight: 1.6, letterSpacing: '0.01em' }}>
+                        {tip.body}
                       </div>
                     </div>
-                  ))}
-
-                  {/* Disclaimer — lives at the bottom of the tips */}
-                  <div style={{
-                    marginTop: '4px', paddingTop: '12px',
-                    borderTop: '1px solid rgba(184,146,46,0.12)',
-                    display: 'flex', gap: '8px', alignItems: 'flex-start',
-                  }}>
-                    <span style={{ fontSize: '0.85rem', flexShrink: 0, color: 'var(--gold2)', marginTop: '1px' }}>⚠</span>
-                    <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.69rem', color: 'var(--gold2)', letterSpacing: '0.02em', lineHeight: 1.65, margin: 0, opacity: 0.8 }}>
-                      Grade accuracy depends on image quality. Well-lit, sharp, straight-on photos produce the most accurate estimates. Blurry or dark images reduce precision.
-                    </p>
                   </div>
+                ))}
+
+                <div style={{
+                  marginTop: '4px', paddingTop: '12px',
+                  borderTop: '1px solid rgba(184,146,46,0.12)',
+                  display: 'flex', gap: '8px', alignItems: 'flex-start',
+                }}>
+                  <span style={{ fontSize: '0.85rem', flexShrink: 0, color: 'var(--gold2)', marginTop: '1px' }}>⚠</span>
+                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.69rem', color: 'var(--gold2)', letterSpacing: '0.02em', lineHeight: 1.65, margin: 0, opacity: 0.8 }}>
+                    Grade accuracy depends on image quality. Well-lit, sharp, straight-on photos produce the most accurate estimates. Blurry or dark images reduce precision.
+                  </p>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         )}
