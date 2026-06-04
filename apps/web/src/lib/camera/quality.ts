@@ -20,8 +20,8 @@ export interface QualityThresholds {
 // STARTING-POINT thresholds — MUST be calibrated on-device against real card
 // photos (see Task 7). Treat as a first guess, not final values.
 export const DEFAULT_THRESHOLDS: QualityThresholds = {
-  minSharpness: 80,
-  minLuminance: 60,
+  minSharpness: 120,
+  minLuminance: 90,
   maxLuminance: 235,
   maxGlareRatio: 0.02,
   maxDarkRatio: 0.25,
