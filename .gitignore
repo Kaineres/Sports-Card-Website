@@ -1,9 +1,7 @@
 .superpowers/
 .claude/logo-extracted.png
 .claude/settings.local.json
-docs/.claude/
-docs/.obsidian/
-docs/*.base
+docs/
 
 .vercel
 
