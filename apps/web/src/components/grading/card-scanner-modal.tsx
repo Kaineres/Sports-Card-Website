@@ -67,7 +67,9 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
   }, [side])
 
   // ── Shared Haiku check (accepts a pre-captured dataUrl) ───────────────────
-  const doHaikuCheck = useCallback(async (dataUrl: string) => {
+  // source='auto'   → local quality gates already passed; timeout may accept
+  // source='manual' → user tapped button; timeout must NOT accept (no local gate)
+  const doHaikuCheck = useCallback(async (dataUrl: string, source: 'auto' | 'manual') => {
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 8000)
     try {
@@ -90,10 +92,16 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
     } catch (e) {
       clearTimeout(timeoutId)
       if (e instanceof Error && e.name === 'AbortError') {
-        // Timed out — accept the frame since it was deemed good enough to attempt
-        setFlash(true)
-        setStatus({ kind: 'captured' })
-        setTimeout(() => { setFlash(false); onCapture(captureToFile(dataUrl)) }, 350)
+        if (source === 'auto') {
+          // Auto-capture timed out — local gates passed so accept the frame
+          setFlash(true)
+          setStatus({ kind: 'captured' })
+          setTimeout(() => { setFlash(false); onCapture(captureToFile(dataUrl)) }, 350)
+        } else {
+          // Manual capture timed out — require Haiku confirmation; don't accept
+          passCountRef.current = 0
+          setStatus({ kind: 'coaching', message: 'Check timed out — please try again' })
+        }
       } else {
         passCountRef.current = 0
         setStatus({ kind: 'coaching', message: 'Check failed — hold steady and try again' })
@@ -112,7 +120,7 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
     checkingRef.current = true
     lastHaikuRef.current = Date.now()
     setStatus({ kind: 'checking' })
-    await doHaikuCheck(dataUrl)
+    await doHaikuCheck(dataUrl, 'manual')
   }, [captureFrame, doHaikuCheck])
 
   // ── Auto-capture Haiku gate (guards cooldown + pass count) ────────────────
@@ -125,7 +133,7 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
     setStatus({ kind: 'checking' })
     const dataUrl = captureFrame()
     if (!dataUrl) { checkingRef.current = false; return }
-    await doHaikuCheck(dataUrl)
+    await doHaikuCheck(dataUrl, 'auto')
   }, [captureFrame, doHaikuCheck])
 
   // ── Camera + quality loop ─────────────────────────────────────────────────

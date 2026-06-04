@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
           },
           {
             type: 'text',
-            text: 'Is a sports or trading card clearly visible and in focus in this image? Reply with JSON only: {"cardVisible":true} or {"cardVisible":false}',
+            text: 'Does this image show a physical sports card or trading card (baseball, basketball, football, Pokémon, etc.) clearly visible and filling most of the frame? A wallet, phone, hand, table, or any other object is NOT a card. Only reply true if you can clearly see a card. Reply with JSON only: {"cardVisible":true} or {"cardVisible":false}',
           },
         ],
       }],
