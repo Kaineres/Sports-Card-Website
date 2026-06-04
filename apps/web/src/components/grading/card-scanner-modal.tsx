@@ -10,16 +10,9 @@ const HAIKU_COOLDOWN_MS = 2500    // min gap between Haiku calls
 const MSG_STABLE_FRAMES = 12      // coaching message must hold for ~200ms at 60fps before displaying
 const MOTION_ABORT_THRESHOLD = 14 // mean abs frame-diff that cancels an in-flight AI check
 
-// TEMPORARY — set to true to download every AI-accepted frame for threshold calibration.
-// Remove before shipping.
+// TEMPORARY — set to true to pause after each AI-accepted frame for threshold calibration.
+// Shows a "Save to Photos" button (iOS share sheet → Save Image). Remove before shipping.
 const DEBUG_DOWNLOAD_ACCEPTED = true
-
-function debugDownload(dataUrl: string) {
-  const a = document.createElement('a')
-  a.href = dataUrl
-  a.download = `card-scan-${Date.now()}.jpg`
-  a.click()
-}
 
 interface Props {
   side: 'front' | 'back'
@@ -50,6 +43,7 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
 
   const [status, setStatus]       = useState<Status>({ kind: 'starting' })
   const [flash, setFlash]         = useState(false)
+  const [debugCapture, setDebugCapture] = useState<{ dataUrl: string; file: File } | null>(null)
 
   // ── Capture full-res frame ────────────────────────────────────────────────
   const captureFrame = useCallback((): string | null => {
@@ -90,10 +84,13 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
     const timeoutId = setTimeout(() => { timedOut = true; controller.abort() }, 8000)
 
     const accept = () => {
-      if (DEBUG_DOWNLOAD_ACCEPTED) debugDownload(dataUrl)
       setFlash(true)
       setStatus({ kind: 'captured' })
-      setTimeout(() => { setFlash(false); onCapture(captureToFile(dataUrl)) }, 350)
+      if (DEBUG_DOWNLOAD_ACCEPTED) {
+        setTimeout(() => { setFlash(false); setDebugCapture({ dataUrl, file: captureToFile(dataUrl) }) }, 350)
+      } else {
+        setTimeout(() => { setFlash(false); onCapture(captureToFile(dataUrl)) }, 350)
+      }
     }
 
     try {
@@ -327,6 +324,51 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
       {/* Hidden canvases */}
       <canvas ref={procCanvas}   style={{ display: 'none' }} />
       <canvas ref={captureCanvas} style={{ display: 'none' }} />
+
+      {/* TEMPORARY debug overlay — shows accepted frame so it can be saved to Photos */}
+      {debugCapture && (
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 100,
+          background: 'rgba(0,0,0,0.92)',
+          display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center',
+          gap: 20, padding: 24,
+        }}>
+          <p style={{ color: '#34c97a', fontFamily: 'var(--font-display)', fontSize: '0.85rem', margin: 0 }}>
+            DEBUG — AI accepted this frame
+          </p>
+          <img
+            src={debugCapture.dataUrl}
+            alt="Accepted frame"
+            style={{ maxWidth: '100%', maxHeight: '55vh', borderRadius: 8, objectFit: 'contain' }}
+          />
+          <button
+            onClick={async () => {
+              if (navigator.canShare?.({ files: [debugCapture.file] })) {
+                try { await navigator.share({ files: [debugCapture.file], title: 'Card scan debug' }) }
+                catch { /* cancelled */ }
+              }
+            }}
+            style={{
+              width: '100%', padding: '14px 0', borderRadius: 12,
+              background: '#34c97a', border: 'none', color: '#000',
+              fontFamily: 'var(--font-display)', fontSize: '1rem', fontWeight: 700, cursor: 'pointer',
+            }}
+          >
+            Save to Photos ↑
+          </button>
+          <button
+            onClick={() => { setDebugCapture(null); onCapture(debugCapture.file) }}
+            style={{
+              width: '100%', padding: '12px 0', borderRadius: 12,
+              background: 'transparent', border: '1px solid rgba(255,255,255,0.25)',
+              color: '#fff', fontFamily: 'var(--font-display)', fontSize: '0.95rem', cursor: 'pointer',
+            }}
+          >
+            Continue without saving
+          </button>
+        </div>
+      )}
     </div>
   )
 }
