@@ -36,36 +36,9 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
   const abortRef           = useRef<AbortController | null>(null) // cancels in-flight Haiku call
   const msgCandidateRef    = useRef('')
   const msgCandidateCount  = useRef(0)
-  const exposureRangeRef   = useRef<{ min: number; max: number } | null>(null)
 
   const [status, setStatus]       = useState<Status>({ kind: 'starting' })
-  const [torchOn, setTorchOn]     = useState(false)
-  const [torchAvail, setTorchAvail] = useState(false)
   const [flash, setFlash]         = useState(false)
-
-  // ── Torch helpers ───────────────────────────────────────────────────────────
-  const setTorch = useCallback(async (on: boolean) => {
-    const track = streamRef.current?.getVideoTracks()[0]
-    if (!track) return
-    try {
-      await track.applyConstraints({ advanced: [{ torch: on } as MediaTrackConstraintSet] })
-      setTorchOn(on)
-    } catch { /* iOS doesn't support torch — ignore */ }
-
-    // On devices that expose exposureCompensation, pull exposure down when the
-    // torch fires to counteract the specular hotspot on foil/chrome cards.
-    // Targeting -1.5 EV (≈ 1/3 of normal brightness), clamped to device range.
-    // Applied separately so torch still works if this constraint is unsupported.
-    if (exposureRangeRef.current) {
-      try {
-        const { min, max } = exposureRangeRef.current
-        const ev = on
-          ? Math.max(min, Math.min(-1.5, max))
-          : Math.max(min, Math.min(0, max))
-        await track.applyConstraints({ advanced: [{ exposureCompensation: ev } as MediaTrackConstraintSet] })
-      } catch { /* exposureCompensation not supported on this device — ignore */ }
-    }
-  }, [])
 
   // ── Capture full-res frame ────────────────────────────────────────────────
   const captureFrame = useCallback((): string | null => {
@@ -162,19 +135,6 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
         video.srcObject = stream
         await video.play()
 
-        // Detect torch support but leave it OFF by default.
-        // Foil, chrome, prizm, and refractor cards (very common) glare badly under
-        // direct torch; users who need light can tap ⚡. We surface a hint when too dark.
-        const track = stream.getVideoTracks()[0]
-        const caps = track.getCapabilities() as MediaTrackCapabilities & {
-          torch?: boolean
-          exposureCompensation?: { min: number; max: number; step?: number }
-        }
-        if (caps.torch) setTorchAvail(true)
-        if (caps.exposureCompensation) {
-          exposureRangeRef.current = { min: caps.exposureCompensation.min, max: caps.exposureCompensation.max }
-        }
-
         loop()
       } catch (e) {
         setStatus({ kind: 'error', message: e instanceof Error ? e.message : 'Camera access failed' })
@@ -246,14 +206,7 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
   }, [runHaikuCheck])
 
   // ── Status text ────────────────────────────────────────────────────────────
-  const coachingMessage = (() => {
-    if (status.kind !== 'coaching') return ''
-    if (torchOn && status.message.startsWith('Glare'))
-      return 'Glare on card — try turning off the flashlight ⚡'
-    if (!torchOn && torchAvail && status.message.startsWith('Too dark'))
-      return 'Too dark — try enabling the flashlight ⚡'
-    return status.message
-  })()
+  const coachingMessage = status.kind === 'coaching' ? status.message : ''
 
   const statusText =
     status.kind === 'starting'  ? 'Starting camera…' :
@@ -329,23 +282,7 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
           {side === 'front' ? 'Front of Card' : 'Back of Card'}
         </span>
 
-        {/* Torch toggle (only shown if available) */}
-        {torchAvail ? (
-          <button
-            onClick={() => setTorch(!torchOn)}
-            aria-label={torchOn ? 'Turn off flashlight' : 'Turn on flashlight'}
-            style={{
-              width: 42, height: 42, borderRadius: '50%',
-              background: torchOn ? 'rgba(212,168,67,0.35)' : 'rgba(0,0,0,0.45)',
-              border: `1px solid ${torchOn ? 'rgba(212,168,67,0.6)' : 'rgba(255,255,255,0.2)'}`,
-              color: torchOn ? '#d4a843' : '#fff',
-              fontSize: '1.15rem', cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}
-          >⚡</button>
-        ) : (
-          <div style={{ width: 42 }} />
-        )}
+        <div style={{ width: 42 }} />
       </div>
 
 
