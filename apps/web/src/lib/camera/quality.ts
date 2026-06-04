@@ -8,13 +8,14 @@ import {
 } from './metrics'
 
 export interface QualityThresholds {
-  minSharpness: number  // variance-of-Laplacian floor
-  minLuminance: number  // too dark below this (0-255)
-  maxLuminance: number  // too bright above this (0-255)
-  maxGlareRatio: number // fraction of blown-out pixels allowed
-  maxDarkRatio: number  // fraction of crushed-black pixels allowed
-  maxMotion: number     // mean abs frame diff allowed for "stable"
-  minLongEdge: number   // min capture long-edge (px) for enough detail
+  minSharpness: number      // variance-of-Laplacian floor
+  minLuminance: number      // too dark below this (0-255)
+  maxLuminance: number      // too bright above this (0-255)
+  maxGlareRatio: number     // fraction of blown-out pixels allowed (whole frame, >=250)
+  maxCellGlareRatio: number // max per-cell fraction of pixels >=220 before flagging hotspot
+  maxDarkRatio: number      // fraction of crushed-black pixels allowed
+  maxMotion: number         // mean abs frame diff allowed for "stable"
+  minLongEdge: number       // min capture long-edge (px) for enough detail
 }
 
 // STARTING-POINT thresholds — MUST be calibrated on-device against real card
@@ -24,6 +25,7 @@ export const DEFAULT_THRESHOLDS: QualityThresholds = {
   minLuminance: 90,
   maxLuminance: 235,
   maxGlareRatio: 0.02,
+  maxCellGlareRatio: 0.20,
   maxDarkRatio: 0.25,
   maxMotion: 6,
   minLongEdge: 1000,
@@ -38,6 +40,7 @@ export interface QualityResult {
     sharpness: number
     meanLuminance: number
     glareRatio: number
+    maxCellGlareRatio: number
     darkRatio: number
     motion: number | null // null when there is no previous frame
   }
@@ -69,6 +72,7 @@ export function evaluateQuality(
   const tooDark = light.meanLuminance < thresholds.minLuminance
   const tooBright = light.meanLuminance > thresholds.maxLuminance
   const glary = light.glareRatio > thresholds.maxGlareRatio
+            || light.maxCellGlareRatio > thresholds.maxCellGlareRatio
   const crushed = light.darkRatio > thresholds.maxDarkRatio
   const lit = !tooDark && !tooBright && !glary && !crushed
   const stable = motion === null ? false : motion <= thresholds.maxMotion
@@ -88,6 +92,7 @@ export function evaluateQuality(
       sharpness,
       meanLuminance: light.meanLuminance,
       glareRatio: light.glareRatio,
+      maxCellGlareRatio: light.maxCellGlareRatio,
       darkRatio: light.darkRatio,
       motion,
     },

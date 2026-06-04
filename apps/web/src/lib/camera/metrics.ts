@@ -45,13 +45,15 @@ export function sharpnessScore(frame: RgbaFrame): number {
 }
 
 export interface LightingMetrics {
-  meanLuminance: number // 0-255
-  glareRatio: number    // fraction of near-white (>=250) pixels
-  darkRatio: number     // fraction of near-black (<=10) pixels
+  meanLuminance: number     // 0-255
+  glareRatio: number        // fraction of near-white (>=250) pixels, whole frame
+  darkRatio: number         // fraction of near-black (<=10) pixels
+  maxCellGlareRatio: number // highest per-cell fraction of pixels >=220 in an 8×8 grid
 }
 
 /** Brightness + glare + darkness metrics from the grayscale histogram. */
 export function lightingMetrics(frame: RgbaFrame): LightingMetrics {
+  const { width, height } = frame
   const gray = toGrayscale(frame)
   let sum = 0, glare = 0, dark = 0
   for (let p = 0; p < gray.length; p++) {
@@ -61,7 +63,37 @@ export function lightingMetrics(frame: RgbaFrame): LightingMetrics {
     if (v <= 10) dark++
   }
   const n = gray.length || 1
-  return { meanLuminance: sum / n, glareRatio: glare / n, darkRatio: dark / n }
+
+  // 8×8 grid hotspot detection — catches concentrated bright regions
+  // that the whole-frame ratio misses due to dark-background dilution.
+  // Uses a lower threshold (>=220) than the global check (>=250) because
+  // real-world camera hotspots typically peak at 220-245, not fully clipped.
+  const GRID = 8
+  const cellW = Math.max(1, Math.floor(width / GRID))
+  const cellH = Math.max(1, Math.floor(height / GRID))
+  let maxCellGlareRatio = 0
+  for (let row = 0; row < GRID; row++) {
+    for (let col = 0; col < GRID; col++) {
+      let cellGlare = 0, cellTotal = 0
+      const yStart = row * cellH
+      const yEnd = Math.min(yStart + cellH, height)
+      const xStart = col * cellW
+      const xEnd = Math.min(xStart + cellW, width)
+      for (let y = yStart; y < yEnd; y++) {
+        for (let x = xStart; x < xEnd; x++) {
+          const v = gray[y * width + x]
+          cellTotal++
+          if (v >= 220) cellGlare++
+        }
+      }
+      if (cellTotal > 0) {
+        const ratio = cellGlare / cellTotal
+        if (ratio > maxCellGlareRatio) maxCellGlareRatio = ratio
+      }
+    }
+  }
+
+  return { meanLuminance: sum / n, glareRatio: glare / n, darkRatio: dark / n, maxCellGlareRatio }
 }
 
 /**
