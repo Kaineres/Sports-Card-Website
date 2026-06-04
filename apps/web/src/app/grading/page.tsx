@@ -306,7 +306,7 @@ export default function GradingPage() {
                   {
                     icon: '🛡️',
                     title: 'Remove from sleeve if possible',
-                    body: 'Plastic sleeves cause soft focus and glare that reduce grade accuracy. For best results, scan the bare card. If the card must stay sleeved, use a clean penny sleeve — scratched or hazy sleeves hurt the most. Scanning through any sleeve will lower accuracy.',
+                    body: 'Remove from top loaders, one-touches, or graded slabs before scanning — thick plastic significantly reduces sharpness and causes glare. A clean penny sleeve is fine to leave on. Scratched or hazy sleeves will soften the image noticeably.',
                   },
                   {
                     icon: '↩️',
