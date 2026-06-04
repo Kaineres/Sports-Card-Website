@@ -299,9 +299,9 @@ export default function GradingPage() {
                     body: 'The scanner checks sharpness, brightness, and motion on every frame. When all three pass, the corner marks turn green and the AI verifies the card automatically — no button needed.',
                   },
                   {
-                    icon: '🖤',
-                    title: 'Use a dark, flat surface',
-                    body: 'Place the card on a dark background (black felt, dark table) with no other cards nearby. This gives the scanner clean contrast to find the card edges.',
+                    icon: '🎨',
+                    title: 'Match your background to your card',
+                    body: 'Use a background that contrasts with the card\'s border. Dark surface (black felt, dark table) for white-bordered cards like Topps and Panini base sets. Light or neutral gray for dark-bordered cards like Prizm Black or Select. Avoid busy patterns or stacking cards.',
                   },
                   {
                     icon: '↩️',
