@@ -5,9 +5,10 @@ import { evaluateQuality, DEFAULT_THRESHOLDS, type QualityResult } from '@/lib/c
 import { toGrayscale, type RgbaFrame } from '@/lib/camera/metrics'
 
 const PROC_WIDTH = 320
-const PASS_FRAMES_REQUIRED = 4   // consecutive local-pass frames before firing Haiku
-const HAIKU_COOLDOWN_MS = 2500   // min gap between Haiku calls
-const MSG_STABLE_FRAMES = 12     // coaching message must hold for ~200ms at 60fps before displaying
+const PASS_FRAMES_REQUIRED = 4    // consecutive local-pass frames before firing Haiku
+const HAIKU_COOLDOWN_MS = 2500    // min gap between Haiku calls
+const MSG_STABLE_FRAMES = 12      // coaching message must hold for ~200ms at 60fps before displaying
+const MOTION_ABORT_THRESHOLD = 14 // mean abs frame-diff that cancels an in-flight AI check
 
 interface Props {
   side: 'front' | 'back'
@@ -32,6 +33,7 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
   const passCountRef       = useRef(0)
   const lastHaikuRef       = useRef(0)
   const checkingRef        = useRef(false) // prevents concurrent Haiku calls
+  const abortRef           = useRef<AbortController | null>(null) // cancels in-flight Haiku call
   const msgCandidateRef    = useRef('')
   const msgCandidateCount  = useRef(0)
 
@@ -69,45 +71,9 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
     return new File([u8], `card-${side}-${Date.now()}.jpg`, { type: mime })
   }, [side])
 
-  // ── Haiku quality check ────────────────────────────────────────────────────
-  const doHaikuCheck = useCallback(async (dataUrl: string) => {
-    const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 8000)
-    try {
-      const res = await fetch('/api/grading/quality-check', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image: dataUrl }),
-        signal: controller.signal,
-      })
-      clearTimeout(timeoutId)
-      const { cardVisible } = await res.json() as { cardVisible: boolean }
-      if (cardVisible) {
-        setFlash(true)
-        setStatus({ kind: 'captured' })
-        setTimeout(() => { setFlash(false); onCapture(captureToFile(dataUrl)) }, 350)
-      } else {
-        passCountRef.current = 0
-        setStatus({ kind: 'coaching', message: 'Card not recognized — make sure the full card fills the frame' })
-      }
-    } catch (e) {
-      clearTimeout(timeoutId)
-      if (e instanceof Error && e.name === 'AbortError') {
-        // Local gates passed — accept the frame on timeout
-        setFlash(true)
-        setStatus({ kind: 'captured' })
-        setTimeout(() => { setFlash(false); onCapture(captureToFile(dataUrl)) }, 350)
-      } else {
-        passCountRef.current = 0
-        setStatus({ kind: 'coaching', message: 'Check failed — hold steady and try again' })
-      }
-    } finally {
-      checkingRef.current = false
-      prevGrayRef.current = null
-    }
-  }, [captureToFile, onCapture])
-
   // ── Auto-capture Haiku gate (guards cooldown + pass count) ────────────────
+  // The RAF loop can abort this mid-flight via abortRef if the camera moves —
+  // in that case we silently revert to coaching (the loop already set the status).
   const runHaikuCheck = useCallback(async () => {
     if (checkingRef.current) return
     const now = Date.now()
@@ -115,10 +81,53 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
     checkingRef.current = true
     lastHaikuRef.current = now
     setStatus({ kind: 'checking' })
+
     const dataUrl = captureFrame()
     if (!dataUrl) { checkingRef.current = false; return }
-    await doHaikuCheck(dataUrl)
-  }, [captureFrame, doHaikuCheck])
+
+    const controller = new AbortController()
+    abortRef.current = controller
+    let timedOut = false
+    const timeoutId = setTimeout(() => { timedOut = true; controller.abort() }, 8000)
+
+    const accept = () => {
+      setFlash(true)
+      setStatus({ kind: 'captured' })
+      setTimeout(() => { setFlash(false); onCapture(captureToFile(dataUrl)) }, 350)
+    }
+
+    try {
+      const res = await fetch('/api/grading/quality-check', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: dataUrl }),
+        signal: controller.signal,
+      })
+      const { cardVisible } = await res.json() as { cardVisible: boolean }
+      if (cardVisible) {
+        accept()
+      } else {
+        passCountRef.current = 0
+        setStatus({ kind: 'coaching', message: 'Card not recognized — make sure the full card fills the frame' })
+      }
+    } catch (e) {
+      if (timedOut) {
+        // Local gates passed but the AI never answered — accept the frame.
+        accept()
+      } else if (e instanceof Error && e.name === 'AbortError') {
+        // Camera moved — the RAF loop already reverted us to "Hold steady…". Do nothing.
+        passCountRef.current = 0
+      } else {
+        passCountRef.current = 0
+        setStatus({ kind: 'coaching', message: 'Check failed — hold steady and try again' })
+      }
+    } finally {
+      clearTimeout(timeoutId)
+      checkingRef.current = false
+      abortRef.current = null
+      prevGrayRef.current = null
+    }
+  }, [captureFrame, captureToFile, onCapture])
 
   // ── Camera + quality loop ─────────────────────────────────────────────────
   useEffect(() => {
@@ -170,29 +179,37 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
           const result: QualityResult = evaluateQuality(frame, prevGrayRef.current, DEFAULT_THRESHOLDS)
           prevGrayRef.current = toGrayscale(frame)
 
-          if (!checkingRef.current) {
-            if (result.pass) {
-              passCountRef.current++
-              msgCandidateRef.current = ''
-              msgCandidateCount.current = 0
-              if (passCountRef.current >= PASS_FRAMES_REQUIRED) {
-                passCountRef.current = 0
-                runHaikuCheck()  // sets status to 'checking' — no competing setStatus here
-              } else {
-                setStatus({ kind: 'coaching', message: 'Hold steady…' })
-              }
-            } else {
+          if (checkingRef.current) {
+            // AI check in flight. If the camera moves noticeably, cancel it and
+            // drop straight back to "Hold steady…" (border returns to white). The
+            // check resumes automatically once the frame is stable + green again.
+            const motion = result.metrics.motion
+            if (motion !== null && motion > MOTION_ABORT_THRESHOLD) {
+              abortRef.current?.abort()
               passCountRef.current = 0
-              const candidate = result.messages[0] ?? 'Align card in the box'
-              if (candidate === msgCandidateRef.current) {
-                msgCandidateCount.current++
-              } else {
-                msgCandidateRef.current = candidate
-                msgCandidateCount.current = 1
-              }
-              if (msgCandidateCount.current >= MSG_STABLE_FRAMES) {
-                setStatus({ kind: 'coaching', message: candidate })
-              }
+              setStatus({ kind: 'coaching', message: 'Hold steady…' })
+            }
+          } else if (result.pass) {
+            passCountRef.current++
+            msgCandidateRef.current = ''
+            msgCandidateCount.current = 0
+            if (passCountRef.current >= PASS_FRAMES_REQUIRED) {
+              passCountRef.current = 0
+              runHaikuCheck()  // owns the transition to 'checking' — no competing setStatus
+            } else {
+              setStatus({ kind: 'coaching', message: 'Hold steady…' })
+            }
+          } else {
+            passCountRef.current = 0
+            const candidate = result.messages[0] ?? 'Align card in the box'
+            if (candidate === msgCandidateRef.current) {
+              msgCandidateCount.current++
+            } else {
+              msgCandidateRef.current = candidate
+              msgCandidateCount.current = 1
+            }
+            if (msgCandidateCount.current >= MSG_STABLE_FRAMES) {
+              setStatus({ kind: 'coaching', message: candidate })
             }
           }
         }
@@ -311,24 +328,21 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
       </div>
 
 
-      {/* Bottom status */}
-      <style>{`@keyframes slab-pulse{0%,100%{opacity:1}50%{opacity:0.45}}`}</style>
+      {/* Bottom status — single stable text node, no content-swapping animation
+          (an opacity keyframe on this <p> promoted it to a compositor layer on
+          iOS and left a ghost of the previous message when the text changed). */}
       <div style={{
         position: 'absolute', bottom: 0, left: 0, right: 0,
         padding: '20px 24px 44px',
         background: 'linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 100%)',
         zIndex: 20, textAlign: 'center',
       }}>
-        <p
-          key={status.kind}
-          style={{
-            fontFamily: 'var(--font-display)', fontSize: '0.93rem', fontWeight: 500,
-            color: isPass ? '#34c97a' : '#fff',
-            margin: 0, letterSpacing: '0.01em',
-            textShadow: '0 1px 6px rgba(0,0,0,0.8)',
-            animation: status.kind === 'checking' ? 'slab-pulse 1.2s ease-in-out infinite' : 'none',
-          }}
-        >
+        <p style={{
+          fontFamily: 'var(--font-display)', fontSize: '0.93rem', fontWeight: 500,
+          color: isPass ? '#34c97a' : '#fff',
+          margin: 0, letterSpacing: '0.01em',
+          textShadow: '0 1px 6px rgba(0,0,0,0.8)',
+        }}>
           {statusText}
         </p>
         <p style={{
