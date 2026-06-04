@@ -36,6 +36,7 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
   const abortRef           = useRef<AbortController | null>(null) // cancels in-flight Haiku call
   const msgCandidateRef    = useRef('')
   const msgCandidateCount  = useRef(0)
+  const exposureRangeRef   = useRef<{ min: number; max: number } | null>(null)
 
   const [status, setStatus]       = useState<Status>({ kind: 'starting' })
   const [torchOn, setTorchOn]     = useState(false)
@@ -50,6 +51,20 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
       await track.applyConstraints({ advanced: [{ torch: on } as MediaTrackConstraintSet] })
       setTorchOn(on)
     } catch { /* iOS doesn't support torch — ignore */ }
+
+    // On devices that expose exposureCompensation, pull exposure down when the
+    // torch fires to counteract the specular hotspot on foil/chrome cards.
+    // Targeting -1.5 EV (≈ 1/3 of normal brightness), clamped to device range.
+    // Applied separately so torch still works if this constraint is unsupported.
+    if (exposureRangeRef.current) {
+      try {
+        const { min, max } = exposureRangeRef.current
+        const ev = on
+          ? Math.max(min, Math.min(-1.5, max))
+          : Math.max(min, Math.min(0, max))
+        await track.applyConstraints({ advanced: [{ exposureCompensation: ev } as MediaTrackConstraintSet] })
+      } catch { /* exposureCompensation not supported on this device — ignore */ }
+    }
   }, [])
 
   // ── Capture full-res frame ────────────────────────────────────────────────
@@ -151,8 +166,14 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
         // Foil, chrome, prizm, and refractor cards (very common) glare badly under
         // direct torch; users who need light can tap ⚡. We surface a hint when too dark.
         const track = stream.getVideoTracks()[0]
-        const caps = track.getCapabilities() as MediaTrackCapabilities & { torch?: boolean }
+        const caps = track.getCapabilities() as MediaTrackCapabilities & {
+          torch?: boolean
+          exposureCompensation?: { min: number; max: number; step?: number }
+        }
         if (caps.torch) setTorchAvail(true)
+        if (caps.exposureCompensation) {
+          exposureRangeRef.current = { min: caps.exposureCompensation.min, max: caps.exposureCompensation.max }
+        }
 
         loop()
       } catch (e) {
