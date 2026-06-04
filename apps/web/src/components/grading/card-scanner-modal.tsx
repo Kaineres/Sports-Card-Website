@@ -5,8 +5,9 @@ import { evaluateQuality, DEFAULT_THRESHOLDS, type QualityResult } from '@/lib/c
 import { toGrayscale, type RgbaFrame } from '@/lib/camera/metrics'
 
 const PROC_WIDTH = 320
-const PASS_FRAMES_REQUIRED = 4  // consecutive local-pass frames before firing Haiku
-const HAIKU_COOLDOWN_MS = 2500  // min gap between Haiku calls
+const PASS_FRAMES_REQUIRED = 4   // consecutive local-pass frames before firing Haiku
+const HAIKU_COOLDOWN_MS = 2500   // min gap between Haiku calls
+const MSG_STABLE_FRAMES = 12     // coaching message must hold for ~200ms at 60fps before displaying
 
 interface Props {
   side: 'front' | 'back'
@@ -28,9 +29,11 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
   const prevGrayRef = useRef<Uint8ClampedArray | null>(null)
   const rafRef      = useRef<number | null>(null)
   const streamRef   = useRef<MediaStream | null>(null)
-  const passCountRef    = useRef(0)
-  const lastHaikuRef    = useRef(0)
-  const checkingRef     = useRef(false) // prevents concurrent Haiku calls
+  const passCountRef       = useRef(0)
+  const lastHaikuRef       = useRef(0)
+  const checkingRef        = useRef(false) // prevents concurrent Haiku calls
+  const msgCandidateRef    = useRef('')
+  const msgCandidateCount  = useRef(0)
 
   const [status, setStatus]       = useState<Status>({ kind: 'starting' })
   const [torchOn, setTorchOn]     = useState(false)
@@ -170,6 +173,8 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
           if (!checkingRef.current) {
             if (result.pass) {
               passCountRef.current++
+              msgCandidateRef.current = ''
+              msgCandidateCount.current = 0
               setStatus({ kind: 'coaching', message: 'Hold steady…' })
               if (passCountRef.current >= PASS_FRAMES_REQUIRED) {
                 passCountRef.current = 0
@@ -177,7 +182,16 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
               }
             } else {
               passCountRef.current = 0
-              setStatus({ kind: 'coaching', message: result.messages[0] ?? 'Align card in the box' })
+              const candidate = result.messages[0] ?? 'Align card in the box'
+              if (candidate === msgCandidateRef.current) {
+                msgCandidateCount.current++
+              } else {
+                msgCandidateRef.current = candidate
+                msgCandidateCount.current = 1
+              }
+              if (msgCandidateCount.current >= MSG_STABLE_FRAMES) {
+                setStatus({ kind: 'coaching', message: candidate })
+              }
             }
           }
         }
