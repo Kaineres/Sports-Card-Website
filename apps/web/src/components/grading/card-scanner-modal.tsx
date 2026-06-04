@@ -312,33 +312,32 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
 
 
       {/* Bottom status */}
-      {status.kind === 'checking' && (
-        <style>{`@keyframes slab-pulse{0%,100%{opacity:1}50%{opacity:0.45}}`}</style>
-      )}
+      <style>{`@keyframes slab-pulse{0%,100%{opacity:1}50%{opacity:0.45}}`}</style>
       <div style={{
         position: 'absolute', bottom: 0, left: 0, right: 0,
         padding: '20px 24px 44px',
         background: 'linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 100%)',
         zIndex: 20, textAlign: 'center',
       }}>
-        <p style={{
-          fontFamily: 'var(--font-display)', fontSize: '0.93rem', fontWeight: 500,
-          color: isPass ? '#34c97a' : '#fff',
-          margin: 0, letterSpacing: '0.01em',
-          textShadow: '0 1px 6px rgba(0,0,0,0.8)',
-          transition: 'color 0.2s',
-          animation: status.kind === 'checking' ? 'slab-pulse 1.2s ease-in-out infinite' : 'none',
-        }}>
+        <p
+          key={status.kind}
+          style={{
+            fontFamily: 'var(--font-display)', fontSize: '0.93rem', fontWeight: 500,
+            color: isPass ? '#34c97a' : '#fff',
+            margin: 0, letterSpacing: '0.01em',
+            textShadow: '0 1px 6px rgba(0,0,0,0.8)',
+            animation: status.kind === 'checking' ? 'slab-pulse 1.2s ease-in-out infinite' : 'none',
+          }}
+        >
           {statusText}
         </p>
-        {subText ? (
-          <p style={{
-            fontFamily: 'var(--font-display)', fontSize: '0.75rem',
-            color: 'rgba(255,255,255,0.5)', margin: '6px 0 0',
-          }}>
-            {subText}
-          </p>
-        ) : null}
+        <p style={{
+          fontFamily: 'var(--font-display)', fontSize: '0.75rem',
+          color: 'rgba(255,255,255,0.5)', margin: '6px 0 0',
+          minHeight: '1.1em',
+        }}>
+          {subText}
+        </p>
       </div>
 
       {/* Hidden canvases */}
