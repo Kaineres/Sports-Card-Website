@@ -306,7 +306,7 @@ export default function GradingPage() {
                   {
                     icon: '🛡️',
                     title: 'Remove from sleeve if possible',
-                    body: 'Remove from top loaders, one-touches, or graded slabs before scanning — thick plastic significantly reduces sharpness and causes glare. A clean penny sleeve is fine to leave on. Scratched or hazy sleeves will soften the image noticeably.',
+                    body: 'For the most accurate scan, remove the card from any holder. Top loaders, one-touches, and graded slabs must be removed — thick plastic causes significant sharpness loss and glare. A clean penny sleeve is optional to remove, but taking it off will improve results. Scratched or hazy penny sleeves should be removed.',
                   },
                   {
                     icon: '↩️',
