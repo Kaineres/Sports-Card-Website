@@ -76,3 +76,8 @@ When something fails repeatedly, when the user has to re-explain, or when a work
 - New skills need a validation step before rendering. First runs have data gaps.
 - Google Slides `autofit` crashes batchUpdate. Set font sizes explicitly.
 - Windows Developer Mode required for symlinks (Paperclip, etc.).
+- `temperature` is deprecated for claude-sonnet-5 — omit it or API 400s.
+- No local ANTHROPIC_API_KEY; grader runs only on Vercel — test in production.
+- `docs/` is a separate gitignored repo (no remote). Tracked docs go in `dev-docs/`.
+- Bash tool sandbox discards git index writes — disable sandbox to commit.
+- Auto-deploy timer commits working tree to main every ~1–2 min.

@@ -164,3 +164,41 @@ Pure, deterministic post-processing. Same input → same output. The model's `ov
 - Rubric grades 5-and-below and the weakest-attribute cap rule are secondary-source `[L]`, not
   stated verbatim by PSA — flagged in `psa.json` for future verification.
 - BGS is unsupported; all grades are PSA.
+
+---
+
+## Decisions & discoveries (captured 2026-07-01)
+
+Working notes so future work on the grader doesn't rediscover these the hard way.
+
+### Locked product decisions
+- **PSA-holistic capping** — forgive one lagging attribute, hard-cap on two-or-more. Implemented
+  deterministically in `mapping.ts` Rule 2 (NOT a strict `min()`).
+- **Altered/fake = Option A** — a `notGraded` N-code SUPPRESSES the number (UI shows code + reason);
+  qualifiers (OC/ST/PD/OF/MK/MC) are advisory tags that NEVER suppress the number.
+- **Login required to grade** — Clerk `auth()` gate on `/api/grade`.
+
+### Gotchas (do not relearn these)
+- **`temperature` is DEPRECATED for `claude-sonnet-5`** — passing it returns HTTP **400
+  invalid_request_error**. This was the root cause of a production 500 on "Analyze Card".
+  `agent.ts` intentionally omits it. **Do not reintroduce it.**
+- **No local `ANTHROPIC_API_KEY`** — the key lives only in Vercel env, so the grader **cannot run
+  locally**. Verify grader changes with `tsc` + build + unit tests locally, then test on
+  production (no real users yet — safe to test there).
+- **Structured output is non-negotiable** — the model MUST call `submit_grade` (forced
+  `tool_choice`); we never parse free text. Malformed tool payload → schema error → 500.
+- **The guardrail owns the final number, not the model** — `mapping.ts` re-derives `overall` from
+  the sub-scores. The model's `overall` is only a proposal and is never allowed to be *raised*.
+
+### Real-world validation so far
+- A test card returned a reasonable, **conservative 7.5** with sensible sub-grades and ranges.
+- Biggest identified error source = **camera tilt corrupting the centering read** → this drove the
+  Stage-1 device level gate (≤ 7°). Straight-on capture is a prerequisite for trustworthy centering.
+
+### Deferred — when I return to the grader
+- **Per-frame lighting** — populate `lighting` (raking vs even) via guided multi-capture so surface
+  can be graded with confidence instead of ceiling-capped. Currently always sent as `unknown`.
+- **Rubric verification** — confirm grades ≤5 and the weakest-attribute cap rule against PSA
+  verbatim (currently secondary-source `[L]` in `psa.json`).
+- **Calibration** — compare engine output against known PSA-slabbed cards to tune the rubric/caps.
+- **BGS support** — schema already allows it; currently forced to PSA.
