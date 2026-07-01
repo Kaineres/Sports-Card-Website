@@ -8,11 +8,13 @@ type GradingState = 'upload' | 'loading' | 'results'
 interface SubGrade { label: string; score: number }
 
 interface LightingTier { label: string; color: string; text: string }
+interface TipExample { label: string; color: string; src: string; caption: string }
 interface Tip {
   icon: string
   title: string
   body: string
   guide?: LightingTier[]
+  examples?: TipExample[]
 }
 
 const LOADING_MSGS = [
@@ -45,6 +47,53 @@ function CardIcon() {
       <rect x="11" y="36" width="24" height="2.5" rx="1.2" fill="rgba(255,255,255,0.14)"/>
       <rect x="11" y="41" width="17" height="2.5" rx="1.2" fill="rgba(255,255,255,0.09)"/>
     </svg>
+  )
+}
+
+// One good/avoid example thumbnail. Renders the photo once it exists at `ex.src`;
+// until then it shows a labeled placeholder telling you which file to drop into
+// public/scan-tips/ — no code change needed when the real photo is added.
+function ExampleThumb({ ex }: { ex: TipExample }) {
+  const [failed, setFailed] = useState(false)
+  const fileName = ex.src.replace(/^\//, '')
+  const showImg = !failed
+
+  return (
+    <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '5px' }}>
+      <span style={{
+        alignSelf: 'flex-start',
+        fontFamily: 'var(--font-mono)', fontSize: '0.55rem', fontWeight: 700,
+        textTransform: 'uppercase', letterSpacing: '0.09em',
+        color: ex.color, border: `1px solid ${ex.color}`, borderRadius: '4px',
+        padding: '1px 6px',
+      }}>
+        {ex.label}
+      </span>
+      <div style={{
+        aspectRatio: '4 / 3', width: '100%', borderRadius: '7px', overflow: 'hidden',
+        border: `1px solid ${ex.color}44`, background: 'rgba(0,0,0,0.35)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}>
+        {showImg ? (
+          <img
+            src={ex.src}
+            alt={`${ex.label} — ${ex.caption}`}
+            onError={() => setFailed(true)}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        ) : (
+          <div style={{ textAlign: 'center', padding: '8px' }}>
+            <div style={{ fontSize: '1rem', opacity: 0.5, marginBottom: '4px' }}>🖼️</div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.5rem', color: 'var(--text3)', opacity: 0.7, wordBreak: 'break-all', lineHeight: 1.4 }}>
+              {fileName}
+            </div>
+          </div>
+        )}
+      </div>
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', color: 'var(--text3)', textAlign: 'center' }}>
+        {ex.caption}
+      </span>
+    </div>
   )
 }
 
@@ -300,11 +349,19 @@ export default function GradingPage() {
                       { label: 'Good',  color: 'var(--gold2)', text: 'A lamp bounced off a wall, or off to one side.' },
                       { label: 'Avoid', color: '#e05c5c',      text: 'A flashlight or bright beam aimed at the card; direct sun.' },
                     ],
+                    examples: [
+                      { label: 'Good',  color: '#34c97a', src: '/scan-tips/lighting-good.jpg',  caption: 'Even, soft light' },
+                      { label: 'Avoid', color: '#e05c5c', src: '/scan-tips/lighting-avoid.jpg', caption: 'Glare hotspot' },
+                    ],
                   },
                   {
                     icon: '📐',
                     title: 'Fill the box, straight-on',
                     body: 'Line the card up with the corner marks and hold your phone flat above it. Tilting throws off centering and edges.',
+                    examples: [
+                      { label: 'Good',  color: '#34c97a', src: '/scan-tips/framing-good.jpg',  caption: 'Filled & square' },
+                      { label: 'Avoid', color: '#e05c5c', src: '/scan-tips/framing-avoid.jpg', caption: 'Tilted & small' },
+                    ],
                   },
                   {
                     icon: '🧘',
@@ -315,11 +372,19 @@ export default function GradingPage() {
                     icon: '🎨',
                     title: 'Contrast the background',
                     body: 'Dark surface for white-bordered cards, light or gray for dark-bordered ones. Avoid busy patterns or stacked cards.',
+                    examples: [
+                      { label: 'Good',  color: '#34c97a', src: '/scan-tips/background-good.jpg',  caption: 'Border stands out' },
+                      { label: 'Avoid', color: '#e05c5c', src: '/scan-tips/background-avoid.jpg', caption: 'Border blends in' },
+                    ],
                   },
                   {
                     icon: '🛡️',
                     title: 'Remove thick holders',
                     body: 'Take cards out of toploaders, one-touches, and slabs — thick plastic adds blur and glare. Ditch hazy penny sleeves too.',
+                    examples: [
+                      { label: 'Good',  color: '#34c97a', src: '/scan-tips/holder-good.jpg',  caption: 'Bare card' },
+                      { label: 'Avoid', color: '#e05c5c', src: '/scan-tips/holder-avoid.jpg', caption: 'In a slab' },
+                    ],
                   },
                   {
                     icon: '↩️',
@@ -327,39 +392,57 @@ export default function GradingPage() {
                     body: 'Front is required. Adding the back catches corner and edge wear on the reverse.',
                   },
                 ] as Tip[]).map(tip => (
-                  <div key={tip.title} style={{ display: 'flex', gap: '11px', alignItems: 'flex-start' }}>
-                    <span style={{ fontSize: '1rem', flexShrink: 0, marginTop: '1px' }}>{tip.icon}</span>
-                    <div>
-                      <div style={{ fontFamily: 'var(--font-display)', fontSize: '0.82rem', fontWeight: 700, color: 'var(--gold2)', marginBottom: '3px' }}>
+                  <div key={tip.title} style={{
+                    border: '1px solid rgba(184,146,46,0.14)',
+                    borderRadius: '10px',
+                    background: 'rgba(0,0,0,0.22)',
+                    padding: '13px 14px',
+                  }}>
+                    {/* Title row */}
+                    <div style={{ display: 'flex', gap: '9px', alignItems: 'center', marginBottom: '6px' }}>
+                      <span style={{
+                        flexShrink: 0, width: '26px', height: '26px', borderRadius: '7px',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        background: 'rgba(184,146,46,0.12)', fontSize: '0.9rem',
+                      }}>{tip.icon}</span>
+                      <div style={{ fontFamily: 'var(--font-display)', fontSize: '0.85rem', fontWeight: 700, color: 'var(--gold2)' }}>
                         {tip.title}
                       </div>
-                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.71rem', color: 'var(--text3)', lineHeight: 1.6, letterSpacing: '0.01em' }}>
-                        {tip.body}
-                      </div>
-                      {tip.guide && (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '7px', marginTop: '10px' }}>
-                          {tip.guide.map(g => (
-                            <div key={g.label} style={{ display: 'flex', gap: '9px', alignItems: 'flex-start' }}>
-                              <span style={{
-                                flexShrink: 0, minWidth: '46px', textAlign: 'center',
-                                fontFamily: 'var(--font-mono)', fontSize: '0.57rem', fontWeight: 700,
-                                textTransform: 'uppercase', letterSpacing: '0.09em',
-                                color: g.color, border: `1px solid ${g.color}`, borderRadius: '4px',
-                                padding: '2px 6px', marginTop: '1px', opacity: 0.9,
-                              }}>
-                                {g.label}
-                              </span>
-                              <span style={{
-                                fontFamily: 'var(--font-mono)', fontSize: '0.7rem',
-                                color: 'var(--text3)', lineHeight: 1.55, letterSpacing: '0.01em',
-                              }}>
-                                {g.text}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      )}
                     </div>
+
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.71rem', color: 'var(--text3)', lineHeight: 1.6, letterSpacing: '0.01em' }}>
+                      {tip.body}
+                    </div>
+
+                    {tip.guide && (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '7px', marginTop: '10px' }}>
+                        {tip.guide.map(g => (
+                          <div key={g.label} style={{ display: 'flex', gap: '9px', alignItems: 'flex-start' }}>
+                            <span style={{
+                              flexShrink: 0, minWidth: '46px', textAlign: 'center',
+                              fontFamily: 'var(--font-mono)', fontSize: '0.57rem', fontWeight: 700,
+                              textTransform: 'uppercase', letterSpacing: '0.09em',
+                              color: g.color, border: `1px solid ${g.color}`, borderRadius: '4px',
+                              padding: '2px 6px', marginTop: '1px', opacity: 0.9,
+                            }}>
+                              {g.label}
+                            </span>
+                            <span style={{
+                              fontFamily: 'var(--font-mono)', fontSize: '0.7rem',
+                              color: 'var(--text3)', lineHeight: 1.55, letterSpacing: '0.01em',
+                            }}>
+                              {g.text}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {tip.examples && (
+                      <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+                        {tip.examples.map(ex => <ExampleThumb key={ex.label} ex={ex} />)}
+                      </div>
+                    )}
                   </div>
                 ))}
 
