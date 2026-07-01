@@ -293,38 +293,38 @@ export default function GradingPage() {
                 {([
                   {
                     icon: '💡',
-                    title: 'Use even, ambient light — not one hard beam',
-                    body: 'A normal well-lit room is enough — you don\'t need a special setup. The tiers below just help if you run into glare or shadows. Soft light spread across the card beats a single bright source: one hard beam creates a glare hotspot that hides scratches and surface detail — worst of all on foil, chrome, prizm, and refractor cards.',
+                    title: 'Even light — not one hard beam',
+                    body: 'A normal well-lit room is enough. These only help if you hit glare or shadows:',
                     guide: [
-                      { label: 'Best',  color: '#34c97a',      text: 'Indirect daylight near a window, or a room with even overhead lighting — light arriving evenly from above or in front.' },
-                      { label: 'Good',  color: 'var(--gold2)', text: 'A lamp bounced off a wall or ceiling, or set off to one side so it doesn\'t reflect straight back into the lens.' },
-                      { label: 'Avoid', color: '#e05c5c',      text: 'Phone flashlight or any single hard beam pointed at the card, harsh direct sunlight, or one bare bulb directly overhead.' },
+                      { label: 'Best',  color: '#34c97a',      text: 'Window daylight, or even overhead room light.' },
+                      { label: 'Good',  color: 'var(--gold2)', text: 'A lamp bounced off a wall, or off to one side.' },
+                      { label: 'Avoid', color: '#e05c5c',      text: 'A flashlight or bright beam aimed at the card; direct sun.' },
                     ],
                   },
                   {
                     icon: '📐',
-                    title: 'Fill the scanning box',
-                    body: 'Position the card so it fills the corner marks. Hold your phone directly above the card, parallel to it — any tilt makes it harder to assess centering and edges accurately.',
+                    title: 'Fill the box, straight-on',
+                    body: 'Line the card up with the corner marks and hold your phone flat above it. Tilting throws off centering and edges.',
                   },
                   {
                     icon: '🧘',
-                    title: 'Hold steady until the corners turn green',
-                    body: 'The scanner checks sharpness, brightness, and motion on every frame. When all three pass, the corner marks turn green and the AI verifies the card automatically — no button needed.',
+                    title: 'Hold still for green',
+                    body: 'When focus, light, and steadiness all pass, the corners turn green and it captures automatically — no button.',
                   },
                   {
                     icon: '🎨',
-                    title: 'Match your background to your card',
-                    body: 'Use a background that contrasts with the card\'s border. Dark surface (black felt, dark table) for white-bordered cards like Topps and Panini base sets. Light or neutral gray for dark-bordered cards like Prizm Black or Select. Avoid busy patterns or stacking cards.',
+                    title: 'Contrast the background',
+                    body: 'Dark surface for white-bordered cards, light or gray for dark-bordered ones. Avoid busy patterns or stacked cards.',
                   },
                   {
                     icon: '🛡️',
-                    title: 'Remove from sleeve if possible',
-                    body: 'For the most accurate scan, remove the card from any holder. Top loaders, one-touches, and graded slabs must be removed — thick plastic causes significant sharpness loss and glare. A clean penny sleeve is optional to remove, but taking it off will improve results. Scratched or hazy penny sleeves should be removed.',
+                    title: 'Remove thick holders',
+                    body: 'Take cards out of toploaders, one-touches, and slabs — thick plastic adds blur and glare. Ditch hazy penny sleeves too.',
                   },
                   {
                     icon: '↩️',
                     title: 'Scan both sides',
-                    body: 'The front is required. Scanning the back as well gives the AI more to work with — especially useful for detecting edge and corner wear on the reverse.',
+                    body: 'Front is required. Adding the back catches corner and edge wear on the reverse.',
                   },
                 ] as Tip[]).map(tip => (
                   <div key={tip.title} style={{ display: 'flex', gap: '11px', alignItems: 'flex-start' }}>
@@ -370,7 +370,7 @@ export default function GradingPage() {
                 }}>
                   <span style={{ fontSize: '0.85rem', flexShrink: 0, color: 'var(--gold2)', marginTop: '1px' }}>⚠</span>
                   <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.69rem', color: 'var(--gold2)', letterSpacing: '0.02em', lineHeight: 1.65, margin: 0, opacity: 0.8 }}>
-                    Grade accuracy depends on image quality. Well-lit, sharp, straight-on photos produce the most accurate estimates. Blurry or dark images reduce precision.
+                    Better photos, better grades. Sharp, well-lit, straight-on scans give the most accurate estimates.
                   </p>
                 </div>
               </div>
