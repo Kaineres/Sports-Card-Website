@@ -136,9 +136,31 @@ function buildSystemPrompt(request: GradeRequest): string {
         : request.lighting === 'even'
           ? 'Only even/flat light was provided, so treat any high surface grade with caution and keep surface confidence lower.'
           : 'Lighting is unknown, so do not assume raking light — be cautious with surface.'),
+    // No-grade (Option A): alteration/authenticity evidence suppresses the number.
+    'NO-GRADE RULE (critical): PSA refuses to assign a numeric grade to a card with visible evidence of ' +
+      'trimming, restoration, recoloring, cleaning, added gloss, altered stock, questionable authenticity/counterfeit, ' +
+      'or that fails minimum size. When — and ONLY when — you actually SEE such evidence, set `notGraded` with the ' +
+      'matching N-code and a specific reason: trimming N1 (hooked/unnaturally sharp/wavy/inconsistent edges), ' +
+      'restoration N2, recoloring N3, questionable authenticity N4, altered stock/added gloss N5, undersize/min-size N6, ' +
+      'cleaning N7, miscut N8, don’t-grade N9, authentic-only N0. Still provide your best-guess `overall` — the grade the ' +
+      'card WOULD have earned absent the alteration — because the app hides the number itself and shows the code + reason. ' +
+      'If you see no such evidence, `notGraded` MUST be null. Do not invent alterations you cannot see.',
+    // Qualifiers: advisory tags for a single honest flaw; the card still gets a number.
+    'QUALIFIERS: When the card IS numerically gradable but carries a single honest flaw, attach an advisory qualifier ' +
+      'in `qualifiers` (do NOT no-grade it): OC off-center, ST staining, PD print defect, OF out of focus, MK marks ' +
+      '(ALWAYS attach MK when any writing/ink/mark is present), MC miscut (ALWAYS attach MC when a factory miscut is ' +
+      'present). Attach nothing — an empty array [] — when the card is clean. Qualifiers annotate the grade; they never ' +
+      'suppress the number.',
+    // Holistic overall: forgive one minor flaw; only two-plus lagging attributes cap hard.
+    'PSA-HOLISTIC OVERALL: PSA grades the overall holistically, NOT as the strict minimum of the four attributes. A ' +
+      'single minor flaw does not sink the card — a MINT 9 is explicitly allowed exactly ONE minor flaw. So when just ' +
+      'one attribute lags and the other three are strong, keep the overall high (typically one grade above the lone ' +
+      'weak attribute, bounded by the second-weakest). Only when TWO OR MORE attributes lag does the weakest cap the ' +
+      'overall hard. Grade the overall the way PSA would, not as a mechanical min().',
     'OUTPUT CONTRACT: Do not reply with prose. Call the `submit_grade` tool exactly once with your ' +
       'full verdict: house, overall, overallRange, confidence, photoQuality, exactly four factors ' +
-      '(centering, corners, edges, surface) each with score/range/reasoning, and a short summary. ' +
+      '(centering, corners, edges, surface) each with score/range/reasoning, `qualifiers` (empty array [] when ' +
+      'clean), `notGraded` (null unless you see alteration/authenticity evidence), and a short summary. ' +
       'Scores and ranges must sit on the PSA 1–10 scale.',
   ].join('\n\n')
 }
@@ -154,17 +176,22 @@ export async function gradeCard(request: GradeRequest): Promise<AgentOutput> {
       '. Assess centering, corners, edges, and surface, then call `submit_grade`.',
   })
 
-  const message = await client.messages.create({
-    model: MODEL,
-    max_tokens: 1500,
-    temperature: 0,
-    system: [
-      { type: 'text', text: buildSystemPrompt(request), cache_control: { type: 'ephemeral' } },
-    ],
-    tools: [SUBMIT_GRADE_TOOL],
-    tool_choice: { type: 'tool', name: 'submit_grade' },
-    messages: [{ role: 'user', content }],
-  })
+  const message = await client.messages.create(
+    {
+      model: MODEL,
+      max_tokens: 1500,
+      temperature: 0,
+      system: [
+        { type: 'text', text: buildSystemPrompt(request), cache_control: { type: 'ephemeral' } },
+      ],
+      tools: [SUBMIT_GRADE_TOOL],
+      tool_choice: { type: 'tool', name: 'submit_grade' },
+      messages: [{ role: 'user', content }],
+    },
+    // Bound the vision call so a stuck request can't hang the grade route. The
+    // TS SDK takes request options as the second arg; timeout is in milliseconds.
+    { timeout: 30_000 },
+  )
 
   const toolUse = message.content.find((b) => b.type === 'tool_use')
   if (!toolUse || toolUse.type !== 'tool_use') {
