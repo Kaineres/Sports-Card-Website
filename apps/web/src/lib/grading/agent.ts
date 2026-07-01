@@ -180,7 +180,8 @@ export async function gradeCard(request: GradeRequest): Promise<AgentOutput> {
     {
       model: MODEL,
       max_tokens: 1500,
-      temperature: 0,
+      // NOTE: `temperature` is deprecated for claude-sonnet-5 — passing it returns
+      // a 400 invalid_request_error. Omit it and let the model use its default.
       system: [
         { type: 'text', text: buildSystemPrompt(request), cache_control: { type: 'ephemeral' } },
       ],
