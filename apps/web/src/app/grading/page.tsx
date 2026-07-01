@@ -26,15 +26,38 @@ const LOADING_MSGS = [
   'Computing grade estimate',
 ]
 
-const MOCK_RESULT = {
-  grade: 9.2,
-  subgrades: [
-    { label: 'Centering', score: 9.0 },
-    { label: 'Corners',   score: 9.5 },
-    { label: 'Edges',     score: 9.0 },
-    { label: 'Surface',   score: 9.3 },
-  ] as SubGrade[],
-  summary: 'Near mint to mint condition with minor edge wear and slight centering variance. Surface presents well with no visible scratches or print defects under standard inspection.',
+// ── Grade API response shape (mirrors @/lib/grading/schema — kept local to avoid
+//    pulling a server-only module into this client component) ──
+type FactorName = 'centering' | 'corners' | 'edges' | 'surface'
+
+interface Factor {
+  name: FactorName
+  score: number
+  range: [number, number]
+  reasoning: string
+}
+
+interface GradeResult {
+  house: 'PSA'
+  overall: number
+  overallRange: [number, number]
+  confidence: 'high' | 'medium' | 'low'
+  photoQuality: 'good' | 'marginal' | 'poor'
+  factors: Factor[]
+  summary: string
+  notes: string[]
+}
+
+const FACTOR_ORDER: FactorName[] = ['centering', 'corners', 'edges', 'surface']
+
+// Convert a File to a base64 data URL (for JSON transport to /api/grade).
+function fileToDataURL(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result as string)
+    reader.onerror = () => reject(reader.error ?? new Error('Failed to read file'))
+    reader.readAsDataURL(file)
+  })
 }
 
 function CardIcon() {
