@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { evaluateQuality, DEFAULT_THRESHOLDS, type QualityResult } from '@/lib/camera/quality'
 import { toGrayscale, type RgbaFrame } from '@/lib/camera/metrics'
+import { evaluateLevel, DEFAULT_TILT_THRESHOLDS, type Gravity } from '@/lib/camera/tilt'
 
 const PROC_WIDTH = 320
 const PASS_FRAMES_REQUIRED = 4    // consecutive local-pass frames before firing Haiku
@@ -49,10 +50,17 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
   const lastGatePassRef    = useRef(false) // latest on-device quality-gate result (live frame)
   const msgCandidateRef    = useRef('')
   const msgCandidateCount  = useRef(0)
+  const gravityRef         = useRef<Gravity | null>(null)   // latest device gravity reading
+  const bubbleDotRef       = useRef<HTMLDivElement>(null)   // level-guide bubble (moved imperatively)
+  const motionHandlerRef   = useRef<((e: DeviceMotionEvent) => void) | null>(null)
 
   const [status, setStatus]       = useState<Status>({ kind: 'starting' })
   const [flash, setFlash]         = useState(false)
   const [debugCapture, setDebugCapture] = useState<{ dataUrl: string; file: File } | null>(null)
+  // Level-guide availability: 'idle' until we probe; 'needs-permission' on iOS
+  // (must ask via a user tap); 'granted' once we're receiving motion; 'denied' /
+  // 'unavailable' → we silently skip the level gate (never hard-block).
+  const [motionState, setMotionState] = useState<'idle' | 'needs-permission' | 'granted' | 'denied' | 'unavailable'>('idle')
 
   // ── Capture full-res frame ────────────────────────────────────────────────
   const captureFrame = useCallback((): string | null => {
@@ -145,6 +153,52 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
     }
   }, [captureFrame, captureToFile, onCapture])
 
+  // ── Device-tilt "level" guide ─────────────────────────────────────────────
+  // Reads the gravity vector to tell whether the phone is flat/level over the
+  // card (straight-on), gating auto-capture so we never grade a tilted shot.
+  const attachMotion = useCallback(() => {
+    if (motionHandlerRef.current) return
+    const handler = (e: DeviceMotionEvent) => {
+      const a = e.accelerationIncludingGravity
+      if (a && a.x != null) {
+        gravityRef.current = { x: a.x ?? 0, y: a.y ?? 0, z: a.z ?? 0 }
+      }
+    }
+    motionHandlerRef.current = handler
+    window.addEventListener('devicemotion', handler)
+    setMotionState('granted')
+  }, [])
+
+  // iOS 13+ requires DeviceMotionEvent.requestPermission() from a user gesture.
+  const requestMotion = useCallback(async () => {
+    const DME = window.DeviceMotionEvent as unknown as { requestPermission?: () => Promise<'granted' | 'denied'> }
+    try {
+      const res = await DME.requestPermission?.()
+      if (res === 'granted') attachMotion()
+      else setMotionState('denied')
+    } catch {
+      setMotionState('denied')
+    }
+  }, [attachMotion])
+
+  useEffect(() => {
+    const DME = typeof window !== 'undefined'
+      ? (window.DeviceMotionEvent as unknown as { requestPermission?: () => Promise<'granted' | 'denied'> } | undefined)
+      : undefined
+    if (!DME) { setMotionState('unavailable'); return }
+    if (typeof DME.requestPermission === 'function') {
+      setMotionState('needs-permission') // iOS — wait for the "Enable level guide" tap
+    } else {
+      attachMotion() // Android / sensor-equipped browsers: no permission gate
+    }
+    return () => {
+      if (motionHandlerRef.current) {
+        window.removeEventListener('devicemotion', motionHandlerRef.current)
+        motionHandlerRef.current = null
+      }
+    }
+  }, [attachMotion])
+
   // ── Camera + quality loop ─────────────────────────────────────────────────
   useEffect(() => {
     let cancelled = false
@@ -221,7 +275,24 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
           const frame: RgbaFrame = { data: img.data, width: w, height: h }
           const result: QualityResult = evaluateQuality(frame, prevGrayRef.current, DEFAULT_THRESHOLDS)
           prevGrayRef.current = toGrayscale(frame)
-          lastGatePassRef.current = result.pass  // live gate result for AI-timeout fallback
+
+          // Level gate: is the phone flat/level over the card (straight-on shot)?
+          const levelRes = evaluateLevel(gravityRef.current, DEFAULT_TILT_THRESHOLDS)
+          // Move the bubble-guide dot imperatively — no per-frame React re-render.
+          const dot = bubbleDotRef.current
+          if (dot) {
+            const g = gravityRef.current
+            const R = 26                 // px the bubble can travel from center
+            const scale = R / 1.3        // ~1.3 m/s² horizontal ≈ tilt threshold → edge
+            // Axis signs tuned for portrait; may need on-device calibration.
+            const dx = g ? Math.max(-R, Math.min(R, g.x * scale)) : 0
+            const dy = g ? Math.max(-R, Math.min(R, -g.y * scale)) : 0
+            dot.style.transform = `translate(${dx}px, ${dy}px)`
+            dot.style.background = levelRes.level ? '#34c97a' : '#ffd24a'
+          }
+
+          const ready = result.pass && levelRes.level
+          lastGatePassRef.current = ready  // live gate result for AI-timeout fallback
 
           if (checkingRef.current) {
             // AI check in flight. If the camera moves noticeably, cancel it and
@@ -234,7 +305,7 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
               lastHaikuRef.current = 0 // reset cooldown — re-check fires immediately on re-stabilize
               setStatus({ kind: 'coaching', message: 'Hold steady…' })
             }
-          } else if (result.pass) {
+          } else if (ready) {
             passCountRef.current++
             msgCandidateRef.current = ''
             msgCandidateCount.current = 0
@@ -246,7 +317,11 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
             }
           } else {
             passCountRef.current = 0
-            const candidate = result.messages[0] ?? 'Align card in the box'
+            // Frame problems first (can't judge level if we can't see the card);
+            // if the frame is good but the phone is tilted, coach to level.
+            const candidate = !result.pass
+              ? (result.messages[0] ?? 'Align card in the box')
+              : (levelRes.message ?? 'Hold steady…')
             if (candidate === msgCandidateRef.current) {
               msgCandidateCount.current++
             } else {
@@ -351,6 +426,49 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
         <div style={{ width: 42 }} />
       </div>
 
+
+      {/* Level guide — the bubble centers + turns green when the phone is flat/level */}
+      {motionState === 'granted' && (
+        <div style={{
+          position: 'absolute', left: 0, right: 0, bottom: 132,
+          display: 'flex', justifyContent: 'center', zIndex: 20, pointerEvents: 'none',
+        }}>
+          <div style={{
+            position: 'relative', width: 72, height: 72, borderRadius: '50%',
+            border: '2px solid rgba(255,255,255,0.35)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <div style={{
+              position: 'absolute', width: 20, height: 20, borderRadius: '50%',
+              border: '1px solid rgba(255,255,255,0.45)',
+            }} />
+            <div ref={bubbleDotRef} style={{
+              width: 16, height: 16, borderRadius: '50%', background: '#ffd24a',
+              boxShadow: '0 0 8px rgba(0,0,0,0.5)', transition: 'background 0.2s',
+            }} />
+          </div>
+        </div>
+      )}
+
+      {/* iOS: one-time tap to enable the motion sensor behind the level guide */}
+      {motionState === 'needs-permission' && (
+        <div style={{
+          position: 'absolute', left: 0, right: 0, bottom: 128,
+          display: 'flex', justifyContent: 'center', zIndex: 25,
+        }}>
+          <button
+            onClick={requestMotion}
+            style={{
+              padding: '10px 18px', borderRadius: 999,
+              background: 'rgba(0,0,0,0.55)', border: '1px solid rgba(255,255,255,0.25)',
+              color: '#fff', fontFamily: 'var(--font-display)', fontSize: '0.85rem',
+              fontWeight: 600, cursor: 'pointer', backdropFilter: 'blur(4px)',
+            }}
+          >
+            Enable level guide
+          </button>
+        </div>
+      )}
 
       {/* Bottom status — single stable text node, no content-swapping animation
           (an opacity keyframe on this <p> promoted it to a compositor layer on
