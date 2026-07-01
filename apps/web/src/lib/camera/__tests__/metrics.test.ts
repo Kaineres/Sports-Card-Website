@@ -68,6 +68,36 @@ describe('lightingMetrics', () => {
     expect(m.darkRatio).toBe(1)
     expect(m.meanLuminance).toBe(0)
   })
+
+  it('does not flag bright-but-unclipped content (chrome/foil) as a glare hotspot', () => {
+    // 235 is bright — like a silver Prizm border under even light — but not clipped.
+    // This is the false positive we fixed: it must NOT read as glare or a hotspot.
+    const m = lightingMetrics(solidFrame(64, 64, 235))
+    expect(m.meanLuminance).toBeGreaterThan(230) // bright…
+    expect(m.glareRatio).toBe(0)                 // …but not clipped
+    expect(m.maxCellGlareRatio).toBe(0)
+  })
+
+  it('flags a small blown-out (clipped) region the whole-frame ratio dilutes away', () => {
+    const w = 64, h = 64
+    const frame = solidFrame(w, h, 130)
+    // Blow out the top-left 8×8 cell to pure white (a concentrated specular hotspot).
+    for (let y = 0; y < 8; y++) {
+      for (let x = 0; x < 8; x++) {
+        const i = (y * w + x) * 4
+        frame.data[i] = 255; frame.data[i + 1] = 255; frame.data[i + 2] = 255
+      }
+    }
+    const m = lightingMetrics(frame)
+    expect(m.glareRatio).toBeLessThan(0.02)        // 64/4096 ≈ 1.6% — under the whole-frame gate
+    expect(m.maxCellGlareRatio).toBeGreaterThan(0.9) // but one full cell is blown → hotspot caught
+  })
+
+  it('reports a full hotspot for a fully blown-out white frame', () => {
+    const m = lightingMetrics(solidFrame(16, 16, 255))
+    expect(m.glareRatio).toBe(1)
+    expect(m.maxCellGlareRatio).toBe(1)
+  })
 })
 
 describe('frameDifference', () => {

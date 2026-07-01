@@ -12,7 +12,7 @@ export interface QualityThresholds {
   minLuminance: number      // too dark below this (0-255)
   maxLuminance: number      // too bright above this (0-255)
   maxGlareRatio: number     // fraction of blown-out pixels allowed (whole frame, >=250)
-  maxCellGlareRatio: number // max per-cell fraction of pixels >=220 before flagging hotspot
+  maxCellGlareRatio: number // max per-cell fraction of clipped (>=250) pixels before flagging a specular hotspot
   maxDarkRatio: number      // fraction of crushed-black pixels allowed
   maxMotion: number         // mean abs frame diff allowed for "stable"
   minLongEdge: number       // min capture long-edge (px) for enough detail

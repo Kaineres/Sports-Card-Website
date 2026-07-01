@@ -46,10 +46,20 @@ export function sharpnessScore(frame: RgbaFrame): number {
 
 export interface LightingMetrics {
   meanLuminance: number     // 0-255
-  glareRatio: number        // fraction of near-white (>=250) pixels, whole frame
+  glareRatio: number        // fraction of clipped (>=250) pixels, whole frame
   darkRatio: number         // fraction of near-black (<=10) pixels
-  maxCellGlareRatio: number // highest per-cell fraction of pixels >=220 in an 8×8 grid
+  maxCellGlareRatio: number // highest per-cell fraction of clipped (>=250) pixels in an 8×8 grid
 }
+
+// A pixel is "glare" only when it is essentially CLIPPED to white (>= this luma).
+// The per-cell hotspot check previously used 220, but that flags cards that are
+// merely bright *by design* — silver/chrome/foil (e.g. Prizm) borders read
+// ~220-245 under even light with all detail intact. A real specular hotspot blows
+// out to pure white (clips at 255) and destroys the detail underneath; that is the
+// only thing worth rejecting. Empirical (2026-07-01, well-lit Prizm): 72.5% of
+// cells exceeded 220 yet only 0.21% of pixels actually clipped (>=250). So both the
+// whole-frame ratio and the per-cell hotspot key on clipping, not brightness.
+const CLIPPED_LUMA = 250
 
 /** Brightness + glare + darkness metrics from the grayscale histogram. */
 export function lightingMetrics(frame: RgbaFrame): LightingMetrics {
@@ -59,15 +69,15 @@ export function lightingMetrics(frame: RgbaFrame): LightingMetrics {
   for (let p = 0; p < gray.length; p++) {
     const v = gray[p]
     sum += v
-    if (v >= 250) glare++
+    if (v >= CLIPPED_LUMA) glare++
     if (v <= 10) dark++
   }
   const n = gray.length || 1
 
-  // 8×8 grid hotspot detection — catches concentrated bright regions
-  // that the whole-frame ratio misses due to dark-background dilution.
-  // Uses a lower threshold (>=220) than the global check (>=250) because
-  // real-world camera hotspots typically peak at 220-245, not fully clipped.
+  // 8×8 grid hotspot detection — catches a concentrated blown-out region that the
+  // whole-frame ratio misses because a dark background (or a large card) dilutes it.
+  // Keyed on CLIPPED_LUMA so a bright-but-detailed chrome card does not read as a
+  // hotspot; only a genuinely blown, detail-destroying specular does.
   const GRID = 8
   const cellW = Math.max(1, Math.floor(width / GRID))
   const cellH = Math.max(1, Math.floor(height / GRID))
@@ -83,7 +93,7 @@ export function lightingMetrics(frame: RgbaFrame): LightingMetrics {
         for (let x = xStart; x < xEnd; x++) {
           const v = gray[y * width + x]
           cellTotal++
-          if (v >= 220) cellGlare++
+          if (v >= CLIPPED_LUMA) cellGlare++
         }
       }
       if (cellTotal > 0) {
