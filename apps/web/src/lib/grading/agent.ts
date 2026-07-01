@@ -21,7 +21,7 @@ const SUBMIT_GRADE_TOOL: Anthropic.Tool = {
   input_schema: {
     type: 'object',
     properties: {
-      house: { type: 'string', enum: ['PSA', 'BGS'] },
+      house: { type: 'string', enum: ['PSA'] },
       overall: { type: 'number', description: 'Overall grade on the PSA 1–10 scale (half-grades allowed, no 9.5).' },
       overallRange: {
         type: 'array',
@@ -193,12 +193,23 @@ export async function gradeCard(request: GradeRequest): Promise<AgentOutput> {
     { timeout: 30_000 },
   )
 
-  const toolUse = message.content.find((b) => b.type === 'tool_use')
-  if (!toolUse || toolUse.type !== 'tool_use') {
+  // Find the submit_grade tool_use specifically (the model may emit other blocks).
+  const toolUse = message.content.find(
+    (b): b is Anthropic.ToolUseBlock => b.type === 'tool_use' && b.name === 'submit_grade',
+  )
+  if (!toolUse) {
     throw new Error('Grading agent did not return a submit_grade tool call')
   }
 
-  const parsed = AgentOutputSchema.parse(toolUse.input)
+  const result = AgentOutputSchema.safeParse(toolUse.input)
+  if (!result.success) {
+    // Surface a clear cause instead of an opaque 500 — the grader returned a
+    // verdict that failed our contract. Include the validation detail for logs.
+    throw new Error(
+      `Grading agent returned a malformed verdict that failed schema validation: ${result.error.message}`,
+    )
+  }
+
   // BGS is unsupported — force PSA regardless of what the model emitted.
-  return { ...parsed, house: 'PSA' }
+  return { ...result.data, house: 'PSA' }
 }

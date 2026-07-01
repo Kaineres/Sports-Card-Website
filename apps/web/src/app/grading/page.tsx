@@ -716,6 +716,22 @@ export default function GradingPage() {
                     <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--text3)', marginTop: '7px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
                       {name.charAt(0).toUpperCase() + name.slice(1)}
                     </div>
+                    {f && (
+                      <div style={{
+                        fontFamily: 'var(--font-mono)', fontSize: '0.55rem', color: 'var(--text3)',
+                        marginTop: '5px', letterSpacing: '0.04em', opacity: 0.7,
+                      }}>
+                        {f.range[0]}–{f.range[1]}
+                      </div>
+                    )}
+                    {f && f.reasoning && (
+                      <div style={{
+                        fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--text3)',
+                        marginTop: '8px', lineHeight: 1.5, letterSpacing: '0.01em', opacity: 0.8,
+                      }}>
+                        {f.reasoning}
+                      </div>
+                    )}
                   </div>
                 )
               })}
