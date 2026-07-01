@@ -130,8 +130,12 @@ export default function GradingPage() {
   const [msgIdx, setMsgIdx]       = useState(0)
   const [dragOver, setDragOver]   = useState<'front' | 'back' | null>(null)
   const [scanner, setScanner]     = useState<'front' | 'back' | null>(null)
+  const [result, setResult]       = useState<GradeResult | null>(null)
+  const [error, setError]         = useState<string | null>(null)
   const frontRef = useRef<HTMLInputElement>(null)
   const backRef  = useRef<HTMLInputElement>(null)
+  const runningRef = useRef(false)
+  const tickRef    = useRef<ReturnType<typeof setInterval> | null>(null)
 
   function handleFile(file: File, side: 'front' | 'back') {
     if (!file.type.startsWith('image/')) return
@@ -147,26 +151,67 @@ export default function GradingPage() {
     if (file) handleFile(file, side)
   }
 
-  const startGrading = useCallback(() => {
+  const startGrading = useCallback(async () => {
     if (!frontFile) return
+    if (runningRef.current) return   // guard against overlapping runs
+    runningRef.current = true
+
+    setError(null)
+    setResult(null)
     setState('loading')
     setProgress(0)
     setMsgIdx(0)
+
+    // Loading animation, decoupled from completion: advance the messages and let
+    // progress creep asymptotically toward ~90% while the request is in flight.
     let p = 0, m = 0
     const tick = setInterval(() => {
-      p += Math.random() * 12 + 4
-      if (p >= 100) { p = 100; clearInterval(tick); setTimeout(() => setState('results'), 400) }
-      setProgress(Math.min(p, 100))
-      const nextMsg = Math.floor((p / 100) * LOADING_MSGS.length)
-      if (nextMsg !== m) { m = nextMsg; setMsgIdx(Math.min(m, LOADING_MSGS.length - 1)) }
-    }, 300)
-  }, [frontFile])
+      p += (90 - p) * 0.12 + 1        // ease toward 90, never reaching it
+      setProgress(Math.min(p, 90))
+      const nextMsg = Math.min(m + 1, LOADING_MSGS.length - 1)
+      if (nextMsg !== m) { m = nextMsg; setMsgIdx(m) }
+    }, 450)
+    tickRef.current = tick
+
+    const stopTick = () => {
+      clearInterval(tick)
+      if (tickRef.current === tick) tickRef.current = null
+    }
+
+    try {
+      const front = await fileToDataURL(frontFile)
+      const back  = backFile ? await fileToDataURL(backFile) : undefined
+
+      const res = await fetch('/api/grade', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ house: 'PSA', front, back, lighting: 'unknown' }),
+      })
+
+      if (!res.ok) {
+        throw new Error(`Grading failed (${res.status})`)
+      }
+
+      const data = (await res.json()) as GradeResult
+      stopTick()
+      setResult(data)
+      setProgress(100)
+      setState('results')
+    } catch (err) {
+      stopTick()
+      setError(err instanceof Error ? err.message : 'Something went wrong while grading your card.')
+      setState('upload')
+    } finally {
+      runningRef.current = false
+    }
+  }, [frontFile, backFile])
 
   function reset() {
     setState('upload')
     setFrontFile(null); setBackFile(null)
     setFrontUrl(null);  setBackUrl(null)
     setProgress(0); setMsgIdx(0)
+    setResult(null); setError(null)
   }
 
   return (
