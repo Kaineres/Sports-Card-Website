@@ -343,7 +343,7 @@ export default function GradingPage() {
                   {
                     icon: '💡',
                     title: 'Even light — not one hard beam',
-                    body: 'A normal well-lit room is enough. These only help if you hit glare or shadows:',
+                    body: 'A normal well-lit room is enough. These only help if you hit glare or shadows. On shiny cards (Prizm, chrome, refractors, foil), some sheen is unavoidable no matter the lighting — just avoid one bright hotspot that hides detail:',
                     guide: [
                       { label: 'Best',  color: '#34c97a',      text: 'Window daylight, or even overhead room light.' },
                       { label: 'Good',  color: 'var(--gold2)', text: 'A lamp bounced off a wall, or off to one side.' },
