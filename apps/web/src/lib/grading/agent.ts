@@ -54,9 +54,53 @@ const SUBMIT_GRADE_TOOL: Anthropic.Tool = {
           required: ['name', 'score', 'range', 'reasoning'],
         },
       },
+      qualifiers: {
+        type: 'array',
+        description:
+          'Advisory qualifier tags for a single honest, visible flaw. MUST be present on every call — use an ' +
+          'EMPTY ARRAY [] when the card is clean. Attach at most one per distinct flaw: OC (off-center), ST ' +
+          '(staining), PD (print defect), OF (out of focus), MK (marks — ALWAYS when writing/ink/marks are ' +
+          'present), MC (miscut — ALWAYS when present). These do NOT suppress the numeric grade; they annotate it.',
+        items: {
+          type: 'object',
+          properties: {
+            code: { type: 'string', enum: ['OC', 'ST', 'PD', 'OF', 'MK', 'MC'] },
+            note: { type: 'string', description: 'Specific visual evidence for this qualifier.' },
+          },
+          required: ['code', 'note'],
+        },
+      },
+      notGraded: {
+        // null when the card is fit for a number; an object when PSA would refuse to grade it.
+        type: ['object', 'null'],
+        description:
+          'Set to null UNLESS there is visible evidence PSA would refuse to assign a numeric grade. Set the object ' +
+          'ONLY on visible evidence of an alteration/authenticity problem: N1 trimming, N2 restoration, N3 ' +
+          'recoloring, N4 questionable authenticity, N5 altered stock, N6 undersize/min-size, N7 cleaning, N8 ' +
+          'miscut, N9 don’t-grade, N0 authentic-only. Still fill `overall` with your best-guess pre-alteration ' +
+          'grade; the app suppresses the number itself.',
+        properties: {
+          code: {
+            type: 'string',
+            enum: ['N0', 'N1', 'N2', 'N3', 'N4', 'N5', 'N6', 'N7', 'N8', 'N9'],
+          },
+          reason: { type: 'string', description: 'The visible evidence that triggered the no-grade.' },
+        },
+        required: ['code', 'reason'],
+      },
       summary: { type: 'string', description: 'One short paragraph summarizing the verdict for the user.' },
     },
-    required: ['house', 'overall', 'overallRange', 'confidence', 'photoQuality', 'factors', 'summary'],
+    required: [
+      'house',
+      'overall',
+      'overallRange',
+      'confidence',
+      'photoQuality',
+      'factors',
+      'qualifiers',
+      'notGraded',
+      'summary',
+    ],
   },
 }
 

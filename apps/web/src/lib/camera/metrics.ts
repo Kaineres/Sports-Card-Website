@@ -78,17 +78,22 @@ export function lightingMetrics(frame: RgbaFrame): LightingMetrics {
   // whole-frame ratio misses because a dark background (or a large card) dilutes it.
   // Keyed on CLIPPED_LUMA so a bright-but-detailed chrome card does not read as a
   // hotspot; only a genuinely blown, detail-destroying specular does.
+  //
+  // Cell boundaries are derived from proportional cuts (row*height/GRID) rather than
+  // a fixed floor(size/GRID) step. The old floor step left a remainder strip on the
+  // right/bottom edge (e.g. width=70 → cellW=8, columns only covered 0..64, so the
+  // 64..70 strip went unmeasured and a specular there was missed). Proportional cuts
+  // make the last row/column extend exactly to the edge, so the whole frame is
+  // covered with no gaps or overlaps. Cells may vary by ±1 px; that is harmless.
   const GRID = 8
-  const cellW = Math.max(1, Math.floor(width / GRID))
-  const cellH = Math.max(1, Math.floor(height / GRID))
   let maxCellGlareRatio = 0
   for (let row = 0; row < GRID; row++) {
+    const yStart = Math.floor((row * height) / GRID)
+    const yEnd = Math.floor(((row + 1) * height) / GRID)
     for (let col = 0; col < GRID; col++) {
+      const xStart = Math.floor((col * width) / GRID)
+      const xEnd = Math.floor(((col + 1) * width) / GRID)
       let cellGlare = 0, cellTotal = 0
-      const yStart = row * cellH
-      const yEnd = Math.min(yStart + cellH, height)
-      const xStart = col * cellW
-      const xEnd = Math.min(xStart + cellW, width)
       for (let y = yStart; y < yEnd; y++) {
         for (let x = xStart; x < xEnd; x++) {
           const v = gray[y * width + x]

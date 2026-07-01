@@ -10,9 +10,17 @@ const HAIKU_COOLDOWN_MS = 2500    // min gap between Haiku calls
 const MSG_STABLE_FRAMES = 12      // coaching message must hold for ~200ms at 60fps before displaying
 const MOTION_ABORT_THRESHOLD = 14 // mean abs frame-diff that cancels an in-flight AI check
 
+// CardBox overlay geometry — MUST stay in sync with the <CardBox> component below.
+// The quality metrics are computed ONLY over this region of interest (the card),
+// not the whole frame, so a dark background never skews sharpness/luminance/glare.
+const CARD_BOX_WIDTH_PCT = 0.78  // CardBox width: 78%
+const CARD_BOX_MAX_WIDTH = 320   // CardBox maxWidth: 320px
+const CARD_BOX_ASPECT_W  = 5     // aspectRatio 5 / 7  (width : height)
+const CARD_BOX_ASPECT_H  = 7
+
 // TEMPORARY — set to true to pause after each AI-accepted frame for threshold calibration.
 // Shows a "Save to Photos" button (iOS share sheet → Save Image). Remove before shipping.
-const DEBUG_DOWNLOAD_ACCEPTED = true
+const DEBUG_DOWNLOAD_ACCEPTED = false
 
 interface Props {
   side: 'front' | 'back'
@@ -38,6 +46,7 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
   const lastHaikuRef       = useRef(0)
   const checkingRef        = useRef(false) // prevents concurrent Haiku calls
   const abortRef           = useRef<AbortController | null>(null) // cancels in-flight Haiku call
+  const lastGatePassRef    = useRef(false) // latest on-device quality-gate result (live frame)
   const msgCandidateRef    = useRef('')
   const msgCandidateCount  = useRef(0)
 
@@ -110,8 +119,17 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
       }
     } catch (e) {
       if (timedOut) {
-        // Local gates passed but the AI never answered — accept the frame.
-        accept()
+        // The AI never answered. Do NOT blindly accept — a timeout is not a
+        // card-present confirmation. Fall back to the on-device quality gate:
+        // only capture if the LIVE frame still passes the local gate; otherwise
+        // keep scanning. Never capture a frame that failed the local gate just
+        // because the AI timed out.
+        if (lastGatePassRef.current) {
+          accept()
+        } else {
+          passCountRef.current = 0
+          setStatus({ kind: 'coaching', message: 'Hold steady…' })
+        }
       } else if (e instanceof Error && e.name === 'AbortError') {
         // Camera moved — the RAF loop already reverted us to "Hold steady…". Do nothing.
         passCountRef.current = 0
@@ -155,16 +173,55 @@ export function CardScannerModal({ side, onCapture, onClose }: Props) {
       const video   = videoRef.current
       const canvas  = procCanvas.current
       if (video && canvas && video.videoWidth > 0) {
+        // ── ROI crop (object-fit: cover mapping) ───────────────────────────
+        // The video is rendered with object-fit: cover, so it is scaled UP to
+        // fill the element and cropped on the overflowing axis. To measure only
+        // the pixels the user frames inside the CardBox we map the on-screen box
+        // back into the video's intrinsic (source) pixel coordinates:
+        //
+        //   scale     = max(elW/vW, elH/vH)        // cover fills the element
+        //   dispW/H   = vW*scale, vH*scale         // displayed video size (>= element)
+        //   offsetX/Y = (el - disp) / 2            // <= 0; overflow, centered
+        //   srcX      = (boxLeft - offsetX) / scale  // element px -> source px
+        //   srcW      = boxW / scale
+        //
+        // CardBox is centered, width = min(78% of elW, 320px), aspect 5:7.
+        const vW = video.videoWidth
+        const vH = video.videoHeight
+        const elW = video.clientWidth  || vW
+        const elH = video.clientHeight || vH
+
+        const scale   = Math.max(elW / vW, elH / vH)
+        const offsetX = (elW - vW * scale) / 2
+        const offsetY = (elH - vH * scale) / 2
+
+        const boxW    = Math.min(CARD_BOX_WIDTH_PCT * elW, CARD_BOX_MAX_WIDTH)
+        const boxH    = boxW * (CARD_BOX_ASPECT_H / CARD_BOX_ASPECT_W)
+        const boxLeft = (elW - boxW) / 2
+        const boxTop  = (elH - boxH) / 2
+
+        // On-screen box -> source sub-rectangle, clamped to the frame bounds.
+        let sx = (boxLeft - offsetX) / scale
+        let sy = (boxTop  - offsetY) / scale
+        let sw = boxW / scale
+        let sh = boxH / scale
+        sx = Math.max(0, Math.min(sx, vW - 1))
+        sy = Math.max(0, Math.min(sy, vH - 1))
+        sw = Math.max(1, Math.min(sw, vW - sx))
+        sh = Math.max(1, Math.min(sh, vH - sy))
+
         const w = PROC_WIDTH
-        const h = Math.round(w * (video.videoHeight / video.videoWidth))
+        const h = Math.max(1, Math.round(w * (sh / sw)))
         if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h }
         const ctx = canvas.getContext('2d', { willReadFrequently: true })
         if (ctx) {
-          ctx.drawImage(video, 0, 0, w, h)
+          // 9-arg drawImage: copy ONLY the ROI sub-rect into the proc canvas.
+          ctx.drawImage(video, sx, sy, sw, sh, 0, 0, w, h)
           const img = ctx.getImageData(0, 0, w, h)
           const frame: RgbaFrame = { data: img.data, width: w, height: h }
           const result: QualityResult = evaluateQuality(frame, prevGrayRef.current, DEFAULT_THRESHOLDS)
           prevGrayRef.current = toGrayscale(frame)
+          lastGatePassRef.current = result.pass  // live gate result for AI-timeout fallback
 
           if (checkingRef.current) {
             // AI check in flight. If the camera moves noticeably, cancel it and

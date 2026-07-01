@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { CardScannerModal } from '@/components/grading/card-scanner-modal'
+import { GradeResultSchema, FACTORS, type GradeResult } from '@/lib/grading/schema'
 
 type GradingState = 'upload' | 'loading' | 'results'
 
@@ -24,38 +25,38 @@ const LOADING_MSGS = [
   'Computing grade estimate',
 ]
 
-// ── Grade API response shape (mirrors @/lib/grading/schema — kept local to avoid
-//    pulling a server-only module into this client component) ──
-type FactorName = 'centering' | 'corners' | 'edges' | 'surface'
+// The API response type + validator come from the shared schema (schema.ts only
+// imports zod, so it is safe in a client component). We validate the response with
+// GradeResultSchema rather than blind-casting.
+type FactorName = (typeof FACTORS)[number]
+const FACTOR_ORDER: readonly FactorName[] = FACTORS
 
-interface Factor {
-  name: FactorName
-  score: number
-  range: [number, number]
-  reasoning: string
-}
-
-interface GradeResult {
-  house: 'PSA'
-  overall: number
-  overallRange: [number, number]
-  confidence: 'high' | 'medium' | 'low'
-  photoQuality: 'good' | 'marginal' | 'poor'
-  factors: Factor[]
-  summary: string
-  notes: string[]
-}
-
-const FACTOR_ORDER: FactorName[] = ['centering', 'corners', 'edges', 'surface']
-
-// Convert a File to a base64 data URL (for JSON transport to /api/grade).
-function fileToDataURL(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onload = () => resolve(reader.result as string)
-    reader.onerror = () => reject(reader.error ?? new Error('Failed to read file'))
-    reader.readAsDataURL(file)
-  })
+// Downscale a captured image so its long edge is ~maxEdge px and re-encode as JPEG.
+// Full-resolution phone photos (8–12MP) blow past the server's size ceiling; this
+// keeps uploads small while preserving enough detail for grading. Returns a data URL.
+async function downscaleImage(file: File, maxEdge = 2000, quality = 0.85): Promise<string> {
+  const objectUrl = URL.createObjectURL(file)
+  try {
+    const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const image = new Image()
+      image.onload = () => resolve(image)
+      image.onerror = () => reject(new Error('Failed to load image for downscaling'))
+      image.src = objectUrl
+    })
+    const longEdge = Math.max(img.naturalWidth, img.naturalHeight) || 1
+    const scale = longEdge > maxEdge ? maxEdge / longEdge : 1
+    const w = Math.max(1, Math.round(img.naturalWidth * scale))
+    const h = Math.max(1, Math.round(img.naturalHeight * scale))
+    const canvas = document.createElement('canvas')
+    canvas.width = w
+    canvas.height = h
+    const ctx = canvas.getContext('2d')
+    if (!ctx) throw new Error('Canvas 2D context unavailable')
+    ctx.drawImage(img, 0, 0, w, h)
+    return canvas.toDataURL('image/jpeg', quality)
+  } finally {
+    URL.revokeObjectURL(objectUrl)
+  }
 }
 
 function CardIcon() {
@@ -135,6 +136,11 @@ export default function GradingPage() {
   const runningRef = useRef(false)
   const tickRef    = useRef<ReturnType<typeof setInterval> | null>(null)
 
+  // Revoke object URLs when they are replaced or on unmount, to avoid leaks. Each
+  // effect's cleanup runs before the next value is applied (replace) and on unmount.
+  useEffect(() => () => { if (frontUrl) URL.revokeObjectURL(frontUrl) }, [frontUrl])
+  useEffect(() => () => { if (backUrl)  URL.revokeObjectURL(backUrl)  }, [backUrl])
+
   function handleFile(file: File, side: 'front' | 'back') {
     if (!file.type.startsWith('image/')) return
     const url = URL.createObjectURL(file)
@@ -176,30 +182,57 @@ export default function GradingPage() {
       if (tickRef.current === tick) tickRef.current = null
     }
 
+    // 30s abort guard — without this a hung request left the progress bar frozen
+    // at ~90% forever. On timeout we abort the fetch and surface a clear error.
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 30_000)
+
     try {
-      const front = await fileToDataURL(frontFile)
-      const back  = backFile ? await fileToDataURL(backFile) : undefined
+      // Downscale before upload — never send full-resolution originals (they exceed
+      // the server-side size ceiling).
+      const front = await downscaleImage(frontFile)
+      const back  = backFile ? await downscaleImage(backFile) : undefined
 
       const res = await fetch('/api/grade', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        // lighting: this upload path has no per-frame lighting signal, so we send
+        // 'unknown'. Phase 2 (guided multi-capture) will populate it per frame.
         body: JSON.stringify({ house: 'PSA', front, back, lighting: 'unknown' }),
+        signal: controller.signal,
       })
 
+      if (res.status === 401) {
+        throw new Error('Please sign in to grade cards — grading now requires an account.')
+      }
+      if (res.status === 429) {
+        throw new Error('You are grading too quickly. Please wait a moment and try again.')
+      }
       if (!res.ok) {
-        throw new Error(`Grading failed (${res.status})`)
+        throw new Error(`Grading failed (${res.status}).`)
       }
 
-      const data = (await res.json()) as GradeResult
+      // Validate the response against the shared schema — never render unvalidated data.
+      const json = await res.json()
+      const parsed = GradeResultSchema.safeParse(json)
+      if (!parsed.success) {
+        throw new Error('We could not read the grading result. Please try again.')
+      }
+
       stopTick()
-      setResult(data)
+      setResult(parsed.data)
       setProgress(100)
       setState('results')
     } catch (err) {
       stopTick()
-      setError(err instanceof Error ? err.message : 'Something went wrong while grading your card.')
+      if (err instanceof DOMException && err.name === 'AbortError') {
+        setError('Grading timed out after 30 seconds. Please check your connection and try again.')
+      } else {
+        setError(err instanceof Error ? err.message : 'Something went wrong while grading your card.')
+      }
       setState('upload')
     } finally {
+      clearTimeout(timeout)
       runningRef.current = false
     }
   }, [frontFile, backFile])
@@ -404,7 +437,7 @@ export default function GradingPage() {
               }}>
                 <span style={{ fontSize: '0.85rem', flexShrink: 0, color: '#e05c5c', marginTop: '1px' }}>⚠</span>
                 <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: '#e05c5c', letterSpacing: '0.02em', lineHeight: 1.6, margin: 0 }}>
-                  {error} Please try again.
+                  {error}
                 </p>
               </div>
             )}
@@ -576,21 +609,81 @@ export default function GradingPage() {
               borderBottom: '1px solid var(--border-md)',
               background: 'linear-gradient(135deg, rgba(10,8,4,0) 0%, rgba(184,146,46,0.04) 100%)',
             }}>
-              <div>
-                <div style={{
-                  fontFamily: 'var(--font-serif)', fontSize: '5.5rem', fontWeight: 700,
-                  color: 'var(--gold2)', lineHeight: 0.95, letterSpacing: '-0.03em',
-                }}>
-                  {result.overall.toFixed(1)}
-                </div>
-                <div style={{
-                  fontFamily: 'var(--font-mono)', fontSize: '0.63rem', color: 'var(--text3)',
-                  textTransform: 'uppercase', letterSpacing: '0.14em', marginTop: '12px',
-                }}>Estimated Grade</div>
-                <div style={{
-                  fontFamily: 'var(--font-mono)', fontSize: '0.66rem', color: 'var(--text2)',
-                  letterSpacing: '0.04em', marginTop: '6px', opacity: 0.85,
-                }}>Range {result.overallRange[0]}–{result.overallRange[1]}</div>
+              <div style={{ maxWidth: '62%' }}>
+                {result.notGraded ? (
+                  /* NO GRADE — the number is deliberately HIDDEN. An altered/fake card
+                     must never render a normal-looking numeric grade. */
+                  <>
+                    <div style={{
+                      fontFamily: 'var(--font-serif)', fontSize: '2.7rem', fontWeight: 700,
+                      color: '#e05c5c', lineHeight: 1, letterSpacing: '-0.01em',
+                    }}>
+                      NO GRADE
+                    </div>
+                    <div style={{
+                      display: 'inline-block', marginTop: '12px',
+                      fontFamily: 'var(--font-mono)', fontSize: '0.58rem', fontWeight: 700,
+                      textTransform: 'uppercase', letterSpacing: '0.1em',
+                      color: '#e05c5c', border: '1px solid #e05c5c', borderRadius: '5px',
+                      padding: '3px 9px',
+                    }}>
+                      Code {result.notGraded.code}
+                    </div>
+                    <p style={{
+                      fontFamily: 'var(--font-display)', fontSize: '0.82rem',
+                      color: 'var(--text2)', lineHeight: 1.6, marginTop: '12px', marginBottom: 0,
+                    }}>
+                      PSA would not assign a numeric grade — {result.notGraded.reason}
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <div style={{
+                      fontFamily: 'var(--font-serif)', fontSize: '5.5rem', fontWeight: 700,
+                      color: 'var(--gold2)', lineHeight: 0.95, letterSpacing: '-0.03em',
+                    }}>
+                      {result.overall.toFixed(1)}
+                    </div>
+                    <div style={{
+                      fontFamily: 'var(--font-mono)', fontSize: '0.63rem', color: 'var(--text3)',
+                      textTransform: 'uppercase', letterSpacing: '0.14em', marginTop: '12px',
+                    }}>Estimated Grade</div>
+                    <div style={{
+                      fontFamily: 'var(--font-mono)', fontSize: '0.66rem', color: 'var(--text2)',
+                      letterSpacing: '0.04em', marginTop: '6px', opacity: 0.85,
+                    }}>Range {result.overallRange[0]}–{result.overallRange[1]}</div>
+
+                    {/* Advisory qualifier tags (OC, ST, …) — small badges; the note
+                        is the hover tooltip and also shown as subtext below. */}
+                    {result.qualifiers.length > 0 && (
+                      <>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '12px' }}>
+                          {result.qualifiers.map(q => (
+                            <span
+                              key={q.code}
+                              title={q.note}
+                              style={{
+                                display: 'inline-flex', alignItems: 'center',
+                                fontFamily: 'var(--font-mono)', fontSize: '0.58rem', fontWeight: 700,
+                                textTransform: 'uppercase', letterSpacing: '0.09em',
+                                color: 'var(--gold2)', border: '1px solid var(--gold2)', borderRadius: '5px',
+                                padding: '3px 8px', opacity: 0.9, cursor: 'help',
+                              }}
+                            >
+                              {q.code}
+                            </span>
+                          ))}
+                        </div>
+                        <div style={{
+                          fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--text3)',
+                          marginTop: '6px', lineHeight: 1.5,
+                        }}>
+                          {result.qualifiers.map(q => `${q.code}: ${q.note}`).join(' · ')}
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
               </div>
               {/* Card image — slightly rotated */}
               <div style={{
@@ -698,14 +791,28 @@ export default function GradingPage() {
               >
                 <span style={{ fontSize: '1rem' }}>↺</span> Scan Another Card
               </button>
-              <button style={{
-                flex: 1, padding: '11px',
-                background: 'linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%)',
-                border: 'none', borderRadius: '8px', color: '#0d1117',
-                fontFamily: 'var(--font-display)', fontSize: '0.83rem', fontWeight: 700,
-                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '7px',
-              }}>
+              {/* Honestly disabled — Collections is a separate, out-of-scope feature.
+                  Do not ship a fake no-op that pretends to save. */}
+              <button
+                disabled
+                title="Collections coming soon"
+                style={{
+                  flex: 1, padding: '11px',
+                  background: 'rgba(184,146,46,0.1)',
+                  border: '1px solid rgba(184,146,46,0.18)', borderRadius: '8px',
+                  color: 'rgba(184,146,46,0.5)',
+                  fontFamily: 'var(--font-display)', fontSize: '0.83rem', fontWeight: 700,
+                  cursor: 'not-allowed', display: 'flex', flexDirection: 'column',
+                  alignItems: 'center', justifyContent: 'center', gap: '2px',
+                }}
+              >
                 + Add to Collection
+                <span style={{
+                  fontFamily: 'var(--font-mono)', fontSize: '0.55rem', fontWeight: 600,
+                  textTransform: 'uppercase', letterSpacing: '0.08em', opacity: 0.85,
+                }}>
+                  Collections coming soon
+                </span>
               </button>
             </div>
           </div>
