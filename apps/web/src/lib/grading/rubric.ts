@@ -92,6 +92,16 @@ export function serializeRubricForPrompt(rubric: PsaRubric): string {
   }
   out.push('')
 
+  // Per-grade holistic anchors (GEM-MT 10 / MINT 9 / … definitions) — the
+  // calibration text the model needs to place a card on the scale. Marker-stripped,
+  // scale order.
+  out.push('## GRADE DEFINITIONS')
+  for (const g of rubric.scale) {
+    const def = (rubric.gradeDefinitions as Record<string, string>)[String(g)]
+    if (def) out.push(`  ${g}: ${stripMarkers(def)}`)
+  }
+  out.push('')
+
   // Centering — front/back ratios per tier + the below-five note.
   out.push('## CENTERING')
   out.push(`  measure: ${stripMarkers(c.centering._measure)}`)
