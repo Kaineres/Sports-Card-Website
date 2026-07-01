@@ -7,6 +7,14 @@ type GradingState = 'upload' | 'loading' | 'results'
 
 interface SubGrade { label: string; score: number }
 
+interface LightingTier { label: string; color: string; text: string }
+interface Tip {
+  icon: string
+  title: string
+  body: string
+  guide?: LightingTier[]
+}
+
 const LOADING_MSGS = [
   'Analyzing edges',
   'Checking centering',
@@ -282,11 +290,16 @@ export default function GradingPage() {
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {[
+                {([
                   {
                     icon: '💡',
-                    title: 'Use good ambient lighting',
-                    body: 'Scan near a window, under a lamp, or hold a flashlight nearby at an angle. For foil, chrome, prizm, or refractor cards, avoid pointing any light directly at the card — it causes glare that obscures the surface.',
+                    title: 'Use even, ambient light — not one hard beam',
+                    body: 'Soft light spread across the card beats a single bright source. One hard beam creates a glare hotspot that hides scratches and surface detail — worst of all on foil, chrome, prizm, and refractor cards.',
+                    guide: [
+                      { label: 'Best',  color: '#34c97a',      text: 'Indirect daylight near a window, or a room with even overhead lighting — light arriving evenly from above or in front.' },
+                      { label: 'Good',  color: 'var(--gold2)', text: 'A lamp bounced off a wall or ceiling, or set off to one side so it doesn\'t reflect straight back into the lens.' },
+                      { label: 'Avoid', color: '#e05c5c',      text: 'Phone flashlight or any single hard beam pointed at the card, harsh direct sunlight, or one bare bulb directly overhead.' },
+                    ],
                   },
                   {
                     icon: '📐',
@@ -313,7 +326,7 @@ export default function GradingPage() {
                     title: 'Scan both sides',
                     body: 'The front is required. Scanning the back as well gives the AI more to work with — especially useful for detecting edge and corner wear on the reverse.',
                   },
-                ].map(tip => (
+                ] as Tip[]).map(tip => (
                   <div key={tip.title} style={{ display: 'flex', gap: '11px', alignItems: 'flex-start' }}>
                     <span style={{ fontSize: '1rem', flexShrink: 0, marginTop: '1px' }}>{tip.icon}</span>
                     <div>
@@ -323,6 +336,29 @@ export default function GradingPage() {
                       <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.71rem', color: 'var(--text3)', lineHeight: 1.6, letterSpacing: '0.01em' }}>
                         {tip.body}
                       </div>
+                      {tip.guide && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '7px', marginTop: '10px' }}>
+                          {tip.guide.map(g => (
+                            <div key={g.label} style={{ display: 'flex', gap: '9px', alignItems: 'flex-start' }}>
+                              <span style={{
+                                flexShrink: 0, minWidth: '46px', textAlign: 'center',
+                                fontFamily: 'var(--font-mono)', fontSize: '0.57rem', fontWeight: 700,
+                                textTransform: 'uppercase', letterSpacing: '0.09em',
+                                color: g.color, border: `1px solid ${g.color}`, borderRadius: '4px',
+                                padding: '2px 6px', marginTop: '1px', opacity: 0.9,
+                              }}>
+                                {g.label}
+                              </span>
+                              <span style={{
+                                fontFamily: 'var(--font-mono)', fontSize: '0.7rem',
+                                color: 'var(--text3)', lineHeight: 1.55, letterSpacing: '0.01em',
+                              }}>
+                                {g.text}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
