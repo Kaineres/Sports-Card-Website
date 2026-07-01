@@ -294,7 +294,7 @@ export default function GradingPage() {
                   {
                     icon: '💡',
                     title: 'Use even, ambient light — not one hard beam',
-                    body: 'Soft light spread across the card beats a single bright source. One hard beam creates a glare hotspot that hides scratches and surface detail — worst of all on foil, chrome, prizm, and refractor cards.',
+                    body: 'A normal well-lit room is enough — you don\'t need a special setup. The tiers below just help if you run into glare or shadows. Soft light spread across the card beats a single bright source: one hard beam creates a glare hotspot that hides scratches and surface detail — worst of all on foil, chrome, prizm, and refractor cards.',
                     guide: [
                       { label: 'Best',  color: '#34c97a',      text: 'Indirect daylight near a window, or a room with even overhead lighting — light arriving evenly from above or in front.' },
                       { label: 'Good',  color: 'var(--gold2)', text: 'A lamp bounced off a wall or ceiling, or set off to one side so it doesn\'t reflect straight back into the lens.' },
