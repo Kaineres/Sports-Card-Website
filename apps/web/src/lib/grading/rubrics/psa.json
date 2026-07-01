@@ -1,0 +1,132 @@
+{
+  "house": "PSA",
+  "_about": "Hand-authored PSA grading rubric consumed by the grading agent. Values verified 2026-07-01 against psacard.com/gradingstandards and psacard.com/resources/lingo. Certainty markers: [C]=stated on psacard.com, [L]=reputable secondary source, [G]=inference. Grades 5-and-below and the weakest-factor cap rule are [L] — verify verbatim before treating as authoritative.",
+  "_sources": [
+    "https://www.psacard.com/gradingstandards",
+    "https://www.psacard.com/resources/lingo/q"
+  ],
+  "scale": [10, 9, 8.5, 8, 7.5, 7, 6.5, 6, 5.5, 5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1],
+  "_scaleNote": "PSA issues whole grades 1-10 plus half-grades 1.5-8.5. There is NO 9.5 and no 10.5. [C]",
+  "gradeNames": {
+    "10": "GEM-MT (Gem Mint)",
+    "9": "MINT",
+    "8.5": "NM-MT+",
+    "8": "NM-MT (Near Mint-Mint)",
+    "7.5": "NM+",
+    "7": "NM (Near Mint)",
+    "6.5": "EX-MT+",
+    "6": "EX-MT (Excellent-Mint)",
+    "5.5": "EX+",
+    "5": "EX (Excellent)",
+    "4.5": "VG-EX+",
+    "4": "VG-EX (Very Good-Excellent)",
+    "3.5": "VG+",
+    "3": "VG (Very Good)",
+    "2.5": "GOOD+",
+    "2": "GOOD",
+    "1.5": "FR (Fair)",
+    "1": "PR (Poor)"
+  },
+  "gradeDefinitions": {
+    "10": "[C] A virtually perfect card. Four perfectly sharp corners, sharp focus, full original gloss, free of staining of any kind. An allowance may be made for a slight printing imperfection if it doesn't impair overall appeal. Centering must be approx 55/45 or better on the front and 75/25 or better on the reverse.",
+    "9": "[C] A superb condition card that exhibits only ONE of the following minor flaws: a very slight wax stain on reverse, a minor printing imperfection, or slightly off-white borders.",
+    "8.5": "[L] Between NM-MT 8 and Mint 9 — a strong 8 approaching 9.",
+    "8": "[C] Appears Mint 9 at first glance but on close inspection may exhibit: a very slight wax stain on reverse, slightest fraying at one or two corners, a minor printing imperfection, and/or slightly off-white borders.",
+    "7.5": "[L] Strong NM 7 approaching NM-MT 8.",
+    "7": "[C] Slight surface wear visible on close inspection. There may be slight fraying on some corners.",
+    "6.5": "[L] Strong EX-MT 6 approaching NM 7.",
+    "6": "[C] May have visible surface wear or a printing defect that does not detract from overall appeal. Corners may have slightly graduated fraying.",
+    "5.5": "[L] Strong EX 5.",
+    "5": "[L] Minor rounding of corners; noticeable surface wear and/or printing defects; some loss of original gloss.",
+    "4.5": "[L] Strong VG-EX 4.",
+    "4": "[L] Corners may be slightly rounded; noticeable but modest surface wear; possible light scuffing or scratches.",
+    "3.5": "[L] Strong VG 3.",
+    "3": "[L] Some rounding of corners, not extreme; obvious surface wear; possible light creasing.",
+    "2.5": "[L] Strong Good 2.",
+    "2": "[L] Significant/obvious wear — scratching, scuffing, or creases.",
+    "1.5": "[L] Considerable wear; may appear rounded/soft with creasing but still fully intact.",
+    "1": "[L] Extreme wear. Need not be fully intact; eye appeal has nearly vanished."
+  },
+  "criteria": {
+    "centering": {
+      "_measure": "Border/margin ratio of the image within the card, worst axis (left-right or top-bottom). Front tolerance is stricter than back. [C] for 10-5.",
+      "10": { "front": "55/45", "back": "75/25" },
+      "9":  { "front": "60/40", "back": "90/10" },
+      "8.5":{ "front": "62/38", "back": "90/10", "_note": "[G] interpolated between 8 and 9" },
+      "8":  { "front": "65/35", "back": "90/10" },
+      "7.5":{ "front": "67/33", "back": "90/10", "_note": "[G] interpolated" },
+      "7":  { "front": "70/30", "back": "90/10" },
+      "6.5":{ "front": "75/25", "back": "90/10", "_note": "[G] interpolated" },
+      "6":  { "front": "80/20", "back": "90/10" },
+      "5.5":{ "front": "82/18", "back": "90/10", "_note": "[G] interpolated" },
+      "5":  { "front": "85/15", "back": "90/10" },
+      "belowFive": "[L] At grade 4 and below, centering is generally not the limiting factor (wear dominates). A card worse than ~90/10 that otherwise qualifies is typically dropped a grade or given the OC qualifier rather than held to a hard ratio."
+    },
+    "corners": {
+      "_measure": "Sharpness vs. wear of all four corners, front and back.",
+      "10": "Four perfectly sharp corners. [C]",
+      "9": "Corners essentially sharp; at most one negligible touch of wear. [L]",
+      "8": "Slightest fraying at one or two corners. [C]",
+      "7": "Slight fraying on some corners. [C]",
+      "6": "Slightly graduated fraying on corners. [C]",
+      "5": "Minor rounding of corners begins to be noticeable. [L]",
+      "4": "Corners slightly rounded. [L]",
+      "3": "Rounding of corners noticeable but not extreme. [L]",
+      "2": "Obvious corner rounding/wear. [L]",
+      "1": "Heavy rounding; corners soft. [L]"
+    },
+    "edges": {
+      "_measure": "Condition of the four card edges — chipping, whitening, roughness, notching. Best assessed with a slight tilt to see the edge face; a flat-on photo under-reports edge whitening.",
+      "10": "Clean, sharp edges with no chipping or whitening. [G from 10 definition]",
+      "9": "Edges essentially clean; at most trivial whitening. [L]",
+      "8": "Minor edge wear/whitening visible on close inspection. [L]",
+      "7": "Slight edge wear visible. [L]",
+      "6": "Visible edge wear that doesn't detract from overall appeal. [L]",
+      "5": "Noticeable edge wear / chipping. [L]",
+      "4": "Modest chipping/roughness along edges. [L]",
+      "3": "Obvious edge wear and chipping. [L]",
+      "2": "Significant edge damage. [L]",
+      "1": "Extreme edge wear/damage. [L]"
+    },
+    "surface": {
+      "_measure": "Print focus/quality, original gloss, and defects: scratches, scuffing, print lines/dots, staining (wax/gum), indentations, and creases/wrinkles. Fine scratches and print lines are only reliably visible under raking/grazing light — a flat, even-light photo hides them (see surfaceCeiling).",
+      "10": "Sharp focus, full original gloss, free of staining of any kind. Allowance for a slight printing imperfection only if it doesn't impair appeal. [C]",
+      "9": "At most one minor flaw: a very slight wax stain on reverse, a minor printing imperfection, or slightly off-white borders. [C]",
+      "8": "Full gloss; at most a very slight wax stain and/or a minor printing imperfection. [C/L]",
+      "7": "Slight surface wear visible on close inspection; gloss largely intact. [C]",
+      "6": "Visible surface wear or a printing defect that does not detract from overall appeal. [C]",
+      "5": "Noticeable surface wear and/or printing defects; some loss of original gloss. [L]",
+      "4": "Noticeable surface wear; possible light scuffing or scratches. [L]",
+      "3": "Obvious surface wear; possible light creasing. [L]",
+      "2": "Heavy scratching, scuffing, or creases. [L]",
+      "1": "Extreme surface wear; eye appeal nearly gone. May include heavy creasing. [L]"
+    }
+  },
+  "overallRule": "[L] PSA publishes ONE overall grade and NO printed subgrades. There is no published numeric formula — grading is holistic — but in practice the overall is effectively CAPPED BY THE WEAKEST of the four attributes: a single serious flaw (rounded corner, crease, heavy whitening) limits the grade regardless of the other three. It is NOT an average. When a card meets a grade in three attributes but fails one (most often centering), it is dropped to the next grade down, or may keep the higher grade WITH a qualifier (see qualifiers). Treat 'weakest attribute caps the overall' as the reconciliation rule.",
+  "surfaceCeiling": "IMPORTANT capture limitation: unless the input explicitly includes a raking/grazing-light photo, surface defects (fine scratches, print lines, hairlines) may be INVISIBLE in even, flat lighting. When grading surface from flat-light-only input, treat the surface score as a CEILING / best-case: never award a top surface score with high confidence, phrase surface reasoning as 'no defects visible under standard lighting; hidden scratches possible', and lower confidence for the surface factor and the overall. Do not claim a clean surface you cannot actually see.",
+  "qualifiers": [
+    { "code": "OC", "meaning": "Off-Center — centering outside the threshold for the assigned grade.", "applied": "optional (submitter-elected)" },
+    { "code": "ST", "meaning": "Staining — manufacturing (e.g. wax) or later substance exposure.", "applied": "optional" },
+    { "code": "PD", "meaning": "Print Defect — printing-process artifacts (stray dots/lines not part of the design).", "applied": "optional" },
+    { "code": "OF", "meaning": "Out of Focus — image-clarity issues from production printing/focus.", "applied": "optional" },
+    { "code": "MK", "meaning": "Marks — writing, ink, or anything resembling writing on the card.", "applied": "auto-applied when present" },
+    { "code": "MC", "meaning": "Miscut — factory cut abnormal; extreme border imbalance or image cut off.", "applied": "auto-applied when present" }
+  ],
+  "_qualifierRule": "[C/L] A qualifier means the card would have received that grade (or higher) if not for one specified flaw (e.g. 'NM-MT 8 OC'). If the submitter does NOT elect an optional qualifier, that same flaw instead lowers the straight numeric grade. MK/MC always appear when present.",
+  "noGrade": {
+    "_policy": "[C] PSA will NOT assign a numeric grade to cards with evidence of trimming, re-coloring, restoration, cleaning, pressing, or added gloss, or of questionable authenticity, or that fail minimum-size specs. Such cards get an 'N' reason code and/or an Authentic (Authentic-Altered) designation.",
+    "codes": {
+      "N0": "Authentic (only) — genuine, no numeric grade.",
+      "N1": "Evidence of Trimming — hooked/unnaturally sharp/inconsistent/wavy edges.",
+      "N2": "Evidence of Restoration — paper stock built up (e.g. corners rebuilt).",
+      "N3": "Evidence of Recoloration — color artificially improved.",
+      "N4": "Questionable Authenticity — appears counterfeit.",
+      "N5": "Altered Stock — restoration, crease/wrinkle pressing, scratch removal, or enhanced gloss.",
+      "N6": "Minimum Size Requirement — significantly undersized vs. factory spec (implies trimming).",
+      "N7": "Evidence of Cleaning — whitener on borders or solvent used to remove stains.",
+      "N8": "Miscut — factory cut abnormal for the issue.",
+      "N9": "Don't Grade — issue outside PSA's graded scope (oversized/obscure)."
+    }
+  },
+  "eyeAppeal": "[C] Not a separately scored attribute but explicitly invoked: a slight printing imperfection is allowed at 10 only 'if it doesn't impair the overall appeal', and PR 1 is defined by eye appeal having 'nearly vanished'."
+}
