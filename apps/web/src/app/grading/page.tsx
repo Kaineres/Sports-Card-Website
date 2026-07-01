@@ -5,8 +5,6 @@ import { CardScannerModal } from '@/components/grading/card-scanner-modal'
 
 type GradingState = 'upload' | 'loading' | 'results'
 
-interface SubGrade { label: string; score: number }
-
 interface LightingTier { label: string; color: string; text: string }
 interface TipExample { label: string; color: string; src: string; caption: string }
 interface Tip {
@@ -395,6 +393,22 @@ export default function GradingPage() {
               Analyze Card
             </button>
 
+            {/* Error box */}
+            {error && (
+              <div style={{
+                display: 'flex', gap: '8px', alignItems: 'flex-start',
+                border: '1px solid rgba(224,92,92,0.4)',
+                borderRadius: '10px',
+                background: 'rgba(224,92,92,0.07)',
+                padding: '12px 14px',
+              }}>
+                <span style={{ fontSize: '0.85rem', flexShrink: 0, color: '#e05c5c', marginTop: '1px' }}>⚠</span>
+                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: '#e05c5c', letterSpacing: '0.02em', lineHeight: 1.6, margin: 0 }}>
+                  {error} Please try again.
+                </p>
+              </div>
+            )}
+
             {/* Tips section */}
             <div style={{
               border: '1px solid rgba(184,146,46,0.22)',
@@ -548,7 +562,7 @@ export default function GradingPage() {
         )}
 
         {/* ══ Results state ══ */}
-        {state === 'results' && (
+        {state === 'results' && result && (
           <div style={{
             background: 'var(--bg2)', border: '1px solid var(--border-md)',
             borderRadius: '16px', overflow: 'hidden',
@@ -567,12 +581,16 @@ export default function GradingPage() {
                   fontFamily: 'var(--font-serif)', fontSize: '5.5rem', fontWeight: 700,
                   color: 'var(--gold2)', lineHeight: 0.95, letterSpacing: '-0.03em',
                 }}>
-                  {MOCK_RESULT.grade}
+                  {result.overall.toFixed(1)}
                 </div>
                 <div style={{
                   fontFamily: 'var(--font-mono)', fontSize: '0.63rem', color: 'var(--text3)',
                   textTransform: 'uppercase', letterSpacing: '0.14em', marginTop: '12px',
                 }}>Estimated Grade</div>
+                <div style={{
+                  fontFamily: 'var(--font-mono)', fontSize: '0.66rem', color: 'var(--text2)',
+                  letterSpacing: '0.04em', marginTop: '6px', opacity: 0.85,
+                }}>Range {result.overallRange[0]}–{result.overallRange[1]}</div>
               </div>
               {/* Card image — slightly rotated */}
               <div style={{
@@ -592,19 +610,22 @@ export default function GradingPage() {
 
             {/* Sub-grades row */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', borderBottom: '1px solid var(--border-md)' }}>
-              {MOCK_RESULT.subgrades.map((sg, i) => (
-                <div key={sg.label} style={{
-                  padding: '1.2rem 0.75rem', textAlign: 'center',
-                  borderLeft: i > 0 ? '1px solid var(--border-md)' : 'none',
-                }}>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.5rem', fontWeight: 700, color: 'var(--gold2)', lineHeight: 1 }}>
-                    {sg.score.toFixed(1)}
+              {FACTOR_ORDER.map((name, i) => {
+                const f = result.factors.find(fac => fac.name === name)
+                return (
+                  <div key={name} style={{
+                    padding: '1.2rem 0.75rem', textAlign: 'center',
+                    borderLeft: i > 0 ? '1px solid var(--border-md)' : 'none',
+                  }}>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.5rem', fontWeight: 700, color: 'var(--gold2)', lineHeight: 1 }}>
+                      {f ? f.score.toFixed(1) : '—'}
+                    </div>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--text3)', marginTop: '7px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                      {name.charAt(0).toUpperCase() + name.slice(1)}
+                    </div>
                   </div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--text3)', marginTop: '7px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                    {sg.label}
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
 
             {/* Condition summary */}
@@ -614,11 +635,55 @@ export default function GradingPage() {
                 textTransform: 'uppercase', letterSpacing: '0.12em',
                 color: 'var(--text3)', marginBottom: '10px',
               }}>— Condition Summary</div>
+
+              {/* Confidence + photo-quality pills */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '14px' }}>
+                {([
+                  { label: 'Confidence', value: result.confidence, good: 'high', bad: 'low' },
+                  { label: 'Photo', value: result.photoQuality, good: 'good', bad: 'poor' },
+                ] as const).map(pill => {
+                  const color = pill.value === pill.good ? '#34c97a' : pill.value === pill.bad ? '#e05c5c' : 'var(--gold2)'
+                  return (
+                    <span key={pill.label} style={{
+                      display: 'inline-flex', alignItems: 'center', gap: '6px',
+                      fontFamily: 'var(--font-mono)', fontSize: '0.58rem', fontWeight: 700,
+                      textTransform: 'uppercase', letterSpacing: '0.09em',
+                      color, border: `1px solid ${color}`, borderRadius: '5px',
+                      padding: '3px 9px', opacity: 0.9,
+                    }}>
+                      <span style={{ color: 'var(--text3)', fontWeight: 600 }}>{pill.label}</span>
+                      {pill.value}
+                    </span>
+                  )
+                })}
+              </div>
+
               <p style={{
                 fontFamily: 'var(--font-display)', fontSize: '0.87rem',
                 color: 'var(--text2)', lineHeight: 1.7, margin: 0,
-              }}>{MOCK_RESULT.summary}</p>
+              }}>{result.summary}</p>
             </div>
+
+            {/* Caveats / notes */}
+            {result.notes.length > 0 && (
+              <div style={{ padding: '1.25rem 2rem', borderBottom: '1px solid var(--border-md)' }}>
+                <div style={{
+                  fontFamily: 'var(--font-mono)', fontSize: '0.6rem',
+                  textTransform: 'uppercase', letterSpacing: '0.12em',
+                  color: 'var(--gold2)', marginBottom: '10px', opacity: 0.85,
+                }}>— Keep in Mind</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {result.notes.map((note, i) => (
+                    <div key={i} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                      <span style={{ fontSize: '0.8rem', flexShrink: 0, color: 'var(--gold2)', marginTop: '1px', opacity: 0.8 }}>⚠</span>
+                      <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.69rem', color: 'var(--gold2)', letterSpacing: '0.02em', lineHeight: 1.6, margin: 0, opacity: 0.8 }}>
+                        {note}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Action buttons */}
             <div style={{ padding: '1.2rem 2rem', display: 'flex', gap: '10px' }}>
