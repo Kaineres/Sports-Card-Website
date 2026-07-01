@@ -24,20 +24,42 @@ export function reconcileOverall(
 ): GradeResult {
   const notes: string[] = []
 
-  // ── Rule 2: weakest-attribute cap ──────────────────────────────────────────
-  // PSA's overall can never exceed its weakest sub-grade. Cap the model's proposal
-  // at the min factor score, then snap to the discrete scale.
-  const weakest = Math.min(...output.factors.map((f) => f.score))
-  const finalOverall = snapDown(Math.min(output.overall, weakest))
+  // ── Rule 1: snap every factor score onto the ladder ─────────────────────────
+  // The model sometimes emits off-scale sub-scores (e.g. 8.7, 9.5). Snap each one
+  // down to the PSA ladder so downstream math and the UI only ever see valid grades.
+  const factors: Factor[] = output.factors.map((f) => ({ ...f, score: snapDown(f.score) }))
 
-  if (finalOverall < output.overall) {
-    // Name the factor(s) sitting at the weakest score so the note explains *why*.
+  // ── Rule 2: PSA-holistic cap (replaces the old strict min()) ─────────────────
+  // PSA grades holistically: a single lagging attribute is forgiven (a MINT 9 is
+  // allowed exactly one minor flaw), and only TWO OR MORE lagging attributes cap
+  // the overall hard at the weakest. Sort the four sub-scores ascending
+  // (s0<=s1<=s2<=s3) and reason off the two weakest. Use the model's ORIGINAL
+  // scores here — snapping is a separate concern, and comparing against the
+  // model's proposal must not mistake a plain 9.5→9 snap for a real cap.
+  const sorted = [...output.factors.map((f) => f.score)].sort((a, b) => a - b)
+  const s0 = sorted[0] // weakest
+  const s1 = sorted[1] // runner-up
+
+  // "Lag" test: if the runner-up is strictly stronger than the weakest, only ONE
+  // attribute lags — forgive it, bounded by BOTH the runner-up and one full
+  // integer grade above the weakest. Otherwise two-or-more lag → strict weakest cap.
+  const singleFlaw = s1 > s0
+  const holisticCap = singleFlaw ? Math.min(s1, s0 + 1) : s0
+
+  // Never let the reconciled overall exceed the model's proposal; then snap down.
+  const finalOverall = snapDown(Math.min(output.overall, holisticCap))
+
+  // Only call it a "cap" when the holistic rule actually pulled the grade below the
+  // model's proposal — NOT when the final number merely dropped via ladder-snapping.
+  if (holisticCap < output.overall) {
     const limiting = output.factors
-      .filter((f: Factor) => f.score === weakest)
+      .filter((f: Factor) => f.score === s0)
       .map((f) => `${f.name} ${f.score.toFixed(1)}`)
       .join(', ')
     notes.push(
-      `Overall capped at ${finalOverall} by weakest attribute (${limiting}) — a PSA grade cannot exceed its weakest attribute.`,
+      singleFlaw
+        ? `Overall capped at ${finalOverall} by weakest attribute (${limiting}) — held to one grade above the lone lagging attribute.`
+        : `Overall capped at ${finalOverall} by weakest attributes (${limiting}) — two or more attributes lag, so the overall cannot exceed the weakest.`,
     )
   }
 
@@ -46,11 +68,11 @@ export function reconcileOverall(
   // the surface score is a best-case ceiling — always disclose that, and soften
   // confidence when the model claims a pristine surface it couldn't have verified.
   let confidence = output.confidence
+  const surface = factors.find((f) => f.name === 'surface')
   if (!opts?.hasRakingLight) {
     notes.push(
       'Surface graded from flat, even lighting only — fine scratches and print lines may be hidden. The surface score is a best-case ceiling; add a raking/grazing-light photo to confirm.',
     )
-    const surface = output.factors.find((f) => f.name === 'surface')
     if (surface && surface.score >= 9 && confidence === 'high') {
       confidence = 'medium'
       notes.push(
@@ -59,14 +81,32 @@ export function reconcileOverall(
     }
   }
 
-  // ── Rule 4: range clamp ─────────────────────────────────────────────────────
-  // Snap both ends onto the scale and make sure finalOverall sits inside the band.
+  // ── Rule 4: thin-evidence confidence cap ────────────────────────────────────
+  // Evidence is thin when there is no raking-light frame (flat/unknown lighting) or
+  // the surface factor is missing — either way we can't justify top confidence, so
+  // cap at medium. This subsumes the narrower surface-only downgrade above.
+  const thinEvidence = !opts?.hasRakingLight || !surface
+  if (thinEvidence && confidence === 'high') {
+    confidence = 'medium'
+    notes.push(
+      'Confidence capped at medium: evidence is thin (no raking-light frame or missing surface read), so certainty is limited.',
+    )
+  }
+
+  // ── Rule 5: range clamp + holistic high-cap ─────────────────────────────────
+  // Snap both ends onto the scale, cap the high end by the reconciled overall (the
+  // band must not promise more than the holistic cap allows), and keep finalOverall
+  // inside the band.
   let low = snapDown(output.overallRange[0])
   let high = snapDown(output.overallRange[1])
+  if (high > finalOverall) high = finalOverall
   if (finalOverall < low) low = finalOverall
   if (finalOverall > high) high = finalOverall
   const overallRange: [number, number] = [low, high]
 
-  // ── Rule 5: assemble ────────────────────────────────────────────────────────
-  return { ...output, overall: finalOverall, overallRange, confidence, notes }
+  // ── Rule 6: assemble ────────────────────────────────────────────────────────
+  // `notGraded` (and `qualifiers`) flow through untouched via the spread — when the
+  // model no-graded the card, we still snap factors and keep notes but do not fight
+  // the no-grade state; the UI hides the number and shows the code + reason.
+  return { ...output, factors, overall: finalOverall, overallRange, confidence, notes }
 }
