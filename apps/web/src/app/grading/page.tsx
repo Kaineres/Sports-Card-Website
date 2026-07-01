@@ -141,6 +141,12 @@ export default function GradingPage() {
   useEffect(() => () => { if (frontUrl) URL.revokeObjectURL(frontUrl) }, [frontUrl])
   useEffect(() => () => { if (backUrl)  URL.revokeObjectURL(backUrl)  }, [backUrl])
 
+  // Clear the progress-bar interval if the component unmounts mid-run, so the tick
+  // can't call setState (setProgress/setMsgIdx) after the component is gone.
+  useEffect(() => () => {
+    if (tickRef.current) { clearInterval(tickRef.current); tickRef.current = null }
+  }, [])
+
   function handleFile(file: File, side: 'front' | 'back') {
     if (!file.type.startsWith('image/')) return
     const url = URL.createObjectURL(file)
@@ -285,7 +291,16 @@ export default function GradingPage() {
                 return (
                   <div
                     key={side}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`${side === 'front' ? 'Front' : 'Back'} of card — capture or drop an image`}
                     onClick={() => setScanner(side)}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        setScanner(side)
+                      }
+                    }}
                     onDragOver={e => { e.preventDefault(); setDragOver(side) }}
                     onDragLeave={() => setDragOver(null)}
                     onDrop={e => handleDrop(e, side)}
