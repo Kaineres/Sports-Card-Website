@@ -1,7 +1,10 @@
 import { z } from 'zod'
+import type { SportLabel, GradingService } from '@/lib/supabase/types'
 
-export const SPORT_LABELS = ['NBA', 'NFL', 'MLB', 'NHL', 'Soccer', 'WNBA', 'UFC/MMA', 'Golf'] as const
-export const GRADING_SERVICES = ['PSA', 'BGS', 'SGC', 'CGC'] as const
+// Literal tuples (not just the types) so z.enum() has values to validate
+// against; `satisfies` keeps them checked against the canonical DB row types.
+export const SPORT_LABELS = ['NBA', 'NFL', 'MLB', 'NHL', 'Soccer', 'WNBA', 'UFC/MMA', 'Golf'] as const satisfies readonly SportLabel[]
+export const GRADING_SERVICES = ['PSA', 'BGS', 'SGC', 'CGC'] as const satisfies readonly GradingService[]
 
 export const WatchlistInputSchema = z.object({
   legacy_catalog_id: z.number().int().positive().optional(),
