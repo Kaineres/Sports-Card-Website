@@ -1,9 +1,12 @@
 'use client'
 
-import { useState, useMemo, useRef } from 'react'
+import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
+import { useAuth, useClerk } from '@clerk/nextjs'
+import type { CollectionItem } from '@/lib/supabase/types'
+import { parseGradeLabel, formatGradeLabel } from '@/lib/cards/grade'
 
 /* ══ Add-to-Collection Modal ══ */
-interface AddModalProps { onClose: () => void }
+interface AddModalProps { onClose: () => void; onAdded: () => void }
 
 /* ══ Photo Card Search Modal ══ */
 function PhotoSearchModal({ onClose }: { onClose: () => void }) {
@@ -119,7 +122,7 @@ function PhotoSearchModal({ onClose }: { onClose: () => void }) {
   )
 }
 
-function AddModal({ onClose }: AddModalProps) {
+function AddModal({ onClose, onAdded }: AddModalProps) {
   const [player,    setPlayer]    = useState('')
   const [cardName,  setCardName]  = useState('')
   const [setName,   setSetName]   = useState('')
@@ -130,8 +133,54 @@ function AddModal({ onClose }: AddModalProps) {
   const [estValue,  setEstValue]  = useState('')
   const [qty,       setQty]       = useState('1')
   const [alreadySold, setAlreadySold] = useState(false)
+  const [cardNumber, setCardNumber] = useState('')
+  const [parallel, setParallel]     = useState('Base')
+  const [certNumber, setCertNumber] = useState('')
+  const [purchaseDate, setPurchaseDate] = useState('')
+  const [saleprice, setSalePrice]   = useState('')
+  const [saleDate, setSaleDate]     = useState('')
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError]           = useState('')
   const frontRef = useRef<HTMLInputElement>(null)
   const backRef  = useRef<HTMLInputElement>(null)
+
+  async function handleSubmit() {
+    setError('')
+    if (!player.trim() || !cardName.trim()) { setError('Player and card name are required'); return }
+    if (alreadySold && (!saleprice || !saleDate)) { setError('Sale price and sale date are required for sold cards'); return }
+    const { grading_service, grade: gradeNum } = parseGradeLabel(grade)
+    const payload: Record<string, unknown> = {
+      player, card_name: cardName, set_name: setName || undefined,
+      year: year ? Number(year) : undefined,
+      card_number: cardNumber || undefined,
+      parallel: parallel || 'Base',
+      grading_service, grade: gradeNum,
+      sport,
+      cert_number: certNumber || undefined,
+      price_paid: pricePaid ? Number(pricePaid) : undefined,
+      est_value: estValue ? Number(estValue) : undefined,
+      quantity: qty ? Number(qty) : 1,
+      already_sold: alreadySold,
+      purchase_date: purchaseDate || undefined,
+      sale_price: alreadySold && saleprice ? Number(saleprice) : undefined,
+      sale_date: alreadySold && saleDate ? saleDate : undefined,
+    }
+    setSubmitting(true)
+    try {
+      const res = await fetch('/api/collection', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      if (!res.ok) throw new Error('save failed')
+      onAdded()
+      onClose()
+    } catch {
+      setError('Could not save. Check the fields and try again.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   const inputStyle: React.CSSProperties = {
     width: '100%', background: '#0d1117', border: '1px solid rgba(255,255,255,0.1)',
@@ -263,6 +312,16 @@ function AddModal({ onClose }: AddModalProps) {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
               <div>
+                <label style={labelStyle}>Card Number</label>
+                <input style={inputStyle} value={cardNumber} onChange={e => setCardNumber(e.target.value)} placeholder="#23" />
+              </div>
+              <div>
+                <label style={labelStyle}>Parallel</label>
+                <input style={inputStyle} value={parallel} onChange={e => setParallel(e.target.value)} placeholder="Base" />
+              </div>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+              <div>
                 <label style={labelStyle}>Grade</label>
                 <select style={selectStyle} value={grade} onChange={e => setGrade(e.target.value)}>
                   {['PSA 10','PSA 9','PSA 8','PSA 7','PSA 6','BGS 10','BGS 9.5','BGS 9','Raw'].map(g => <option key={g} value={g}>{g}</option>)}
@@ -285,6 +344,16 @@ function AddModal({ onClose }: AddModalProps) {
                 <input style={inputStyle} type="number" value={estValue} onChange={e => setEstValue(e.target.value)} placeholder="310.00" />
               </div>
             </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+              <div>
+                <label style={labelStyle}>Cert Number</label>
+                <input style={inputStyle} value={certNumber} onChange={e => setCertNumber(e.target.value)} placeholder="12345678" />
+              </div>
+              <div>
+                <label style={labelStyle}>Purchase Date</label>
+                <input style={inputStyle} type="date" value={purchaseDate} onChange={e => setPurchaseDate(e.target.value)} />
+              </div>
+            </div>
             <div style={{ width: '50%' }}>
               <label style={labelStyle}>Quantity</label>
               <input style={inputStyle} type="number" min="1" value={qty} onChange={e => setQty(e.target.value)} placeholder="1" />
@@ -303,6 +372,23 @@ function AddModal({ onClose }: AddModalProps) {
               </span>
             </label>
 
+            {alreadySold && (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                <div>
+                  <label style={labelStyle}>Sale Price ($)</label>
+                  <input style={inputStyle} type="number" value={saleprice} onChange={e => setSalePrice(e.target.value)} placeholder="350.00" />
+                </div>
+                <div>
+                  <label style={labelStyle}>Sale Date</label>
+                  <input style={inputStyle} type="date" value={saleDate} onChange={e => setSaleDate(e.target.value)} />
+                </div>
+              </div>
+            )}
+
+            {error && (
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: '#e05c5c', margin: 0 }}>{error}</p>
+            )}
+
             {/* Footer buttons */}
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', paddingTop: '4px' }}>
               <button onClick={onClose} style={{
@@ -311,13 +397,17 @@ function AddModal({ onClose }: AddModalProps) {
                 color: 'var(--text2)', fontFamily: 'var(--font-display)', fontSize: '0.85rem',
                 cursor: 'pointer',
               }}>Cancel</button>
-              <button style={{
-                padding: '10px 24px',
-                background: 'linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%)',
-                border: 'none', borderRadius: '8px', color: '#0d1117',
-                fontFamily: 'var(--font-display)', fontSize: '0.85rem', fontWeight: 700,
-                cursor: 'pointer',
-              }}>Add to Collection</button>
+              <button
+                onClick={handleSubmit}
+                disabled={submitting}
+                style={{
+                  padding: '10px 24px',
+                  background: 'linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%)',
+                  border: 'none', borderRadius: '8px', color: '#0d1117',
+                  fontFamily: 'var(--font-display)', fontSize: '0.85rem', fontWeight: 700,
+                  cursor: submitting ? 'default' : 'pointer',
+                  opacity: submitting ? 0.7 : 1,
+                }}>{submitting ? 'Saving…' : 'Add to Collection'}</button>
             </div>
           </div>
         </div>
@@ -329,7 +419,7 @@ function AddModal({ onClose }: AddModalProps) {
 type SortKey = '' | 'player-asc' | 'player-desc' | 'setName-asc' | 'setName-desc' | 'year-asc' | 'year-desc' | 'grade-asc' | 'grade-desc' | 'value-desc' | 'value-asc' | 'change-desc' | 'change-asc' | 'cost-desc' | 'cost-asc'
 
 interface CollCard {
-  id: number
+  id: string
   player: string
   cardName: string
   setName: string
@@ -343,17 +433,6 @@ interface CollCard {
   percentChange: number
 }
 
-const MOCK: CollCard[] = [
-  { id:1, player:'LeBron James',          cardName:'2003-04 Topps Chrome Rookie',        setName:'Topps Chrome',  year:2003, grade:'PSA 9',  sport:'NBA', qty:1, purchasePrice:3200, currentValue:4800,  change:1600,  percentChange:50.0  },
-  { id:2, player:'Patrick Mahomes',        cardName:'2017 Panini Prizm Rookie PSA 10',    setName:'Panini Prizm',  year:2017, grade:'PSA 10', sport:'NFL', qty:1, purchasePrice:1800, currentValue:2950,  change:1150,  percentChange:63.9  },
-  { id:3, player:'Luka Dončić',           cardName:'2018-19 Panini Prizm Silver Rookie',  setName:'Panini Prizm',  year:2018, grade:'PSA 10', sport:'NBA', qty:2, purchasePrice:900,  currentValue:780,   change:-120,  percentChange:-13.3 },
-  { id:4, player:'Mike Trout',             cardName:'2011 Topps Update Rookie',           setName:'Topps Update',  year:2011, grade:'PSA 8',  sport:'MLB', qty:1, purchasePrice:620,  currentValue:740,   change:120,   percentChange:19.4  },
-  { id:5, player:'Ja Morant',              cardName:'2019-20 Donruss Optic Rated Rookie', setName:'Donruss Optic', year:2019, grade:'PSA 10', sport:'NBA', qty:1, purchasePrice:480,  currentValue:590,   change:110,   percentChange:22.9  },
-  { id:6, player:'Justin Jefferson',       cardName:'2020 Panini Prizm Rookie Silver',    setName:'Panini Prizm',  year:2020, grade:'PSA 9',  sport:'NFL', qty:1, purchasePrice:310,  currentValue:420,   change:110,   percentChange:35.5  },
-  { id:7, player:'Shohei Ohtani',          cardName:'2018 Topps Chrome Rookie Refractor', setName:'Topps Chrome',  year:2018, grade:'PSA 10', sport:'MLB', qty:1, purchasePrice:850,  currentValue:1100,  change:250,   percentChange:29.4  },
-  { id:8, player:'Giannis Antetokounmpo',  cardName:'2013-14 Panini Prizm Rookie',        setName:'Panini Prizm',  year:2013, grade:'PSA 9',  sport:'NBA', qty:1, purchasePrice:1400, currentValue:1650,  change:250,   percentChange:17.9  },
-]
-
 function gradeStyle(g: string) {
   if (g === 'PSA 10') return { bg: 'rgba(52,201,122,0.13)',  border: 'rgba(52,201,122,0.35)',  text: '#34c97a' }
   if (g === 'PSA 9')  return { bg: 'rgba(212,168,67,0.13)',  border: 'rgba(212,168,67,0.35)',  text: '#d4a843' }
@@ -364,13 +443,54 @@ function gradeStyle(g: string) {
 const SET_COLOR = '#c9a84c'
 
 export default function CollectionPage() {
+  const { isLoaded, isSignedIn } = useAuth()
+  const { redirectToSignIn } = useClerk()
+  const [items, setItems] = useState<CollectionItem[]>([])
+  const [loadError, setLoadError] = useState(false)
+
+  const reload = useCallback(() => {
+    fetch('/api/collection')
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error('load failed'))))
+      .then((d) => { setItems(d.items ?? []); setLoadError(false) })
+      .catch(() => setLoadError(true))
+  }, [])
+
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn) return
+    reload()
+  }, [isLoaded, isSignedIn, reload])
+
+  async function handleDelete(id: string) {
+    const prev = items
+    setItems((cur) => cur.filter((c) => c.id !== id))   // optimistic
+    const res = await fetch(`/api/collection/${id}`, { method: 'DELETE' })
+    if (!res.ok) setItems(prev)                          // revert
+  }
+
   const [search,    setSearch]    = useState('')
   const [setFilter, setSetFilter] = useState('')
   const [yearFilter, setYearFilter] = useState('')
   const [sport,     setSport]     = useState('')
   const [grade,     setGrade]     = useState('')
   const [sort,      setSort]      = useState<SortKey>('')
-  const [cards]                   = useState<CollCard[]>(MOCK)
+  const cards: CollCard[] = useMemo(() => items.map((it) => {
+    const purchase = it.price_paid ?? 0
+    const value = it.est_value ?? purchase           // user's own estimate; falls back to cost
+    return {
+      id: it.id, // uuid string — used as React key and delete target
+      player: it.player,
+      cardName: it.card_name,
+      setName: it.set_name ?? '',
+      year: it.year ?? 0,
+      grade: formatGradeLabel(it.grading_service, it.grade),
+      sport: it.sport,
+      qty: it.quantity,
+      purchasePrice: purchase,
+      currentValue: value,
+      change: value - purchase,
+      percentChange: purchase > 0 ? ((value - purchase) / purchase) * 100 : 0,
+    }
+  }), [items])
   const [showModal, setShowModal] = useState(false)
   const [showPhotoSearch, setShowPhotoSearch] = useState(false)
 
@@ -435,9 +555,30 @@ export default function CollectionPage() {
     else setSort(sortD as SortKey)
   }
 
+  if (isLoaded && !isSignedIn) {
+    return (
+      <div style={{ padding: '4rem 1.5rem', textAlign: 'center' }}>
+        <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: 'var(--text)' }}>
+          Sign in to view your collection
+        </p>
+        <button
+          onClick={() => redirectToSignIn()}
+          style={{
+            marginTop: '1rem', padding: '10px 24px',
+            background: 'linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%)',
+            border: 'none', borderRadius: '8px', color: '#0d1117',
+            fontFamily: 'var(--font-display)', fontWeight: 700, cursor: 'pointer',
+          }}
+        >
+          Sign In
+        </button>
+      </div>
+    )
+  }
+
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
-      {showModal && <AddModal onClose={() => setShowModal(false)} />}
+      {showModal && <AddModal onClose={() => setShowModal(false)} onAdded={reload} />}
       {showPhotoSearch && <PhotoSearchModal onClose={() => setShowPhotoSearch(false)} />}
 
       {/* ── Header ── */}
@@ -572,10 +713,28 @@ export default function CollectionPage() {
 
         {/* ── Table ── */}
         <div style={{ overflowX: 'auto', marginTop: '1rem' }}>
-          {filtered.length === 0 ? (
+          {loadError ? (
+            <div style={{ textAlign: 'center', padding: '5rem 0', fontFamily: 'var(--font-mono)', color: 'var(--text3)', fontSize: '0.85rem' }}>
+              <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>⚠️</div>
+              Couldn&apos;t load your collection.
+              <div style={{ marginTop: '1rem' }}>
+                <button
+                  onClick={reload}
+                  style={{
+                    padding: '9px 20px',
+                    background: 'linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%)',
+                    border: 'none', borderRadius: '8px', color: '#0d1117',
+                    fontFamily: 'var(--font-display)', fontSize: '0.83rem', fontWeight: 700, cursor: 'pointer',
+                  }}
+                >
+                  Retry
+                </button>
+              </div>
+            </div>
+          ) : filtered.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '5rem 0', fontFamily: 'var(--font-mono)', color: 'var(--text3)', fontSize: '0.85rem' }}>
               <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>📋</div>
-              {cards.length === 0 ? 'Your collection is empty — add your first card above.' : 'No cards match your filters.'}
+              {cards.length === 0 ? 'No cards yet — add your first card above.' : 'No cards match your filters.'}
             </div>
           ) : (
             <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '1000px' }}>
@@ -685,15 +844,18 @@ export default function CollectionPage() {
                           }}>
                             $ Sell
                           </button>
-                          <button style={{
-                            padding: '5px 8px',
-                            background: 'none',
-                            border: '1px solid var(--border-md)',
-                            borderRadius: '6px',
-                            color: 'var(--text3)',
-                            fontFamily: 'var(--font-mono)', fontSize: '0.72rem',
-                            cursor: 'pointer', lineHeight: 1,
-                          }}>
+                          <button
+                            onClick={() => handleDelete(card.id)}
+                            title="Remove from collection"
+                            style={{
+                              padding: '5px 8px',
+                              background: 'none',
+                              border: '1px solid var(--border-md)',
+                              borderRadius: '6px',
+                              color: 'var(--text3)',
+                              fontFamily: 'var(--font-mono)', fontSize: '0.72rem',
+                              cursor: 'pointer', lineHeight: 1,
+                            }}>
                             ×
                           </button>
                         </div>
