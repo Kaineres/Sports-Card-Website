@@ -103,7 +103,7 @@ function PricePendingSparkline() {
 export default function WatchlistPage() {
   const { isLoaded, isSignedIn } = useAuth()
   const { redirectToSignIn } = useClerk()
-  const { toggle: toggleWatch } = useWatchlist()
+  const { toggle: toggleWatch, watchedIds, loading: watchlistLoading } = useWatchlist()
 
   const [items, setItems] = useState<WatchlistItem[]>([])
   const [loadError, setLoadError] = useState(false)
@@ -154,6 +154,13 @@ export default function WatchlistPage() {
       percentChange: null,
       priceHistory: [],
     }))
+    // Reflect unwatch (✕) immediately: the context owns watchedIds and is
+    // updated optimistically by toggle(), independent of this page's own
+    // `items` fetch. Skip while the context is still loading its own list
+    // so we don't briefly hide everything before watchedIds is populated.
+    if (!watchlistLoading) {
+      list = list.filter((c) => c.legacyCatalogId == null || watchedIds.has(c.legacyCatalogId))
+    }
     if (playerFilter.trim()) {
       const q = playerFilter.toLowerCase()
       list = list.filter(c => c.player.toLowerCase().includes(q))
@@ -184,7 +191,7 @@ export default function WatchlistPage() {
       }
     })
     return list
-  }, [items, playerFilter, cardFilter, setFilter, yearFilter, gradeFilter, sort])
+  }, [items, watchedIds, watchlistLoading, playerFilter, cardFilter, setFilter, yearFilter, gradeFilter, sort])
 
   const totalCount = displayed.length
 
