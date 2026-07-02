@@ -41,3 +41,48 @@ export interface PriceSnapshot {
   sale_count: number
   created_at: string
 }
+
+export type SportLabel =
+  | 'NBA' | 'NFL' | 'MLB' | 'NHL' | 'Soccer' | 'WNBA' | 'UFC/MMA' | 'Golf'
+
+export interface WatchlistItem {
+  id: string
+  user_id: string
+  legacy_catalog_id: number | null
+  catalog_card_id: string | null
+  player: string
+  card_name: string
+  set_name: string | null
+  year: number | null
+  card_number: string | null
+  parallel: string
+  grading_service: GradingService | null
+  grade: number | null
+  sport: SportLabel
+  alert_enabled: boolean
+  created_at: string
+}
+
+export interface CollectionItem {
+  id: string
+  user_id: string
+  catalog_card_id: string | null
+  player: string
+  card_name: string
+  set_name: string | null
+  year: number | null
+  card_number: string | null
+  parallel: string
+  grading_service: GradingService | null
+  grade: number | null
+  sport: SportLabel
+  cert_number: string | null
+  price_paid: number | null
+  est_value: number | null
+  quantity: number
+  already_sold: boolean
+  purchase_date: string | null
+  sale_price: number | null
+  sale_date: string | null
+  created_at: string
+}
