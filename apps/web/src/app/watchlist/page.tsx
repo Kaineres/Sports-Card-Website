@@ -190,12 +190,14 @@ export default function WatchlistPage() {
 
   async function toggleAlert(id: string, next: boolean) {
     setItems((prev) => prev.map((it) => (it.id === id ? { ...it, alert_enabled: next } : it)))
-    const res = await fetch(`/api/watchlist/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ alert_enabled: next }),
-    })
-    if (!res.ok) {
+    try {
+      const res = await fetch(`/api/watchlist/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ alert_enabled: next }),
+      })
+      if (!res.ok) throw new Error('patch failed')
+    } catch {
       setItems((prev) => prev.map((it) => (it.id === id ? { ...it, alert_enabled: !next } : it)))
     }
   }
