@@ -64,6 +64,9 @@ export function WatchlistProvider({ children }: { children: React.ReactNode }) {
   const isWatched = useCallback((id: number) => watchedIds.has(id), [watchedIds])
 
   const toggle = useCallback((id: number) => {
+    // Clerk's isSignedIn is falsy until isLoaded — don't redirect an
+    // already-authenticated user to sign-in during that hydration window.
+    if (!isLoaded) return
     if (!isSignedIn) { redirectToSignIn(); return }
 
     const existingRowId = rowByLegacy.current.get(id)
@@ -111,7 +114,7 @@ export function WatchlistProvider({ children }: { children: React.ReactNode }) {
       .catch(() => {
         setRows((prev) => prev.filter((r) => r.id !== tempId))
       })
-  }, [isSignedIn, redirectToSignIn])
+  }, [isLoaded, isSignedIn, redirectToSignIn])
 
   return (
     <WatchlistContext.Provider value={{ watchedIds, toggle, isWatched, loading }}>
