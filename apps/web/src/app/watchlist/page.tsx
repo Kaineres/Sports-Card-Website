@@ -1,71 +1,28 @@
 'use client'
 
-import { useState, useMemo, useEffect, useRef } from 'react'
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
-import { BROWSE_CATALOG } from '@/lib/catalog'
+import { useAuth, useClerk } from '@clerk/nextjs'
+import type { WatchlistItem } from '@/lib/supabase/types'
+import { formatGradeLabel } from '@/lib/cards/grade'
 import { useWatchlist } from '@/lib/watchlist-context'
 
-type WLSortKey = '' | 'player-asc' | 'player-desc' | 'setName-asc' | 'setName-desc' | 'year-asc' | 'year-desc' | 'grade-asc' | 'grade-desc' | 'value-desc' | 'value-asc' | 'change-desc' | 'change-asc'
+type WLSortKey = '' | 'player-asc' | 'player-desc' | 'setName-asc' | 'setName-desc' | 'year-asc' | 'year-desc' | 'grade-asc' | 'grade-desc'
 
-interface WatchCard {
-  id: number
+interface WatchRow {
+  id: string
+  legacyCatalogId: number | null
   player: string
   cardName: string
   setName: string
   year: number
   grade: string
-  currentValue: number
-  trendUp: boolean
   sport: string
   alertEnabled: boolean
+  // No fabricated market data until eBay data links in:
+  currentValue: number | null
+  percentChange: number | null
   priceHistory: number[]
-  open: number
-  high: number
-  low: number
-}
-
-const MOCK_WATCHLIST: WatchCard[] = [
-  {
-    id: 101, player: 'Victor Wembanyama', cardName: '2023-24 Topps Chrome RC Auto',
-    setName: 'Topps Chrome', year: 2023, grade: 'PSA 10', currentValue: 3400,
-    trendUp: true, sport: 'NBA', alertEnabled: true,
-    priceHistory: [2100, 2300, 2500, 2600, 2800, 3000, 3200, 3400],
-    open: 2100, high: 3450, low: 2080,
-  },
-  {
-    id: 102, player: 'Caitlin Clark', cardName: '2024 Rittenhouse WNBA Rookie',
-    setName: 'Rittenhouse', year: 2024, grade: 'PSA 10', currentValue: 1200,
-    trendUp: true, sport: 'WNBA', alertEnabled: false,
-    priceHistory: [650, 720, 810, 900, 980, 1050, 1120, 1200],
-    open: 650, high: 1240, low: 630,
-  },
-  {
-    id: 103, player: 'Caleb Williams', cardName: '2024 Panini Prizm Draft Picks RC',
-    setName: 'Panini Prizm', year: 2024, grade: 'Raw', currentValue: 180,
-    trendUp: false, sport: 'NFL', alertEnabled: true,
-    priceHistory: [220, 210, 205, 195, 190, 185, 182, 180],
-    open: 220, high: 225, low: 176,
-  },
-  {
-    id: 104, player: 'Connor Bedard', cardName: 'Upper Deck Series 1 RC',
-    setName: 'Upper Deck', year: 2023, grade: 'PSA 10', currentValue: 620,
-    trendUp: true, sport: 'NHL', alertEnabled: false,
-    priceHistory: [400, 440, 470, 510, 530, 555, 590, 620],
-    open: 400, high: 635, low: 390,
-  },
-  {
-    id: 105, player: 'Paul Skenes', cardName: 'Topps Chrome RC',
-    setName: 'Topps Chrome', year: 2024, grade: 'PSA 10', currentValue: 445,
-    trendUp: true, sport: 'MLB', alertEnabled: true,
-    priceHistory: [280, 300, 320, 355, 380, 400, 425, 445],
-    open: 280, high: 452, low: 272,
-  },
-]
-
-const SPORT_COLORS: Record<string, string> = {
-  NBA: '#d4a843', NFL: '#c9a84c', MLB: '#34c97a',
-  NHL: '#7eb8e8', Soccer: '#a88be0', WNBA: '#e07a5b',
-  'UFC/MMA': '#e05c5c', Golf: '#6db87a',
 }
 
 const RANGE_OPTS = ['7D', '30D', '90D', '6M', '1Y', '5Y+']
@@ -128,22 +85,29 @@ function WatchSparkline({ data, up, uid }: { data: number[], up: boolean, uid: s
   )
 }
 
-function genHistory(id: number, currentValue: number, percentChange: number) {
-  const open = Math.round(currentValue / (1 + percentChange / 100))
-  const pts = 8
-  const history: number[] = []
-  for (let i = 0; i < pts; i++) {
-    const t = i / (pts - 1)
-    const noise = Math.sin(id * 7.3 + i * 13.1) * currentValue * 0.04
-    history.push(Math.max(1, Math.round(open + (currentValue - open) * t + noise)))
-  }
-  history[history.length - 1] = currentValue
-  const high = Math.round(Math.max(...history) * 1.015)
-  const low  = Math.round(Math.min(...history) * 0.985)
-  return { history, open, high, low }
+// Shown in place of the sparkline until real eBay price history is available.
+// Never fabricates a chart from thin air.
+function PricePendingSparkline() {
+  return (
+    <div style={{
+      width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+      border: '1px dashed var(--border-md)', borderRadius: '8px', boxSizing: 'border-box',
+    }}>
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'var(--text3)' }}>
+        Awaiting price data
+      </span>
+    </div>
+  )
 }
 
 export default function WatchlistPage() {
+  const { isLoaded, isSignedIn } = useAuth()
+  const { redirectToSignIn } = useClerk()
+  const { toggle: toggleWatch } = useWatchlist()
+
+  const [items, setItems] = useState<WatchlistItem[]>([])
+  const [loadError, setLoadError] = useState(false)
+
   const [playerFilter, setPlayerFilter] = useState('')
   const [cardFilter,   setCardFilter]   = useState('')
   const [setFilter,    setSetFilter]    = useState('')
@@ -152,7 +116,20 @@ export default function WatchlistPage() {
   const [sort, setSort]                 = useState<WLSortKey>('')
   const [photoModal,   setPhotoModal]   = useState(false)
   const [dragOver,     setDragOver]     = useState(false)
+  const [ranges, setRanges] = useState<Record<string, string>>({})
   const photoRef = useRef<HTMLInputElement>(null)
+
+  const reload = useCallback(() => {
+    fetch('/api/watchlist')
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error('load failed'))))
+      .then((d) => { setItems(d.items ?? []); setLoadError(false) })
+      .catch(() => setLoadError(true))
+  }, [])
+
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn) return
+    reload()
+  }, [isLoaded, isSignedIn, reload])
 
   useEffect(() => {
     if (!photoModal) return
@@ -160,16 +137,23 @@ export default function WatchlistPage() {
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [photoModal])
-  const { watchedIds, toggle: toggleWatch } = useWatchlist()
-  const [alerts, setAlerts] = useState<Record<number, boolean>>(
-    Object.fromEntries(MOCK_WATCHLIST.map(c => [c.id, c.alertEnabled]))
-  )
-  const [ranges, setRanges] = useState<Record<number, string>>(
-    Object.fromEntries(MOCK_WATCHLIST.map(c => [c.id, '30D']))
-  )
 
   const displayed = useMemo(() => {
-    let list = MOCK_WATCHLIST.filter(c => watchedIds.has(c.id))
+    let list: WatchRow[] = items.map((it) => ({
+      id: it.id,
+      legacyCatalogId: it.legacy_catalog_id,
+      player: it.player,
+      cardName: it.card_name,
+      setName: it.set_name ?? '',
+      year: it.year ?? 0,
+      grade: formatGradeLabel(it.grading_service, it.grade),
+      sport: it.sport,
+      alertEnabled: it.alert_enabled,
+      // No fabricated market data until eBay data links in:
+      currentValue: null,
+      percentChange: null,
+      priceHistory: [],
+    }))
     if (playerFilter.trim()) {
       const q = playerFilter.toLowerCase()
       list = list.filter(c => c.player.toLowerCase().includes(q))
@@ -190,10 +174,6 @@ export default function WatchlistPage() {
       switch (sort) {
         case 'player-asc':   return a.player.localeCompare(b.player)
         case 'player-desc':  return b.player.localeCompare(a.player)
-        case 'value-desc':   return b.currentValue - a.currentValue
-        case 'value-asc':    return a.currentValue - b.currentValue
-        case 'change-desc':  return (b.trendUp ? 1 : -1) - (a.trendUp ? 1 : -1)
-        case 'change-asc':   return (a.trendUp ? 1 : -1) - (b.trendUp ? 1 : -1)
         case 'setName-asc':  return a.setName.localeCompare(b.setName)
         case 'setName-desc': return b.setName.localeCompare(a.setName)
         case 'year-asc':     return a.year - b.year
@@ -204,39 +184,47 @@ export default function WatchlistPage() {
       }
     })
     return list
-  }, [playerFilter, cardFilter, setFilter, yearFilter, gradeFilter, sort, watchedIds])
+  }, [items, playerFilter, cardFilter, setFilter, yearFilter, gradeFilter, sort])
 
-  const mockWatchlistIds = useMemo(() => new Set(MOCK_WATCHLIST.map(c => c.id)), [])
+  const totalCount = displayed.length
 
-  const browsedWatched = useMemo(() =>
-    BROWSE_CATALOG.filter(c => watchedIds.has(c.id) && !mockWatchlistIds.has(c.id))
-  , [watchedIds, mockWatchlistIds])
-
-  const totalCount = displayed.length + browsedWatched.length
-
-  function toggleAlert(id: number) {
-    setAlerts(prev => ({ ...prev, [id]: !prev[id] }))
+  async function toggleAlert(id: string, next: boolean) {
+    setItems((prev) => prev.map((it) => (it.id === id ? { ...it, alert_enabled: next } : it)))
+    const res = await fetch(`/api/watchlist/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ alert_enabled: next }),
+    })
+    if (!res.ok) {
+      setItems((prev) => prev.map((it) => (it.id === id ? { ...it, alert_enabled: !next } : it)))
+    }
   }
 
   function WatchCard({
-    id, player, cardName, setName, year, grade,
-    currentValue, trendUp, sport, priceHistory,
-    openVal, highVal, lowVal, showAlert,
+    id, legacyCatalogId, player, setName, year, grade,
+    currentValue, priceHistory, alertEnabled,
   }: {
-    id: number; player: string; cardName: string; setName: string
-    year: number; grade: string; currentValue: number; trendUp: boolean
-    sport: string; priceHistory: number[]; openVal: number; highVal: number
-    lowVal: number; showAlert: boolean
+    id: string; legacyCatalogId: number | null; player: string; setName: string
+    year: number; grade: string; currentValue: number | null; percentChange: number | null
+    sport: string; priceHistory: number[]; alertEnabled: boolean
   }) {
-    const dollarChange = currentValue - openVal
-    const pctChange    = openVal > 0 ? (dollarChange / openVal) * 100 : 0
-    const isUp         = dollarChange >= 0
+    const hasHistory   = priceHistory.length > 0
+    const openVal      = hasHistory ? priceHistory[0] : null
+    const highVal      = hasHistory ? Math.max(...priceHistory) : null
+    const lowVal       = hasHistory ? Math.min(...priceHistory) : null
+    const dollarChange = currentValue != null && openVal != null ? currentValue - openVal : null
+    const pctChange    = dollarChange != null && openVal ? (dollarChange / openVal) * 100 : null
+    const isUp         = dollarChange != null ? dollarChange >= 0 : null
     const rangeActive  = ranges[id] ?? '30D'
-    const alertOn      = alerts[id] ?? false
     const changeColor  = isUp ? 'var(--green)' : 'var(--red)'
     const changeBg     = isUp ? 'var(--green-bg)' : 'var(--red-bg)'
     const changeBorder = isUp ? 'rgba(52,201,122,0.2)' : 'rgba(224,92,92,0.2)'
     const sign         = isUp ? '+' : ''
+    const accentGradient = isUp == null
+      ? 'linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent)'
+      : isUp
+        ? 'linear-gradient(90deg, transparent, rgba(52,201,122,0.55), transparent)'
+        : 'linear-gradient(90deg, transparent, rgba(224,92,92,0.5), transparent)'
 
     return (
       <div style={{
@@ -247,9 +235,7 @@ export default function WatchlistPage() {
         {/* Top accent line */}
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0, height: '2px',
-          background: isUp
-            ? 'linear-gradient(90deg, transparent, rgba(52,201,122,0.55), transparent)'
-            : 'linear-gradient(90deg, transparent, rgba(224,92,92,0.5), transparent)',
+          background: accentGradient,
         }} />
 
         {/* Header: player name · set/year/grade · bell + ✕ */}
@@ -265,26 +251,28 @@ export default function WatchlistPage() {
             }}>{setName} · {year} · {grade}</div>
           </div>
           <div style={{ display: 'flex', gap: '5px', flexShrink: 0 }}>
-            {showAlert && (
-              <button
-                onClick={() => toggleAlert(id)}
-                style={{
-                  width: '28px', height: '28px', borderRadius: '6px',
-                  border: '1px solid var(--border-md)',
-                  background: alertOn ? 'var(--gold-bg)' : 'none',
-                  color: alertOn ? 'var(--gold2)' : 'var(--text3)',
-                  fontSize: '0.75rem', cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}
-              >🔔</button>
-            )}
             <button
-              onClick={() => toggleWatch(id)}
+              onClick={() => toggleAlert(id, !alertEnabled)}
+              style={{
+                width: '28px', height: '28px', borderRadius: '6px',
+                border: '1px solid var(--border-md)',
+                background: alertEnabled ? 'var(--gold-bg)' : 'none',
+                color: alertEnabled ? 'var(--gold2)' : 'var(--text3)',
+                fontSize: '0.75rem', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}
+            >🔔</button>
+            <button
+              onClick={() => { if (legacyCatalogId != null) toggleWatch(legacyCatalogId) }}
+              disabled={legacyCatalogId == null}
+              title={legacyCatalogId == null ? 'This item cannot be unwatched yet' : 'Remove from watchlist'}
               style={{
                 width: '28px', height: '28px', borderRadius: '6px',
                 border: '1px solid rgba(224,92,92,0.25)',
                 background: 'var(--red-bg)', color: 'var(--red)',
-                fontSize: '0.85rem', fontWeight: 700, cursor: 'pointer',
+                fontSize: '0.85rem', fontWeight: 700,
+                cursor: legacyCatalogId == null ? 'not-allowed' : 'pointer',
+                opacity: legacyCatalogId == null ? 0.5 : 1,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >✕</button>
@@ -293,28 +281,41 @@ export default function WatchlistPage() {
 
         {/* Price + dollar/pct badge */}
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', flexWrap: 'wrap' }}>
-          <span style={{
-            fontFamily: 'var(--font-mono)', fontSize: '1.55rem', fontWeight: 500,
-            color: 'var(--text)', letterSpacing: '-0.03em', lineHeight: 1,
-          }}>
-            ${currentValue.toLocaleString()}
-          </span>
-          <span style={{
-            padding: '3px 9px', borderRadius: '5px',
-            background: changeBg, border: `1px solid ${changeBorder}`,
-            fontFamily: 'var(--font-mono)', fontSize: '0.67rem', fontWeight: 600,
-            color: changeColor, whiteSpace: 'nowrap',
-          }}>
-            {isUp ? '▲' : '▼'} {sign}${Math.abs(dollarChange).toLocaleString()} ({sign}{pctChange.toFixed(2)}%)
-          </span>
+          {currentValue == null ? (
+            <span style={{
+              fontFamily: 'var(--font-mono)', fontSize: '1.02rem', fontWeight: 500,
+              color: 'var(--text3)', letterSpacing: '-0.01em',
+            }}>
+              Price pending
+            </span>
+          ) : (
+            <>
+              <span style={{
+                fontFamily: 'var(--font-mono)', fontSize: '1.55rem', fontWeight: 500,
+                color: 'var(--text)', letterSpacing: '-0.03em', lineHeight: 1,
+              }}>
+                ${currentValue.toLocaleString()}
+              </span>
+              {dollarChange != null && pctChange != null && (
+                <span style={{
+                  padding: '3px 9px', borderRadius: '5px',
+                  background: changeBg, border: `1px solid ${changeBorder}`,
+                  fontFamily: 'var(--font-mono)', fontSize: '0.67rem', fontWeight: 600,
+                  color: changeColor, whiteSpace: 'nowrap',
+                }}>
+                  {isUp ? '▲' : '▼'} {sign}${Math.abs(dollarChange).toLocaleString()} ({sign}{pctChange.toFixed(2)}%)
+                </span>
+              )}
+            </>
+          )}
         </div>
 
         {/* OPEN / HIGH / LOW / RANGE stats */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '4px' }}>
           {([
-            ['OPEN',  `$${openVal.toLocaleString()}`],
-            ['HIGH',  `$${highVal.toLocaleString()}`],
-            ['LOW',   `$${lowVal.toLocaleString()}`],
+            ['OPEN',  openVal != null ? `$${openVal.toLocaleString()}` : '—'],
+            ['HIGH',  highVal != null ? `$${highVal.toLocaleString()}` : '—'],
+            ['LOW',   lowVal  != null ? `$${lowVal.toLocaleString()}`  : '—'],
             ['RANGE', rangeActive],
           ] as [string, string][]).map(([label, val]) => (
             <div key={label} style={{ textAlign: 'center' }}>
@@ -352,46 +353,67 @@ export default function WatchlistPage() {
           })}
         </div>
 
-        {/* Sparkline */}
+        {/* Sparkline (placeholder until real price history exists) */}
         <div style={{ height: '86px', margin: '0 -4px' }}>
-          <WatchSparkline data={priceHistory} up={isUp} uid={`${id}`} />
+          {hasHistory
+            ? <WatchSparkline data={priceHistory} up={isUp ?? true} uid={id} />
+            : <PricePendingSparkline />}
         </div>
 
-        {/* Alert toggle — mock cards only */}
-        {showAlert && (
-          <div style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            paddingTop: '7px', borderTop: '1px solid var(--border-sm)',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
-              <div style={{
-                width: '6px', height: '6px', borderRadius: '50%',
-                background: alertOn ? 'var(--green)' : 'var(--text3)',
-                boxShadow: alertOn ? '0 0 6px var(--green)' : 'none',
-                transition: 'background 0.15s',
-              }} />
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text3)' }}>
-                Price alert
-              </span>
-            </div>
-            <button
-              onClick={() => toggleAlert(id)}
-              style={{
-                width: '36px', height: '20px', borderRadius: '10px',
-                border: `1px solid ${alertOn ? 'rgba(52,201,122,0.4)' : 'var(--border-md)'}`,
-                background: alertOn ? 'rgba(52,201,122,0.15)' : 'var(--bg5)',
-                cursor: 'pointer', position: 'relative', transition: 'all 0.15s', padding: 0,
-              }}
-            >
-              <div style={{
-                position: 'absolute', top: '3px', width: '12px', height: '12px', borderRadius: '50%',
-                background: alertOn ? 'var(--green)' : 'var(--text3)',
-                left: alertOn ? '20px' : '3px',
-                transition: 'left 0.15s, background 0.15s',
-              }} />
-            </button>
+        {/* Alert toggle */}
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          paddingTop: '7px', borderTop: '1px solid var(--border-sm)',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
+            <div style={{
+              width: '6px', height: '6px', borderRadius: '50%',
+              background: alertEnabled ? 'var(--green)' : 'var(--text3)',
+              boxShadow: alertEnabled ? '0 0 6px var(--green)' : 'none',
+              transition: 'background 0.15s',
+            }} />
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--text3)' }}>
+              Price alert
+            </span>
           </div>
-        )}
+          <button
+            onClick={() => toggleAlert(id, !alertEnabled)}
+            style={{
+              width: '36px', height: '20px', borderRadius: '10px',
+              border: `1px solid ${alertEnabled ? 'rgba(52,201,122,0.4)' : 'var(--border-md)'}`,
+              background: alertEnabled ? 'rgba(52,201,122,0.15)' : 'var(--bg5)',
+              cursor: 'pointer', position: 'relative', transition: 'all 0.15s', padding: 0,
+            }}
+          >
+            <div style={{
+              position: 'absolute', top: '3px', width: '12px', height: '12px', borderRadius: '50%',
+              background: alertEnabled ? 'var(--green)' : 'var(--text3)',
+              left: alertEnabled ? '20px' : '3px',
+              transition: 'left 0.15s, background 0.15s',
+            }} />
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  if (isLoaded && !isSignedIn) {
+    return (
+      <div style={{ padding: '4rem 1.5rem', textAlign: 'center' }}>
+        <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: 'var(--text)' }}>
+          Sign in to view your watchlist
+        </p>
+        <button
+          onClick={() => redirectToSignIn()}
+          style={{
+            marginTop: '1rem', padding: '10px 24px',
+            background: 'linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%)',
+            border: 'none', borderRadius: '8px', color: '#0d1117',
+            fontFamily: 'var(--font-display)', fontWeight: 700, cursor: 'pointer',
+          }}
+        >
+          Sign In
+        </button>
       </div>
     )
   }
@@ -408,7 +430,7 @@ export default function WatchlistPage() {
         }}>
           <div>
             <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '1.45rem', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text)' }}>Watchlist</h1>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text2)', marginTop: '3px' }}>Cards you're tracking and targeting</p>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text2)', marginTop: '3px' }}>Cards you&apos;re tracking and targeting</p>
           </div>
           <span style={{
             fontFamily: 'var(--font-mono)', fontSize: '0.7rem', fontWeight: 600,
@@ -541,11 +563,28 @@ export default function WatchlistPage() {
 
       {/* ── Card grid ── */}
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
-        {totalCount === 0 ? (
+        {loadError ? (
+          <div style={{ textAlign: 'center', padding: '6rem 0' }}>
+            <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', color: 'var(--text)', marginBottom: '8px' }}>
+              Couldn&apos;t load your watchlist
+            </div>
+            <button
+              onClick={reload}
+              style={{
+                marginTop: '0.5rem', padding: '9px 22px',
+                background: 'linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%)',
+                border: 'none', borderRadius: '8px', color: '#0d1117',
+                fontFamily: 'var(--font-display)', fontSize: '0.83rem', fontWeight: 700,
+                cursor: 'pointer',
+              }}
+            >Retry</button>
+          </div>
+        ) : items.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '6rem 0' }}>
             <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>☆</div>
-            <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', color: 'var(--text)', marginBottom: '8px' }}>Your watchlist is empty</div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', color: 'var(--text3)', marginBottom: '1.5rem' }}>Browse cards and click Watch to track them here</div>
+            <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.1rem', color: 'var(--text)', marginBottom: '8px' }}>
+              Nothing on your watchlist yet — add cards from Browse
+            </div>
             <Link href="/browse" style={{
               padding: '9px 22px',
               background: 'linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%)',
@@ -554,49 +593,28 @@ export default function WatchlistPage() {
               textDecoration: 'none',
             }}>Browse Cards</Link>
           </div>
+        ) : totalCount === 0 ? (
+          <div style={{ textAlign: 'center', padding: '6rem 0', fontFamily: 'var(--font-mono)', color: 'var(--text3)', fontSize: '0.85rem' }}>
+            No cards match your filters.
+          </div>
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '14px' }}>
             {displayed.map(card => (
               <WatchCard
                 key={card.id}
                 id={card.id}
+                legacyCatalogId={card.legacyCatalogId}
                 player={card.player}
-                cardName={card.cardName}
                 setName={card.setName}
                 year={card.year}
                 grade={card.grade}
                 currentValue={card.currentValue}
-                trendUp={card.trendUp}
+                percentChange={card.percentChange}
                 sport={card.sport}
                 priceHistory={card.priceHistory}
-                openVal={card.open}
-                highVal={card.high}
-                lowVal={card.low}
-                showAlert={true}
+                alertEnabled={card.alertEnabled}
               />
             ))}
-            {browsedWatched.map(card => {
-              const { history, open, high, low } = genHistory(card.id, card.currentValue, card.percentChange)
-              return (
-                <WatchCard
-                  key={card.id}
-                  id={card.id}
-                  player={card.player}
-                  cardName={card.cardName}
-                  setName={card.setName}
-                  year={card.year}
-                  grade={card.grade}
-                  currentValue={card.currentValue}
-                  trendUp={card.percentChange >= 0}
-                  sport={card.sport}
-                  priceHistory={history}
-                  openVal={open}
-                  highVal={high}
-                  lowVal={low}
-                  showAlert={false}
-                />
-              )
-            })}
           </div>
         )}
       </div>
